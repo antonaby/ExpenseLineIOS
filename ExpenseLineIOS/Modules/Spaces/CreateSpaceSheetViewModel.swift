@@ -31,7 +31,7 @@ class CreateSpaceSheetViewModel: ObservableObject {
     }
     
     func createSpace() {
-        
+        ExpensesService.shared.addSpace(Space(id: UUID(), name: name, iconName: "No"))
     }
     
 }
@@ -42,7 +42,7 @@ private extension CreateSpaceSheetViewModel {
         $name
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .map { name in
-                name.count >= 3
+                name.count > 0
             }
             .eraseToAnyPublisher()
     }

@@ -11,20 +11,19 @@ import Foundation
 class HomeViewModel: ObservableObject {
     
     @Published var spaces: [Space]
+    @Published var totalAmount: Int
     
     init() {
         self.spaces = []
+        self.totalAmount = 0
     }
     
     func loadSpaces() {
-        spaces = [
-            Space(id: UUID(), name: "Home", iconName: "No"),
-            Space(id: UUID(), name: "Garden", iconName: "No"),
-            Space(id: UUID(), name: "Fun", iconName: "No"),
-            Space(id: UUID(), name: "Car", iconName: "No"),
-            Space(id: UUID(), name: "Vacation", iconName: "No"),
-            Space(id: UUID(), name: "Other", iconName: "No"),
-        ]
+        spaces = ExpensesService.shared.getSpaces()
+    }
+    
+    func loadTotalAmount() {
+        totalAmount = ExpensesService.shared.getTotalAmount()
     }
     
 }
