@@ -8,44 +8,77 @@
 import Foundation
 
 
+enum ExpenseServiceError: Error, LocalizedError {
+    
+    case FetchError(msg: String, reason: Error?)
+    case SaveError(msg: String, reason: Error?)
+    
+}
+
 class ExpensesService {
     
     public static let shared = ExpensesService()
     
-    private var spaces: [Space]
-    private var expenses: [Expense]
     private var totalAmount: Int
     
     init() {
-        self.spaces = [
-            Space(id: UUID(), name: "Home", iconName: "No"),
-            Space(id: UUID(), name: "Garden", iconName: "No"),
-            Space(id: UUID(), name: "Fun", iconName: "No"),
-            Space(id: UUID(), name: "Car", iconName: "No"),
-            Space(id: UUID(), name: "Vacation", iconName: "No"),
-            Space(id: UUID(), name: "Other", iconName: "No"),
-        ]
-        self.expenses = []
         self.totalAmount = 0
     }
     
-    func getSpaces() -> [Space] {
-        return spaces
+    func getSpaces() throws -> [Space] {
+        let request = SpaceEntity.fetchRequest()
+        
+        do {
+            let spaces = try DatabaseManager.shared.viewContext.fetch(request)
+            return spaces.map { space in
+                // TODO: check nil
+                Space(id: space.id ?? UUID(), name: space.name ?? "No", iconName: space.iconName ?? "No")
+            }
+        } catch {
+            throw ExpenseServiceError.FetchError(msg: "Failed to fetch spaces", reason: error)
+        }
     }
     
     func getTotalAmount() -> Int {
         return totalAmount
     }
     
-    // TODO: Save
     func addSpace(_ space: Space) {
-        spaces.insert(space, at: 0)
+        let spaceEntity = SpaceEntity(context: DatabaseManager.shared.viewContext)
+        spaceEntity.id = space.id
+        spaceEntity.name = space.name
+        spaceEntity.iconName = space.iconName
+        
+        DatabaseManager.shared.save()
     }
     
-    // TODO: Save
-    func addExpense(_ expense: Expense) {
-        expenses.insert(expense, at: 0)
-        totalAmount += expense.amount
+    // TODO: add currency
+    func addExpense(_ expense: Expense) throws {
+        let expenseEntity = ExpenseEntity(context: DatabaseManager.shared.viewContext)
+        expenseEntity.id = expense.id
+        expenseEntity.name = expense.name
+        expenseEntity.amount = Int32(expense.amount)
+        
+        do {
+            let space = try getSpaceById(expense.id)
+            expenseEntity.space = space
+        } catch {
+            throw ExpenseServiceError.SaveError(msg: "Failed to save expense", reason: error)
+        }
+        
+        DatabaseManager.shared.save()
+    }
+    
+    private func getSpaceById(_ id: UUID) throws -> SpaceEntity? {
+        let request = SpaceEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+        
+        do {
+            return try DatabaseManager.shared.viewContext.fetch(request).first
+        } catch {
+            throw ExpenseServiceError.FetchError(msg: "Failed to fetch a space by id", reason: error)
+        }
     }
     
 }

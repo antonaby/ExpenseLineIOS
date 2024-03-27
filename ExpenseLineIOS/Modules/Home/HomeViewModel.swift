@@ -19,7 +19,11 @@ class HomeViewModel: ObservableObject {
     }
     
     func loadSpaces() {
-        spaces = ExpensesService.shared.getSpaces()
+        do {
+            spaces = try ExpensesService.shared.getSpaces()
+        } catch {
+            // TODO: show error
+        }
     }
     
     func loadTotalAmount() {

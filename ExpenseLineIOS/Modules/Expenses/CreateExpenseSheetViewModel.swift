@@ -37,12 +37,22 @@ class CreateExpenseSheetViewModel: ObservableObject {
     // TODO: add currency
     func createExpense() {
         guard let space = self.space else { return }
-        ExpensesService.shared.addExpense(
-            Expense(id: UUID(), spaceId: space.id, name: name, amount: amount, currency: "USD"))
+        do {
+            try ExpensesService.shared.addExpense(
+                Expense(id: UUID(), spaceId: space.id, name: name, amount: amount, currency: "USD"))
+        } catch {
+            // TODO: show error
+            print(error)
+        }
     }
     
     func getSpaces() -> [Space] {
-        return ExpensesService.shared.getSpaces()
+        do {
+            return try ExpensesService.shared.getSpaces()
+        } catch {
+            // TODO: Show error instead
+            return []
+        }
     }
     
     func setSpace(_ space: Space) {
