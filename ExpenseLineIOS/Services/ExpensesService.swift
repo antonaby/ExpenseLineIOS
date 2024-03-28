@@ -19,10 +19,8 @@ class ExpensesService {
     
     public static let shared = ExpensesService()
     
-    private var totalAmount: Int
-    
     init() {
-        self.totalAmount = 0
+        
     }
     
     func getSpaces() throws -> [Space] {
@@ -40,7 +38,22 @@ class ExpensesService {
     }
     
     func getTotalAmount() -> Int {
-        return totalAmount
+        let request = SpaceEntity.fetchRequest()
+        
+        do {
+            let spaces = try DatabaseManager.shared.viewContext.fetch(request)
+            if spaces.isEmpty {
+                return 0
+            }
+            
+            let total = Int(spaces.reduce(0)  { r, e in
+                r + e.totalExpenses
+            })
+            
+            return total
+        } catch {
+            return 0
+        }
     }
     
     func addSpace(_ space: Space) {
@@ -60,7 +73,7 @@ class ExpensesService {
         expenseEntity.amount = Int32(expense.amount)
         
         do {
-            let space = try getSpaceById(expense.id)
+            let space = try getSpaceById(expense.spaceId)
             expenseEntity.space = space
         } catch {
             throw ExpenseServiceError.SaveError(msg: "Failed to save expense", reason: error)
