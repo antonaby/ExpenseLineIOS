@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateSpaceSheetView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var vm: CreateSpaceSheetViewModel = CreateSpaceSheetViewModel()
+    @StateObject var vm: CreateSpaceSheetViewModel
     
     var body: some View {
         VStack {
@@ -38,5 +38,5 @@ struct CreateSpaceSheetView: View {
 }
 
 #Preview {
-    CreateSpaceSheetView()
+    CreateSpaceSheetView(vm: DependencyResolver.preview.createSpaceSheetViewModel())
 }

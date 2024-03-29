@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct ExpenseLineIOSApp: App {
+    
+    private let resolver = DependencyResolver(assemblies: DatabaseManagerBundle(), ServiceBundle(), ModulesBundle())
+    
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView(vm: resolver.homeViewModel())
+                .environmentObject(resolver)
         }
     }
 }

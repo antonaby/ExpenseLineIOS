@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateExpenseSheetView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject var vm = CreateExpenseSheetViewModel()
+    @StateObject var vm: CreateExpenseSheetViewModel
     
     var body: some View {
         VStack {
@@ -57,5 +57,5 @@ struct CreateExpenseSheetView: View {
 }
 
 #Preview {
-    CreateExpenseSheetView()
+    CreateExpenseSheetView(vm: DependencyResolver.preview.createExpenseSheetViewModel())
 }

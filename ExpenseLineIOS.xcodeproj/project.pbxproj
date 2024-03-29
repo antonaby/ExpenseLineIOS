@@ -26,6 +26,10 @@
 		D23960912BB2EAED0071547D /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960902BB2EAED0071547D /* Expense.swift */; };
 		D23960942BB2EBBF0071547D /* CreateExpenseSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960932BB2EBBF0071547D /* CreateExpenseSheetView.swift */; };
 		D23960962BB2EBD70071547D /* CreateExpenseSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960952BB2EBD70071547D /* CreateExpenseSheetViewModel.swift */; };
+		D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = D263EC6C2BB6E97600BA4287 /* Swinject */; };
+		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
+		D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */; };
+		D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */; };
 		D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */; };
 		D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
@@ -70,6 +74,9 @@
 		D23960902BB2EAED0071547D /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		D23960932BB2EBBF0071547D /* CreateExpenseSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExpenseSheetView.swift; sourceTree = "<group>"; };
 		D23960952BB2EBD70071547D /* CreateExpenseSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExpenseSheetViewModel.swift; sourceTree = "<group>"; };
+		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
+		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
+		D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBundle.swift; sourceTree = "<group>"; };
 		D2DEFC112BB4348600AC7CA0 /* DataContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataContainer.xcdatamodel; sourceTree = "<group>"; };
 		D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +138,7 @@
 				D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */,
 				D20EF2B02BB18CFB006CF8CD /* Preview Content */,
 				D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */,
+				D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */,
 			);
 			path = ExpenseLineIOS;
 			sourceTree = "<group>";
@@ -165,6 +174,7 @@
 				D23960922BB2EB9F0071547D /* Expenses */,
 				D20EF2DF2BB192D0006CF8CD /* Home */,
 				D20EF2D72BB18E4A006CF8CD /* Spaces */,
+				D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -212,6 +222,7 @@
 			children = (
 				D239608E2BB2E97E0071547D /* ExpensesService.swift */,
 				D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */,
+				D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -241,6 +252,9 @@
 			dependencies = (
 			);
 			name = ExpenseLineIOS;
+			packageProductDependencies = (
+				D263EC6C2BB6E97600BA4287 /* Swinject */,
+			);
 			productName = ExpenseLineIOS;
 			productReference = D20EF2A72BB18CFA006CF8CD /* ExpenseLineIOS.app */;
 			productType = "com.apple.product-type.application";
@@ -313,6 +327,9 @@
 				Base,
 			);
 			mainGroup = D20EF29E2BB18CFA006CF8CD;
+			packageReferences = (
+				D263EC6B2BB6E97600BA4287 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			productRefGroup = D20EF2A82BB18CFA006CF8CD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -359,6 +376,7 @@
 				D23960912BB2EAED0071547D /* Expense.swift in Sources */,
 				D20EF2D92BB18E8F006CF8CD /* CreateSpaceSheetView.swift in Sources */,
 				D20EF2E12BB193FD006CF8CD /* HomeViewModel.swift in Sources */,
+				D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */,
 				D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */,
 				D23960962BB2EBD70071547D /* CreateExpenseSheetViewModel.swift in Sources */,
 				D239608F2BB2E97E0071547D /* ExpensesService.swift in Sources */,
@@ -366,11 +384,13 @@
 				D20EF2D52BB18DFA006CF8CD /* HomeView.swift in Sources */,
 				D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
+				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,
 				D20EF2E62BB19693006CF8CD /* AddSpaceCircle.swift in Sources */,
 				D20EF2E82BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift in Sources */,
 				D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */,
 				D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */,
 				D23960942BB2EBBF0071547D /* CreateExpenseSheetView.swift in Sources */,
+				D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,6 +720,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D263EC6B2BB6E97600BA4287 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D263EC6C2BB6E97600BA4287 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D263EC6B2BB6E97600BA4287 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */ = {

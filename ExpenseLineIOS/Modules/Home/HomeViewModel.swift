@@ -13,21 +13,25 @@ class HomeViewModel: ObservableObject {
     @Published var spaces: [Space]
     @Published var totalAmount: Int
     
-    init() {
+    private let es: ExpensesService
+    
+    init(es: ExpensesService) {
+        self.es = es
+        
         self.spaces = []
         self.totalAmount = 0
     }
     
     func loadSpaces() {
         do {
-            spaces = try ExpensesService.shared.getSpaces()
+            spaces = try es.getSpaces()
         } catch {
             // TODO: show error
         }
     }
     
     func loadTotalAmount() {
-        totalAmount = ExpensesService.shared.getTotalAmount()
+        totalAmount = es.getTotalAmount()
     }
     
 }

@@ -10,10 +10,12 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject var vm: HomeViewModel = HomeViewModel()
+    @StateObject var vm: HomeViewModel
     
     @State var createSpaceSheetOpen = false
     @State var createExpenseSheetOpen = false
+    
+    @EnvironmentObject var resolver: DependencyResolver
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -42,11 +44,11 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $createSpaceSheetOpen, onDismiss: onSpaceCreated) {
-            CreateSpaceSheetView()
+            CreateSpaceSheetView(vm: resolver.createSpaceSheetViewModel())
                 .presentationDetents([.medium])
         }
         .sheet(isPresented: $createExpenseSheetOpen, onDismiss: onExpenseCreated) {
-            CreateExpenseSheetView()
+            CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel())
                 .presentationDetents([.medium])
         }
         .padding([.horizontal], 15)
@@ -66,5 +68,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(vm: DependencyResolver.preview.homeViewModel())
+        .environmentObject(DependencyResolver.preview)
 }
