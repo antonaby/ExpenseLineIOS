@@ -21,6 +21,14 @@ class DependencyResolver: ObservableObject {
     
 }
 
+extension DependencyResolver {
+    
+    func databaseManager() -> DatabaseManager {
+        resolver.resolve(DatabaseManager.self)!
+    }
+    
+}
+
 #if DEBUG
 extension DependencyResolver {
     

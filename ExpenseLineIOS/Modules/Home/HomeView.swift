@@ -14,48 +14,58 @@ struct HomeView: View {
     
     @State var createSpaceSheetOpen = false
     @State var createExpenseSheetOpen = false
+    @State var path: NavigationPath
     
     @EnvironmentObject var resolver: DependencyResolver
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            VStack {
-                ScrollView(.horizontal) {
-                    HStack(alignment: .top, spacing: 15) {
-                        AddSpaceCircle {
-                            createSpaceSheetOpen.toggle()
-                        }
-                        .frame(alignment: .top)
-                        ForEach(vm.spaces) { space in
-                            SpaceCircle(space.name) {
-                                print("WIP")
+        NavigationStack(path: $path) {
+            ZStack(alignment: .bottomTrailing) {
+                VStack {
+                    ScrollView(.horizontal) {
+                        HStack(alignment: .top, spacing: 15) {
+                            AddSpaceCircle {
+                                createSpaceSheetOpen.toggle()
+                            }
+                            .frame(alignment: .top)
+                            ForEach(vm.spaces) { space in
+                                NavigationLink(value: space) {
+                                    Text(getSpaceName(space))
+                                }
                             }
                         }
                     }
+                    .scrollIndicators(.hidden)
+                    Text("Total: \(vm.totalAmount)")
+                        .font(.title)
+                        .padding([.top], 30)
+                    Spacer()
                 }
-                .scrollIndicators(.hidden)
-                Text("Total: \(vm.totalAmount)")
-                    .font(.title)
-                    .padding([.top], 30)
-                Spacer()
+                AddExpenseButton {
+                    createExpenseSheetOpen.toggle()
+                }
             }
-            AddExpenseButton {
-                createExpenseSheetOpen.toggle()
+            .sheet(isPresented: $createSpaceSheetOpen, onDismiss: onSpaceCreated) {
+                CreateSpaceSheetView(vm: resolver.createSpaceSheetViewModel())
+                    .presentationDetents([.medium])
+            }
+            .sheet(isPresented: $createExpenseSheetOpen, onDismiss: onExpenseCreated) {
+                CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel())
+                    .presentationDetents([.medium])
+            }
+            .navigationDestination(for: SpaceEntity.self) { space in
+                SpaceView(vm: resolver.spaceViewModel(space))
+            }
+            .padding([.horizontal], 15)
+            .onAppear {
+                vm.loadSpaces()
+                vm.loadTotalAmount()
             }
         }
-        .sheet(isPresented: $createSpaceSheetOpen, onDismiss: onSpaceCreated) {
-            CreateSpaceSheetView(vm: resolver.createSpaceSheetViewModel())
-                .presentationDetents([.medium])
-        }
-        .sheet(isPresented: $createExpenseSheetOpen, onDismiss: onExpenseCreated) {
-            CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel())
-                .presentationDetents([.medium])
-        }
-        .padding([.horizontal], 15)
-        .onAppear {
-            vm.loadSpaces()
-            vm.loadTotalAmount()
-        }
+    }
+    
+    func getSpaceName(_ space: SpaceEntity) -> String {
+        space.name ?? "Unknown"
     }
     
     func onSpaceCreated() {
@@ -68,6 +78,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(vm: DependencyResolver.preview.homeViewModel())
+    HomeView(vm: DependencyResolver.preview.homeViewModel(), path: NavigationPath())
         .environmentObject(DependencyResolver.preview)
 }

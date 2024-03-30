@@ -14,7 +14,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
     @Published var name: String
     @Published var amount: Int
     @Published var isValid: Bool
-    @Published var space: Space?
+    @Published var space: SpaceEntity?
     
     private let es: ExpensesService
     // TODO: cancel all
@@ -42,14 +42,14 @@ class CreateExpenseSheetViewModel: ObservableObject {
         guard let space = self.space else { return }
         do {
             try es.addExpense(
-                Expense(id: UUID(), spaceId: space.id, name: name, amount: amount, currency: "USD"))
+                Expense(id: UUID(), name: name, amount: amount, currency: "USD"), space: space)
         } catch {
             // TODO: show error
             print(error)
         }
     }
     
-    func getSpaces() -> [Space] {
+    func getSpaces() -> [SpaceEntity] {
         do {
             return try es.getSpaces()
         } catch {
@@ -58,7 +58,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
         }
     }
     
-    func setSpace(_ space: Space) {
+    func setSpace(_ space: SpaceEntity) {
         self.space = space
     }
     

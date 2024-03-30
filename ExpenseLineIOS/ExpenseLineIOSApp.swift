@@ -14,7 +14,7 @@ struct ExpenseLineIOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView(vm: resolver.homeViewModel())
+            HomeView(vm: resolver.homeViewModel(), path: NavigationPath())
                 .environmentObject(resolver)
         }
     }

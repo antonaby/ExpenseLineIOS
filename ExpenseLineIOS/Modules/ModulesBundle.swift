@@ -21,6 +21,9 @@ class ModulesBundle: Assembly {
         container.register(CreateSpaceSheetViewModel.self) { resolver in
             CreateSpaceSheetViewModel(es: resolver.resolve(ExpensesService.self)!)
         }.inObjectScope(.graph)
+        container.register(SpaceViewModel.self) { resolver, entity in
+            SpaceViewModel(entity, es: resolver.resolve(ExpensesService.self)!)
+        }.inObjectScope(.graph)
     }
     
 }
@@ -37,6 +40,10 @@ extension DependencyResolver {
     
     func createSpaceSheetViewModel() -> CreateSpaceSheetViewModel {
         resolver.resolve(CreateSpaceSheetViewModel.self)!
+    }
+    
+    func spaceViewModel(_ entity: SpaceEntity) -> SpaceViewModel {
+        resolver.resolve(SpaceViewModel.self, argument: entity)!
     }
     
 }

@@ -33,12 +33,12 @@ struct CreateExpenseSheetView: View {
                     Button {
                         vm.setSpace(space)
                     } label: {
-                        Text(space.name)
+                        Text(space.name ?? "Unknown")
                     }
                 }
             } label: {
                 if let space = vm.space {
-                    Text(space.name)
+                    Text(space.name ?? "Unknown")
                 } else {
                     Text("Select Space")
                 }

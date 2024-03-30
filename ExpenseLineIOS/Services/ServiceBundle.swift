@@ -23,7 +23,7 @@ class InMemoryDatabaseManagerBundle: Assembly {
     
     func assemble(container: Swinject.Container) {
         container.register(DatabaseManager.self) { _ in
-            DatabaseManager(inMemory: false)
+            DatabaseManager(inMemory: true)
         }.inObjectScope(.container)
     }
     

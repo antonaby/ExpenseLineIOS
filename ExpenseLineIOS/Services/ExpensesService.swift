@@ -24,15 +24,11 @@ class ExpensesService {
         self.dm = dm
     }
     
-    func getSpaces() throws -> [Space] {
+    func getSpaces() throws -> [SpaceEntity] {
         let request = SpaceEntity.fetchRequest()
         
         do {
-            let spaces = try dm.viewContext.fetch(request)
-            return spaces.map { space in
-                // TODO: check nil
-                Space(id: space.id ?? UUID(), name: space.name ?? "No", iconName: space.iconName ?? "No")
-            }
+            return try dm.viewContext.fetch(request)
         } catch {
             throw ExpenseServiceError.FetchError(msg: "Failed to fetch spaces", reason: error)
         }
@@ -62,6 +58,14 @@ class ExpensesService {
         return 0
     }
     
+    func addBudget(_ budget: Budget) {
+        let budgetEntity = BudgetEntity(context: dm.viewContext)
+        budgetEntity.id = budget.id
+        budgetEntity.name = budget.name
+        
+        dm.save()
+    }
+    
     func addSpace(_ space: Space) {
         let spaceEntity = SpaceEntity(context: dm.viewContext)
         spaceEntity.id = space.id
@@ -72,23 +76,17 @@ class ExpensesService {
     }
     
     // TODO: add currency
-    func addExpense(_ expense: Expense) throws {
+    func addExpense(_ expense: Expense, space: SpaceEntity) throws {
         let expenseEntity = ExpenseEntity(context: dm.viewContext)
         expenseEntity.id = expense.id
         expenseEntity.name = expense.name
         expenseEntity.amount = Int32(expense.amount)
-        
-        do {
-            let space = try getSpaceById(expense.spaceId)
-            expenseEntity.space = space
-        } catch {
-            throw ExpenseServiceError.SaveError(msg: "Failed to save expense", reason: error)
-        }
+        expenseEntity.space = space
         
         dm.save()
     }
     
-    private func getSpaceById(_ id: UUID) throws -> SpaceEntity? {
+    func getSpaceById(_ id: UUID) throws -> SpaceEntity? {
         let request = SpaceEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         request.fetchLimit = 1

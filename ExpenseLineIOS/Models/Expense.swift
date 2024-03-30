@@ -11,7 +11,6 @@ import Foundation
 struct Expense: Identifiable, Hashable {
     
     let id: UUID
-    let spaceId: UUID
     let name: String
     let amount: Int
     let currency: String

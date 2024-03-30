@@ -10,7 +10,8 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     
-    @Published var spaces: [Space]
+    @Published var bugget: BudgetEntity?
+    @Published var spaces: [SpaceEntity]
     @Published var totalAmount: Int
     
     private let es: ExpensesService
