@@ -14,5 +14,6 @@ struct Expense: Identifiable, Hashable {
     let name: String
     let amount: Int
     let currency: String
+    let createdAt: Date
     
 }

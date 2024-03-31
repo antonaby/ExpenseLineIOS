@@ -14,6 +14,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
     @Published var name: String
     @Published var amount: Int
     @Published var isValid: Bool
+    @Published var createdAt: Date
     @Published var space: SpaceEntity?
     
     private let es: ExpensesService
@@ -27,6 +28,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
         self.amount = 0
         self.isValid = false
         self.space = nil
+        self.createdAt = Date()
         
         isFormValid
             .receive(on: DispatchQueue.main)
@@ -42,7 +44,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
         guard let space = self.space else { return }
         do {
             try es.addExpense(
-                Expense(id: UUID(), name: name, amount: amount, currency: "USD"), space: space)
+                Expense(id: UUID(), name: name, amount: amount, currency: "USD", createdAt: createdAt), space: space)
         } catch {
             // TODO: show error
             print(error)

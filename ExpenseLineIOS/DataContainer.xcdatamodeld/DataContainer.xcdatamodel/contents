@@ -10,7 +10,8 @@
         </fetchIndex>
     </entity>
     <entity name="ExpenseEntity" representedClassName="ExpenseEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetEntity" inverseName="expenses" inverseEntity="BudgetEntity"/>
@@ -20,6 +21,10 @@
         </fetchIndex>
         <fetchIndex name="bySpace">
             <fetchIndexElement property="space" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byDateAndSpace">
+            <fetchIndexElement property="space" type="Binary" order="ascending"/>
+            <fetchIndexElement property="createdAt" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
     <entity name="SpaceEntity" representedClassName="SpaceEntity" syncable="YES" codeGenerationType="class">

@@ -30,7 +30,7 @@ struct HomeView: View {
                             .frame(alignment: .top)
                             ForEach(vm.spaces) { space in
                                 NavigationLink(value: space) {
-                                    Text(getSpaceName(space))
+                                    SpaceCircle(name: getSpaceName(space))
                                 }
                             }
                         }

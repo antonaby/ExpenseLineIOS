@@ -34,6 +34,17 @@ class ExpensesService {
         }
     }
     
+    func getExpensesForSpace(_ spaceId: UUID) throws -> [ExpenseEntity] {
+        let request = ExpenseEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "space.id == %@", spaceId as CVarArg)
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw ExpenseServiceError.FetchError(msg: "Failed to fetch expenses", reason: error)
+        }
+    }
+    
     func getTotalAmount() -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ExpenseEntity")
         request.resultType = .dictionaryResultType
@@ -80,8 +91,9 @@ class ExpensesService {
         let expenseEntity = ExpenseEntity(context: dm.viewContext)
         expenseEntity.id = expense.id
         expenseEntity.name = expense.name
-        expenseEntity.amount = Int32(expense.amount)
+        expenseEntity.amount = Int64(expense.amount)
         expenseEntity.space = space
+        expenseEntity.createdAt = expense.createdAt
         
         dm.save()
     }

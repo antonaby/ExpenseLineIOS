@@ -49,6 +49,7 @@ struct CreateExpenseSheetView: View {
             }
             // TODO: proper numeric text field
             TextField("Enter your score", value: $vm.amount, format: .number)
+            DatePicker("Expense Date", selection: $vm.createdAt, displayedComponents: [.hourAndMinute, .date])
             Spacer()
         }
         .padding([.horizontal, .top], 15)
