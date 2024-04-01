@@ -13,15 +13,20 @@
 		D20EF2BC2BB18CFB006CF8CD /* ExpenseLineIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2BB2BB18CFB006CF8CD /* ExpenseLineIOSTests.swift */; };
 		D20EF2C62BB18CFB006CF8CD /* ExpenseLineIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2C52BB18CFB006CF8CD /* ExpenseLineIOSUITests.swift */; };
 		D20EF2C82BB18CFB006CF8CD /* ExpenseLineIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2C72BB18CFB006CF8CD /* ExpenseLineIOSUITestsLaunchTests.swift */; };
-		D20EF2D52BB18DFA006CF8CD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2D42BB18DFA006CF8CD /* HomeView.swift */; };
+		D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2D42BB18DFA006CF8CD /* BudgetView.swift */; };
 		D20EF2D92BB18E8F006CF8CD /* CreateSpaceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2D82BB18E8F006CF8CD /* CreateSpaceSheetView.swift */; };
 		D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */; };
 		D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */; };
-		D20EF2E12BB193FD006CF8CD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E02BB193FD006CF8CD /* HomeViewModel.swift */; };
+		D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */; };
 		D20EF2E42BB19436006CF8CD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E32BB19436006CF8CD /* Space.swift */; };
 		D20EF2E62BB19693006CF8CD /* AddSpaceCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E52BB19693006CF8CD /* AddSpaceCircle.swift */; };
 		D20EF2E82BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E72BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift */; };
 		D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */; };
+		D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B372BBACC3500556936 /* BudgetListView.swift */; };
+		D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */; };
+		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
+		D2246B412BBAD94E00556936 /* CreateBudgetSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B402BBAD94E00556936 /* CreateBudgetSheetView.swift */; };
+		D2246B432BBAD96200556936 /* CreateBudgetSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B422BBAD96200556936 /* CreateBudgetSheetViewModel.swift */; };
 		D239608F2BB2E97E0071547D /* ExpensesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239608E2BB2E97E0071547D /* ExpensesService.swift */; };
 		D23960912BB2EAED0071547D /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960902BB2EAED0071547D /* Expense.swift */; };
 		D23960942BB2EBBF0071547D /* CreateExpenseSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960932BB2EBBF0071547D /* CreateExpenseSheetView.swift */; };
@@ -64,15 +69,20 @@
 		D20EF2C12BB18CFB006CF8CD /* ExpenseLineIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExpenseLineIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D20EF2C52BB18CFB006CF8CD /* ExpenseLineIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseLineIOSUITests.swift; sourceTree = "<group>"; };
 		D20EF2C72BB18CFB006CF8CD /* ExpenseLineIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseLineIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		D20EF2D42BB18DFA006CF8CD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D20EF2D42BB18DFA006CF8CD /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
 		D20EF2D82BB18E8F006CF8CD /* CreateSpaceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpaceSheetView.swift; sourceTree = "<group>"; };
 		D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseButton.swift; sourceTree = "<group>"; };
 		D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCircle.swift; sourceTree = "<group>"; };
-		D20EF2E02BB193FD006CF8CD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		D20EF2E32BB19436006CF8CD /* Space.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		D20EF2E52BB19693006CF8CD /* AddSpaceCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceCircle.swift; sourceTree = "<group>"; };
 		D20EF2E72BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpaceSheetViewModel.swift; sourceTree = "<group>"; };
 		D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArrowButton.swift; sourceTree = "<group>"; };
+		D2246B372BBACC3500556936 /* BudgetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListView.swift; sourceTree = "<group>"; };
+		D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListViewModel.swift; sourceTree = "<group>"; };
+		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		D2246B402BBAD94E00556936 /* CreateBudgetSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBudgetSheetView.swift; sourceTree = "<group>"; };
+		D2246B422BBAD96200556936 /* CreateBudgetSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBudgetSheetViewModel.swift; sourceTree = "<group>"; };
 		D239608E2BB2E97E0071547D /* ExpensesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesService.swift; sourceTree = "<group>"; };
 		D23960902BB2EAED0071547D /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		D23960932BB2EBBF0071547D /* CreateExpenseSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExpenseSheetView.swift; sourceTree = "<group>"; };
@@ -179,9 +189,9 @@
 			children = (
 				D250D4D02BB829950050638C /* Budgets */,
 				D23960922BB2EB9F0071547D /* Expenses */,
-				D20EF2DF2BB192D0006CF8CD /* Home */,
 				D20EF2D72BB18E4A006CF8CD /* Spaces */,
 				D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */,
+				D2246B3B2BBAD67B00556936 /* AppState.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -205,16 +215,6 @@
 				D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		D20EF2DF2BB192D0006CF8CD /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				D20EF2D42BB18DFA006CF8CD /* HomeView.swift */,
-				D20EF2E02BB193FD006CF8CD /* HomeViewModel.swift */,
-				D20EF2E52BB19693006CF8CD /* AddSpaceCircle.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		D20EF2E22BB19427006CF8CD /* Models */ = {
@@ -249,6 +249,13 @@
 		D250D4D02BB829950050638C /* Budgets */ = {
 			isa = PBXGroup;
 			children = (
+				D20EF2E52BB19693006CF8CD /* AddSpaceCircle.swift */,
+				D20EF2D42BB18DFA006CF8CD /* BudgetView.swift */,
+				D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */,
+				D2246B372BBACC3500556936 /* BudgetListView.swift */,
+				D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */,
+				D2246B402BBAD94E00556936 /* CreateBudgetSheetView.swift */,
+				D2246B422BBAD96200556936 /* CreateBudgetSheetViewModel.swift */,
 			);
 			path = Budgets;
 			sourceTree = "<group>";
@@ -390,25 +397,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
+				D2246B412BBAD94E00556936 /* CreateBudgetSheetView.swift in Sources */,
 				D23960912BB2EAED0071547D /* Expense.swift in Sources */,
 				D250D4CF2BB828EB0050638C /* Budget.swift in Sources */,
 				D20EF2D92BB18E8F006CF8CD /* CreateSpaceSheetView.swift in Sources */,
-				D20EF2E12BB193FD006CF8CD /* HomeViewModel.swift in Sources */,
+				D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */,
+				D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */,
 				D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */,
 				D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */,
 				D23960962BB2EBD70071547D /* CreateExpenseSheetViewModel.swift in Sources */,
 				D239608F2BB2E97E0071547D /* ExpensesService.swift in Sources */,
 				D20EF2E42BB19436006CF8CD /* Space.swift in Sources */,
-				D20EF2D52BB18DFA006CF8CD /* HomeView.swift in Sources */,
+				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
 				D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,
 				D250D4D22BB82A640050638C /* SpaceView.swift in Sources */,
+				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D250D4D42BB82A780050638C /* SpaceViewModel.swift in Sources */,
 				D20EF2E62BB19693006CF8CD /* AddSpaceCircle.swift in Sources */,
 				D20EF2E82BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift in Sources */,
 				D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */,
+				D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */,
 				D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */,
+				D2246B432BBAD96200556936 /* CreateBudgetSheetViewModel.swift in Sources */,
 				D23960942BB2EBBF0071547D /* CreateExpenseSheetView.swift in Sources */,
 				D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */,
 			);

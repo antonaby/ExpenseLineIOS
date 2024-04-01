@@ -8,7 +8,7 @@
 import Foundation
 
 
-class HomeViewModel: ObservableObject {
+class BudgetViewModel: ObservableObject {
     
     @Published var bugget: BudgetEntity?
     @Published var spaces: [SpaceEntity]

@@ -8,13 +8,13 @@
 import SwiftUI
 
 
-struct HomeView: View {
+struct BudgetView: View {
     
-    @StateObject var vm: HomeViewModel
+    @StateObject var vm: BudgetViewModel
     
     @State var createSpaceSheetOpen = false
     @State var createExpenseSheetOpen = false
-    @State var path: NavigationPath
+    @Binding var path: NavigationPath
     
     @EnvironmentObject var resolver: DependencyResolver
     
@@ -78,6 +78,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(vm: DependencyResolver.preview.homeViewModel(), path: NavigationPath())
+    BudgetView(vm: DependencyResolver.preview.budgetViewModel(), path: .constant(NavigationPath()))
         .environmentObject(DependencyResolver.preview)
 }

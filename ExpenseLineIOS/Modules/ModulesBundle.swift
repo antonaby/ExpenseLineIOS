@@ -12,8 +12,12 @@ import Swinject
 class ModulesBundle: Assembly {
     
     func assemble(container: Swinject.Container) {
-        container.register(HomeViewModel.self) { resolver in
-            HomeViewModel(es: resolver.resolve(ExpensesService.self)!)
+        container.register(AppState.self) { resolver in
+            AppState()
+        }.inObjectScope(.container)
+        
+        container.register(BudgetViewModel.self) { resolver in
+            BudgetViewModel(es: resolver.resolve(ExpensesService.self)!)
         }.inObjectScope(.graph)
         container.register(CreateExpenseSheetViewModel.self) { resolver in
             CreateExpenseSheetViewModel(es: resolver.resolve(ExpensesService.self)!)
@@ -24,14 +28,24 @@ class ModulesBundle: Assembly {
         container.register(SpaceViewModel.self) { resolver, entity in
             SpaceViewModel(entity, es: resolver.resolve(ExpensesService.self)!)
         }.inObjectScope(.graph)
+        container.register(BudgetListViewModel.self) { resolver in
+            BudgetListViewModel(es: resolver.resolve(ExpensesService.self)!)
+        }.inObjectScope(.graph)
+        container.register(CreateBudgetSheetViewModel.self) { resolver in
+            CreateBudgetSheetViewModel(es: resolver.resolve(ExpensesService.self)!)
+        }.inObjectScope(.graph)
     }
     
 }
 
 extension DependencyResolver {
     
-    func homeViewModel() -> HomeViewModel {
-        resolver.resolve(HomeViewModel.self)!
+    func appState() -> AppState {
+        resolver.resolve(AppState.self)!
+    }
+    
+    func budgetViewModel() -> BudgetViewModel {
+        resolver.resolve(BudgetViewModel.self)!
     }
     
     func createExpenseSheetViewModel() -> CreateExpenseSheetViewModel {
@@ -44,6 +58,14 @@ extension DependencyResolver {
     
     func spaceViewModel(_ entity: SpaceEntity) -> SpaceViewModel {
         resolver.resolve(SpaceViewModel.self, argument: entity)!
+    }
+    
+    func budgetListViewModel() -> BudgetListViewModel {
+        resolver.resolve(BudgetListViewModel.self)!
+    }
+    
+    func createBudgetSheetViewModel() -> CreateBudgetSheetViewModel {
+        resolver.resolve(CreateBudgetSheetViewModel.self)!
     }
     
 }

@@ -24,6 +24,16 @@ class ExpensesService {
         self.dm = dm
     }
     
+    func getBudgets() throws -> [BudgetEntity] {
+        let request = BudgetEntity.fetchRequest()
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw ExpenseServiceError.FetchError(msg: "Failed to fetch budgets", reason: error)
+        }
+    }
+    
     func getSpaces() throws -> [SpaceEntity] {
         let request = SpaceEntity.fetchRequest()
         
