@@ -43,7 +43,7 @@ class AppState: ObservableObject {
     }
     
     private func getBudget() -> BudgetEntity? {
-        if let data = UserDefaults.standard.data(forKey: "budgetId") {
+        if let data = userDefaults.data(forKey: "budgetId") {
             do {
                 let decoder = JSONDecoder()
                 let budgetId = try decoder.decode(BudgetId.self, from: data)
