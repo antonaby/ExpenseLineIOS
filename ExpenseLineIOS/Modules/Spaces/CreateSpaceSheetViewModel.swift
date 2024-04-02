@@ -14,11 +14,14 @@ class CreateSpaceSheetViewModel: ObservableObject {
     @Published var name: String
     @Published var isValid: Bool
     
+    let budget: BudgetEntity
+    
     private let es: ExpensesService
     // TODO: cancel all
     private var cancellables = Set<AnyCancellable>()
     
-    init(es: ExpensesService) {
+    init(budget: BudgetEntity, es: ExpensesService) {
+        self.budget = budget
         self.es = es
         
         self.name = ""
@@ -34,7 +37,7 @@ class CreateSpaceSheetViewModel: ObservableObject {
     }
     
     func createSpace() {
-        es.addSpace(Space(id: UUID(), name: name, iconName: "No"))
+        es.addSpace(Space(id: UUID(), name: name, iconName: "No"), budget: budget)
     }
     
 }

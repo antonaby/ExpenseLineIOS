@@ -34,8 +34,9 @@ class ExpensesService {
         }
     }
     
-    func getSpaces() throws -> [SpaceEntity] {
+    func getSpacesForBudget(_ budgetId: UUID) throws -> [SpaceEntity] {
         let request = SpaceEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
         
         do {
             return try dm.viewContext.fetch(request)
@@ -55,7 +56,7 @@ class ExpensesService {
         }
     }
     
-    func getTotalAmount() -> Int {
+    func getTotalAmount(_ budgetId: UUID) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ExpenseEntity")
         request.resultType = .dictionaryResultType
         
@@ -65,6 +66,7 @@ class ExpensesService {
         totalAmountExpressionDescription.expressionResultType = .integer32AttributeType
         
         request.propertiesToFetch = [totalAmountExpressionDescription]
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
         
         do {
             let results = try dm.viewContext.fetch(request) as? [NSDictionary]
@@ -87,25 +89,39 @@ class ExpensesService {
         dm.save()
     }
     
-    func addSpace(_ space: Space) {
+    func addSpace(_ space: Space, budget: BudgetEntity) {
         let spaceEntity = SpaceEntity(context: dm.viewContext)
         spaceEntity.id = space.id
         spaceEntity.name = space.name
         spaceEntity.iconName = space.iconName
+        spaceEntity.budget = budget
         
         dm.save()
     }
     
     // TODO: add currency
-    func addExpense(_ expense: Expense, space: SpaceEntity) throws {
+    func addExpense(_ expense: Expense, space: SpaceEntity, budget: BudgetEntity) throws {
         let expenseEntity = ExpenseEntity(context: dm.viewContext)
         expenseEntity.id = expense.id
         expenseEntity.name = expense.name
         expenseEntity.amount = Int64(expense.amount)
         expenseEntity.space = space
+        expenseEntity.budget = budget
         expenseEntity.createdAt = expense.createdAt
         
         dm.save()
+    }
+    
+    func getBudgetById(_ id: UUID) throws -> BudgetEntity? {
+        let request = BudgetEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+        
+        do {
+            return try dm.viewContext.fetch(request).first
+        } catch {
+            throw ExpenseServiceError.FetchError(msg: "Failed to fetch a budget by id", reason: error)
+        }
     }
     
     func getSpaceById(_ id: UUID) throws -> SpaceEntity? {

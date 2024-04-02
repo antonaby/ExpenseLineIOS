@@ -38,5 +38,12 @@ struct CreateSpaceSheetView: View {
 }
 
 #Preview {
-    CreateSpaceSheetView(vm: DependencyResolver.preview.createSpaceSheetViewModel())
+    let dm = DependencyResolver.preview.databaseManager()
+    let budget = BudgetEntity(context: dm.viewContext)
+    budget.id = UUID()
+    budget.name = "Preview"
+    
+    dm.save()
+    
+    return CreateSpaceSheetView(vm: DependencyResolver.preview.createSpaceSheetViewModel(budget))
 }

@@ -17,11 +17,20 @@ struct BudgetView: View {
     @Binding var path: NavigationPath
     
     @EnvironmentObject var resolver: DependencyResolver
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottomTrailing) {
                 VStack {
+                    Button {
+                        appState.unselectBudget()
+                    } label: {
+                        Text(vm.bugget.name ?? "Unknown")
+                            .font(.title3)
+                            .tint(.black)
+                    }
+                    
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 15) {
                             AddSpaceCircle {
@@ -46,11 +55,11 @@ struct BudgetView: View {
                 }
             }
             .sheet(isPresented: $createSpaceSheetOpen, onDismiss: onSpaceCreated) {
-                CreateSpaceSheetView(vm: resolver.createSpaceSheetViewModel())
+                CreateSpaceSheetView(vm: resolver.createSpaceSheetViewModel(vm.bugget))
                     .presentationDetents([.medium])
             }
             .sheet(isPresented: $createExpenseSheetOpen, onDismiss: onExpenseCreated) {
-                CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel())
+                CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel(vm.bugget))
                     .presentationDetents([.medium])
             }
             .navigationDestination(for: SpaceEntity.self) { space in
@@ -78,6 +87,22 @@ struct BudgetView: View {
 }
 
 #Preview {
-    BudgetView(vm: DependencyResolver.preview.budgetViewModel(), path: .constant(NavigationPath()))
+    let dm = DependencyResolver.preview.databaseManager()
+    let budget = BudgetEntity(context: dm.viewContext)
+    budget.id = UUID()
+    budget.name = "Preview"
+    
+    let space = SpaceEntity(context: dm.viewContext)
+    space.id = UUID()
+    space.name = "Preview"
+    space.budget = budget
+    
+    dm.save()
+    
+    let appState = AppState()
+    appState.selectBudget(budget)
+    
+    return BudgetView(vm: DependencyResolver.preview.budgetViewModel(budget), path: .constant(NavigationPath()))
         .environmentObject(DependencyResolver.preview)
+        .environmentObject(appState)
 }

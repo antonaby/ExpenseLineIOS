@@ -10,13 +10,15 @@ import Foundation
 
 class BudgetViewModel: ObservableObject {
     
-    @Published var bugget: BudgetEntity?
     @Published var spaces: [SpaceEntity]
     @Published var totalAmount: Int
     
+    let bugget: BudgetEntity
+    
     private let es: ExpensesService
     
-    init(es: ExpensesService) {
+    init(budget: BudgetEntity, es: ExpensesService) {
+        self.bugget = budget
         self.es = es
         
         self.spaces = []
@@ -24,15 +26,19 @@ class BudgetViewModel: ObservableObject {
     }
     
     func loadSpaces() {
+        guard let budgetId = bugget.id else { return }
+        
         do {
-            spaces = try es.getSpaces()
+            spaces = try es.getSpacesForBudget(budgetId)
         } catch {
             // TODO: show error
         }
     }
     
     func loadTotalAmount() {
-        totalAmount = es.getTotalAmount()
+        guard let budgetId = bugget.id else { return }
+        
+        totalAmount = es.getTotalAmount(budgetId)
     }
     
 }

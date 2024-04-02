@@ -58,5 +58,12 @@ struct CreateExpenseSheetView: View {
 }
 
 #Preview {
-    CreateExpenseSheetView(vm: DependencyResolver.preview.createExpenseSheetViewModel())
+    let dm = DependencyResolver.preview.databaseManager()
+    let budget = BudgetEntity(context: dm.viewContext)
+    budget.id = UUID()
+    budget.name = "Preview"
+    
+    dm.save()
+    
+    return CreateExpenseSheetView(vm: DependencyResolver.preview.createExpenseSheetViewModel(budget))
 }

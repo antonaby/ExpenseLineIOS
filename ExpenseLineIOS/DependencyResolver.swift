@@ -27,6 +27,10 @@ extension DependencyResolver {
         resolver.resolve(DatabaseManager.self)!
     }
     
+    func expensesService() -> ExpensesService {
+        resolver.resolve(ExpensesService.self)!
+    }
+    
 }
 
 #if DEBUG
