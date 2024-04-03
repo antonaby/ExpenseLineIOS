@@ -17,13 +17,13 @@ class CreateExpenseSheetViewModel: ObservableObject {
     @Published var createdAt: Date
     @Published var space: SpaceEntity?
     
-    let budget: BudgetEntity
+    let plan: BudgetPlanEntity
     private let es: ExpensesService
     // TODO: cancel all
     private var cancellables = Set<AnyCancellable>()
     
-    init(budget: BudgetEntity, es: ExpensesService) {
-        self.budget = budget
+    init(budget: BudgetPlanEntity, es: ExpensesService) {
+        self.plan = budget
         self.es = es
                 
         self.name = ""
@@ -46,7 +46,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
         guard let space = self.space else { return }
         do {
             try es.addExpense(
-                Expense(id: UUID(), name: name, amount: amount, currency: "USD", createdAt: createdAt), space: space, budget: budget)
+                Expense(id: UUID(), name: name, amount: amount, currency: "USD", createdAt: createdAt), space: space, plan: plan)
         } catch {
             // TODO: show error
             print(error)
@@ -54,7 +54,7 @@ class CreateExpenseSheetViewModel: ObservableObject {
     }
     
     func getSpaces() -> [SpaceEntity] {
-        guard let budgetId = budget.id else { return [] }
+        guard let budgetId = plan.id else { return [] }
         
         do {
             return try es.getSpacesForBudget(budgetId)

@@ -63,7 +63,16 @@ struct CreateExpenseSheetView: View {
     budget.id = UUID()
     budget.name = "Preview"
     
+    let plan = BudgetPlanEntity(context: dm.viewContext)
+    plan.id = UUID()
+    plan.planTypeValue = .mountly
+    plan.budget = budget
+    plan.createdAt = Date()
+    plan.startsAt = Date()
+    plan.endsAt = Date()
+    plan.plannedExpenses = 1000
+    
     dm.save()
     
-    return CreateExpenseSheetView(vm: DependencyResolver.preview.createExpenseSheetViewModel(budget))
+    return CreateExpenseSheetView(vm: DependencyResolver.preview.createExpenseSheetViewModel(plan))
 }

@@ -41,4 +41,8 @@ class BudgetViewModel: ObservableObject {
         totalAmount = es.getTotalAmount(budgetId)
     }
     
+    func getBudgetPlan() -> BudgetPlanEntity {
+        es.findBudgetPlan(bugget.id!)
+    }
+    
 }

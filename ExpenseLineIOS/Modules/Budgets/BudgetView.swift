@@ -59,7 +59,7 @@ struct BudgetView: View {
                     .presentationDetents([.medium])
             }
             .sheet(isPresented: $createExpenseSheetOpen, onDismiss: onExpenseCreated) {
-                CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel(vm.bugget))
+                CreateExpenseSheetView(vm: resolver.createExpenseSheetViewModel(vm.getBudgetPlan()))
                     .presentationDetents([.medium])
             }
             .navigationDestination(for: SpaceEntity.self) { space in

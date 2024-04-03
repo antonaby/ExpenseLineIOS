@@ -48,8 +48,8 @@ extension DependencyResolver {
         resolver.resolve(BudgetViewModel.self, argument: budget)!
     }
     
-    func createExpenseSheetViewModel(_ budget: BudgetEntity) -> CreateExpenseSheetViewModel {
-        resolver.resolve(CreateExpenseSheetViewModel.self, argument: budget)!
+    func createExpenseSheetViewModel(_ plan: BudgetPlanEntity) -> CreateExpenseSheetViewModel {
+        resolver.resolve(CreateExpenseSheetViewModel.self, argument: plan)!
     }
     
     func createSpaceSheetViewModel(_ budget: BudgetEntity) -> CreateSpaceSheetViewModel {

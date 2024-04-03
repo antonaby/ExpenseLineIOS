@@ -56,7 +56,7 @@ class ExpensesService {
         }
     }
     
-    func getTotalAmount(_ budgetId: UUID) -> Int {
+    func getTotalAmount(_ planId: UUID) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ExpenseEntity")
         request.resultType = .dictionaryResultType
         
@@ -66,7 +66,7 @@ class ExpensesService {
         totalAmountExpressionDescription.expressionResultType = .integer32AttributeType
         
         request.propertiesToFetch = [totalAmountExpressionDescription]
-        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        request.predicate = NSPredicate(format: "plan.id == %@", planId as CVarArg)
         
         do {
             let results = try dm.viewContext.fetch(request) as? [NSDictionary]
@@ -89,6 +89,24 @@ class ExpensesService {
         dm.save()
     }
     
+    func addBudgetPlan(_ plan: BudgetPlan, budget: BudgetEntity) {
+        let planEntity = BudgetPlanEntity(context: dm.viewContext)
+        planEntity.id = plan.id
+        planEntity.startsAt = plan.startsAt
+        planEntity.endsAt = plan.endsAt
+        planEntity.createdAt = plan.createdAt
+        planEntity.planTypeValue = plan.planType
+        planEntity.plannedExpenses = plan.plannedExpenses
+        planEntity.budget = budget
+        
+        dm.save()
+    }
+    
+    // TODO: check if plan exisit
+    func findBudgetPlan(_ budgetId: UUID) -> BudgetPlanEntity {
+        return BudgetPlanEntity(context: dm.viewContext)
+    }
+    
     func addSpace(_ space: Space, budget: BudgetEntity) {
         let spaceEntity = SpaceEntity(context: dm.viewContext)
         spaceEntity.id = space.id
@@ -100,13 +118,13 @@ class ExpensesService {
     }
     
     // TODO: add currency
-    func addExpense(_ expense: Expense, space: SpaceEntity, budget: BudgetEntity) throws {
+    func addExpense(_ expense: Expense, space: SpaceEntity, plan: BudgetPlanEntity) throws {
         let expenseEntity = ExpenseEntity(context: dm.viewContext)
         expenseEntity.id = expense.id
         expenseEntity.name = expense.name
         expenseEntity.amount = Int64(expense.amount)
         expenseEntity.space = space
-        expenseEntity.budget = budget
+        expenseEntity.plan = plan
         expenseEntity.createdAt = expense.createdAt
         
         dm.save()

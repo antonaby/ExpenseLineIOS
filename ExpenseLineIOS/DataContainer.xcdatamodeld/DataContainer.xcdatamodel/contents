@@ -3,10 +3,23 @@
     <entity name="BudgetEntity" representedClassName="BudgetEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExpenseEntity" inverseName="budget" inverseEntity="ExpenseEntity"/>
+        <relationship name="plans" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BudgetPlanEntity" inverseName="budget" inverseEntity="BudgetPlanEntity"/>
         <relationship name="spaces" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpaceEntity" inverseName="budget" inverseEntity="SpaceEntity"/>
         <fetchIndex name="byId">
             <fetchIndexElement property="id" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="BudgetPlanEntity" representedClassName="BudgetPlanEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endsAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="plannedExpenses" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="planType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startsAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetEntity" inverseName="plans" inverseEntity="BudgetEntity"/>
+        <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExpenseEntity" inverseName="plan" inverseEntity="ExpenseEntity"/>
+        <fetchIndex name="byBudget">
+            <fetchIndexElement property="budget" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
     <entity name="ExpenseEntity" representedClassName="ExpenseEntity" syncable="YES" codeGenerationType="class">
@@ -14,7 +27,7 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetEntity" inverseName="expenses" inverseEntity="BudgetEntity"/>
+        <relationship name="plan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetPlanEntity" inverseName="expenses" inverseEntity="BudgetPlanEntity"/>
         <relationship name="space" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceEntity" inverseName="expenses" inverseEntity="SpaceEntity"/>
         <fetchIndex name="byId">
             <fetchIndexElement property="id" type="Binary" order="ascending"/>
