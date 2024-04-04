@@ -27,12 +27,25 @@ struct CreateBudgetSheetView: View {
                 }
                 .disabled(!vm.isValid)
             }
-            TextField(text: $vm.name) {
-                Text("Name")
+            .padding([.horizontal, .top], 15)
+            Form {
+                Section {
+                    TextField(text: $vm.name) {
+                        Text("Name")
+                    }
+                    Picker("Currency", selection: $vm.currecny) {
+                        ForEach(vm.getCurrencies(), id: \.self) { currency in
+                            Text(currency)
+                        }
+                    }
+                    Picker("Type", selection: $vm.type) {
+                        ForEach(PlanType.allCases) { type in
+                            Text("\(type)")
+                        }
+                    }
+                }
             }
-            Spacer()
         }
-        .padding([.horizontal, .top], 15)
     }
 }
 

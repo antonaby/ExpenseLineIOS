@@ -48,7 +48,7 @@ struct BudgetListView: View {
         .onAppear {
             vm.loadBudgets()
         }
-        .sheet(isPresented: $isCreateBudgetSheetOpen, onDismiss: onBudgetCreated) {
+        .fullScreenCover(isPresented: $isCreateBudgetSheetOpen, onDismiss: onBudgetCreated) {
             CreateBudgetSheetView(vm: resolver.createBudgetSheetViewModel())
                 .presentationDetents([.medium])
         }

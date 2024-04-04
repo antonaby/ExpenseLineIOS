@@ -8,10 +8,12 @@
 import Foundation
 
 
-enum PlanType: Int {
+enum PlanType: Int, CaseIterable, Identifiable {
     
     case mountly = 1
     case weekly = 2
+    
+    var id: Self { self }
     
 }
 
@@ -19,6 +21,21 @@ struct Budget: Identifiable, Hashable {
     
     let id: UUID
     let name: String
+    let currency: String
+    let type: PlanType
+    
+}
+
+extension BudgetEntity {
+    
+    var planTypeValue: PlanType {
+        get {
+            PlanType(rawValue: Int(self.planType))!
+        }
+        set {
+            self.planType = Int64(newValue.rawValue)
+        }
+    }
     
 }
 

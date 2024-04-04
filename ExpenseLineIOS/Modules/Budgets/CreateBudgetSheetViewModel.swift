@@ -12,6 +12,8 @@ import Combine
 class CreateBudgetSheetViewModel: ObservableObject {
     
     @Published var name: String
+    @Published var currecny: String
+    @Published var type: PlanType
     @Published var isValid: Bool
     
     private let es: ExpensesService
@@ -23,6 +25,8 @@ class CreateBudgetSheetViewModel: ObservableObject {
         self.es = es
         
         self.name = ""
+        self.currecny = "USD"
+        self.type = .mountly
         self.isValid = false
         
         isBudgetNameValid
@@ -35,7 +39,11 @@ class CreateBudgetSheetViewModel: ObservableObject {
     }
     
     func createBudget() {
-        es.addBudget(Budget(id: UUID(), name: name))
+        es.addBudget(Budget(id: UUID(), name: name, currency: currecny, type: type))
+    }
+    
+    func getCurrencies() -> [String] {
+        ["USD", "EUR", "RUB", "CHF", "AMD"]
     }
     
 }
@@ -50,5 +58,7 @@ private extension CreateBudgetSheetViewModel {
             }
             .eraseToAnyPublisher()
     }
+    
+    
     
 }

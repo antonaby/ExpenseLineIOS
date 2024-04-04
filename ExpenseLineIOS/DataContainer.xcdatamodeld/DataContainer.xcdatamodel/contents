@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="BudgetEntity" representedClassName="BudgetEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="planType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="plans" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BudgetPlanEntity" inverseName="budget" inverseEntity="BudgetPlanEntity"/>
         <relationship name="spaces" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpaceEntity" inverseName="budget" inverseEntity="SpaceEntity"/>
         <fetchIndex name="byId">
@@ -11,6 +13,7 @@
     </entity>
     <entity name="BudgetPlanEntity" representedClassName="BudgetPlanEntity" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="endsAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="plannedExpenses" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
