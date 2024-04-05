@@ -39,6 +39,8 @@
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
 		D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */; };
 		D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */; };
+		D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */; };
+		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
 		D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */; };
 		D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
@@ -95,6 +97,8 @@
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
 		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
 		D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBundle.swift; sourceTree = "<group>"; };
+		D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardView.swift; sourceTree = "<group>"; };
+		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
 		D2DEFC112BB4348600AC7CA0 /* DataContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataContainer.xcdatamodel; sourceTree = "<group>"; };
 		D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,6 +193,7 @@
 		D20EF2D62BB18E20006CF8CD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D2705E592BC01D45003426A8 /* Wizard */,
 				D2350E682BBC3592002B93A0 /* Main */,
 				D250D4D02BB829950050638C /* Budgets */,
 				D23960922BB2EB9F0071547D /* Expenses */,
@@ -269,6 +274,15 @@
 				D2246B422BBAD96200556936 /* CreateBudgetSheetViewModel.swift */,
 			);
 			path = Budgets;
+			sourceTree = "<group>";
+		};
+		D2705E592BC01D45003426A8 /* Wizard */ = {
+			isa = PBXGroup;
+			children = (
+				D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */,
+				D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */,
+			);
+			path = Wizard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,12 +435,14 @@
 				D239608F2BB2E97E0071547D /* ExpensesService.swift in Sources */,
 				D20EF2E42BB19436006CF8CD /* Space.swift in Sources */,
 				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
+				D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */,
 				D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,
 				D250D4D22BB82A640050638C /* SpaceView.swift in Sources */,
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D250D4D42BB82A780050638C /* SpaceViewModel.swift in Sources */,
+				D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */,
 				D20EF2E62BB19693006CF8CD /* AddSpaceCircle.swift in Sources */,
 				D20EF2E82BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift in Sources */,
 				D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */,
