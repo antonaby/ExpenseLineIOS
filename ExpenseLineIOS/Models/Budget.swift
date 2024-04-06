@@ -12,6 +12,7 @@ enum PlanType: Int, CaseIterable, Identifiable {
     
     case mountly = 1
     case weekly = 2
+    case biweekly = 3
     
     var id: Self { self }
     

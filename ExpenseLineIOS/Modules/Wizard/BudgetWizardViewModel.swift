@@ -10,26 +10,24 @@ import Foundation
 
 class BudgetWizardViewModel: ObservableObject {
     
-    @Published var currentStageIndex: Int
     @Published var name: String
     @Published var currency: String
+    @Published var type: PlanType
+    @Published var dailyReminder: Date
+    
+    @Published var incomeSources: [IncomeSource]
     
     init() {
-        self.currentStageIndex = 0
-        self.name = ""
+        self.name = "My Budget"
         self.currency = "USD"
-    }
-    
-    func previousPage() {
-        if currentStageIndex - 1 >= 0 {
-            currentStageIndex -= 1
-        }
-    }
- 
-    func nextPage() {
-        if currentStageIndex + 1 <= 2 {
-            currentStageIndex += 1
-        }
+        self.type = .mountly
+        self.incomeSources = [
+            IncomeSource(id: UUID(), name: "Salary", amount: 0, iconName: "case", createdAt: Date()),
+            IncomeSource(id: UUID(), name: "Salary", amount: 0, iconName: "case", createdAt: Date())
+        ]
+        
+        let components = DateComponents(hour: 20, minute: 0)
+        self.dailyReminder = Calendar.current.date(from: components) ?? Date()
     }
     
     func getCurrencies() -> [String] {

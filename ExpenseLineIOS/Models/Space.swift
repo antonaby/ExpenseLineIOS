@@ -7,6 +7,18 @@
 
 import Foundation
 
+struct IncomeSource: Identifiable, Hashable {
+    
+    let id: UUID
+    var name: String
+    var amount: Double
+    var iconName: String
+    var createdAt: Date
+    
+}
+
+
+
 struct Space: Identifiable, Hashable {
     
     let id: UUID

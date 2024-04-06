@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+enum WizzardPage: Int, Hashable {
+    case base = 0
+    case income
+    case scopes
+}
+
 struct NextButtonView: View {
     
     private let label: String
@@ -22,8 +28,13 @@ struct NextButtonView: View {
             action()
         } label: {
             Text(label)
+                .font(.title2)
+                .frame(maxWidth: .infinity)
+                
         }
-        .buttonStyle(.borderless)
+        .padding([.horizontal], 25)
+        .buttonStyle(.borderedProminent)
+        .tint(.green)
     }
     
 }
@@ -32,17 +43,18 @@ struct NextButtonView: View {
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
+    @State var currentPageIndex: WizzardPage = .income
     @StateObject var vm: BudgetWizardViewModel = BudgetWizardViewModel()
     
     var body: some View {
         VStack {
             HStack {
                 Button {
-                    vm.previousPage()
+                    previousPage()
                 } label: {
                     Label("Back", systemImage: "chevron.backward")
                 }
-                .disabled(vm.currentStageIndex == 0)
+                .disabled(currentPageIndex == .base)
                 Spacer()
                 Button {
                     dismiss()
@@ -52,17 +64,20 @@ struct BudgetWizardView: View {
                 }
             }
             .padding([.horizontal], 10)
-            TabView(selection: $vm.currentStageIndex) {
-                initialPageView().tag(0)
-                incomePageView().tag(1)
-                scopeSelectorView().tag(2)
+            TabView(selection: $currentPageIndex) {
+                initialPageView()
+                    .tag(WizzardPage.base)
+                incomePageView()
+                    .tag(WizzardPage.income)
+                scopeSelectorView()
+                    .tag(WizzardPage.scopes)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             NextButtonView(nextButtonCaption()) {
-                if vm.currentStageIndex == 2 {
+                if currentPageIndex == .scopes {
                     dismiss()
                 } else {
-                    vm.nextPage()
+                    nextPage()
                 }
             }
         }
@@ -70,27 +85,80 @@ struct BudgetWizardView: View {
     }
     
     func nextButtonCaption() -> String {
-        return vm.currentStageIndex < 2 ? "Next" : "Create"
+        currentPageIndex == .scopes ? "Create" : "Next"
+    }
+    
+    func nextPage() {
+        let nextValue = currentPageIndex.rawValue + 1
+        if  nextValue <= WizzardPage.scopes.rawValue {
+            currentPageIndex = WizzardPage(rawValue: nextValue) ?? .base
+        }
+    }
+    
+    func previousPage() {
+        let previousValue = currentPageIndex.rawValue - 1
+        if previousValue >= 0 {
+            currentPageIndex = WizzardPage(rawValue: previousValue) ?? .base
+        }
     }
     
     @ViewBuilder
     func initialPageView() -> some View {
         Form {
-            Section {
-                TextField("Name", text: $vm.name)
+            Section(header: Text("Basic")) {
+                TextField("Name", text: $vm.name).padding([.top, .bottom], 5)
+            }
+            Section(header: Text("Type")) {
                 Picker("Currency", selection: $vm.currency) {
                     ForEach(vm.getCurrencies(), id: \.self) { currency in
                         Text(currency)
                     }
                 }
+                Picker("Type", selection: $vm.type) {
+                    ForEach(PlanType.allCases) { type in
+                        Text("\(type)")
+                    }
+                }
+            }
+            Section(header: Text("Reminder")) {
+                DatePicker("Daily reminder",
+                           selection: $vm.dailyReminder,
+                           displayedComponents: [.hourAndMinute])
             }
         }
     }
     
     @ViewBuilder
     func incomePageView() -> some View {
-        VStack {
-            Text("Income")
+        Form {
+            Section {
+                ForEach(vm.incomeSources) { income in
+                    HStack {
+                        Image(systemName: income.iconName)
+                        Text(income.name)
+                        Spacer()
+                        Text(income.amount, format: .number.rounded(increment: 0.01))
+                        Text(vm.currency)
+                    }.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button(role: .destructive) {
+                            
+                        } label: {
+                            Label("delete", systemImage: "trash.fill")
+                        }
+                    }
+                }
+            } header: {
+                Text("Income Sources")
+            } footer: {
+                HStack {
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Label("Add", systemImage: "plus")
+                    }
+                }
+            }
         }
     }
     
