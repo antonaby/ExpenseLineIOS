@@ -13,6 +13,14 @@ enum WizzardPage: Int, Hashable {
     case scopes
 }
 
+enum WizzardSheet: String, Identifiable {
+    case incomeSource
+    case expenseSpace
+    
+    var id: String { rawValue }
+    
+}
+
 struct NextButtonView: View {
     
     private let label: String
@@ -45,6 +53,8 @@ struct BudgetWizardView: View {
     @Environment(\.dismiss) var dismiss
     @State var currentPageIndex: WizzardPage = .income
     @StateObject var vm: BudgetWizardViewModel = BudgetWizardViewModel()
+    
+    @State var sheet: WizzardSheet?
     
     var body: some View {
         VStack {
@@ -82,6 +92,15 @@ struct BudgetWizardView: View {
             }
         }
         .background(Color(uiColor: .secondarySystemBackground))
+        .sheet(item: $sheet, onDismiss: onSheetClosed) { sheet in
+            switch sheet {
+            case .incomeSource:
+                EditIncomeSourceSheet(incomeSource: $vm.selectedIncomeSource, op: $vm.incomeSourceOp)
+                    .presentationDetents([.medium])
+            case .expenseSpace:
+                Text("WIP")
+            }
+        }
     }
     
     func nextButtonCaption() -> String {
@@ -133,19 +152,30 @@ struct BudgetWizardView: View {
         Form {
             Section {
                 ForEach(vm.incomeSources) { income in
-                    HStack {
-                        Image(systemName: income.iconName)
-                        Text(income.name)
-                        Spacer()
-                        Text(income.amount, format: .number.rounded(increment: 0.01))
-                        Text(vm.currency)
-                    }.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Group {
+                        Button {
+                            vm.selectIncomeSource(income, op: .edit)
+                            sheet = .incomeSource
+                        } label: {
+                            HStack {
+                                Image(systemName: income.iconName)
+                                Text(income.name)
+                                Spacer()
+                                Text(income.amount, format: .number.rounded(increment: 0.01))
+                                Text(vm.currency)
+                            }
+                            .foregroundColor(.black)
+                        }
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button(role: .destructive) {
-                            
+                            vm.selectIncomeSource(income, op: .delete)
+                            vm.performEditOps()
                         } label: {
                             Label("delete", systemImage: "trash.fill")
                         }
                     }
+                    .listRowSeparator(.hidden)
                 }
             } header: {
                 Text("Income Sources")
@@ -153,7 +183,8 @@ struct BudgetWizardView: View {
                 HStack {
                     Spacer()
                     Button {
-                        
+                        vm.newIncomeSource()
+                        sheet = .incomeSource
                     } label: {
                         Label("Add", systemImage: "plus")
                     }
@@ -167,6 +198,10 @@ struct BudgetWizardView: View {
         VStack {
             Text("Scopes")
         }
+    }
+    
+    func onSheetClosed() {
+        vm.performEditOps()
     }
     
 }
