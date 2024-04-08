@@ -29,25 +29,35 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var selectedFixedOutcome: PlanCategory
     @Published var fixedOutcomeOp: DataEditOp
     
+    @Published var dailyOutcomes: [PlanCategory]
+    @Published var selectedDailyOutcome: PlanCategory
+    @Published var dailyOutcomeOp: DataEditOp
+    
     init() {
         self.name = "My Budget"
         self.currency = "USD"
         self.type = .mountly
         
         self.incomeSources = [
-            PlanCategory(id: UUID(), name: "Salary", amount: 0, iconName: "case", createdAt: Date())
+            PlanCategory(id: UUID(), name: "Salary", amount: 0, percent: 0, iconName: "case", createdAt: Date())
         ]
-        self.selectedIncomeSource = PlanCategory(id: UUID(), name: "My Income", amount: 0, iconName: "case", createdAt: Date())
+        self.selectedIncomeSource = PlanCategory(id: UUID(), name: "My Income", amount: 0, percent: 0, iconName: "case", createdAt: Date())
         self.incomeSourceOp = .none
         
         self.fixedOutcomes = [
-            PlanCategory(id: UUID(), name: "Rent", amount: 0, iconName: "house", createdAt: Date()),
-            PlanCategory(id: UUID(), name: "Internet", amount: 0, iconName: "globe", createdAt: Date()),
-            PlanCategory(id: UUID(), name: "Phone", amount: 0, iconName: "phone", createdAt: Date())
+            PlanCategory(id: UUID(), name: "Rent", amount: 0, percent: 0, iconName: "house", createdAt: Date()),
+            PlanCategory(id: UUID(), name: "Internet", amount: 0, percent: 0, iconName: "globe", createdAt: Date()),
+            PlanCategory(id: UUID(), name: "Phone", amount: 0, percent: 0, iconName: "phone", createdAt: Date())
         ]
-        self.selectedFixedOutcome = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, iconName: "case", createdAt: Date())
+        self.selectedFixedOutcome = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, percent: 0, iconName: "case", createdAt: Date())
         self.fixedOutcomeOp = .none
         
+        self.dailyOutcomes = [
+            PlanCategory(id: UUID(), name: "Groceries", amount: 0, percent: 0, iconName: "cart", createdAt: Date()),
+            PlanCategory(id: UUID(), name: "Coffee", amount: 0, percent: 0, iconName: "cup.and.saucer", createdAt: Date())
+        ]
+        self.selectedDailyOutcome = PlanCategory(id: UUID(), name: "My daily expense", amount: 0, percent: 0, iconName: "car", createdAt: Date())
+        self.dailyOutcomeOp = .none
         
         let components = DateComponents(hour: 20, minute: 0)
         self.dailyReminder = Calendar.current.date(from: components) ?? Date()
@@ -63,6 +73,18 @@ class BudgetWizardViewModel: ObservableObject {
         return String(format: "%.2f", total)
     }
     
+    func getTotalDailyOutcomeAsString() -> String {
+        let total = dailyOutcomes.reduce(0) { $0 + $1.amount }
+        return String(format: "%.2f", total)
+    }
+    
+    func remainingAsString() -> String {
+        let income = incomeSources.reduce(0) { $0 + $1.amount }
+        let outcome = fixedOutcomes.reduce(0) { $0 + $1.amount }
+        
+        return String(format: "%.2f", income - outcome)
+    }
+    
     func getCurrencies() -> [String] {
         ["USD", "EUR", "AMD", "RUB"]
     }
@@ -71,13 +93,23 @@ class BudgetWizardViewModel: ObservableObject {
         
     }
     
+    func selectDailyOutcome(_ outcome: PlanCategory, op: DataEditOp) {
+        selectedDailyOutcome = outcome
+        dailyOutcomeOp = op
+    }
+    
+    func newDailyOutcome() {
+        selectedDailyOutcome = PlanCategory(id: UUID(), name: "My daily expense", amount: 0, percent: 0, iconName: "car", createdAt: Date())
+        dailyOutcomeOp = .create
+    }
+    
     func selectFixedOutcome(_ outcome: PlanCategory, op: DataEditOp) {
         selectedFixedOutcome = outcome
         fixedOutcomeOp = op
     }
     
     func newFixedOutcome() {
-        selectedFixedOutcome = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, iconName: "case", createdAt: Date())
+        selectedFixedOutcome = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, percent: 0, iconName: "case", createdAt: Date())
         fixedOutcomeOp = .create
     }
     
@@ -87,7 +119,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func newIncomeSource() {
-        selectedIncomeSource = PlanCategory(id: UUID(), name: "My Income", amount: 0, iconName: "case", createdAt: Date())
+        selectedIncomeSource = PlanCategory(id: UUID(), name: "My Income", amount: 0, percent: 0, iconName: "case", createdAt: Date())
         incomeSourceOp = .create
     }
     
@@ -117,6 +149,19 @@ class BudgetWizardViewModel: ObservableObject {
         }
         
         fixedOutcomeOp = .none
+        
+        switch dailyOutcomeOp {
+        case .create:
+            dailyOutcomes.append(selectedDailyOutcome)
+        case .edit:
+            updateDailyOutcome()
+        case .delete:
+            deleteDailyOutcome()
+        case .none:
+            break
+        }
+        
+        dailyOutcomeOp = .none
     }
     
     func updateIncomeSource() {
@@ -140,6 +185,18 @@ class BudgetWizardViewModel: ObservableObject {
     func deleteFixedOutcome() {
         if let source = fixedOutcomes.enumerated().filter({ $0.element.id == selectedFixedOutcome.id }).first {
             fixedOutcomes.remove(at: source.offset)
+        }
+    }
+    
+    func updateDailyOutcome() {
+        if let source = dailyOutcomes.enumerated().filter({ $0.element.id == selectedDailyOutcome.id }).first {
+            dailyOutcomes[source.offset] = selectedDailyOutcome
+        }
+    }
+    
+    func deleteDailyOutcome() {
+        if let source = dailyOutcomes.enumerated().filter({ $0.element.id == selectedDailyOutcome.id }).first {
+            dailyOutcomes.remove(at: source.offset)
         }
     }
     

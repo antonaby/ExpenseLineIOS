@@ -12,13 +12,14 @@ enum WizzardPage: Int, Hashable {
     case base
     case income
     case fixed
-    case expenses
+    case daily
     case summary
 }
 
 enum WizzardSheet: String, Identifiable {
     case incomeSource
     case fixedOutcome
+    case dailyOutcome
     
     var id: String { rawValue }
     
@@ -54,7 +55,7 @@ struct NextButtonView: View {
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State var currentPageIndex: WizzardPage = .fixed
+    @State var currentPageIndex: WizzardPage = .daily
     @StateObject var vm: BudgetWizardViewModel = BudgetWizardViewModel()
     
     @State var sheet: WizzardSheet?
@@ -87,7 +88,7 @@ struct BudgetWizardView: View {
                 fixedExpensesPageView()
                     .tag(WizzardPage.fixed)
                 expensePageView()
-                    .tag(WizzardPage.expenses)
+                    .tag(WizzardPage.daily)
                 summaryPageView()
                     .tag(WizzardPage.summary)
             }
@@ -109,6 +110,9 @@ struct BudgetWizardView: View {
             case .fixedOutcome:
                 EditPlanCategorySheet(category: $vm.selectedFixedOutcome, op: $vm.fixedOutcomeOp)
                     .presentationDetents([.medium])
+            case .dailyOutcome:
+                EditPlanCategorySheet(category: $vm.selectedDailyOutcome, op: $vm.dailyOutcomeOp)
+                    .presentationDetents([.medium])
             }
         }
     }
@@ -119,7 +123,7 @@ struct BudgetWizardView: View {
     
     func nextPage() {
         let nextValue = currentPageIndex.rawValue + 1
-        if  nextValue <= WizzardPage.expenses.rawValue {
+        if  nextValue <= WizzardPage.daily.rawValue {
             currentPageIndex = WizzardPage(rawValue: nextValue) ?? .base
         }
     }
@@ -261,13 +265,54 @@ struct BudgetWizardView: View {
             }
             Text("\(vm.getTotalFixedOutcomeAsString()) \(vm.currency)")
                 .font(.title2)
+            Text("\(vm.remainingAsString()) \(vm.currency)")
         }
     }
     
     @ViewBuilder
     func expensePageView() -> some View {
         VStack {
-            Text("Scopes")
+            Form {
+                Section {
+                    ForEach(vm.dailyOutcomes) { outcome in
+                        Button {
+                            vm.selectDailyOutcome(outcome, op: .edit)
+                            sheet = .dailyOutcome
+                        } label: {
+                            HStack {
+                                Image(systemName: outcome.iconName)
+                                Text(outcome.name)
+                                Spacer()
+                                Text(outcome.amount, format: .number.rounded(increment: 0.01))
+                                Text(vm.currency)
+                            }
+                            .foregroundColor(.black)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                vm.selectDailyOutcome(outcome, op: .delete)
+                                vm.performEditOps()
+                            } label: {
+                                Label("delete", systemImage: "trash.fill")
+                            }
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                    HStack {
+                        Button {
+                            vm.newDailyOutcome()
+                            sheet = .dailyOutcome
+                        } label: {
+                            Label("Add", systemImage: "plus")
+                        }
+                    }
+                } header: {
+                    Text("Fixed outcomes")
+                }
+            }
+            Text("\(vm.getTotalDailyOutcomeAsString()) \(vm.currency)")
+                .font(.title2)
+            Text("\(vm.remainingAsString()) \(vm.currency)")
         }
     }
     
