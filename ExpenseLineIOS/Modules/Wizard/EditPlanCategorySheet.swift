@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct EditIncomeSourceSheet: View {
+struct EditPlanCategorySheet: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding<IncomeSource> var incomeSource: IncomeSource
+    @Binding<PlanCategory> var category: PlanCategory
     @Binding<DataEditOp> var op: DataEditOp
     
     var body: some View {
@@ -28,9 +28,9 @@ struct EditIncomeSourceSheet: View {
             }
             .padding([.top], 10)
             .padding([.bottom], 5)
-            TextField("Name", text: $incomeSource.name)
+            TextField("Name", text: $category.name)
                 .font(.title3)
-            TextField("Amount", value: $incomeSource.amount, format: .number)
+            TextField("Amount", value: $category.amount, format: .number)
                 .font(.title)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.green)
@@ -48,7 +48,7 @@ struct EditIncomeSourceSheet: View {
                 Button {
                     dismiss()
                 } label: {
-                    Label("Create", systemImage: "plus")
+                    Label(labelName(), systemImage: "plus")
                         .font(.title3)
                 }
                 .foregroundColor(.green)
@@ -60,11 +60,15 @@ struct EditIncomeSourceSheet: View {
         .interactiveDismissDisabled(op == .create)
     }
     
+    func labelName() -> String {
+        return op == .create ? "Create" : "Update"
+    }
+    
 }
 
 #Preview {
-    EditIncomeSourceSheet(incomeSource:
-            .constant(IncomeSource(
+    EditPlanCategorySheet(category:
+            .constant(PlanCategory(
                 id: UUID(), name: "My Income", amount: 1000, iconName: "case", createdAt: Date())),
                           op: .constant(.create))
 }

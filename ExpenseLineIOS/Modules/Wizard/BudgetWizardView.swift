@@ -8,14 +8,17 @@
 import SwiftUI
 
 enum WizzardPage: Int, Hashable {
-    case base = 0
+    case intro = 0
+    case base
     case income
-    case scopes
+    case fixed
+    case expenses
+    case summary
 }
 
 enum WizzardSheet: String, Identifiable {
     case incomeSource
-    case expenseSpace
+    case fixedOutcome
     
     var id: String { rawValue }
     
@@ -51,7 +54,7 @@ struct NextButtonView: View {
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State var currentPageIndex: WizzardPage = .income
+    @State var currentPageIndex: WizzardPage = .fixed
     @StateObject var vm: BudgetWizardViewModel = BudgetWizardViewModel()
     
     @State var sheet: WizzardSheet?
@@ -75,16 +78,22 @@ struct BudgetWizardView: View {
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPageIndex) {
-                initialPageView()
+                introPageView()
+                    .tag(WizzardPage.intro)
+                basePageView()
                     .tag(WizzardPage.base)
                 incomePageView()
                     .tag(WizzardPage.income)
-                scopeSelectorView()
-                    .tag(WizzardPage.scopes)
+                fixedExpensesPageView()
+                    .tag(WizzardPage.fixed)
+                expensePageView()
+                    .tag(WizzardPage.expenses)
+                summaryPageView()
+                    .tag(WizzardPage.summary)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             NextButtonView(nextButtonCaption()) {
-                if currentPageIndex == .scopes {
+                if currentPageIndex == .summary {
                     dismiss()
                 } else {
                     nextPage()
@@ -95,21 +104,22 @@ struct BudgetWizardView: View {
         .sheet(item: $sheet, onDismiss: onSheetClosed) { sheet in
             switch sheet {
             case .incomeSource:
-                EditIncomeSourceSheet(incomeSource: $vm.selectedIncomeSource, op: $vm.incomeSourceOp)
+                EditPlanCategorySheet(category: $vm.selectedIncomeSource, op: $vm.incomeSourceOp)
                     .presentationDetents([.medium])
-            case .expenseSpace:
-                Text("WIP")
+            case .fixedOutcome:
+                EditPlanCategorySheet(category: $vm.selectedFixedOutcome, op: $vm.fixedOutcomeOp)
+                    .presentationDetents([.medium])
             }
         }
     }
     
     func nextButtonCaption() -> String {
-        currentPageIndex == .scopes ? "Create" : "Next"
+        currentPageIndex == .summary ? "Create" : "Next"
     }
     
     func nextPage() {
         let nextValue = currentPageIndex.rawValue + 1
-        if  nextValue <= WizzardPage.scopes.rawValue {
+        if  nextValue <= WizzardPage.expenses.rawValue {
             currentPageIndex = WizzardPage(rawValue: nextValue) ?? .base
         }
     }
@@ -122,7 +132,22 @@ struct BudgetWizardView: View {
     }
     
     @ViewBuilder
-    func initialPageView() -> some View {
+    func introPageView() -> some View {
+        VStack{
+            Text("Creating a financial budget gives you control over your money, helps you achieve your financial goals, and reduces stress by providing a clear picture of your finances. It's a crucial tool for managing expenses, saving for the future, and ensuring financial security. Start budgeting today to take charge of your financial well-being and build a solid foundation for your future.")
+                .font(.title3)
+                .padding([.bottom], 10)
+            Button {
+                currentPageIndex = .summary
+            } label: {
+                Text("Skip")
+            }
+        }
+        .padding([.horizontal], 15)
+    }
+    
+    @ViewBuilder
+    func basePageView() -> some View {
         Form {
             Section(header: Text("Basic")) {
                 TextField("Name", text: $vm.name).padding([.top, .bottom], 5)
@@ -149,10 +174,10 @@ struct BudgetWizardView: View {
     
     @ViewBuilder
     func incomePageView() -> some View {
-        Form {
-            Section {
-                ForEach(vm.incomeSources) { income in
-                    Group {
+        VStack {
+            Form {
+                Section {
+                    ForEach(vm.incomeSources) { income in
                         Button {
                             vm.selectIncomeSource(income, op: .edit)
                             sheet = .incomeSource
@@ -166,38 +191,89 @@ struct BudgetWizardView: View {
                             }
                             .foregroundColor(.black)
                         }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                vm.selectIncomeSource(income, op: .delete)
+                                vm.performEditOps()
+                            } label: {
+                                Label("delete", systemImage: "trash.fill")
+                            }
+                        }
+                        .listRowSeparator(.hidden)
                     }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button(role: .destructive) {
-                            vm.selectIncomeSource(income, op: .delete)
-                            vm.performEditOps()
+                    HStack {
+                        Button {
+                            vm.newIncomeSource()
+                            sheet = .incomeSource
                         } label: {
-                            Label("delete", systemImage: "trash.fill")
+                            Label("Add", systemImage: "plus")
                         }
                     }
-                    .listRowSeparator(.hidden)
-                }
-            } header: {
-                Text("Income Sources")
-            } footer: {
-                HStack {
-                    Spacer()
-                    Button {
-                        vm.newIncomeSource()
-                        sheet = .incomeSource
-                    } label: {
-                        Label("Add", systemImage: "plus")
-                    }
+                } header: {
+                    Text("Income Sources")
                 }
             }
+            Text("\(vm.getTotalIncomeAsString()) \(vm.currency)")
+                .font(.title2)
         }
     }
     
     @ViewBuilder
-    func scopeSelectorView() -> some View {
+    func fixedExpensesPageView() -> some View {
+        VStack {
+            Form {
+                Section {
+                    ForEach(vm.fixedOutcomes) { outcome in
+                        Button {
+                            vm.selectFixedOutcome(outcome, op: .edit)
+                            sheet = .fixedOutcome
+                        } label: {
+                            HStack {
+                                Image(systemName: outcome.iconName)
+                                Text(outcome.name)
+                                Spacer()
+                                Text(outcome.amount, format: .number.rounded(increment: 0.01))
+                                Text(vm.currency)
+                            }
+                            .foregroundColor(.black)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                vm.selectFixedOutcome(outcome, op: .delete)
+                                vm.performEditOps()
+                            } label: {
+                                Label("delete", systemImage: "trash.fill")
+                            }
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                    HStack {
+                        Button {
+                            vm.newFixedOutcome()
+                            sheet = .fixedOutcome
+                        } label: {
+                            Label("Add", systemImage: "plus")
+                        }
+                    }
+                } header: {
+                    Text("Fixed outcomes")
+                }
+            }
+            Text("\(vm.getTotalFixedOutcomeAsString()) \(vm.currency)")
+                .font(.title2)
+        }
+    }
+    
+    @ViewBuilder
+    func expensePageView() -> some View {
         VStack {
             Text("Scopes")
         }
+    }
+    
+    @ViewBuilder
+    func summaryPageView() -> some View {
+        Text("Summary")
     }
     
     func onSheetClosed() {

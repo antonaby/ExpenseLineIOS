@@ -27,7 +27,7 @@
 		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
 		D2246B412BBAD94E00556936 /* CreateBudgetSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B402BBAD94E00556936 /* CreateBudgetSheetView.swift */; };
 		D2246B432BBAD96200556936 /* CreateBudgetSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B422BBAD96200556936 /* CreateBudgetSheetViewModel.swift */; };
-		D23126A72BC2799C0008BDD6 /* EditIncomeSourceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditIncomeSourceSheet.swift */; };
+		D23126A72BC2799C0008BDD6 /* EditPlanCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
 		D239608F2BB2E97E0071547D /* ExpensesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D239608E2BB2E97E0071547D /* ExpensesService.swift */; };
 		D23960912BB2EAED0071547D /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960902BB2EAED0071547D /* Expense.swift */; };
@@ -87,7 +87,7 @@
 		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D2246B402BBAD94E00556936 /* CreateBudgetSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBudgetSheetView.swift; sourceTree = "<group>"; };
 		D2246B422BBAD96200556936 /* CreateBudgetSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBudgetSheetViewModel.swift; sourceTree = "<group>"; };
-		D23126A62BC2799C0008BDD6 /* EditIncomeSourceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIncomeSourceSheet.swift; sourceTree = "<group>"; };
+		D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanCategorySheet.swift; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D239608E2BB2E97E0071547D /* ExpensesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesService.swift; sourceTree = "<group>"; };
 		D23960902BB2EAED0071547D /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
@@ -283,7 +283,7 @@
 			children = (
 				D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */,
 				D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */,
-				D23126A62BC2799C0008BDD6 /* EditIncomeSourceSheet.swift */,
+				D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */,
 			);
 			path = Wizard;
 			sourceTree = "<group>";
@@ -425,7 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
-				D23126A72BC2799C0008BDD6 /* EditIncomeSourceSheet.swift in Sources */,
+				D23126A72BC2799C0008BDD6 /* EditPlanCategorySheet.swift in Sources */,
 				D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */,
 				D2246B412BBAD94E00556936 /* CreateBudgetSheetView.swift in Sources */,
 				D23960912BB2EAED0071547D /* Expense.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct IncomeSource: Identifiable, Hashable {
+struct PlanCategory: Identifiable, Hashable {
     
     let id: UUID
     var name: String
@@ -16,8 +16,6 @@ struct IncomeSource: Identifiable, Hashable {
     var createdAt: Date
     
 }
-
-
 
 struct Space: Identifiable, Hashable {
     
