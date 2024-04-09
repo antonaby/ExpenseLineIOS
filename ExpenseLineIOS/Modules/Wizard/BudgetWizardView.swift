@@ -8,8 +8,7 @@
 import SwiftUI
 
 enum WizzardPage: Int, Hashable {
-    case intro = 0
-    case base
+    case base = 0
     case income
     case fixed
     case daily
@@ -55,7 +54,7 @@ struct NextButtonView: View {
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State var currentPageIndex: WizzardPage = .daily
+    @State var currentPageIndex: WizzardPage = .base
     @StateObject var vm: BudgetWizardViewModel = BudgetWizardViewModel()
     
     @State var sheet: WizzardSheet?
@@ -68,7 +67,7 @@ struct BudgetWizardView: View {
                 } label: {
                     Label("Back", systemImage: "chevron.backward")
                 }
-                .disabled(currentPageIndex == .base)
+                .disabled(currentPageIndex.rawValue == 0)
                 Spacer()
                 Button {
                     dismiss()
@@ -79,15 +78,13 @@ struct BudgetWizardView: View {
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPageIndex) {
-                introPageView()
-                    .tag(WizzardPage.intro)
                 basePageView()
                     .tag(WizzardPage.base)
                 incomePageView()
                     .tag(WizzardPage.income)
                 fixedExpensesPageView()
                     .tag(WizzardPage.fixed)
-                expensePageView()
+                dailyExpensesPageView()
                     .tag(WizzardPage.daily)
                 summaryPageView()
                     .tag(WizzardPage.summary)
@@ -111,7 +108,7 @@ struct BudgetWizardView: View {
                 EditPlanCategorySheet(category: $vm.selectedFixedOutcome, op: $vm.fixedOutcomeOp)
                     .presentationDetents([.medium])
             case .dailyOutcome:
-                EditPlanCategorySheet(category: $vm.selectedDailyOutcome, op: $vm.dailyOutcomeOp)
+                EditDailyPlanCategorySheet(category: $vm.selectedDailyOutcome, op: $vm.dailyOutcomeOp)
                     .presentationDetents([.medium])
             }
         }
@@ -123,7 +120,7 @@ struct BudgetWizardView: View {
     
     func nextPage() {
         let nextValue = currentPageIndex.rawValue + 1
-        if  nextValue <= WizzardPage.daily.rawValue {
+        if  nextValue <= WizzardPage.summary.rawValue {
             currentPageIndex = WizzardPage(rawValue: nextValue) ?? .base
         }
     }
@@ -133,21 +130,6 @@ struct BudgetWizardView: View {
         if previousValue >= 0 {
             currentPageIndex = WizzardPage(rawValue: previousValue) ?? .base
         }
-    }
-    
-    @ViewBuilder
-    func introPageView() -> some View {
-        VStack{
-            Text("Creating a financial budget gives you control over your money, helps you achieve your financial goals, and reduces stress by providing a clear picture of your finances. It's a crucial tool for managing expenses, saving for the future, and ensuring financial security. Start budgeting today to take charge of your financial well-being and build a solid foundation for your future.")
-                .font(.title3)
-                .padding([.bottom], 10)
-            Button {
-                currentPageIndex = .summary
-            } label: {
-                Text("Skip")
-            }
-        }
-        .padding([.horizontal], 15)
     }
     
     @ViewBuilder
@@ -217,14 +199,22 @@ struct BudgetWizardView: View {
                     Text("Income Sources")
                 }
             }
-            Text("\(vm.getTotalIncomeAsString()) \(vm.currency)")
-                .font(.title2)
+            HStack {
+                Text(vm.getTotalIncome(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            .font(.title2)
         }
     }
     
     @ViewBuilder
     func fixedExpensesPageView() -> some View {
         VStack {
+            HStack {
+                Text(vm.getRemainingBudget(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            .font(.title3)
             Form {
                 Section {
                     ForEach(vm.fixedOutcomes) { outcome in
@@ -263,15 +253,22 @@ struct BudgetWizardView: View {
                     Text("Fixed outcomes")
                 }
             }
-            Text("\(vm.getTotalFixedOutcomeAsString()) \(vm.currency)")
-                .font(.title2)
-            Text("\(vm.remainingAsString()) \(vm.currency)")
+            HStack {
+                Text(vm.getTotalFixedOutcome(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            .font(.title2)
         }
     }
     
     @ViewBuilder
-    func expensePageView() -> some View {
+    func dailyExpensesPageView() -> some View {
         VStack {
+            HStack {
+                Text(vm.getRemainingBudget(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            .font(.title3)
             Form {
                 Section {
                     ForEach(vm.dailyOutcomes) { outcome in
@@ -279,12 +276,18 @@ struct BudgetWizardView: View {
                             vm.selectDailyOutcome(outcome, op: .edit)
                             sheet = .dailyOutcome
                         } label: {
-                            HStack {
-                                Image(systemName: outcome.iconName)
-                                Text(outcome.name)
-                                Spacer()
-                                Text(outcome.amount, format: .number.rounded(increment: 0.01))
-                                Text(vm.currency)
+                            VStack {
+                                HStack {
+                                    Image(systemName: outcome.iconName)
+                                    Text(outcome.name)
+                                    Spacer()
+                                    Text(outcome.percent, format: .percent)
+                                }
+                                HStack {
+                                    Text(vm.getAmountForDailyCatedory(outcome), format: .number.rounded(increment: 0.01))
+                                    Text(vm.currency)
+                                }
+                                .font(.caption)
                             }
                             .foregroundColor(.black)
                         }
@@ -307,18 +310,42 @@ struct BudgetWizardView: View {
                         }
                     }
                 } header: {
-                    Text("Fixed outcomes")
+                    Text("Daily outcomes")
                 }
             }
-            Text("\(vm.getTotalDailyOutcomeAsString()) \(vm.currency)")
-                .font(.title2)
-            Text("\(vm.remainingAsString()) \(vm.currency)")
+            HStack {
+                Text(vm.getTotalDailyOutcome(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            .font(.title2)
         }
     }
     
     @ViewBuilder
     func summaryPageView() -> some View {
-        Text("Summary")
+        VStack {
+            HStack {
+                Text("Income:")
+                Text(vm.getTotalIncome(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            HStack {
+                Text("Fixed Expenses:")
+                Text(vm.getTotalFixedOutcome(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            HStack {
+                Text("Daily:")
+                Text(vm.getTotalDailyOutcome(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+            HStack {
+                Text("Savings:")
+                Text(vm.getRemainingBudget(), format: .number.rounded(increment: 0.01))
+                Text(vm.currency)
+            }
+        }
+        .font(.title3)
     }
     
     func onSheetClosed() {

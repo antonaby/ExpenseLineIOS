@@ -63,19 +63,25 @@ class BudgetWizardViewModel: ObservableObject {
         self.dailyReminder = Calendar.current.date(from: components) ?? Date()
     }
     
-    func getTotalIncomeAsString() -> String {
-        let total = incomeSources.reduce(0) { $0 + $1.amount }
-        return String(format: "%.2f", total)
+    func getTotalIncome() -> Double {
+        return incomeSources.reduce(0) { $0 + $1.amount }
     }
     
-    func getTotalFixedOutcomeAsString() -> String {
-        let total = fixedOutcomes.reduce(0) { $0 + $1.amount }
-        return String(format: "%.2f", total)
+    func getTotalFixedOutcome() -> Double {
+        return fixedOutcomes.reduce(0) { $0 + $1.amount }
     }
     
-    func getTotalDailyOutcomeAsString() -> String {
-        let total = dailyOutcomes.reduce(0) { $0 + $1.amount }
-        return String(format: "%.2f", total)
+    func getTotalDailyOutcome() -> Double {
+        let budget = getTotalIncome()
+        return dailyOutcomes.reduce(0) { $0 + budget * $1.percent }
+    }
+    
+    func getAmountForDailyCatedory(_ category: PlanCategory) -> Double {
+        return getTotalIncome() * category.percent
+    }
+    
+    func getRemainingBudget() -> Double {
+        return getTotalIncome() - getTotalFixedOutcome() - getTotalDailyOutcome()
     }
     
     func remainingAsString() -> String {

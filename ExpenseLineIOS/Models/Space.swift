@@ -12,7 +12,7 @@ struct PlanCategory: Identifiable, Hashable {
     let id: UUID
     var name: String
     var amount: Double
-    var percent: Int
+    var percent: Double
     var iconName: String
     var createdAt: Date
     
