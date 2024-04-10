@@ -6,6 +6,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="planType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PlanCategoryEntity" inverseName="budget" inverseEntity="PlanCategoryEntity"/>
+        <relationship name="periods" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PeriodEntity" inverseName="budget" inverseEntity="PeriodEntity"/>
         <fetchIndex name="byId">
             <fetchIndexElement property="id" type="Binary" order="ascending"/>
         </fetchIndex>
@@ -41,6 +42,12 @@
             <fetchIndexElement property="space" type="Binary" order="ascending"/>
             <fetchIndexElement property="createdAt" type="Binary" order="ascending"/>
         </fetchIndex>
+    </entity>
+    <entity name="PeriodEntity" representedClassName="PeriodEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="endstAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startsAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetEntity" inverseName="periods" inverseEntity="BudgetEntity"/>
     </entity>
     <entity name="PlanCategoryEntity" representedClassName="PlanCategoryEntity" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

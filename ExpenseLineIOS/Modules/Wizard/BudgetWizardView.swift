@@ -155,6 +155,10 @@ struct BudgetWizardView: View {
                 DatePicker("Daily reminder",
                            selection: $vm.dailyReminder,
                            displayedComponents: [.hourAndMinute])
+                DatePicker("Period Starts at",
+                           selection: $vm.periodStartsAt,
+                           in: vm.getDateRange(),
+                           displayedComponents: [.date])
             }
         }
     }

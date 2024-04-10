@@ -10,39 +10,13 @@ import Foundation
 
 class BudgetViewModel: ObservableObject {
     
-    @Published var spaces: [SpaceEntity]
-    @Published var totalAmount: Int
-    
     let bugget: BudgetEntity
     
-    private let es: ExpensesService
+    private let budgetService: BudgetService
     
-    init(budget: BudgetEntity, es: ExpensesService) {
+    init(budget: BudgetEntity, budgetService: BudgetService) {
         self.bugget = budget
-        self.es = es
-        
-        self.spaces = []
-        self.totalAmount = 0
+        self.budgetService = budgetService
     }
-    
-    func loadSpaces() {
-        guard let budgetId = bugget.id else { return }
-        
-        do {
-            spaces = try es.getSpacesForBudget(budgetId)
-        } catch {
-            // TODO: show error
-        }
-    }
-    
-    func loadTotalAmount() {
-        guard let budgetId = bugget.id else { return }
-        
-        totalAmount = es.getTotalAmount(budgetId)
-    }
-    
-    func getBudgetPlan() -> BudgetPlanEntity {
-        es.findBudgetPlan(bugget.id!)
-    }
-    
+   
 }

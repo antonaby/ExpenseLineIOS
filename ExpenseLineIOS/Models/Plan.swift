@@ -42,6 +42,14 @@ extension PlanCategoryEntity {
     
 }
 
+struct Period: Identifiable, Hashable {
+    
+    let id: UUID
+    var startsAt: Date
+    var endsAt: Date
+    
+}
+
 
 
 // TODO: remove if needed

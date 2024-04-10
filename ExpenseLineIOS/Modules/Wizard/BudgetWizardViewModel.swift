@@ -33,6 +33,8 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var selectedDailyOutcome: PlanCategory
     @Published var dailyOutcomeOp: DataEditOp
     
+    @Published var periodStartsAt: Date
+    
     private let budgetService: BudgetService
     
     init(budgetService: BudgetService) {
@@ -65,6 +67,9 @@ class BudgetWizardViewModel: ObservableObject {
         
         let components = DateComponents(hour: 20, minute: 0)
         self.dailyReminder = Calendar.current.date(from: components) ?? Date()
+        
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        self.periodStartsAt = Calendar.current.date(from: periodComponents)!
     }
     
     func getTotalIncome() -> Double {
@@ -101,13 +106,20 @@ class BudgetWizardViewModel: ObservableObject {
     
     func createBudget() {
         let budget = Budget(id: UUID(), name: name, currency: currency, type: type)
+        
+        var components = DateComponents()
+        components.month = 1
+        components.second = -1
+        let periodEndsAt = Calendar.current.date(byAdding: components, to: periodStartsAt)!
+        let period = Period(id: UUID(), startsAt: periodStartsAt, endsAt: periodEndsAt)
+        
         var categories: [PlanCategory] = []
         categories.append(contentsOf: incomeSources)
         categories.append(contentsOf: fixedOutcomes)
         categories.append(contentsOf: dailyOutcomes)
         
         do {
-            try budgetService.createBudget(budget: budget, categories: categories)
+            try budgetService.createBudget(budget: budget, period: period, categories: categories)
         } catch {
             // TODO: show correct error
             print("Error \(error)")
@@ -219,6 +231,13 @@ class BudgetWizardViewModel: ObservableObject {
         if let source = dailyOutcomes.enumerated().filter({ $0.element.id == selectedDailyOutcome.id }).first {
             dailyOutcomes.remove(at: source.offset)
         }
+    }
+    
+    func getDateRange() -> ClosedRange<Date> {
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        let firstDay = Calendar.current.date(from: periodComponents)!
+        
+        return firstDay ... Date()
     }
     
 }

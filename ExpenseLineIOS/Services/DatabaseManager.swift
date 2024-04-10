@@ -10,7 +10,7 @@ import CoreData
 
 enum DatabaseManagerError: Error {
     
-    case syncError(msg: String, reason: Error?)
+    case SyncError(msg: String, reason: Error?)
     
 }
 
@@ -45,7 +45,7 @@ class DatabaseManager: ObservableObject {
         do {
             try container.viewContext.save()
         } catch {
-            throw DatabaseManagerError.syncError(msg: "Failed to save CoreData context", reason: error)
+            throw DatabaseManagerError.SyncError(msg: "Failed to save CoreData context", reason: error)
         }
     }
     
