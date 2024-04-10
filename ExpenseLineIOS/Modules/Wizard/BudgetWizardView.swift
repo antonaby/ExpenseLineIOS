@@ -55,7 +55,7 @@ struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
     @State var currentPageIndex: WizzardPage = .base
-    @StateObject var vm: BudgetWizardViewModel = BudgetWizardViewModel()
+    @StateObject var vm: BudgetWizardViewModel
     
     @State var sheet: WizzardSheet?
     
@@ -92,6 +92,7 @@ struct BudgetWizardView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             NextButtonView(nextButtonCaption()) {
                 if currentPageIndex == .summary {
+                    vm.createBudget()
                     dismiss()
                 } else {
                     nextPage()
@@ -355,5 +356,5 @@ struct BudgetWizardView: View {
 }
 
 #Preview {
-    BudgetWizardView()
+    BudgetWizardView(vm: DependencyResolver.preview.budgetWizzardViewModel())
 }

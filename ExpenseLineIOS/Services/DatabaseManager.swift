@@ -8,6 +8,12 @@
 import Foundation
 import CoreData
 
+enum DatabaseManagerError: Error {
+    
+    case syncError(msg: String, reason: Error?)
+    
+}
+
 
 class DatabaseManager: ObservableObject {
     
@@ -33,6 +39,18 @@ class DatabaseManager: ObservableObject {
         }
     }
     
+    func sync() throws {
+        guard container.viewContext.hasChanges else { return }
+        
+        do {
+            try container.viewContext.save()
+        } catch {
+            throw DatabaseManagerError.syncError(msg: "Failed to save CoreData context", reason: error)
+        }
+    }
+    
+    
+    // TODO: remove
     func save() {
         guard container.viewContext.hasChanges else { return }
         

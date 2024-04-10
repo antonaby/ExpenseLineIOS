@@ -36,6 +36,9 @@ class ServiceBundle: Assembly {
         container.register(ExpensesService.self) { resolver in
             ExpensesService(dm: resolver.resolve(DatabaseManager.self)!)
         }.inObjectScope(.container)
+        container.register(BudgetService.self) { resolver in
+            BudgetService(dm: resolver.resolve(DatabaseManager.self)!)
+        }.inObjectScope(.container)
     }
     
 }

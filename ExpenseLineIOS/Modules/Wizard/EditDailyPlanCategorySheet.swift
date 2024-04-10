@@ -69,6 +69,6 @@ struct EditDailyPlanCategorySheet: View {
 #Preview {
     EditDailyPlanCategorySheet(category:
             .constant(PlanCategory(
-                id: UUID(), name: "Groceries", amount: 0, percent: 0.2, iconName: "cart", createdAt: Date())),
+                id: UUID(), name: "Groceries", amount: 0, percent: 0.2, iconName: "cart", type: .outcomeFixed, createdAt: Date())),
                           op: .constant(.create))
 }

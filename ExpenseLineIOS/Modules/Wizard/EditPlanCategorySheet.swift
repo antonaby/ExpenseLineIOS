@@ -69,6 +69,6 @@ struct EditPlanCategorySheet: View {
 #Preview {
     EditPlanCategorySheet(category:
             .constant(PlanCategory(
-                id: UUID(), name: "My Income", amount: 1000, percent: 0, iconName: "case", createdAt: Date())),
+                id: UUID(), name: "My Income", amount: 1000, percent: 0, iconName: "case", type: .income, createdAt: Date())),
                           op: .constant(.create))
 }

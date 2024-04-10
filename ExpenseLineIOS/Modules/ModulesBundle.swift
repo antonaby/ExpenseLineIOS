@@ -16,6 +16,12 @@ class ModulesBundle: Assembly {
             AppState()
         }.inObjectScope(.container)
         
+        container.register(BudgetWizardViewModel.self) { resolver in
+            BudgetWizardViewModel(budgetService: resolver.resolve(BudgetService.self)!)
+        }.inObjectScope(.graph)
+        
+        
+        // TODO: review
         container.register(BudgetViewModel.self) { resolver, entity in
             BudgetViewModel(budget: entity, es: resolver.resolve(ExpensesService.self)!)
         }.inObjectScope(.graph)
@@ -44,6 +50,11 @@ extension DependencyResolver {
         resolver.resolve(AppState.self)!
     }
     
+    func budgetWizzardViewModel() -> BudgetWizardViewModel {
+        resolver.resolve(BudgetWizardViewModel.self)!
+    }
+    
+    // TODO: review
     func budgetViewModel(_ budget: BudgetEntity) -> BudgetViewModel {
         resolver.resolve(BudgetViewModel.self, argument: budget)!
     }

@@ -19,7 +19,7 @@
 		D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */; };
 		D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */; };
 		D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */; };
-		D20EF2E42BB19436006CF8CD /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E32BB19436006CF8CD /* Space.swift */; };
+		D20EF2E42BB19436006CF8CD /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E32BB19436006CF8CD /* Plan.swift */; };
 		D20EF2E62BB19693006CF8CD /* AddSpaceCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E52BB19693006CF8CD /* AddSpaceCircle.swift */; };
 		D20EF2E82BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E72BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift */; };
 		D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */; };
@@ -34,6 +34,7 @@
 		D23960912BB2EAED0071547D /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960902BB2EAED0071547D /* Expense.swift */; };
 		D23960942BB2EBBF0071547D /* CreateExpenseSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960932BB2EBBF0071547D /* CreateExpenseSheetView.swift */; };
 		D23960962BB2EBD70071547D /* CreateExpenseSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23960952BB2EBD70071547D /* CreateExpenseSheetViewModel.swift */; };
+		D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23EE3322BC66B7C0088B246 /* BudgetService.swift */; };
 		D250D4CF2BB828EB0050638C /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4CE2BB828EB0050638C /* Budget.swift */; };
 		D250D4D22BB82A640050638C /* SpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4D12BB82A640050638C /* SpaceView.swift */; };
 		D250D4D42BB82A780050638C /* SpaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4D32BB82A780050638C /* SpaceViewModel.swift */; };
@@ -80,7 +81,7 @@
 		D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseButton.swift; sourceTree = "<group>"; };
 		D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCircle.swift; sourceTree = "<group>"; };
 		D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
-		D20EF2E32BB19436006CF8CD /* Space.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
+		D20EF2E32BB19436006CF8CD /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		D20EF2E52BB19693006CF8CD /* AddSpaceCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceCircle.swift; sourceTree = "<group>"; };
 		D20EF2E72BB1998A006CF8CD /* CreateSpaceSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSpaceSheetViewModel.swift; sourceTree = "<group>"; };
 		D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArrowButton.swift; sourceTree = "<group>"; };
@@ -95,6 +96,7 @@
 		D23960902BB2EAED0071547D /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		D23960932BB2EBBF0071547D /* CreateExpenseSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExpenseSheetView.swift; sourceTree = "<group>"; };
 		D23960952BB2EBD70071547D /* CreateExpenseSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExpenseSheetViewModel.swift; sourceTree = "<group>"; };
+		D23EE3322BC66B7C0088B246 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		D250D4D12BB82A640050638C /* SpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceView.swift; sourceTree = "<group>"; };
 		D250D4D32BB82A780050638C /* SpaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceViewModel.swift; sourceTree = "<group>"; };
@@ -232,7 +234,7 @@
 		D20EF2E22BB19427006CF8CD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D20EF2E32BB19436006CF8CD /* Space.swift */,
+				D20EF2E32BB19436006CF8CD /* Plan.swift */,
 				D23960902BB2EAED0071547D /* Expense.swift */,
 				D250D4CE2BB828EB0050638C /* Budget.swift */,
 			);
@@ -253,6 +255,7 @@
 				D239608E2BB2E97E0071547D /* ExpensesService.swift */,
 				D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */,
 				D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */,
+				D23EE3322BC66B7C0088B246 /* BudgetService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -441,10 +444,11 @@
 				D23960962BB2EBD70071547D /* CreateExpenseSheetViewModel.swift in Sources */,
 				D200C8F62BC55C0400C048AB /* EditDailyPlanCategorySheet.swift in Sources */,
 				D239608F2BB2E97E0071547D /* ExpensesService.swift in Sources */,
-				D20EF2E42BB19436006CF8CD /* Space.swift in Sources */,
+				D20EF2E42BB19436006CF8CD /* Plan.swift in Sources */,
 				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
 				D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */,
 				D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */,
+				D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,
 				D250D4D22BB82A640050638C /* SpaceView.swift in Sources */,
