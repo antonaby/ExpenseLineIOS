@@ -8,6 +8,10 @@
 import Foundation
 import Swinject
 
+enum ModuleBundleError: Error {
+    case ResolveError(msg: String, reason: Error?)
+}
+
 
 class ModulesBundle: Assembly {
     
@@ -15,14 +19,6 @@ class ModulesBundle: Assembly {
         container.register(AppState.self) { resolver in
             AppState()
         }.inObjectScope(.container)
-        
-        container.register(BudgetWizardViewModel.self) { resolver in
-            BudgetWizardViewModel(budgetService: resolver.resolve(BudgetService.self)!)
-        }.inObjectScope(.graph)
-        
-        container.register(BudgetViewModel.self) { resolver, entity in
-            BudgetViewModel(budget: entity, budgetService: resolver.resolve(BudgetService.self)!)
-        }.inObjectScope(.graph)
         
         // TODO: review
         
@@ -52,11 +48,19 @@ extension DependencyResolver {
     }
     
     func budgetWizzardViewModel() -> BudgetWizardViewModel {
-        resolver.resolve(BudgetWizardViewModel.self)!
+        BudgetWizardViewModel(budgetService: resolver.resolve(BudgetService.self)!)
     }
     
-    func budgetViewModel(_ budget: BudgetEntity) -> BudgetViewModel {
-        resolver.resolve(BudgetViewModel.self, argument: budget)!
+    func budgetViewModel(_ budget: BudgetEntity) throws -> BudgetViewModel {
+        if let budgetService = resolver.resolve(BudgetService.self), let budgetId = budget.id {
+            return BudgetViewModel(
+                budget: budget,
+                period: try budgetService.getOrCreateLastPeriod(budgetId),
+                budgetService: budgetService
+            )
+        }
+        
+        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
     }
     
     // TODO: review

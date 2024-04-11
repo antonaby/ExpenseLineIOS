@@ -19,6 +19,7 @@ class AppState: ObservableObject {
     
     @Published var budget: BudgetEntity?
     
+    // TODO: move resolver outside
     let resolver: DependencyResolver
     
     private let userDefaults: UserDefaults

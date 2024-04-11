@@ -23,16 +23,23 @@ class BudgetService {
     }
     
     func getOrCreateLastPeriod(_ budgetId: UUID) throws -> PeriodEntity {
-        let period = try getLastPeriod(budgetId)
-        if period != nil {
-            return period!
+        if let period = try getLastPeriod(budgetId) {
+            return period
         }
-        
-        // TODO: create proper period
+    
         let entity = PeriodEntity(context: dm.viewContext)
         entity.id = UUID()
-        entity.startsAt = Date()
-        entity.endstAt = Date()
+        
+        let startComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        let periodStartsAt = Calendar.current.date(from: startComponents)!
+        entity.startsAt = periodStartsAt
+        
+        var endComponents = DateComponents()
+        endComponents.month = 1
+        endComponents.second = -1
+        entity.endstAt = Calendar.current.date(byAdding: endComponents, to: periodStartsAt)!
+        
+        try dm.sync()
         
         return entity
     }

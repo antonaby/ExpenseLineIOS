@@ -19,24 +19,33 @@ struct BudgetView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            ZStack(alignment: .bottomTrailing) {
+            ZStack(alignment: .bottom) {
                 VStack {
                     Button {
                         appState.unselectBudget()
                     } label: {
                         Text(vm.bugget.name ?? "Unknown")
-                            .font(.title3)
+                            .font(.title2)
                             .tint(.black)
                     }
                     .frame(maxWidth: .infinity)
-                    Text("")
-                    Spacer()
+                    Text(vm.getPeriodName())
+                        .font(.caption)
+                    TabView {
+                        BudgetOverviewView(vm: vm)
+                            .tabItem { Image(systemName: "house") }
+                        Spacer().tabItem {
+                            EmptyView()
+                        }
+                        BudgetStatsView()
+                            .tabItem { Image(systemName: "chart.pie") }
+                    }
                 }
                 AddExpenseButton {
                     
                 }
             }
-            .padding([.horizontal], 15)
+            
             .onAppear {
                 
             }
@@ -56,7 +65,13 @@ struct BudgetView: View {
     let appState = AppState()
     appState.selectBudget(budget)
     
-    return BudgetView(vm: DependencyResolver.preview.budgetViewModel(budget), path: .constant(NavigationPath()))
-        .environmentObject(DependencyResolver.preview)
-        .environmentObject(appState)
+    do {
+        let vm = try DependencyResolver.preview.budgetViewModel(budget)
+        
+        return BudgetView(vm: vm, path: .constant(NavigationPath()))
+            .environmentObject(DependencyResolver.preview)
+            .environmentObject(appState)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
 }
