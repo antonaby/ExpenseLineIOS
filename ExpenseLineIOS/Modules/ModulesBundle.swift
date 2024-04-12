@@ -63,6 +63,17 @@ extension DependencyResolver {
         throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
     }
     
+    func transactionSheetViewModel(budget: BudgetEntity) throws -> TransactionSheetViewModel {
+        if let budgetService = resolver.resolve(BudgetService.self) {
+            return TransactionSheetViewModel(
+                budget: budget,
+                budgetService: budgetService
+            )
+        }
+        
+        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
+    }
+    
     // TODO: review
     
     

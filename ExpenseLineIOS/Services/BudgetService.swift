@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 enum BudgetServiceError: Error {
     
@@ -20,6 +21,51 @@ class BudgetService {
     
     init(dm: DatabaseManager) {
         self.dm = dm
+    }
+    
+    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Double {
+        guard 
+            let starsAt = period.startsAt,
+            let endsAt = period.endstAt,
+            let budgetId = budget.id
+        else {
+            return 0
+        }
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TransactionEntity")
+        request.resultType = .dictionaryResultType
+        
+        let totalAmountExpressionDescription = NSExpressionDescription()
+        totalAmountExpressionDescription.name = "totalAmount"
+        totalAmountExpressionDescription.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
+        totalAmountExpressionDescription.expressionResultType = .doubleAttributeType
+        
+        request.propertiesToFetch = [totalAmountExpressionDescription]
+        request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@", starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
+        
+        do {
+            let results = try dm.viewContext.fetch(request) as? [NSDictionary]
+            if let dict = results, let first = dict.first {
+                return first["totalAmount"] as! Double
+            }
+        } catch {
+            print("Error \(error.localizedDescription)")
+            return 0
+        }
+        
+        return 0
+        
+    }
+    
+    func getCategoriesOfBudget(_ budgetId: UUID) throws -> [PlanCategoryEntity] {
+        let request = PlanCategoryEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch categories", reason: error)
+        }
     }
     
     func getOrCreateLastPeriod(_ budgetId: UUID) throws -> PeriodEntity {
@@ -79,6 +125,18 @@ class BudgetService {
         for category in categories {
             entity.addToCategories(getPlanCategoryEntity(category))
         }
+        
+        try dm.sync()
+    }
+    
+    func createTransaction(_ transaction: Transaction, category: PlanCategoryEntity, budget: BudgetEntity) throws {
+        let entity = TransactionEntity(context: dm.viewContext)
+        entity.id = transaction.id
+        entity.name = transaction.name
+        entity.amount = transaction.amount
+        entity.createdAt = transaction.createdAt
+        entity.category = category
+        entity.budget = budget
         
         try dm.sync()
     }

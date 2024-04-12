@@ -50,6 +50,14 @@ struct Period: Identifiable, Hashable {
     
 }
 
+struct Transaction: Identifiable, Hashable {
+    
+    let id: UUID
+    var name: String
+    var amount: Double
+    var createdAt: Date
+    
+}
 
 
 // TODO: remove if needed

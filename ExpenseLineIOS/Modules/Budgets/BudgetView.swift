@@ -17,6 +17,8 @@ struct BudgetView: View {
     @EnvironmentObject var resolver: DependencyResolver
     @EnvironmentObject var appState: AppState
     
+    @State var transactionSheet: Bool = false
+    
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
@@ -42,14 +44,30 @@ struct BudgetView: View {
                     }
                 }
                 AddExpenseButton {
-                    
+                    transactionSheet.toggle()
                 }
             }
-            
+            .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
+                getTransactionSheet()
+                    .presentationDetents([.medium])
+            }
             .onAppear {
-                
+                vm.updateTotalAmount()
             }
         }
+    }
+    
+    func getTransactionSheet() -> AnyView {
+        do {
+            let vm = try resolver.transactionSheetViewModel(budget: vm.bugget)
+            return AnyView(TransactionSheetView(vm: vm))
+        } catch {
+            return AnyView(Text("Something went wrong \(error)"))
+        }
+    }
+    
+    func onCategoryUpdated() {
+        vm.updateTotalAmount()
     }
     
 }

@@ -12,17 +12,24 @@ class BudgetViewModel: ObservableObject {
     
     @Published var bugget: BudgetEntity
     @Published var period: PeriodEntity
+    @Published var totalAmount: Double
         
     private let budgetService: BudgetService
     
     init(budget: BudgetEntity, period: PeriodEntity, budgetService: BudgetService) {
         self.bugget = budget
         self.period = period
+        self.totalAmount = 0
         self.budgetService = budgetService
     }
     
-    func getRemaingBudget() -> Double {
-        3000.3
+    func updateTotalAmount() {
+        do {
+            totalAmount = try budgetService.getTotalOutcomeForPeriod(period, budget: bugget)
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+        }
     }
     
     func getCurrency() -> String {

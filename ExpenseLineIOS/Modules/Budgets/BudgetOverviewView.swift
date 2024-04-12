@@ -14,7 +14,7 @@ struct BudgetOverviewView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(vm.getRemaingBudget(), format: .number.rounded(increment: 0.01))
+                Text(vm.totalAmount, format: .number.rounded(increment: 0.01))
                     .font(.title)
                 Text(vm.getCurrency())
                     .font(.title2)
