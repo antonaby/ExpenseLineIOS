@@ -14,10 +14,11 @@ struct BudgetListView: View {
     @EnvironmentObject var resolver: DependencyResolver
     
     @StateObject var vm: BudgetListViewModel
-    @State var isCreateBudgetSheetOpen = false
+    @State var isWizzardOpen = false
     
     var body: some View {
         VStack {
+            Spacer()
             ForEach(vm.budgets) { budget in
                 VStack {
                     Button {
@@ -30,25 +31,30 @@ struct BudgetListView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.horizontal], 10)
                         .padding([.vertical], 5)
-                        .background(RoundedRectangle(cornerRadius: 5).stroke(lineWidth: 1))
+                        .background(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(lineWidth: 1).background(Color.white))
                         .tint(.black)
                     }
                 }
             }
+            .padding([.horizontal], 10)
             HStack {
                 Spacer()
                 Button {
-                    isCreateBudgetSheetOpen.toggle()
+                    isWizzardOpen.toggle()
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
             }
+            .padding([.horizontal], 10)
+            Spacer()
         }
-        .padding([.horizontal], 10)
+        .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
             vm.loadBudgets()
         }
-        .fullScreenCover(isPresented: $isCreateBudgetSheetOpen, onDismiss: onBudgetCreated) {
+        .fullScreenCover(isPresented: $isWizzardOpen, onDismiss: onBudgetCreated) {
             BudgetWizardView(vm: resolver.budgetWizzardViewModel())
         }
     }
@@ -71,7 +77,14 @@ struct BudgetListView: View {
     
     dm.save()
     
-    return BudgetListView(vm: DependencyResolver.preview.budgetListViewModel())
-        .environmentObject(AppState())
-        .environmentObject(DependencyResolver.preview)
+    do {
+        let vm = try DependencyResolver.preview.budgetListViewModel()
+        return BudgetListView(vm: vm)
+            .environmentObject(AppState())
+            .environmentObject(DependencyResolver.preview)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
+    
+    
 }

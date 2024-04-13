@@ -8,20 +8,13 @@
 import Foundation
 import Combine
 
-struct CategoryName: Identifiable {
-    
-    var id: UUID
-    var name: String
-    var iconName: String
-    
-}
-
 class TransactionSheetViewModel: ObservableObject {
     
     @Published var name: String
     @Published var amount: Double
     @Published var isValid: Bool
-    @Published var category: CategoryName?
+    @Published var category: PlanCategory?
+    @Published var date: Date
     
     private let budget: BudgetEntity
     private let budgetService: BudgetService
@@ -38,6 +31,7 @@ class TransactionSheetViewModel: ObservableObject {
         self.amount = 0
         self.isValid = false
         self.category = nil
+        self.date = Date()
         
         isFormValid
             .receive(on: DispatchQueue.main)
@@ -48,17 +42,21 @@ class TransactionSheetViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func getCetegories() -> [CategoryName] {
+    func getCetegories() -> [PlanCategory] {
         guard let budgetId = budget.id else { return [] }
         
         do {
             categoryEntities = try budgetService.getCategoriesOfBudget(budgetId)
             return categoryEntities
                 .map {
-                    CategoryName(
+                    PlanCategory(
                         id: $0.id ?? UUID(),
                         name: $0.name ?? "Unknown",
-                        iconName: $0.iconName ?? "Unknown"
+                        amount: $0.amount,
+                        percent: $0.percent,
+                        iconName: $0.iconName ?? "Unknown",
+                        type: $0.typeValue,
+                        createdAt: $0.createdAt ?? Date()
                     )
                 }
         } catch {
@@ -79,7 +77,7 @@ class TransactionSheetViewModel: ObservableObject {
         if let entity = categoryEntity {
             do {
                 try budgetService.createTransaction(
-                    Transaction(id: UUID(), name: name, amount: amount, createdAt: Date()),
+                    Transaction(id: UUID(), name: name, amount: amount, createdAt: date),
                     category: entity,
                     budget: budget
                 )

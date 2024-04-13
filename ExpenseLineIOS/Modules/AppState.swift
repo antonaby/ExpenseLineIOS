@@ -49,8 +49,8 @@ class AppState: ObservableObject {
                 let decoder = JSONDecoder()
                 let budgetId = try decoder.decode(BudgetId.self, from: data)
                 if let id = budgetId.id {
-                    let es = resolver.expensesService()
-                    return try es.getBudgetById(id)
+                    let bs = resolver.budgetService()
+                    return try bs.getBudgetById(id)
                 }
             } catch {
                 // TODO: show error

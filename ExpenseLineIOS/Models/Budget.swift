@@ -39,29 +39,3 @@ extension BudgetEntity {
     }
     
 }
-
-struct BudgetPlan: Identifiable, Hashable {
-    
-    let id: UUID
-    let startsAt: Date
-    let endsAt: Date
-    let createdAt: Date
-    let plannedExpenses: Double
-    let planType: PlanType
-    
-}
-
-extension BudgetPlanEntity {
-    
-    var planTypeValue: PlanType {
-        get {
-            PlanType(rawValue: Int(self.planType))!
-        }
-        set {
-            self.planType = Int64(newValue.rawValue)
-        }
-    }
-    
-}
-
-

@@ -33,7 +33,7 @@ extension PlanCategoryEntity {
     
     var typeValue: PlanCategoryType {
         get {
-            PlanCategoryType(rawValue: Int(self.type))!
+            PlanCategoryType(rawValue: Int(self.type)) ?? .outcomePercent
         }
         set {
             self.type = Int64(newValue.rawValue)
@@ -59,12 +59,3 @@ struct Transaction: Identifiable, Hashable {
     
 }
 
-
-// TODO: remove if needed
-struct Space: Identifiable, Hashable {
-    
-    let id: UUID
-    let name: String
-    let iconName: String
-    
-}

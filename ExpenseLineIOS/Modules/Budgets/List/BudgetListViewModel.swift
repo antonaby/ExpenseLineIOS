@@ -12,20 +12,19 @@ class BudgetListViewModel: ObservableObject {
     
     @Published var budgets: [BudgetEntity]
     
-    private let es: ExpensesService
+    private let budgetService: BudgetService
     
-    init(es: ExpensesService) {
-        self.es = es
-        
+    init(budgetService: BudgetService) {
+        self.budgetService = budgetService
         self.budgets = []
     }
     
     func loadBudgets() {
         do {
-            budgets = try es.getBudgets()
+            budgets = try budgetService.getAllBudgets()
         } catch {
-            // TODO: show error
-            print("Error \(error)")
+            // TODO: show error message
+            print("Something went wrong: \(error)")
         }
     }
     

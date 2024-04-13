@@ -10,9 +10,9 @@ import SwiftUI
 struct CategoryListView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding var category: CategoryName?
+    @Binding var category: PlanCategory?
        
-    var categories: [CategoryName]
+    var categories: [PlanCategory]
     
     var body: some View {
         VStack {
@@ -82,6 +82,11 @@ struct TransactionSheetView: View {
                             .keyboardType(.decimalPad)
                     } header: {
                         Text("Amount")
+                    }
+                    Section {
+                        DatePicker("Date", selection: $vm.date, in: ...Date())
+                    } header: {
+                        Text("Other")
                     }
                 }
             }

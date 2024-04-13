@@ -23,6 +23,28 @@ class BudgetService {
         self.dm = dm
     }
     
+    func getBudgetById(_ budgetId: UUID) throws -> BudgetEntity? {
+        let request = BudgetEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", budgetId as CVarArg)
+        request.fetchLimit = 1
+        
+        do {
+            return try dm.viewContext.fetch(request).first
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget by id", reason: error)
+        }
+    }
+    
+    func getAllBudgets() throws -> [BudgetEntity] {
+        let request = BudgetEntity.fetchRequest()
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget by id", reason: error)
+        }
+    }
+    
     func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Double {
         guard 
             let starsAt = period.startsAt,

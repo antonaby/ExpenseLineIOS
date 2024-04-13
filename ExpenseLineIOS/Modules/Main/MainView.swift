@@ -14,9 +14,9 @@ struct MainView: View {
     var body: some View {
         Group {
             if let budget = appState.budget {
-                getBudgetView(budget)
+                getBudget(budget)
             } else {
-                BudgetListView(vm: appState.resolver.budgetListViewModel())
+                getBudgetList()
             }
         }
         .environmentObject(appState.resolver)
@@ -26,13 +26,23 @@ struct MainView: View {
         }
     }
     
-    func getBudgetView(_ budget: BudgetEntity) -> some View {
+    func getBudget(_ budget: BudgetEntity) -> some View {
         do {
             let vm = try appState.resolver.budgetViewModel(budget)
             return AnyView(BudgetView(vm: vm, path: .constant(NavigationPath())))
         } catch {
             // TODO: Show error
-            return AnyView(Text("Something went wrong"))
+            return AnyView(Text("Something went wrong \(error)"))
+        }
+    }
+    
+    func getBudgetList() -> some View {
+        do {
+            let vm = try appState.resolver.budgetListViewModel()
+            return AnyView(BudgetListView(vm: vm))
+        } catch {
+            // TODO: Show error
+            return AnyView(Text("Something went wrong \(error)"))
         }
     }
     
