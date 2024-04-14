@@ -11,8 +11,7 @@ struct CategoryListView: View {
     
     @Environment(\.dismiss) var dismiss
     @Binding var category: PlanCategory?
-       
-    var categories: [PlanCategory]
+    @Binding var categories: [PlanCategory]
     
     var body: some View {
         VStack {
@@ -40,7 +39,6 @@ struct TransactionSheetView: View {
     @State var path = NavigationPath()
     
     var body: some View {
-        
         VStack {
             HStack {
                 Button {
@@ -63,7 +61,7 @@ struct TransactionSheetView: View {
                             Text("Name")
                         }
                         NavigationLink {
-                            CategoryListView(category: $vm.category, categories: vm.getCetegories())
+                            CategoryListView(category: $vm.category, categories: $vm.categories)
                         } label: {
                             if let category = vm.category {
                                 Text(category.name)
@@ -90,6 +88,9 @@ struct TransactionSheetView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            vm.loadCetegories()
         }
     }
 }

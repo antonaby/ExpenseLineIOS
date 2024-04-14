@@ -15,6 +15,7 @@ class TransactionSheetViewModel: ObservableObject {
     @Published var isValid: Bool
     @Published var category: PlanCategory?
     @Published var date: Date
+    @Published var categories: [PlanCategory]
     
     private let budget: BudgetEntity
     private let budgetService: BudgetService
@@ -32,6 +33,7 @@ class TransactionSheetViewModel: ObservableObject {
         self.isValid = false
         self.category = nil
         self.date = Date()
+        self.categories = []
         
         isFormValid
             .receive(on: DispatchQueue.main)
@@ -42,12 +44,12 @@ class TransactionSheetViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func getCetegories() -> [PlanCategory] {
-        guard let budgetId = budget.id else { return [] }
+    func loadCetegories() {
+        guard let budgetId = budget.id else { return }
         
         do {
             categoryEntities = try budgetService.getCategoriesOfBudget(budgetId)
-            return categoryEntities
+            categories = categoryEntities
                 .map {
                     PlanCategory(
                         id: $0.id ?? UUID(),
@@ -61,7 +63,7 @@ class TransactionSheetViewModel: ObservableObject {
                 }
         } catch {
             // TODO: show error
-            return []
+            print("Something went wrong \(error)")
         }
     }
     

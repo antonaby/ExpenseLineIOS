@@ -59,3 +59,10 @@ struct Transaction: Identifiable, Hashable {
     
 }
 
+struct CategorySpendings: Identifiable {
+    
+    let id: UUID
+    let totalAmount: Double
+    let expectedPercent: Double
+    
+}

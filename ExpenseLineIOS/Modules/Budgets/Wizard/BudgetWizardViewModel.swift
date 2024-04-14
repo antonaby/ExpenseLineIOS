@@ -100,6 +100,7 @@ class BudgetWizardViewModel: ObservableObject {
         return String(format: "%.2f", income - outcome)
     }
     
+    // TODO: add all currencies
     func getCurrencies() -> [String] {
         ["USD", "EUR", "AMD", "RUB"]
     }

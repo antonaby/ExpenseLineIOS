@@ -26,7 +26,7 @@ struct BudgetView: View {
                     Button {
                         appState.unselectBudget()
                     } label: {
-                        Text(vm.bugget.name ?? "Unknown")
+                        Text(vm.budget.name ?? "Unknown")
                             .font(.title2)
                             .tint(.black)
                     }
@@ -52,14 +52,14 @@ struct BudgetView: View {
                     .presentationDetents([.medium])
             }
             .onAppear {
-                vm.updateTotalAmount()
+                vm.updateSpendingPerCategory()
             }
         }
     }
     
     func getTransactionSheet() -> AnyView {
         do {
-            let vm = try resolver.transactionSheetViewModel(budget: vm.bugget)
+            let vm = try resolver.transactionSheetViewModel(budget: vm.budget)
             return AnyView(TransactionSheetView(vm: vm))
         } catch {
             return AnyView(Text("Something went wrong \(error)"))
@@ -67,7 +67,7 @@ struct BudgetView: View {
     }
     
     func onCategoryUpdated() {
-        vm.updateTotalAmount()
+        vm.updateSpendingPerCategory()
     }
     
 }

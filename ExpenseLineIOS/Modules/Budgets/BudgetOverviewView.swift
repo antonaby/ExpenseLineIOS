@@ -14,11 +14,16 @@ struct BudgetOverviewView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(vm.totalAmount, format: .number.rounded(increment: 0.01))
+                Text(vm.totalDynamicAmount, format: .number.rounded(increment: 0.01))
                     .font(.title)
                 Text(vm.getCurrency())
                     .font(.title2)
             }
+            HStack {
+                Text(vm.plannedBudget, format: .number.rounded(increment: 0.01))
+                Text(vm.getCurrency())
+            }
+            .font(.caption)
             Spacer()
         }
     }
