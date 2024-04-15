@@ -63,6 +63,7 @@ struct CategorySpendings: Identifiable {
     
     let id: UUID
     let totalAmount: Double
+    let expectedAmount: Double
     let expectedPercent: Double
     
 }

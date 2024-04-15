@@ -38,6 +38,7 @@ extension DependencyResolver {
             return BudgetViewModel(
                 budget: budget,
                 period: try budgetService.getOrCreateLastPeriod(budgetId),
+                categories: try budgetService.getCategoriesOfBudget(budgetId),
                 budgetService: budgetService
             )
         }

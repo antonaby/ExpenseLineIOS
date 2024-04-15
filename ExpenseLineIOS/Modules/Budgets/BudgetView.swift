@@ -33,6 +33,8 @@ struct BudgetView: View {
                     .frame(maxWidth: .infinity)
                     Text(vm.getPeriodName())
                         .font(.caption)
+                        .padding([.horizontal], 10)
+                        .background(RoundedRectangle(cornerRadius: 3).foregroundColor(.green))
                     TabView {
                         BudgetOverviewView(vm: vm)
                             .tabItem { Image(systemName: "house") }
@@ -52,7 +54,7 @@ struct BudgetView: View {
                     .presentationDetents([.medium])
             }
             .onAppear {
-                vm.updateSpendingPerCategory()
+                vm.updateAmounts()
             }
         }
     }
@@ -67,7 +69,7 @@ struct BudgetView: View {
     }
     
     func onCategoryUpdated() {
-        vm.updateSpendingPerCategory()
+        vm.updateAmounts()
     }
     
 }

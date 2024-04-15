@@ -52,6 +52,15 @@ class BudgetService {
         }
     }
     
+    func spendingsForFixedCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
+        do {
+            let categories = try categoriesByType(budget: budget, type: .outcomeFixed)
+            return try spendingsPerCategory(period, budget: budget, categories: categories)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch dynamic category spendings", reason: error)
+        }
+    }
+    
     func spendingsForDynamicCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
         do {
             let categories = try categoriesByType(budget: budget, type: .outcomePercent)
@@ -96,12 +105,17 @@ class BudgetService {
         categoryId.expression = NSExpression(format: "category.id")
         categoryId.expressionResultType = .UUIDAttributeType
         
+        let categoryExpectedAmount = NSExpressionDescription()
+        categoryExpectedAmount.name = "expectedAmount"
+        categoryExpectedAmount.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "category.amount")])
+        categoryExpectedAmount.expressionResultType = .doubleAttributeType
+        
         let categoryExpectedPercent = NSExpressionDescription()
         categoryExpectedPercent.name = "expectedPercent"
         categoryExpectedPercent.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "category.percent")])
         categoryExpectedPercent.expressionResultType = .doubleAttributeType
         
-        request.propertiesToFetch = [categoryId, categoryExpectedPercent, totalAmountExpressionDescription]
+        request.propertiesToFetch = [categoryId, categoryExpectedAmount, categoryExpectedPercent, totalAmountExpressionDescription]
         request.propertiesToGroupBy = ["category.id"]
         request.predicate = NSPredicate(
             format: "createdAt BETWEEN {%@, %@} AND budget.id == %@ AND category.id IN %@",
@@ -115,6 +129,7 @@ class BudgetService {
                 result.append(CategorySpendings(
                     id: element["categoryId"] as! UUID,
                     totalAmount: element["totalAmount"] as! Double,
+                    expectedAmount: element["expectedAmount"] as! Double,
                     expectedPercent: element["expectedPercent"] as! Double
                 ))
             }
