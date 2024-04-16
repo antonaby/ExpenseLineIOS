@@ -44,11 +44,13 @@ struct BudgetView: View {
                         BudgetStatsView()
                             .tabItem { Image(systemName: "chart.pie") }
                     }
+                    .padding([.horizontal], 15)
                 }
                 AddExpenseButton {
                     transactionSheet.toggle()
                 }
             }
+            .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
                 getTransactionSheet()
                     .presentationDetents([.medium])

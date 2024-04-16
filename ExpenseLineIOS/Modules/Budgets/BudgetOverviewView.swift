@@ -7,27 +7,96 @@
 
 import SwiftUI
 
+
+struct ProgressView: View {
+    
+    var percent: CGFloat
+    
+    var body: some View {
+        GeometryReader { proxy in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .foregroundColor(.green)
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .frame(width: proxy.size.width * percent, alignment: .leading)
+                    .foregroundColor(.red)
+            }
+        }.frame(maxHeight: 10)
+    }
+    
+}
+
+struct DailyExpensesCard: View {
+    
+    @Binding var currentExpenses: Double
+    @Binding var plannedExpenses: Double
+    
+    var currency: String
+    
+    var body: some View {
+        Group {
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Average Daily Spending")
+                    .font(.title)
+                Text("Money you can spend today")
+                    .tint(.gray)
+                    .font(.caption)
+                HStack(alignment: .lastTextBaseline) {
+                    Text(currentExpenses, format: .number.rounded(increment: 0.01))
+                        .font(.largeTitle)
+                    Text(currency)
+                        .font(.title3)
+                }
+                .padding([.top], 10)
+                ProgressView(percent: getTotalPercent())
+                HStack(alignment: .lastTextBaseline) {
+                    Text(plannedExpenses, format: .number.rounded(increment: 0.01))
+                    Text(currency)
+                        .font(.caption)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding([.horizontal], 15)
+            .padding([.vertical], 5)
+        }
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+    }
+    
+    func getTotalPercent() -> Double {
+        if currentExpenses <= 0 {
+            return 0
+        }
+        
+        if plannedExpenses <= 0 {
+            return 1
+        }
+        
+        let percent = currentExpenses / plannedExpenses
+        if percent > 1 {
+            return 1
+        }
+        
+        return percent
+    }
+}
+
+
 struct BudgetOverviewView: View {
     
     @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
         VStack {
-            VStack {
-                HStack {
-                    Text(vm.currentDailyOutcome, format: .number.rounded(increment: 0.01))
-                    Text("/")
-                    Text(vm.plannedDailyOutcome, format: .number.rounded(increment: 0.01))
-                }.font(.title)
-                Text(vm.getCurrency())
-            }
-            HStack {
-                Text(vm.totalDynamicOutcomeAmount + vm.totalFixedOutcomeAmount,
-                     format: .number.rounded(increment: 0.01))
-                Text(vm.getCurrency())
-            }
+            DailyExpensesCard(
+                currentExpenses: $vm.currentDailyOutcome,
+                plannedExpenses: $vm.plannedDailyOutcome,
+                currency: vm.getCurrency()
+            )
             Spacer()
         }
+        .background(Color(uiColor: .secondarySystemBackground))
     }
 }
 
@@ -44,7 +113,8 @@ struct BudgetOverviewView: View {
     
     do {
         let vm = try DependencyResolver.preview.budgetViewModel(budget)
-        
+        vm.currentDailyOutcome = 20
+        vm.plannedDailyOutcome = 100
         return BudgetOverviewView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
