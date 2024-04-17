@@ -71,6 +71,16 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
+    func getAllTransactions() -> [TransactionEntity] {
+        do {
+            return try budgetService.getAllTransactions(period, budget: budget)
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+            return []
+        }
+    }
+    
     private func calculatePlannedDailyOutcome(_ plannedDynamicAmount: Double, _ currentDynamicAmount: Double) {
         guard let startsAt = period.startsAt, let endsAt = period.endstAt
         else {

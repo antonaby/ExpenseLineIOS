@@ -21,34 +21,28 @@ struct BudgetView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            ZStack(alignment: .bottom) {
-                VStack {
-                    Button {
-                        appState.unselectBudget()
-                    } label: {
-                        Text(vm.budget.name ?? "Unknown")
-                            .font(.title2)
-                            .tint(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Text(vm.getPeriodName())
-                        .font(.caption)
-                        .padding([.horizontal], 10)
-                        .background(RoundedRectangle(cornerRadius: 3).foregroundColor(.green))
-                    TabView {
-                        BudgetOverviewView(vm: vm)
-                            .tabItem { Image(systemName: "house") }
-                        Spacer().tabItem {
-                            EmptyView()
-                        }
-                        BudgetStatsView()
-                            .tabItem { Image(systemName: "chart.pie") }
-                    }
-                    .padding([.horizontal], 15)
+            VStack {
+                Button {
+                    appState.unselectBudget()
+                } label: {
+                    Text(vm.budget.name ?? "Unknown")
+                        .font(.title2)
+                        .tint(.black)
                 }
-                AddExpenseButton {
-                    transactionSheet.toggle()
+                .frame(maxWidth: .infinity)
+                Text(vm.getPeriodName())
+                    .font(.caption)
+                    .padding([.horizontal], 10)
+                    .background(RoundedRectangle(cornerRadius: 3).foregroundColor(.green))
+                TabView {
+                    BudgetOverviewView(vm: vm, transactionSheet: $transactionSheet)
+                        .tabItem { Image(systemName: "house") }
+                    TransactionListView(vm: vm)
+                        .tabItem { Image(systemName: "list.clipboard") }
+                    BudgetStatsView()
+                        .tabItem { Image(systemName: "chart.pie") }
                 }
+                .padding([.horizontal], 15)
             }
             .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {

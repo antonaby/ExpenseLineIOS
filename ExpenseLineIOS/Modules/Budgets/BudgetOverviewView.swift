@@ -86,17 +86,23 @@ struct DailyExpensesCard: View {
 struct BudgetOverviewView: View {
     
     @ObservedObject var vm: BudgetViewModel
+    @Binding var transactionSheet: Bool
     
     var body: some View {
-        VStack {
-            DailyExpensesCard(
-                currentExpenses: $vm.currentDailyOutcome,
-                plannedExpenses: $vm.plannedDailyOutcome,
-                currency: vm.getCurrency()
-            )
-            Spacer()
-        }
-        .background(Color(uiColor: .secondarySystemBackground))
+        ZStack(alignment: .bottomTrailing) {
+            VStack {
+                DailyExpensesCard(
+                    currentExpenses: $vm.currentDailyOutcome,
+                    plannedExpenses: $vm.plannedDailyOutcome,
+                    currency: vm.getCurrency()
+                )
+                Spacer()
+            }
+            AddExpenseButton {
+                transactionSheet.toggle()
+            }
+            .offset(y: -10)
+        }.background(Color(uiColor: .secondarySystemBackground))
     }
 }
 
@@ -115,7 +121,7 @@ struct BudgetOverviewView: View {
         let vm = try DependencyResolver.preview.budgetViewModel(budget)
         vm.currentDailyOutcome = 20
         vm.plannedDailyOutcome = 100
-        return BudgetOverviewView(vm: vm)
+        return BudgetOverviewView(vm: vm, transactionSheet: .constant(false))
     } catch {
         return Text("Something went wrong \(error)")
     }

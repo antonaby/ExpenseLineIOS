@@ -22,6 +22,27 @@ class BudgetService {
         self.dm = dm
     }
     
+    func getAllTransactions(_ period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
+        guard
+            let starsAt = period.startsAt,
+            let endsAt = period.endstAt,
+            let budgetId = budget.id
+        else {
+            return []
+        }
+        
+        let request = TransactionEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "createdAt BETWEEN {%@, %@} AND budget.id == %@",
+            starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions by budget id", reason: error)
+        }
+    }
+    
     func getBudgetById(_ budgetId: UUID) throws -> BudgetEntity? {
         let request = BudgetEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", budgetId as CVarArg)
