@@ -37,6 +37,8 @@ struct BudgetView: View {
                 TabView {
                     BudgetOverviewView(vm: vm, transactionSheet: $transactionSheet)
                         .tabItem { Image(systemName: "house") }
+                    CategoryListView(vm: vm)
+                        .tabItem { Image(systemName: "menucard") }
                     TransactionListView(vm: vm)
                         .tabItem { Image(systemName: "list.clipboard") }
                     BudgetStatsView()

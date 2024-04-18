@@ -67,3 +67,11 @@ struct CategorySpendings: Identifiable {
     let expectedPercent: Double
     
 }
+
+struct CategoryInfo: Identifiable {
+    
+    let id: UUID
+    let entity: PlanCategoryEntity
+    let spendings: CategorySpendings?
+    
+}

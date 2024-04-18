@@ -73,6 +73,17 @@ class BudgetService {
         }
     }
     
+    func spendingsForAllCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
+        guard let budgetId = budget.id else { return [] }
+        
+        do {
+            let categories = try getCategoriesOfBudget(budgetId)
+            return try spendingsPerCategory(period, budget: budget, categories: categories)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch dynamic category spendings", reason: error)
+        }
+    }
+    
     func spendingsForFixedCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
         do {
             let categories = try categoriesByType(budget: budget, type: .outcomeFixed)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryListView: View {
+struct CategorySelectorView: View {
     
     @Environment(\.dismiss) var dismiss
     @Binding var category: PlanCategory?
@@ -61,7 +61,7 @@ struct TransactionSheetView: View {
                             Text("Name")
                         }
                         NavigationLink {
-                            CategoryListView(category: $vm.category, categories: $vm.categories)
+                            CategorySelectorView(category: $vm.category, categories: $vm.categories)
                         } label: {
                             if let category = vm.category {
                                 Text(category.name)

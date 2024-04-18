@@ -1,31 +1,35 @@
 //
-//  TransactionListView.swift
+//  CategoryListView.swift
 //  ExpenseLineIOS
 //
-//  Created by Anton Abyshev on 17.04.24.
+//  Created by Anton Abyshev on 18.04.24.
 //
 
 import SwiftUI
 
-struct TransactionCard: View {
+struct CategoryCard: View {
     
-    let transaction: TransactionEntity
+    let category: CategoryInfo
     let currency: String
     
     var body: some View {
         Group {
             VStack(alignment: .leading) {
-                Text(transaction.category?.name ?? "")
-                    .font(.caption)
-                Text(transaction.name ?? "")
+                Text(category.entity.name ?? "")
                 HStack(alignment: .firstTextBaseline) {
-                    Text(transaction.amount, format: .number.rounded(increment: 0.01))
+                    Text(category.spendings?.totalAmount ?? 0, format: .number.rounded(increment: 0.01))
                         .font(.largeTitle)
                     Text(currency)
                         .font(.title3)
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                Text(transaction.createdAt ?? Date(), format: .dateTime)
-                    .font(.caption)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                if category.entity.amount > 0 {
+                    Text(category.entity.amount, format: .number.rounded(increment: 0.01))
+                        .font(.caption)
+                } else if category.entity.percent > 0 {
+                    Text(category.entity.percent, format: .percent)
+                        .font(.caption)
+                }
             }
             .padding([.horizontal], 15)
             .padding([.vertical], 5)
@@ -35,15 +39,15 @@ struct TransactionCard: View {
     }
 }
 
-struct TransactionListView: View {
+struct CategoryListView: View {
     
     @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(vm.getAllTransactions()) { transaction in
-                    TransactionCard(transaction: transaction, currency: vm.getCurrency())
+                ForEach(vm.getCategoryInfos()) { category in
+                    CategoryCard(category: category, currency: vm.getCurrency())
                 }
             }
             Spacer()
@@ -107,7 +111,7 @@ struct TransactionListView: View {
         )
         
         let vm = try DependencyResolver.preview.budgetViewModel(budget)
-        return TransactionListView(vm: vm)
+        return CategoryListView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }

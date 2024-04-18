@@ -41,6 +41,28 @@ class BudgetViewModel: ObservableObject {
         budget.currency ?? "USD"
     }
     
+    func getCategoryInfos() -> [CategoryInfo] {
+        do {
+            let byCategory = try budgetService
+                .spendingsForAllCategories(period, budget: budget)
+                .reduce(into: [UUID:CategorySpendings]()) { result, spendings in
+                result[spendings.id] = spendings
+            }
+            
+            return categories.map { category in
+                if let categoryId = category.id, let spendings = byCategory[categoryId] {
+                    return CategoryInfo(id: categoryId, entity: category, spendings: spendings)
+                }
+                
+                return CategoryInfo(id: category.id!, entity: category, spendings: nil)
+            }
+        } catch {
+            // TODO: shopw error
+            print("Error \(error)")
+            return []
+        }
+    }
+    
     func getPeriodName() -> String {
         guard let starts = period.startsAt else { return "Unknown" }
         

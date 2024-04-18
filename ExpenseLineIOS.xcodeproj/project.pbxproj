@@ -26,6 +26,7 @@
 		D23126A72BC2799C0008BDD6 /* EditPlanCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
 		D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23EE3322BC66B7C0088B246 /* BudgetService.swift */; };
+		D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */; };
 		D250D4CF2BB828EB0050638C /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4CE2BB828EB0050638C /* Budget.swift */; };
 		D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = D263EC6C2BB6E97600BA4287 /* Swinject */; };
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
@@ -82,6 +83,7 @@
 		D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanCategorySheet.swift; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D23EE3322BC66B7C0088B246 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
+		D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
 		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */,
 				D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */,
 				D2B7F1982BCFE06E0003C283 /* TransactionListView.swift */,
+				D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */,
 			);
 			path = Budgets;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */,
 				D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */,
 				D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */,
+				D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */,
 				D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
