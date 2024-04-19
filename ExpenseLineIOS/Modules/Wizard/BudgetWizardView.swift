@@ -78,7 +78,7 @@ struct BudgetWizardView: View {
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPageIndex) {
-                basePageView()
+                MainWizardPageView(vm: vm)
                     .tag(WizzardPage.base)
                 incomePageView()
                     .tag(WizzardPage.income)
@@ -130,36 +130,6 @@ struct BudgetWizardView: View {
         let previousValue = currentPageIndex.rawValue - 1
         if previousValue >= 0 {
             currentPageIndex = WizzardPage(rawValue: previousValue) ?? .base
-        }
-    }
-    
-    @ViewBuilder
-    func basePageView() -> some View {
-        Form {
-            Section(header: Text("Basic")) {
-                TextField("Name", text: $vm.name).padding([.top, .bottom], 5)
-            }
-            Section(header: Text("Type")) {
-                Picker("Currency", selection: $vm.currency) {
-                    ForEach(vm.getCurrencies(), id: \.self) { currency in
-                        Text(currency)
-                    }
-                }
-                Picker("Type", selection: $vm.type) {
-                    ForEach(PlanType.allCases) { type in
-                        Text("\(type)")
-                    }
-                }
-            }
-            Section(header: Text("Reminder")) {
-                DatePicker("Daily reminder",
-                           selection: $vm.dailyReminder,
-                           displayedComponents: [.hourAndMinute])
-                DatePicker("Period Starts at",
-                           selection: $vm.periodStartsAt,
-                           in: vm.getDateRange(),
-                           displayedComponents: [.date])
-            }
         }
     }
     
@@ -359,6 +329,20 @@ struct BudgetWizardView: View {
     
 }
 
-#Preview {
-    BudgetWizardView(vm: DependencyResolver.preview.budgetWizzardViewModel())
+#Preview("New Budget") {
+    do {
+        let vm = try DependencyResolver.preview.budgetWizzardViewModel()
+        return MainWizardPageView(vm: vm)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
+}
+
+#Preview("Edit Budget") {
+    do {
+        let vm = try DependencyResolver.preview.budgetWizzardViewModel()
+        return MainWizardPageView(vm: vm)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
 }

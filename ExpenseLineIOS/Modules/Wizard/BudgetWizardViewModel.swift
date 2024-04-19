@@ -16,6 +16,12 @@ enum DataEditOp {
 
 class BudgetWizardViewModel: ObservableObject {
     
+    @Published var budget: BudgetEntity?
+    
+    private let budgetService: BudgetService
+    private let dataService: DataService
+    
+    // TODO: Review
     @Published var name: String
     @Published var currency: String
     @Published var type: PlanType
@@ -35,11 +41,16 @@ class BudgetWizardViewModel: ObservableObject {
     
     @Published var periodStartsAt: Date
     
-    private let budgetService: BudgetService
     
-    init(budgetService: BudgetService) {
+    
+    init(budget: BudgetEntity?, budgetService: BudgetService, dataService: DataService) {
+        self.budget = budget
         self.budgetService = budgetService
-                
+        self.dataService = dataService
+        
+        
+        
+        // TODO: review
         self.name = "My Budget"
         self.currency = "USD"
         self.type = .mountly

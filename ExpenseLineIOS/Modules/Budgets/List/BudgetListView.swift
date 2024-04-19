@@ -55,12 +55,22 @@ struct BudgetListView: View {
             vm.loadBudgets()
         }
         .fullScreenCover(isPresented: $isWizzardOpen, onDismiss: onBudgetCreated) {
-            BudgetWizardView(vm: resolver.budgetWizzardViewModel())
+            getWizardView()
         }
     }
     
     func onBudgetCreated() {
         vm.loadBudgets()
+    }
+    
+    func getWizardView() -> some View {
+        do {
+            let vm = try resolver.budgetWizzardViewModel()
+            return AnyView(BudgetWizardView(vm: vm))
+        } catch {
+            // TODO: show error
+            return AnyView(Text("Something went wrong \(error)"))
+        }
     }
     
 }
