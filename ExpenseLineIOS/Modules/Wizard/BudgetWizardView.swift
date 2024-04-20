@@ -78,7 +78,7 @@ struct BudgetWizardView: View {
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPageIndex) {
-                MainWizardPageView(vm: vm)
+                MainWizardPageView(vm: MainWizardPageViewModel())
                     .tag(WizzardPage.base)
                 incomePageView()
                     .tag(WizzardPage.income)
@@ -332,7 +332,7 @@ struct BudgetWizardView: View {
 #Preview("New Budget") {
     do {
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return MainWizardPageView(vm: vm)
+        return BudgetWizardView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -341,7 +341,7 @@ struct BudgetWizardView: View {
 #Preview("Edit Budget") {
     do {
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return MainWizardPageView(vm: vm)
+        return BudgetWizardView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }

@@ -6,10 +6,42 @@
 //
 
 import SwiftUI
+import Combine
+
+class MainWizardPageViewModel: ObservableObject {
+    
+    @Published var name: String
+    @Published var currency: String
+    @Published var type: PlanType
+    @Published var dailyReminder: Date
+    @Published var periodStartsAt: Date
+    
+    init() {
+        self.name = ""
+        self.currency = "USD"
+        self.type = .mountly
+        self.dailyReminder = Date()
+        
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        self.periodStartsAt = Calendar.current.date(from: periodComponents)!
+    }
+    
+    func getCurrencies() -> [String] {
+        return ["USD", "EUR", "RUB", "AMD"]
+    }
+    
+    func getDateRange() -> ClosedRange<Date> {
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        let firstDay = Calendar.current.date(from: periodComponents)!
+        
+        return firstDay ... Date()
+    }
+    
+}
 
 struct MainWizardPageView: View {
     
-    @ObservedObject var vm: BudgetWizardViewModel
+    @ObservedObject var vm: MainWizardPageViewModel
     
     var body: some View {
         Form {
@@ -27,25 +59,20 @@ struct MainWizardPageView: View {
                         Text("\(type)")
                     }
                 }
+                DatePicker("Period Starts at",
+                           selection: $vm.periodStartsAt,
+                           in: vm.getDateRange(),
+                           displayedComponents: [.date])
             }
             Section(header: Text("Reminder")) {
                 DatePicker("Daily reminder",
                            selection: $vm.dailyReminder,
                            displayedComponents: [.hourAndMinute])
-                DatePicker("Period Starts at",
-                           selection: $vm.periodStartsAt,
-                           in: vm.getDateRange(),
-                           displayedComponents: [.date])
             }
         }
     }
 }
 
 #Preview {
-    do {
-        let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return MainWizardPageView(vm: vm)
-    } catch {
-        return Text("Something went wrong \(error)")
-    }
+    MainWizardPageView(vm: MainWizardPageViewModel())
 }
