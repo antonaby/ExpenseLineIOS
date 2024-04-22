@@ -16,7 +16,7 @@ enum DataEditOp {
 
 class BudgetWizardViewModel: ObservableObject {
     
-    @Published var budget: BudgetEntity?
+    @Published var budget: BudgetEntity
     
     private let budgetService: BudgetService
     private let dataService: DataService
@@ -43,7 +43,7 @@ class BudgetWizardViewModel: ObservableObject {
     
     
     
-    init(budget: BudgetEntity?, budgetService: BudgetService, dataService: DataService) {
+    init(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
         self.budgetService = budgetService
         self.dataService = dataService

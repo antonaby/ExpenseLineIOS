@@ -21,7 +21,7 @@ class BudgetViewModel: ObservableObject {
     
         
     private let budgetService: BudgetService
-    private let categories: [PlanCategoryEntity]
+    let categories: [PlanCategoryEntity]
     
     init(budget: BudgetEntity, period: PeriodEntity, categories: [PlanCategoryEntity], budgetService: BudgetService) {
         self.budget = budget

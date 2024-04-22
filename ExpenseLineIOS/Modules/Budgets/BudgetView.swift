@@ -18,18 +18,28 @@ struct BudgetView: View {
     @EnvironmentObject var appState: AppState
     
     @State var transactionSheet: Bool = false
+    @State var editBudgetSheetOpen: Bool = false
     
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
-                Button {
-                    appState.unselectBudget()
-                } label: {
-                    Text(vm.budget.name ?? "Unknown")
-                        .font(.title2)
-                        .tint(.black)
+                ZStack {
+                    Button {
+                        appState.unselectBudget()
+                    } label: {
+                        Text(vm.budget.name ?? "Unknown")
+                            .font(.title2)
+                            .tint(.black)
+                    }
+                    .frame(maxWidth: .infinity)
+                    Button {
+                        editBudgetSheetOpen.toggle()
+                    } label: {
+                        Image(systemName: "pencil")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding([.trailing], 10)
                 }
-                .frame(maxWidth: .infinity)
                 Text(vm.getPeriodName())
                     .font(.caption)
                     .padding([.horizontal], 10)
@@ -51,9 +61,26 @@ struct BudgetView: View {
                 getTransactionSheet()
                     .presentationDetents([.medium])
             }
+            .fullScreenCover(isPresented: $editBudgetSheetOpen, onDismiss: onBudgetUpdated) {
+                getWizardView()
+            }
             .onAppear {
                 vm.updateAmounts()
             }
+        }
+    }
+    
+    func onBudgetUpdated() {
+        
+    }
+    
+    func getWizardView() -> some View {
+        do {
+            let vm = try resolver.budgetWizzardViewModel(budget: vm.budget)
+            return AnyView(BudgetWizardView(vm: vm))
+        } catch {
+            // TODO: show error
+            return AnyView(Text("Something went wrong \(error)"))
         }
     }
     

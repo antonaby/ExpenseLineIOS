@@ -31,7 +31,7 @@ extension BudgetEntity {
     
     var planTypeValue: PlanType {
         get {
-            PlanType(rawValue: Int(self.planType))!
+            PlanType(rawValue: Int(self.planType)) ?? .mountly
         }
         set {
             self.planType = Int64(newValue.rawValue)

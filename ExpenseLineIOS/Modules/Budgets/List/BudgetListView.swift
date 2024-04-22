@@ -15,6 +15,7 @@ struct BudgetListView: View {
     
     @StateObject var vm: BudgetListViewModel
     @State var isWizzardOpen = false
+    @State var selectedBudget: BudgetEntity?
     
     var body: some View {
         VStack {
@@ -27,6 +28,12 @@ struct BudgetListView: View {
                         HStack {
                             Text(budget.name ?? "Unknown")
                                 .font(.title2)
+                            Spacer()
+                            Button {
+                                selectedBudget = budget
+                            } label: {
+                                Text("Edit")
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.horizontal], 10)
@@ -54,18 +61,22 @@ struct BudgetListView: View {
         .onAppear {
             vm.loadBudgets()
         }
+        .fullScreenCover(item: $selectedBudget, onDismiss: onBudgetCreated) { budget in
+            getWizardView(budget: budget)
+        }
         .fullScreenCover(isPresented: $isWizzardOpen, onDismiss: onBudgetCreated) {
             getWizardView()
         }
     }
     
     func onBudgetCreated() {
+        selectedBudget = nil
         vm.loadBudgets()
     }
     
-    func getWizardView() -> some View {
+    func getWizardView(budget: BudgetEntity? = nil) -> some View {
         do {
-            let vm = try resolver.budgetWizzardViewModel()
+            let vm = try resolver.budgetWizzardViewModel(budget: budget)
             return AnyView(BudgetWizardView(vm: vm))
         } catch {
             // TODO: show error

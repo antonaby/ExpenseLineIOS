@@ -62,8 +62,6 @@ struct CategoryListView: View {
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
-   
-    dm.save()
     
     do {
         let category1 = PlanCategoryEntity(context: dm.viewContext)
@@ -74,6 +72,7 @@ struct CategoryListView: View {
         category1.iconName = "preview"
         category1.typeValue = .outcomePercent
         category1.createdAt = Date()
+        category1.budget = budget
         
         let category2 = PlanCategoryEntity(context: dm.viewContext)
         category2.id = UUID()
@@ -83,8 +82,7 @@ struct CategoryListView: View {
         category2.iconName = "preview"
         category2.typeValue = .outcomeFixed
         category2.createdAt = Date()
-        
-        dm.save()
+        category2.budget = budget
         
         try budgetService.createTransaction(
             Transaction(id: UUID(), name: "Test 1", amount: 15, createdAt: Date()),

@@ -32,7 +32,12 @@ extension DependencyResolver {
     func budgetWizzardViewModel(budget: BudgetEntity? = nil) throws -> BudgetWizardViewModel {
         if let budgetService = resolver.resolve(BudgetService.self),
            let dataService = resolver.resolve(DataService.self) {
-            return BudgetWizardViewModel(budget: budget, budgetService: budgetService, dataService: dataService)
+            if let budgetEntity = budget {
+                return BudgetWizardViewModel(budget: budgetEntity, budgetService: budgetService, dataService: dataService)
+            }
+            
+            let budgetEntity = BudgetEntity(context: databaseManager().viewContext)
+            return BudgetWizardViewModel(budget: budgetEntity, budgetService: budgetService, dataService: dataService)
         }
         
         throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)

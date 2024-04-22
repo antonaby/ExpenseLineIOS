@@ -78,7 +78,7 @@ struct BudgetWizardView: View {
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPageIndex) {
-                MainWizardPageView(vm: MainWizardPageViewModel())
+                MainWizardPageView(vm: MainWizardPageViewModel(vm.budget))
                     .tag(WizzardPage.base)
                 incomePageView()
                     .tag(WizzardPage.income)

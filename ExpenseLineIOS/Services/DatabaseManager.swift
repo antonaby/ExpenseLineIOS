@@ -49,6 +49,10 @@ class DatabaseManager: ObservableObject {
         }
     }
     
+    func rollback() {
+        guard container.viewContext.hasChanges else { return }
+        container.viewContext.rollback()
+    }
     
     // TODO: remove
     func save() {
