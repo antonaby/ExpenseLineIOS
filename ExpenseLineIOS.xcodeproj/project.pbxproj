@@ -30,6 +30,7 @@
 		D24CA2972BD2944C00896BC6 /* MainWizardPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */; };
 		D24CA2992BD295F400896BC6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2982BD295F400896BC6 /* DataService.swift */; };
 		D250D4CF2BB828EB0050638C /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4CE2BB828EB0050638C /* Budget.swift */; };
+		D2563E502BD7D9A800D28F65 /* CategoryWizardPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */; };
 		D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = D263EC6C2BB6E97600BA4287 /* Swinject */; };
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
 		D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */; };
@@ -89,6 +90,7 @@
 		D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWizardPageView.swift; sourceTree = "<group>"; };
 		D24CA2982BD295F400896BC6 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
+		D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWizardPageView.swift; sourceTree = "<group>"; };
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
 		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
 		D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBundle.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */,
+				D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				D2B7F1992BCFE06E0003C283 /* TransactionListView.swift in Sources */,
 				D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */,
 				D200C8F62BC55C0400C048AB /* EditDailyPlanCategorySheet.swift in Sources */,
+				D2563E502BD7D9A800D28F65 /* CategoryWizardPageView.swift in Sources */,
 				D20EF2E42BB19436006CF8CD /* Transaction.swift in Sources */,
 				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
 				D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */,

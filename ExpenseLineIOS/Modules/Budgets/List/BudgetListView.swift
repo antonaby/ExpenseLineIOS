@@ -76,8 +76,9 @@ struct BudgetListView: View {
     
     func getWizardView(budget: BudgetEntity? = nil) -> some View {
         do {
+            let contoller = try resolver.budgetWizzardController()
             let vm = try resolver.budgetWizzardViewModel(budget: budget)
-            return AnyView(BudgetWizardView(vm: vm))
+            return AnyView(BudgetWizardView(controller: contoller, vm: vm))
         } catch {
             // TODO: show error
             return AnyView(Text("Something went wrong \(error)"))

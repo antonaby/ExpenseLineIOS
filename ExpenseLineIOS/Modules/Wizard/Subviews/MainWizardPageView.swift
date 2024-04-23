@@ -14,7 +14,7 @@ class MainWizardPageViewModel: ObservableObject {
     @Published var currency: String
     @Published var type: PlanType
     @Published var periodStartsAt: Date
-    @Published var dailyReminder: Date
+    @Published var dailyReminderAt: Date
     
     @Published var isFormValid: Bool = false
     
@@ -28,10 +28,8 @@ class MainWizardPageViewModel: ObservableObject {
         self.currency = budget.currency ?? "EUR"
         self.type = budget.planTypeValue 
         
-        // TODO: add to entity
-        self.dailyReminder = Date()
-        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
-        self.periodStartsAt = Calendar.current.date(from: periodComponents)!
+        self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
+        self.periodStartsAt = budget.periodStartsAt ?? MainWizardPageViewModel.getFirstDayOfPeriod()
         
         isValid.sink { [weak self]  isValid in
             guard let self = self else { return }
@@ -59,12 +57,17 @@ class MainWizardPageViewModel: ObservableObject {
         }
     }
     
-    func save() {
+    func updateEntity() {
         budget.name = name
         budget.currency = currency
         budget.planTypeValue = type
-        
-        // TODO: save with CoreData
+        budget.dailyRemainderAt = dailyReminderAt
+        budget.periodStartsAt = periodStartsAt
+    }
+    
+    private static func getFirstDayOfPeriod() -> Date {
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        return Calendar.current.date(from: periodComponents)!
     }
     
 }
@@ -124,7 +127,7 @@ struct MainWizardPageView: View {
             }
             Section(header: Text("Reminder")) {
                 DatePicker("Daily reminder",
-                           selection: $vm.dailyReminder,
+                           selection: $vm.dailyReminderAt,
                            displayedComponents: [.hourAndMinute])
             }
         }

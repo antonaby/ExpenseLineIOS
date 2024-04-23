@@ -22,6 +22,13 @@ class BudgetService {
         self.dm = dm
     }
     
+    func newBudgetEntity() -> BudgetEntity {
+        let entity = BudgetEntity(context: dm.viewContext)
+        entity.id = UUID()
+        
+        return entity
+    }
+    
     
     
     // TODO: Review

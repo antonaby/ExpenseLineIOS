@@ -50,14 +50,30 @@ struct NextButtonView: View {
     
 }
 
+class BudgetWizardContoller: ObservableObject {
+    
+    var budget: BudgetEntity
+    var mainPageVm: MainWizardPageViewModel
+    var incomePageVm: CategoryWizardPageViewModel
+    
+    init(_ budget: BudgetEntity) {
+        self.budget = budget
+        self.mainPageVm = MainWizardPageViewModel(budget)
+        self.incomePageVm = CategoryWizardPageViewModel(budget)
+    }
+    
+}
 
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
     @State var currentPageIndex: WizzardPage = .base
-    @StateObject var vm: BudgetWizardViewModel
-    
     @State var sheet: WizzardSheet?
+
+    @StateObject var controller: BudgetWizardContoller
+    
+    
+    @StateObject var vm: BudgetWizardViewModel // TODO: remove
     
     var body: some View {
         VStack {
@@ -78,9 +94,9 @@ struct BudgetWizardView: View {
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPageIndex) {
-                MainWizardPageView(vm: MainWizardPageViewModel(vm.budget))
+                MainWizardPageView(vm: controller.mainPageVm)
                     .tag(WizzardPage.base)
-                incomePageView()
+                CategoryWizardPageView(vm: controller.incomePageVm)
                     .tag(WizzardPage.income)
                 fixedExpensesPageView()
                     .tag(WizzardPage.fixed)
@@ -331,8 +347,9 @@ struct BudgetWizardView: View {
 
 #Preview("New Budget") {
     do {
+        let contoller = try DependencyResolver.preview.budgetWizzardController()
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetWizardView(vm: vm)
+        return BudgetWizardView(controller: contoller, vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -340,8 +357,9 @@ struct BudgetWizardView: View {
 
 #Preview("Edit Budget") {
     do {
+        let contoller = try DependencyResolver.preview.budgetWizzardController()
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetWizardView(vm: vm)
+        return BudgetWizardView(controller: contoller, vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }
