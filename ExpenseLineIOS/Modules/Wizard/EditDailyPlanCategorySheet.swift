@@ -10,8 +10,8 @@ import SwiftUI
 struct EditDailyPlanCategorySheet: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding<PlanCategory> var category: PlanCategory
-    @Binding<DataEditOp> var op: DataEditOp
+    @Binding var category: PlanCategory
+    @Binding var op: CategoryActionOperation
     
     var body: some View {
         VStack {

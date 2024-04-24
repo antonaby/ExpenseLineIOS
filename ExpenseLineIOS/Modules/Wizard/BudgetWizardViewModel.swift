@@ -6,17 +6,149 @@
 //
 
 import Foundation
+import Combine
 
-enum DataEditOp {
-    case none
-    case create
-    case edit
-    case delete
+enum WizzardPage: Int, Hashable {
+    case base = 0
+    case income
+    case fixed
+    case dynamic
+    case summary
 }
 
 class BudgetWizardViewModel: ObservableObject {
     
-    @Published var budget: BudgetEntity
+    @Published var name: String
+    @Published var currency: String
+    @Published var type: PlanType
+    @Published var periodStartsAt: Date
+    @Published var dailyReminderAt: Date
+    
+    @Published var isFormValid: Bool = false
+    @Published var selectedCategory: PlanCategory?
+    @Published var op: CategoryActionOperation = .none
+    
+    private var budget: BudgetEntity
+    private var categories: [PlanCategory]
+    private var budgetService: BudgetService
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(_ budget: BudgetEntity, budgetService: BudgetService) {
+        self.budget = budget
+        self.categories = []
+        self.budgetService = budgetService
+        
+        self.name = budget.name ?? "My Budget"
+        self.currency = budget.currency ?? "EUR"
+        self.type = budget.planTypeValue
+        self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
+        self.periodStartsAt = budget.periodStartsAt ?? BudgetWizardViewModel.getFirstDayOfPeriod()
+        
+        isValid.sink { [weak self]  isValid in
+            guard let self = self else { return }
+            self.isFormValid = isValid
+        }
+        .store(in: &cancellables)
+    }
+    
+    func categoriesForType(_ type: PlanCategoryType) -> [PlanCategory] {
+        categories.filter { $0.type == type }
+    }
+    
+    func selectCategory(_ category: PlanCategory, op: CategoryActionOperation) {
+        selectedCategory = category
+        self.op = op
+    }
+    
+    func newCategory(_ page: WizzardPage) {
+        // TODO: generate from data
+        switch page {
+        case .income:
+            selectedCategory = PlanCategory(id: UUID(), name: "My Income", amount: 0, percent: 0, iconName: "case", type: .income, createdAt: Date())
+        case .fixed:
+            selectedCategory = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, percent: 0, iconName: "case", type: .outcomeFixed, createdAt: Date())
+        case .dynamic:
+            selectedCategory = PlanCategory(id: UUID(), name: "My daily expense", amount: 0, percent: 0, iconName: "car", type: .outcomePercent, createdAt: Date())
+        default:
+            return
+        }
+        
+        op = .create
+    }
+    
+    func updateCategory(_ category: PlanCategory) {
+        selectedCategory = nil
+        categories.append(category)
+    }
+    
+    func deleteCategory(_ category: PlanCategory) {
+        selectedCategory = nil
+        categories.removeAll(where: { $0.id == category.id })
+    }
+    
+    func getCurrencies() -> [String] {
+        return ["USD", "EUR", "RUB", "AMD"] // TODO: get currencies from DB
+    }
+    
+    func getDateRange() -> ClosedRange<Date> {
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        let firstDay = Calendar.current.date(from: periodComponents)!
+        
+        return firstDay ... Date()
+    }
+    
+    // TODO: cancel all
+    func cancelAll() {
+        for c in cancellables {
+            c.cancel()
+        }
+    }
+    
+    func updateEntity() {
+        budget.name = name
+        budget.currency = currency
+        budget.planTypeValue = type
+        budget.dailyRemainderAt = dailyReminderAt
+        budget.periodStartsAt = periodStartsAt
+    }
+    
+    private static func getFirstDayOfPeriod() -> Date {
+        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
+        return Calendar.current.date(from: periodComponents)!
+    }
+    
+}
+
+extension BudgetWizardViewModel {
+    
+    var isNameValid: AnyPublisher<Bool, Never> {
+        $name.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .map { name in
+                name.count > 0
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isCurrencyValid: AnyPublisher<Bool, Never> {
+        $currency.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .map { currency in
+                currency.count == 3
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isValid: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(isNameValid, isCurrencyValid)
+            .map { isNameValid, isCurrencyValid in
+                isNameValid && isCurrencyValid
+            }
+            .eraseToAnyPublisher()
+    }
+    
+}
+    
+    
+    /*@Published var budget: BudgetEntity
     
     private let budgetService: BudgetService
     private let dataService: DataService
@@ -144,7 +276,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func newDailyOutcome() {
-        selectedDailyOutcome = PlanCategory(id: UUID(), name: "My daily expense", amount: 0, percent: 0, iconName: "car", type: .outcomePercent, createdAt: Date())
+        selectedDailyOutcome =
         dailyOutcomeOp = .create
     }
     
@@ -154,7 +286,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func newFixedOutcome() {
-        selectedFixedOutcome = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, percent: 0, iconName: "case", type: .outcomeFixed, createdAt: Date())
+        selectedFixedOutcome =
         fixedOutcomeOp = .create
     }
     
@@ -251,6 +383,7 @@ class BudgetWizardViewModel: ObservableObject {
         
         return firstDay ... Date()
     }
+     */
     
-}
+
 

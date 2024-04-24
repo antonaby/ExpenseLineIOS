@@ -26,30 +26,17 @@ class ModulesBundle: Assembly {
 extension DependencyResolver {
     
     func appState() -> AppState {
+        // TODO: resolve correctly
         resolver.resolve(AppState.self)!
     }
     
-    func budgetWizzardController(budget: BudgetEntity? = nil) throws -> BudgetWizardContoller {
-        if let budgetService = resolver.resolve(BudgetService.self) {
-            if budget != nil {
-                return BudgetWizardContoller(budget!)
-            }
-            
-            return BudgetWizardContoller(budgetService.newBudgetEntity())
-        }
-        
-        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
-    }
-    
     func budgetWizzardViewModel(budget: BudgetEntity? = nil) throws -> BudgetWizardViewModel {
-        if let budgetService = resolver.resolve(BudgetService.self),
-           let dataService = resolver.resolve(DataService.self) {
+        if let budgetService = resolver.resolve(BudgetService.self) {
             if let budgetEntity = budget {
-                return BudgetWizardViewModel(budget: budgetEntity, budgetService: budgetService, dataService: dataService)
+                return BudgetWizardViewModel(budgetEntity, budgetService: budgetService)
             }
             
-            let budgetEntity = BudgetEntity(context: databaseManager().viewContext)
-            return BudgetWizardViewModel(budget: budgetEntity, budgetService: budgetService, dataService: dataService)
+            return BudgetWizardViewModel(budgetService.newBudgetEntity(), budgetService: budgetService)
         }
         
         throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)

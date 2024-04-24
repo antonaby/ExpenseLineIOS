@@ -7,23 +7,6 @@
 
 import SwiftUI
 
-enum WizzardPage: Int, Hashable {
-    case base = 0
-    case income
-    case fixed
-    case daily
-    case summary
-}
-
-enum WizzardSheet: String, Identifiable {
-    case incomeSource
-    case fixedOutcome
-    case dailyOutcome
-    
-    var id: String { rawValue }
-    
-}
-
 struct NextButtonView: View {
     
     private let label: String
@@ -50,30 +33,12 @@ struct NextButtonView: View {
     
 }
 
-class BudgetWizardContoller: ObservableObject {
-    
-    var budget: BudgetEntity
-    var mainPageVm: MainWizardPageViewModel
-    var incomePageVm: CategoryWizardPageViewModel
-    
-    init(_ budget: BudgetEntity) {
-        self.budget = budget
-        self.mainPageVm = MainWizardPageViewModel(budget)
-        self.incomePageVm = CategoryWizardPageViewModel(budget)
-    }
-    
-}
-
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State var currentPageIndex: WizzardPage = .base
-    @State var sheet: WizzardSheet?
+    @State var currentPage: WizzardPage = .base
 
-    @StateObject var controller: BudgetWizardContoller
-    
-    
-    @StateObject var vm: BudgetWizardViewModel // TODO: remove
+    @StateObject var vm: BudgetWizardViewModel
     
     var body: some View {
         VStack {
@@ -83,7 +48,7 @@ struct BudgetWizardView: View {
                 } label: {
                     Label("Back", systemImage: "chevron.backward")
                 }
-                .disabled(currentPageIndex.rawValue == 0)
+                .disabled(currentPage.rawValue == 0)
                 Spacer()
                 Button {
                     dismiss()
@@ -93,22 +58,23 @@ struct BudgetWizardView: View {
                 }
             }
             .padding([.horizontal], 10)
-            TabView(selection: $currentPageIndex) {
-                MainWizardPageView(vm: controller.mainPageVm)
+            TabView(selection: $currentPage) {
+                MainWizardPageView(vm: vm)
                     .tag(WizzardPage.base)
-                CategoryWizardPageView(vm: controller.incomePageVm)
+                CategoryWizardPageView(vm: vm, page: .income, type: .income)
                     .tag(WizzardPage.income)
-                fixedExpensesPageView()
+                CategoryWizardPageView(vm: vm, page: .fixed, type: .outcomeFixed)
                     .tag(WizzardPage.fixed)
-                dailyExpensesPageView()
-                    .tag(WizzardPage.daily)
+                CategoryWizardPageView(vm: vm, page: .dynamic, type: .outcomePercent)
+                    .tag(WizzardPage.dynamic)
+                /*
                 summaryPageView()
                     .tag(WizzardPage.summary)
+                 */
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             NextButtonView(nextButtonCaption()) {
-                if currentPageIndex == .summary {
-                    vm.createBudget()
+                if currentPage == .summary {
                     dismiss()
                 } else {
                     nextPage()
@@ -116,202 +82,37 @@ struct BudgetWizardView: View {
             }
         }
         .background(Color(uiColor: .secondarySystemBackground))
-        .sheet(item: $sheet, onDismiss: onSheetClosed) { sheet in
-            switch sheet {
-            case .incomeSource:
-                EditPlanCategorySheet(category: $vm.selectedIncomeSource, op: $vm.incomeSourceOp)
-                    .presentationDetents([.medium])
-            case .fixedOutcome:
-                EditPlanCategorySheet(category: $vm.selectedFixedOutcome, op: $vm.fixedOutcomeOp)
-                    .presentationDetents([.medium])
-            case .dailyOutcome:
-                EditDailyPlanCategorySheet(category: $vm.selectedDailyOutcome, op: $vm.dailyOutcomeOp)
-                    .presentationDetents([.medium])
-            }
+        .sheet(item: $vm.selectedCategory) { category in
+            EditPlanCategorySheet(vm: EditPlanCategorySheetViewModel(category), op: vm.op)
+                .onUpdateCategory { category in
+                    vm.updateCategory(category)
+                }
+                .onDeleteCategory { category in
+                    vm.deleteCategory(category)
+                }
+                .presentationDetents([.medium])
         }
     }
     
     func nextButtonCaption() -> String {
-        currentPageIndex == .summary ? "Create" : "Next"
+        currentPage == .summary ? "Create" : "Next"
     }
     
     func nextPage() {
-        let nextValue = currentPageIndex.rawValue + 1
+        let nextValue = currentPage.rawValue + 1
         if  nextValue <= WizzardPage.summary.rawValue {
-            currentPageIndex = WizzardPage(rawValue: nextValue) ?? .base
+            currentPage = WizzardPage(rawValue: nextValue) ?? .base
         }
     }
     
     func previousPage() {
-        let previousValue = currentPageIndex.rawValue - 1
+        let previousValue = currentPage.rawValue - 1
         if previousValue >= 0 {
-            currentPageIndex = WizzardPage(rawValue: previousValue) ?? .base
+            currentPage = WizzardPage(rawValue: previousValue) ?? .base
         }
     }
     
-    @ViewBuilder
-    func incomePageView() -> some View {
-        VStack {
-            Form {
-                Section {
-                    ForEach(vm.incomeSources) { income in
-                        Button {
-                            vm.selectIncomeSource(income, op: .edit)
-                            sheet = .incomeSource
-                        } label: {
-                            HStack {
-                                Image(systemName: income.iconName)
-                                Text(income.name)
-                                Spacer()
-                                Text(income.amount, format: .number.rounded(increment: 0.01))
-                                Text(vm.currency)
-                            }
-                            .foregroundColor(.black)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                vm.selectIncomeSource(income, op: .delete)
-                                vm.performEditOps()
-                            } label: {
-                                Label("delete", systemImage: "trash.fill")
-                            }
-                        }
-                        .listRowSeparator(.hidden)
-                    }
-                    HStack {
-                        Button {
-                            vm.newIncomeSource()
-                            sheet = .incomeSource
-                        } label: {
-                            Label("Add", systemImage: "plus")
-                        }
-                    }
-                } header: {
-                    Text("Income Sources")
-                }
-            }
-            HStack {
-                Text(vm.getTotalIncome(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            .font(.title2)
-        }
-    }
-    
-    @ViewBuilder
-    func fixedExpensesPageView() -> some View {
-        VStack {
-            HStack {
-                Text(vm.getRemainingBudget(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            .font(.title3)
-            Form {
-                Section {
-                    ForEach(vm.fixedOutcomes) { outcome in
-                        Button {
-                            vm.selectFixedOutcome(outcome, op: .edit)
-                            sheet = .fixedOutcome
-                        } label: {
-                            HStack {
-                                Image(systemName: outcome.iconName)
-                                Text(outcome.name)
-                                Spacer()
-                                Text(outcome.amount, format: .number.rounded(increment: 0.01))
-                                Text(vm.currency)
-                            }
-                            .foregroundColor(.black)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                vm.selectFixedOutcome(outcome, op: .delete)
-                                vm.performEditOps()
-                            } label: {
-                                Label("delete", systemImage: "trash.fill")
-                            }
-                        }
-                        .listRowSeparator(.hidden)
-                    }
-                    HStack {
-                        Button {
-                            vm.newFixedOutcome()
-                            sheet = .fixedOutcome
-                        } label: {
-                            Label("Add", systemImage: "plus")
-                        }
-                    }
-                } header: {
-                    Text("Fixed outcomes")
-                }
-            }
-            HStack {
-                Text(vm.getTotalFixedOutcome(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            .font(.title2)
-        }
-    }
-    
-    @ViewBuilder
-    func dailyExpensesPageView() -> some View {
-        VStack {
-            HStack {
-                Text(vm.getRemainingBudget(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            .font(.title3)
-            Form {
-                Section {
-                    ForEach(vm.dailyOutcomes) { outcome in
-                        Button {
-                            vm.selectDailyOutcome(outcome, op: .edit)
-                            sheet = .dailyOutcome
-                        } label: {
-                            VStack {
-                                HStack {
-                                    Image(systemName: outcome.iconName)
-                                    Text(outcome.name)
-                                    Spacer()
-                                    Text(outcome.percent, format: .percent)
-                                }
-                                HStack {
-                                    Text(vm.getAmountForDailyCatedory(outcome), format: .number.rounded(increment: 0.01))
-                                    Text(vm.currency)
-                                }
-                                .font(.caption)
-                            }
-                            .foregroundColor(.black)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                vm.selectDailyOutcome(outcome, op: .delete)
-                                vm.performEditOps()
-                            } label: {
-                                Label("delete", systemImage: "trash.fill")
-                            }
-                        }
-                        .listRowSeparator(.hidden)
-                    }
-                    HStack {
-                        Button {
-                            vm.newDailyOutcome()
-                            sheet = .dailyOutcome
-                        } label: {
-                            Label("Add", systemImage: "plus")
-                        }
-                    }
-                } header: {
-                    Text("Daily outcomes")
-                }
-            }
-            HStack {
-                Text(vm.getTotalDailyOutcome(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            .font(.title2)
-        }
-    }
-    
+    /*
     @ViewBuilder
     func summaryPageView() -> some View {
         VStack {
@@ -337,19 +138,14 @@ struct BudgetWizardView: View {
             }
         }
         .font(.title3)
-    }
-    
-    func onSheetClosed() {
-        vm.performEditOps()
-    }
+    }*/
     
 }
 
 #Preview("New Budget") {
     do {
-        let contoller = try DependencyResolver.preview.budgetWizzardController()
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetWizardView(controller: contoller, vm: vm)
+        return BudgetWizardView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -357,9 +153,8 @@ struct BudgetWizardView: View {
 
 #Preview("Edit Budget") {
     do {
-        let contoller = try DependencyResolver.preview.budgetWizzardController()
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetWizardView(controller: contoller, vm: vm)
+        return BudgetWizardView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }

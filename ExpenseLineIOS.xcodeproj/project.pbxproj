@@ -224,6 +224,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		D22EC4202BD8E927003E1D48 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		D2350E682BBC3592002B93A0 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +255,7 @@
 			children = (
 				D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */,
 				D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */,
+				D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -278,10 +286,10 @@
 		D2705E592BC01D45003426A8 /* Wizard */ = {
 			isa = PBXGroup;
 			children = (
+				D22EC4202BD8E927003E1D48 /* Components */,
 				D24CA2952BD2942200896BC6 /* Subviews */,
 				D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */,
 				D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */,
-				D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */,
 				D200C8F52BC55C0400C048AB /* EditDailyPlanCategorySheet.swift */,
 			);
 			path = Wizard;

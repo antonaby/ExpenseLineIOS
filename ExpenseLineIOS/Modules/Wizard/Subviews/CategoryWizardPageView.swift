@@ -7,58 +7,33 @@
 
 import SwiftUI
 
-enum CategoryEditOperation {
-    
-    case none
-    case create
-    case edit
-    case delete
-    
-}
-
-class CategoryWizardPageViewModel: ObservableObject {
-    
-    @Published var categories: [PlanCategory]
-    
-    private var budget: BudgetEntity
-    
-    init(_ budget: BudgetEntity) {
-        self.budget = budget
-        self.categories = []
-    }
- 
-    func selectCategory(_ category: PlanCategory, op: CategoryEditOperation) {
-        
-    }
-    
-}
-
 struct CategoryWizardPageView: View {
     
-    @ObservedObject var vm: CategoryWizardPageViewModel
+    @ObservedObject var vm: BudgetWizardViewModel
+    
+    let page: WizzardPage
+    let type: PlanCategoryType
     
     var body: some View {
         VStack {
             Form {
                 Section {
-                    ForEach(vm.categories) { category in
+                    ForEach(vm.categoriesForType(type)) { category in
                         Button {
-                            vm.selectCategory(category, op: .edit)
-                            //sheet = .incomeSource
+                            vm.selectCategory(category, op: .update)
                         } label: {
                             HStack {
                                 Image(systemName: category.iconName)
                                 Text(category.name)
                                 Spacer()
                                 Text(category.amount, format: .number.rounded(increment: 0.01))
-                                //Text(vm.currency)
+                                Text(vm.currency)
                             }
                             .foregroundColor(.black)
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
                                 vm.selectCategory(category, op: .delete)
-                                //vm.performEditOps()
                             } label: {
                                 Label("delete", systemImage: "trash.fill")
                             }
@@ -67,26 +42,28 @@ struct CategoryWizardPageView: View {
                     }
                     HStack {
                         Button {
-                            //vm.newIncomeSource()
-                            //sheet = .incomeSource
+                            vm.newCategory(page)
                         } label: {
                             Label("Add", systemImage: "plus")
                         }
                     }
                 } header: {
-                    Text("Income Sources")
+                    Text("Header Name") // TODO: fill
+                }
+                HStack {
+                    Text(vm.currency)
                 }
             }
-            HStack {
-                //Text(vm.getTotalIncome(), format: .number.rounded(increment: 0.01))
-                //Text(vm.currency)
-            }
-            .font(.title2)
         }
     }
 }
 
 #Preview {
     let budget = BudgetEntity(context: DependencyResolver.preview.databaseManager().viewContext)
-    return CategoryWizardPageView(vm: CategoryWizardPageViewModel(budget))
+    let vm = BudgetWizardViewModel(budget, budgetService: DependencyResolver.preview.budgetService())
+    return CategoryWizardPageView(
+        vm: vm,
+        page: .fixed,
+        type: .income
+    )
 }
