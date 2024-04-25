@@ -29,6 +29,30 @@ class BudgetService {
         return entity
     }
     
+    func newCategoryEntity(_ budget: BudgetEntity) -> PlanCategoryEntity {
+        let entity = PlanCategoryEntity(context: dm.viewContext)
+        entity.id = UUID()
+        entity.createdAt = Date()
+        entity.budget = budget
+        
+        return entity
+    }
+    
+    func deleteCategory(_ category: PlanCategoryEntity, budget: BudgetEntity) {
+        budget.removeFromCategories(category)
+        dm.viewContext.delete(category)
+    }
+    
+    func save() throws {
+        try dm.sync()
+    }
+    
+    func rollback() {
+        dm.rollback()
+    }
+    
+    
+    
     
     
     // TODO: Review

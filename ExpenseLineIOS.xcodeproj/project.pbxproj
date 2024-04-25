@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D200C8F62BC55C0400C048AB /* EditDailyPlanCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200C8F52BC55C0400C048AB /* EditDailyPlanCategorySheet.swift */; };
 		D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2AA2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift */; };
 		D20EF2AF2BB18CFB006CF8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */; };
 		D20EF2B22BB18CFB006CF8CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D20EF2B12BB18CFB006CF8CD /* Preview Assets.xcassets */; };
@@ -25,6 +24,8 @@
 		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
 		D23126A72BC2799C0008BDD6 /* EditPlanCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
+		D2370CD42BDA68FC00B75B4D /* SummaryWizardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */; };
+		D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */; };
 		D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23EE3322BC66B7C0088B246 /* BudgetService.swift */; };
 		D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */; };
 		D24CA2972BD2944C00896BC6 /* MainWizardPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */; };
@@ -64,7 +65,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D200C8F52BC55C0400C048AB /* EditDailyPlanCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDailyPlanCategorySheet.swift; sourceTree = "<group>"; };
 		D20EF2A72BB18CFA006CF8CD /* ExpenseLineIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpenseLineIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D20EF2AA2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseLineIOSApp.swift; sourceTree = "<group>"; };
 		D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +85,8 @@
 		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanCategorySheet.swift; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryWizardPage.swift; sourceTree = "<group>"; };
+		D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizzardNextButton.swift; sourceTree = "<group>"; };
 		D23EE3322BC66B7C0088B246 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
 		D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWizardPageView.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		D22EC4202BD8E927003E1D48 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */,
 				D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */,
 				D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */,
+				D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -290,7 +294,6 @@
 				D24CA2952BD2942200896BC6 /* Subviews */,
 				D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */,
 				D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */,
-				D200C8F52BC55C0400C048AB /* EditDailyPlanCategorySheet.swift */,
 			);
 			path = Wizard;
 			sourceTree = "<group>";
@@ -454,7 +457,7 @@
 				D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */,
 				D2B7F1992BCFE06E0003C283 /* TransactionListView.swift in Sources */,
 				D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */,
-				D200C8F62BC55C0400C048AB /* EditDailyPlanCategorySheet.swift in Sources */,
+				D2370CD42BDA68FC00B75B4D /* SummaryWizardPage.swift in Sources */,
 				D2563E502BD7D9A800D28F65 /* CategoryWizardPageView.swift in Sources */,
 				D20EF2E42BB19436006CF8CD /* Transaction.swift in Sources */,
 				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
@@ -464,6 +467,7 @@
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
+				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
 				D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */,
 				D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */,
 				D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */,

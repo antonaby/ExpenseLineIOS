@@ -7,37 +7,11 @@
 
 import SwiftUI
 
-struct NextButtonView: View {
-    
-    private let label: String
-    private let action: () -> Void
-    
-    init(_ label: String, action: @escaping () -> Void) {
-        self.label = label
-        self.action = action
-    }
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(label)
-                .font(.title2)
-                .frame(maxWidth: .infinity)
-                
-        }
-        .padding([.horizontal], 25)
-        .buttonStyle(.borderedProminent)
-        .tint(.green)
-    }
-    
-}
-
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
     @State var currentPage: WizzardPage = .base
-
+    
     @StateObject var vm: BudgetWizardViewModel
     
     var body: some View {
@@ -51,6 +25,7 @@ struct BudgetWizardView: View {
                 .disabled(currentPage.rawValue == 0)
                 Spacer()
                 Button {
+                    vm.rollback()
                     dismiss()
                 } label: {
                     Label("Close", systemImage: "xmark")
@@ -61,20 +36,19 @@ struct BudgetWizardView: View {
             TabView(selection: $currentPage) {
                 MainWizardPageView(vm: vm)
                     .tag(WizzardPage.base)
-                CategoryWizardPageView(vm: vm, page: .income, type: .income)
+                CategoryWizardPageView(vm: vm, name: "Income", page: .income, type: .income)
                     .tag(WizzardPage.income)
-                CategoryWizardPageView(vm: vm, page: .fixed, type: .outcomeFixed)
+                CategoryWizardPageView(vm: vm, name: "Fixed Outcome", page: .fixed, type: .outcomeFixed)
                     .tag(WizzardPage.fixed)
-                CategoryWizardPageView(vm: vm, page: .dynamic, type: .outcomePercent)
+                CategoryWizardPageView(vm: vm, name: "Daily Spendings", page: .dynamic, type: .outcomePercent)
                     .tag(WizzardPage.dynamic)
-                /*
-                summaryPageView()
+                SummaryWizardPage()
                     .tag(WizzardPage.summary)
-                 */
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            NextButtonView(nextButtonCaption()) {
+            WizzardNextButton(nextButtonCaption()) {
                 if currentPage == .summary {
+                    vm.save()
                     dismiss()
                 } else {
                     nextPage()
@@ -83,12 +57,15 @@ struct BudgetWizardView: View {
         }
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(item: $vm.selectedCategory) { category in
-            EditPlanCategorySheet(vm: EditPlanCategorySheetViewModel(category), op: vm.op)
+            EditPlanCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category))
                 .onUpdateCategory { category in
                     vm.updateCategory(category)
                 }
                 .onDeleteCategory { category in
                     vm.deleteCategory(category)
+                }
+                .onDismissCategory { category in
+                    vm.dismissCategory(category)
                 }
                 .presentationDetents([.medium])
         }
@@ -111,34 +88,6 @@ struct BudgetWizardView: View {
             currentPage = WizzardPage(rawValue: previousValue) ?? .base
         }
     }
-    
-    /*
-    @ViewBuilder
-    func summaryPageView() -> some View {
-        VStack {
-            HStack {
-                Text("Income:")
-                Text(vm.getTotalIncome(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            HStack {
-                Text("Fixed Expenses:")
-                Text(vm.getTotalFixedOutcome(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            HStack {
-                Text("Daily:")
-                Text(vm.getTotalDailyOutcome(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-            HStack {
-                Text("Savings:")
-                Text(vm.getRemainingBudget(), format: .number.rounded(increment: 0.01))
-                Text(vm.currency)
-            }
-        }
-        .font(.title3)
-    }*/
     
 }
 

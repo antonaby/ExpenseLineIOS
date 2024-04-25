@@ -11,6 +11,7 @@ struct CategoryWizardPageView: View {
     
     @ObservedObject var vm: BudgetWizardViewModel
     
+    let name: String
     let page: WizzardPage
     let type: PlanCategoryType
     
@@ -20,11 +21,11 @@ struct CategoryWizardPageView: View {
                 Section {
                     ForEach(vm.categoriesForType(type)) { category in
                         Button {
-                            vm.selectCategory(category, op: .update)
+                            vm.selectCategory(category)
                         } label: {
                             HStack {
-                                Image(systemName: category.iconName)
-                                Text(category.name)
+                                Image(systemName: category.iconName ?? "questionmark.app.fill")
+                                Text(category.name ?? "Unknown")
                                 Spacer()
                                 Text(category.amount, format: .number.rounded(increment: 0.01))
                                 Text(vm.currency)
@@ -33,7 +34,7 @@ struct CategoryWizardPageView: View {
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
-                                vm.selectCategory(category, op: .delete)
+                                vm.deleteCategory(category)
                             } label: {
                                 Label("delete", systemImage: "trash.fill")
                             }
@@ -48,7 +49,7 @@ struct CategoryWizardPageView: View {
                         }
                     }
                 } header: {
-                    Text("Header Name") // TODO: fill
+                    Text(name)
                 }
                 HStack {
                     Text(vm.currency)
@@ -63,6 +64,7 @@ struct CategoryWizardPageView: View {
     let vm = BudgetWizardViewModel(budget, budgetService: DependencyResolver.preview.budgetService())
     return CategoryWizardPageView(
         vm: vm,
+        name: "Preview",
         page: .fixed,
         type: .income
     )

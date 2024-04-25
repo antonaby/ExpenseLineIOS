@@ -7,19 +7,12 @@
 
 import SwiftUI
 
-enum CategoryActionOperation {
-    case none
-    case create
-    case update
-    case delete
-}
-
 struct CategoryAction {
     
-    typealias Action = (PlanCategory) -> Void
+    typealias Action = (PlanCategoryEntity) -> Void
     let action: Action
     
-    func callAsFunction(_ category: PlanCategory) {
+    func callAsFunction(_ category: PlanCategoryEntity) {
         action(category)
     }
     
@@ -37,6 +30,12 @@ struct DeleteCategoryActionKey: EnvironmentKey {
     
 }
 
+struct DismissCategoryActionKey: EnvironmentKey {
+    
+    static var defaultValue: CategoryAction?
+    
+}
+
 extension EnvironmentValues {
     
     var updateCategory: CategoryAction? {
@@ -47,6 +46,11 @@ extension EnvironmentValues {
     var deleteCategory: CategoryAction? {
         get { self[DeleteCategoryActionKey.self] }
         set { self[DeleteCategoryActionKey.self] = newValue }
+    }
+    
+    var dismissCategory: CategoryAction? {
+        get { self[DismissCategoryActionKey.self] }
+        set { self[DismissCategoryActionKey.self] = newValue }
     }
     
 }
@@ -61,53 +65,46 @@ extension View {
         self.environment(\.deleteCategory, CategoryAction(action: action))
     }
     
+    func onDismissCategory(_ action: @escaping CategoryAction.Action) -> some View {
+        self.environment(\.dismissCategory, CategoryAction(action: action))
+    }
+    
 }
 
 class EditPlanCategorySheetViewModel: ObservableObject {
     
-    @Published var category: PlanCategory
+    @Published var name: String
+    @Published var amount: Double
     
-    init(_ category: PlanCategory) {
+    var category: PlanCategoryEntity
+    
+    init(_ category: PlanCategoryEntity) {
         self.category = category
+        
+        self.name = category.name ?? ""
+        self.amount = category.amount
     }
     
-    func getUpdatedCategory() -> PlanCategory {
-        category //TODO: return updated
+    func getUpdatedCategory() -> PlanCategoryEntity {
+        category.name = name
+        category.amount = amount
+        
+        return category
     }
     
 }
 
 struct EditPlanCategorySheet: View {
     
-    @Environment(\.dismiss) var dismiss
     @Environment(\.updateCategory) private var update
     @Environment(\.deleteCategory) private var delete
+    @Environment(\.dismissCategory) private var dismiss
     
+    var title: String
     @StateObject var vm: EditPlanCategorySheetViewModel
-    var op: CategoryActionOperation
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.title3)
-                }
-                .foregroundColor(.red)
-            }
-            .padding([.top], 10)
-            .padding([.bottom], 5)
-            TextField("Name", text: $vm.category.name)
-                .font(.title3)
-            TextField("Amount", value: $vm.category.amount, format: .number)
-                .font(.title)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.green)
-                .keyboardType(.decimalPad)
-            Spacer()
             HStack {
                 Button {
                     delete?(vm.category)
@@ -116,10 +113,32 @@ struct EditPlanCategorySheet: View {
                         .font(.title3)
                 }
                 .foregroundColor(.red)
+                Spacer()
+                Button {
+                    dismiss?(vm.category)
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.title3)
+                }
+                .foregroundColor(.red)
+            }
+            .padding([.top], 10)
+            .padding([.bottom], 5)
+            TextField("Name", text: $vm.name)
+                .font(.title2)
+                .multilineTextAlignment(.center)
+            TextField("Amount", value: $vm.amount, format: .number)
+                .font(.title)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.green)
+                .keyboardType(.decimalPad)
+            Spacer()
+            HStack {
+                
                 Button {
                     update?(vm.getUpdatedCategory())
                 } label: {
-                    Label(labelName(), systemImage: "plus")
+                    Label(title, systemImage: "plus")
                         .font(.title3)
                 }
                 .foregroundColor(.green)
@@ -128,25 +147,21 @@ struct EditPlanCategorySheet: View {
             .padding([.bottom], 10)
         }
         .padding([.horizontal], 15)
-        .interactiveDismissDisabled(op == .create)
-    }
-    
-    func labelName() -> String {
-        return op == .create ? "Create" : "Update"
+        .interactiveDismissDisabled(true)
     }
     
 }
 
 #Preview {
-    let category = PlanCategory(
-        id: UUID(),
-        name: "My Income",
-        amount: 1000,
-        percent: 0,
-        iconName: "case",
-        type: .income,
-        createdAt: Date()
-    )
+    let busgetService = DependencyResolver.preview.budgetService()
+    let budget = busgetService.newBudgetEntity()
+    budget.name = "Preview"
     
-    return EditPlanCategorySheet(vm: EditPlanCategorySheetViewModel(category), op: .create)
+    let category = busgetService.newCategoryEntity(budget)
+    category.name = "Preview"
+    category.amount = 1000
+    category.iconName = "case"
+    category.typeValue = .income
+
+    return EditPlanCategorySheet(title: "Preview", vm: EditPlanCategorySheetViewModel(category))
 }

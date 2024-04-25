@@ -16,6 +16,13 @@ enum WizzardPage: Int, Hashable {
     case summary
 }
 
+enum CategoryActionOperation {
+    case none
+    case create
+    case update
+    case delete
+}
+
 class BudgetWizardViewModel: ObservableObject {
     
     @Published var name: String
@@ -25,17 +32,17 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var dailyReminderAt: Date
     
     @Published var isFormValid: Bool = false
-    @Published var selectedCategory: PlanCategory?
-    @Published var op: CategoryActionOperation = .none
+    @Published var selectedCategory: PlanCategoryEntity?
     
+    private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
-    private var categories: [PlanCategory]
+    private var categories: [PlanCategoryEntity]
     private var budgetService: BudgetService
     private var cancellables = Set<AnyCancellable>()
     
     init(_ budget: BudgetEntity, budgetService: BudgetService) {
         self.budget = budget
-        self.categories = []
+        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
         self.budgetService = budgetService
         
         self.name = budget.name ?? "My Budget"
@@ -51,39 +58,75 @@ class BudgetWizardViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
-    func categoriesForType(_ type: PlanCategoryType) -> [PlanCategory] {
-        categories.filter { $0.type == type }
+    func categoriesForType(_ type: PlanCategoryType) -> [PlanCategoryEntity] {
+        categories.filter { $0.typeValue == type }
     }
     
-    func selectCategory(_ category: PlanCategory, op: CategoryActionOperation) {
+    func selectCategory(_ category: PlanCategoryEntity) {
+        op = .update
         selectedCategory = category
-        self.op = op
     }
     
     func newCategory(_ page: WizzardPage) {
+        var category: PlanCategoryEntity
+        
         // TODO: generate from data
         switch page {
         case .income:
-            selectedCategory = PlanCategory(id: UUID(), name: "My Income", amount: 0, percent: 0, iconName: "case", type: .income, createdAt: Date())
+            let entity = budgetService.newCategoryEntity(budget)
+            entity.typeValue = .income
+            entity.name = "My Income"
+            entity.iconName = "case"
+            category = entity
         case .fixed:
-            selectedCategory = PlanCategory(id: UUID(), name: "My fixed outcome", amount: 0, percent: 0, iconName: "case", type: .outcomeFixed, createdAt: Date())
+            let entity = budgetService.newCategoryEntity(budget)
+            entity.typeValue = .outcomeFixed
+            entity.name = "My Fixed Outcome"
+            entity.iconName = "case"
+            category = entity
         case .dynamic:
-            selectedCategory = PlanCategory(id: UUID(), name: "My daily expense", amount: 0, percent: 0, iconName: "car", type: .outcomePercent, createdAt: Date())
+            let entity = budgetService.newCategoryEntity(budget)
+            entity.typeValue = .outcomePercent
+            entity.name = "My daily spending"
+            entity.iconName = "car"
+            category = entity
         default:
             return
         }
         
         op = .create
+        selectedCategory = category
     }
     
-    func updateCategory(_ category: PlanCategory) {
+    func updateCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
-        categories.append(category)
+        switch op {
+        case .create:
+            categories.append(category)
+        default:
+            if let existing = categories.enumerated().filter({ $0.element.id == category.id }).first {
+                categories[existing.offset] = category
+            }
+        }
+        
+        op = .none
     }
     
-    func deleteCategory(_ category: PlanCategory) {
+    func deleteCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
         categories.removeAll(where: { $0.id == category.id })
+        budgetService.deleteCategory(category, budget: budget)
+        
+        op = .none
+    }
+    
+    func dismissCategory(_ category: PlanCategoryEntity) {
+        selectedCategory = nil
+        if op == .create {
+            budgetService.deleteCategory(category, budget: budget)
+        }
+        
+        op = .none
     }
     
     func getCurrencies() -> [String] {
@@ -104,12 +147,23 @@ class BudgetWizardViewModel: ObservableObject {
         }
     }
     
-    func updateEntity() {
+    func save() {
         budget.name = name
         budget.currency = currency
         budget.planTypeValue = type
         budget.dailyRemainderAt = dailyReminderAt
         budget.periodStartsAt = periodStartsAt
+        
+        do {
+            try budgetService.save()
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    func rollback() {
+        budgetService.rollback()
     }
     
     private static func getFirstDayOfPeriod() -> Date {
