@@ -36,13 +36,11 @@ class BudgetWizardViewModel: ObservableObject {
     
     private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
-    private var categories: [PlanCategoryEntity]
     private var budgetService: BudgetService
     private var cancellables = Set<AnyCancellable>()
     
     init(_ budget: BudgetEntity, budgetService: BudgetService) {
         self.budget = budget
-        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
         self.budgetService = budgetService
         
         self.name = budget.name ?? "My Budget"
@@ -59,7 +57,8 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func categoriesForType(_ type: PlanCategoryType) -> [PlanCategoryEntity] {
-        categories.filter { $0.typeValue == type }
+        let categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
+        return categories.filter { $0.typeValue == type }
     }
     
     func selectCategory(_ category: PlanCategoryEntity) {
@@ -100,21 +99,11 @@ class BudgetWizardViewModel: ObservableObject {
     
     func updateCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
-        switch op {
-        case .create:
-            categories.append(category)
-        default:
-            if let existing = categories.enumerated().filter({ $0.element.id == category.id }).first {
-                categories[existing.offset] = category
-            }
-        }
-        
         op = .none
     }
     
     func deleteCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
-        categories.removeAll(where: { $0.id == category.id })
         budgetService.deleteCategory(category, budget: budget)
         
         op = .none
@@ -166,6 +155,7 @@ class BudgetWizardViewModel: ObservableObject {
         budgetService.rollback()
     }
     
+    // TODO: move to extensions
     private static func getFirstDayOfPeriod() -> Date {
         let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
         return Calendar.current.date(from: periodComponents)!
