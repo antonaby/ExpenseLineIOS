@@ -57,7 +57,7 @@ struct BudgetWizardView: View {
         }
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(item: $vm.selectedCategory) { category in
-            EditPlanCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category))
+            EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category))
                 .onUpdateCategory { category in
                     vm.updateCategory(category)
                 }

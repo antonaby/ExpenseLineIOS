@@ -22,7 +22,7 @@
 		D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B372BBACC3500556936 /* BudgetListView.swift */; };
 		D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */; };
 		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
-		D23126A72BC2799C0008BDD6 /* EditPlanCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */; };
+		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
 		D2370CD42BDA68FC00B75B4D /* SummaryWizardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */; };
 		D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */; };
@@ -83,7 +83,7 @@
 		D2246B372BBACC3500556936 /* BudgetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListView.swift; sourceTree = "<group>"; };
 		D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListViewModel.swift; sourceTree = "<group>"; };
 		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanCategorySheet.swift; sourceTree = "<group>"; };
+		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryWizardPage.swift; sourceTree = "<group>"; };
 		D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizzardNextButton.swift; sourceTree = "<group>"; };
@@ -258,7 +258,7 @@
 			children = (
 				D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */,
 				D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */,
-				D23126A62BC2799C0008BDD6 /* EditPlanCategorySheet.swift */,
+				D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */,
 				D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */,
 			);
 			path = Subviews;
@@ -445,7 +445,7 @@
 			files = (
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
 				D2F7685E2BC95326001CE98C /* TransactionSheetViewModel.swift in Sources */,
-				D23126A72BC2799C0008BDD6 /* EditPlanCategorySheet.swift in Sources */,
+				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
 				D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */,
 				D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */,
 				D2F7685B2BC952A6001CE98C /* TransactionSheetView.swift in Sources */,

@@ -94,7 +94,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
 }
 
-struct EditPlanCategorySheet: View {
+struct EditCategorySheet: View {
     
     @Environment(\.updateCategory) private var update
     @Environment(\.deleteCategory) private var delete
@@ -107,46 +107,56 @@ struct EditPlanCategorySheet: View {
         VStack {
             HStack {
                 Button {
-                    delete?(vm.category)
-                } label: {
-                    Image(systemName: "trash")
-                        .font(.title3)
-                }
-                .foregroundColor(.red)
-                Spacer()
-                Button {
                     dismiss?(vm.category)
                 } label: {
-                    Image(systemName: "xmark")
+                    Text("Cancel")
+                        .foregroundColor(.red)
+                }
+                Spacer()
+                Menu {
+                    Button(role: .destructive) {
+                        delete?(vm.category)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                     }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
                         .font(.title3)
                 }
-                .foregroundColor(.red)
-            }
-            .padding([.top], 10)
-            .padding([.bottom], 5)
-            TextField("Name", text: $vm.name)
-                .font(.title2)
-                .multilineTextAlignment(.center)
-            TextField("Amount", value: $vm.amount, format: .number)
-                .font(.title)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.green)
-                .keyboardType(.decimalPad)
-            Spacer()
-            HStack {
-                
+                .padding([.trailing], 5)
                 Button {
                     update?(vm.getUpdatedCategory())
                 } label: {
-                    Label(title, systemImage: "plus")
+                    Image(systemName: "checkmark")
                         .font(.title3)
+                        .foregroundColor(.green)
                 }
-                .foregroundColor(.green)
-                
             }
-            .padding([.bottom], 10)
+            .padding([.top, .horizontal], 10)
+            VStack {
+                Group {
+                    TextField("Name", text: $vm.name)
+                        .font(.title3)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
+                .background(RoundedRectangle(cornerRadius: 10).fill(.white))
+                .padding([.top], 10)
+                .padding([.horizontal], 10)
+                Group {
+                    TextField("Amount", value: $vm.amount, format: .number)
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.green)
+                        .keyboardType(.decimalPad)
+                        .padding()
+                }
+                .background(RoundedRectangle(cornerRadius: 10).fill(.white))
+                .padding([.horizontal], 10)
+                Spacer()
+            }
+            .background(Color(uiColor: .secondarySystemBackground))
         }
-        .padding([.horizontal], 15)
         .interactiveDismissDisabled(true)
     }
     
@@ -163,5 +173,5 @@ struct EditPlanCategorySheet: View {
     category.iconName = "case"
     category.typeValue = .income
 
-    return EditPlanCategorySheet(title: "Preview", vm: EditPlanCategorySheetViewModel(category))
+    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category))
 }
