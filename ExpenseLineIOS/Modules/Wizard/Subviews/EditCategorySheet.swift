@@ -74,7 +74,7 @@ extension View {
 class EditPlanCategorySheetViewModel: ObservableObject {
     
     @Published var name: String
-    @Published var amount: Double
+    @Published var amount: String
     
     var category: PlanCategoryEntity
     
@@ -82,12 +82,12 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         self.category = category
         
         self.name = category.name ?? ""
-        self.amount = category.amount
+        self.amount = "" //category.amount
     }
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
-        category.amount = amount
+        category.amount = 0
         
         return category
     }
@@ -102,6 +102,10 @@ struct EditCategorySheet: View {
     
     var title: String
     @StateObject var vm: EditPlanCategorySheetViewModel
+    
+    @FocusState private var showKeyboard: Bool
+    
+    @State var placeholder: String = "Amount"
     
     var body: some View {
         VStack {
@@ -143,12 +147,15 @@ struct EditCategorySheet: View {
                 .background(RoundedRectangle(cornerRadius: 10).fill(.white))
                 .padding([.top], 10)
                 .padding([.horizontal], 10)
-                Group {
-                    TextField("Amount", value: $vm.amount, format: .number)
+                 Group {
+                    TextField("Amount", text: $vm.amount)
+                        .inputView(hint: "Amount") {
+                            CustomNumericKeybord(showKeyboard: $showKeyboard, text: $vm.amount)
+                        }
+                        .focused($showKeyboard)
                         .font(.title)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.green)
-                        .keyboardType(.decimalPad)
                         .padding()
                 }
                 .background(RoundedRectangle(cornerRadius: 10).fill(.white))
