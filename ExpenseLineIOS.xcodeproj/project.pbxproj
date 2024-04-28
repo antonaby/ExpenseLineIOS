@@ -15,7 +15,6 @@
 		D20EF2C82BB18CFB006CF8CD /* ExpenseLineIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2C72BB18CFB006CF8CD /* ExpenseLineIOSUITestsLaunchTests.swift */; };
 		D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2D42BB18DFA006CF8CD /* BudgetView.swift */; };
 		D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */; };
-		D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */; };
 		D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */; };
 		D20EF2E42BB19436006CF8CD /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E32BB19436006CF8CD /* Transaction.swift */; };
 		D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */; };
@@ -32,7 +31,7 @@
 		D24CA2992BD295F400896BC6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2982BD295F400896BC6 /* DataService.swift */; };
 		D250D4CF2BB828EB0050638C /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4CE2BB828EB0050638C /* Budget.swift */; };
 		D2563E502BD7D9A800D28F65 /* CategoryWizardPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */; };
-		D25ACF962BDD1AB800D61DEA /* CustomNumericKeybord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25ACF952BDD1AB800D61DEA /* CustomNumericKeybord.swift */; };
+		D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */; };
 		D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = D263EC6C2BB6E97600BA4287 /* Swinject */; };
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
 		D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */; };
@@ -77,7 +76,6 @@
 		D20EF2C72BB18CFB006CF8CD /* ExpenseLineIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseLineIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D20EF2D42BB18DFA006CF8CD /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
 		D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseButton.swift; sourceTree = "<group>"; };
-		D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCircle.swift; sourceTree = "<group>"; };
 		D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		D20EF2E32BB19436006CF8CD /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArrowButton.swift; sourceTree = "<group>"; };
@@ -94,7 +92,7 @@
 		D24CA2982BD295F400896BC6 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		D2563E4F2BD7D9A800D28F65 /* CategoryWizardPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWizardPageView.swift; sourceTree = "<group>"; };
-		D25ACF952BDD1AB800D61DEA /* CustomNumericKeybord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumericKeybord.swift; sourceTree = "<group>"; };
+		D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumericField.swift; sourceTree = "<group>"; };
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
 		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
 		D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBundle.swift; sourceTree = "<group>"; };
@@ -213,9 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				D20EF2DB2BB18EB6006CF8CD /* AddExpenseButton.swift */,
-				D20EF2DD2BB19146006CF8CD /* SpaceCircle.swift */,
 				D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */,
-				D25ACF952BDD1AB800D61DEA /* CustomNumericKeybord.swift */,
+				D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -449,7 +446,7 @@
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
 				D2F7685E2BC95326001CE98C /* TransactionSheetViewModel.swift in Sources */,
 				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
-				D25ACF962BDD1AB800D61DEA /* CustomNumericKeybord.swift in Sources */,
+				D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */,
 				D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */,
 				D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */,
 				D2F7685B2BC952A6001CE98C /* TransactionSheetView.swift in Sources */,
@@ -466,7 +463,6 @@
 				D20EF2E42BB19436006CF8CD /* Transaction.swift in Sources */,
 				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
 				D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */,
-				D20EF2DE2BB19146006CF8CD /* SpaceCircle.swift in Sources */,
 				D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,

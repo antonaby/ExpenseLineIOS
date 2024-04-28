@@ -82,12 +82,17 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         self.category = category
         
         self.name = category.name ?? ""
-        self.amount = "" //category.amount
+        let formatter = NumberFormatter()
+        
+        self.amount = category.amount > 0 ? String(category.amount) : ""
     }
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
-        category.amount = 0
+        
+        let formatter = NumberFormatter()
+        let number = formatter.number(from: amount)?.doubleValue
+        category.amount = number ?? 0
         
         return category
     }
@@ -147,19 +152,16 @@ struct EditCategorySheet: View {
                 .background(RoundedRectangle(cornerRadius: 10).fill(.white))
                 .padding([.top], 10)
                 .padding([.horizontal], 10)
-                 Group {
-                    TextField("Amount", text: $vm.amount)
-                        .inputView(hint: "Amount") {
-                            CustomNumericKeybord(showKeyboard: $showKeyboard, text: $vm.amount)
-                        }
-                        .focused($showKeyboard)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.green)
-                        .padding()
+                Group {
+                    CustomNumericField(text: $vm.amount, placeholder: "Amount") {
+                        CustomNumericKeybord(text: $vm.amount, showKeyboard: $showKeyboard)
+                    }
+                    .focused($showKeyboard)
+                    .padding()
                 }
                 .background(RoundedRectangle(cornerRadius: 10).fill(.white))
                 .padding([.horizontal], 10)
+                .frame(maxHeight: 80)
                 Spacer()
             }
             .background(Color(uiColor: .secondarySystemBackground))
