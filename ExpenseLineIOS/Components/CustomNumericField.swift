@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomNumericField<Content: View>: UIViewRepresentable {
     
-    @Binding var text: String
+    var text: String
     
     private var font: UIFont
     private var alignment: NSTextAlignment
@@ -19,13 +19,13 @@ struct CustomNumericField<Content: View>: UIViewRepresentable {
     
     @State private var keyboardController: UIHostingController<Content>?
     
-    init(text: Binding<String>,
+    init(text: String,
          placeholder: String,
          placeholderColor: UIColor = UIColor.gray,
          font: UIFont = UIFont.systemFont(ofSize: 30),
          alignment: NSTextAlignment = NSTextAlignment.center,
          @ViewBuilder keyboard: @escaping () -> Content) {
-        self._text = text
+        self.text = text
         self.placeholder = placeholder
         self.placeholderColor = placeholderColor
         self.font = font
@@ -92,6 +92,7 @@ struct CustomNumericKeybord: View {
     
     @Binding var text: String
     @FocusState.Binding var showKeyboard: Bool
+    var currencySymbol: String
     
     var body: some View {
         VStack {
@@ -109,6 +110,9 @@ struct CustomNumericKeybord: View {
             LazyVGrid(columns: Array(repeating: .init(.flexible(), spacing: 10), count: 3), spacing: 10) {
                 ForEach(1...9, id: \.self) { index in
                     NumericKeyboardButton(String(index)) {
+                        if text.isEmpty {
+                            text.append(currencySymbol)
+                        }
                         text.append("\(index)")
                     }
                 }
@@ -121,6 +125,9 @@ struct CustomNumericKeybord: View {
                 Button {
                     if !text.isEmpty {
                         text.removeLast()
+                    }
+                    if text == currencySymbol {
+                        text = ""
                     }
                 } label: {
                     Image(systemName: "delete.backward")

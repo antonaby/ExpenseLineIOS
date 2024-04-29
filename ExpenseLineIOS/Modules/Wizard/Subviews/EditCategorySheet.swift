@@ -77,20 +77,34 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     @Published var amount: String
     
     var category: PlanCategoryEntity
+    let currency: String
     
-    init(_ category: PlanCategoryEntity) {
+    init(_ category: PlanCategoryEntity, currency: String) {
         self.category = category
+        self.currency = currency
         
         self.name = category.name ?? ""
-        let formatter = NumberFormatter()
         
-        self.amount = category.amount > 0 ? String(category.amount) : ""
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currency
+        formatter.usesGroupingSeparator = false
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.decimalSeparator = ","
+        
+        self.amount = category.amount > 0 
+            ? formatter.string(from: category.amount as NSNumber)!
+            : ""
     }
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
         
         let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currency
+        formatter.decimalSeparator = ","
         let number = formatter.number(from: amount)?.doubleValue
         category.amount = number ?? 0
         
@@ -153,8 +167,12 @@ struct EditCategorySheet: View {
                 .padding([.top], 10)
                 .padding([.horizontal], 10)
                 Group {
-                    CustomNumericField(text: $vm.amount, placeholder: "Amount") {
-                        CustomNumericKeybord(text: $vm.amount, showKeyboard: $showKeyboard)
+                    CustomNumericField(text: vm.amount, placeholder: "Amount") {
+                        CustomNumericKeybord(
+                            text: $vm.amount,
+                            showKeyboard: $showKeyboard,
+                            currencySymbol: vm.currency.currencySymbol
+                        )
                     }
                     .focused($showKeyboard)
                     .padding()
@@ -182,5 +200,5 @@ struct EditCategorySheet: View {
     category.iconName = "case"
     category.typeValue = .income
 
-    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category))
+    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, currency: "USD"))
 }

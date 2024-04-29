@@ -119,7 +119,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func getCurrencies() -> [String] {
-        return ["USD", "EUR", "RUB", "AMD"] // TODO: get currencies from DB
+        return ["USD", "EUR", "RUB", "AMD", "INR"] // TODO: get currencies from DB
     }
     
     func getDateRange() -> ClosedRange<Date> {

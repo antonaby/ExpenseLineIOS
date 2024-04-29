@@ -18,6 +18,7 @@
 		D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */; };
 		D20EF2E42BB19436006CF8CD /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E32BB19436006CF8CD /* Transaction.swift */; };
 		D20EF2EA2BB19ADD006CF8CD /* AddArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */; };
+		D22218742BDFD73D00E552E4 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22218732BDFD73D00E552E4 /* String+Extension.swift */; };
 		D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B372BBACC3500556936 /* BudgetListView.swift */; };
 		D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */; };
 		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
@@ -79,6 +80,7 @@
 		D20EF2E02BB193FD006CF8CD /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		D20EF2E32BB19436006CF8CD /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D20EF2E92BB19ADD006CF8CD /* AddArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArrowButton.swift; sourceTree = "<group>"; };
+		D22218732BDFD73D00E552E4 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		D2246B372BBACC3500556936 /* BudgetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListView.swift; sourceTree = "<group>"; };
 		D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListViewModel.swift; sourceTree = "<group>"; };
 		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 		D20EF2A92BB18CFA006CF8CD /* ExpenseLineIOS */ = {
 			isa = PBXGroup;
 			children = (
+				D22218722BDFD72600E552E4 /* Extensions */,
 				D20EF2E22BB19427006CF8CD /* Models */,
 				D239608D2BB2E95C0071547D /* Services */,
 				D20EF2DA2BB18E9D006CF8CD /* Components */,
@@ -224,6 +227,14 @@
 				D250D4CE2BB828EB0050638C /* Budget.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D22218722BDFD72600E552E4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D22218732BDFD73D00E552E4 /* String+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D22EC4202BD8E927003E1D48 /* Components */ = {
@@ -444,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
+				D22218742BDFD73D00E552E4 /* String+Extension.swift in Sources */,
 				D2F7685E2BC95326001CE98C /* TransactionSheetViewModel.swift in Sources */,
 				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
 				D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */,
