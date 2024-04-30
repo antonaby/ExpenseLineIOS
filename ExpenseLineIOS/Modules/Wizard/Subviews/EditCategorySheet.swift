@@ -90,19 +90,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         self.name = category.name ?? ""
         
         if category.amount > 0 {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.decimalSeparator = delimiter
-            formatter.usesGroupingSeparator = false
-            formatter.minimumFractionDigits = 0
-            formatter.maximumFractionDigits = 2
-            let formatted = formatter.string(from: NSNumber(floatLiteral: category.amount)) ?? "0"
-            
-            if isSymbolTrailing {
-                self.amount = formatted + " " + currencySymbol
-            } else {
-                self.amount = currencySymbol + " " + formatted
-            }
+            self.amount = category.amountAsString(currencySymbol, delimiter: delimiter, trailing: isSymbolTrailing)
         } else {
             self.amount = ""
         }

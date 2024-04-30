@@ -40,6 +40,22 @@ extension PlanCategoryEntity {
         }
     }
     
+    func amountAsString(_ symbol: String, delimiter: String, trailing: Bool) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = delimiter
+        formatter.usesGroupingSeparator = false
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        let formatted = formatter.string(from: NSNumber(floatLiteral: amount)) ?? "0"
+        
+        if trailing {
+            return formatted + " " + symbol
+        } else {
+            return symbol + " " + formatted
+        }
+    }
+    
 }
 
 struct Period: Identifiable, Hashable {
