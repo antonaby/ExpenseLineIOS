@@ -46,6 +46,7 @@ struct CustomNumericField<Content: View>: UIViewRepresentable {
         textfield.inputAccessoryView = UIView()
         textfield.font = font
         textfield.textAlignment = alignment
+        textfield.tintColor = .clear
         return textfield
     }
     
@@ -93,6 +94,25 @@ struct CustomNumericKeybord: View {
     @Binding var text: String
     @FocusState.Binding var showKeyboard: Bool
     var currencySymbol: String
+    var delimiter: String
+    var isSymbolTrailing: Bool
+    
+    @State private var internalValue: String
+    
+    init(text: Binding<String>, 
+         showKeyboard: FocusState<Bool>.Binding,
+         currencySymbol: String,
+         delimiter: String,
+         isSymbolTrailing: Bool) {
+        self._text = text
+        self._showKeyboard = showKeyboard
+        self.currencySymbol = currencySymbol
+        self.delimiter = delimiter
+        self.isSymbolTrailing = isSymbolTrailing
+        self.internalValue = text.wrappedValue
+            .replacingOccurrences(of: currencySymbol, with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
     
     var body: some View {
         VStack {
@@ -110,25 +130,23 @@ struct CustomNumericKeybord: View {
             LazyVGrid(columns: Array(repeating: .init(.flexible(), spacing: 10), count: 3), spacing: 10) {
                 ForEach(1...9, id: \.self) { index in
                     NumericKeyboardButton(String(index)) {
-                        if text.isEmpty {
-                            text.append(currencySymbol)
-                        }
-                        text.append("\(index)")
+                        internalValue.append("\(index)")
+                        refreshText()
                     }
                 }
-                NumericKeyboardButton(",") {
-                    text.append(",")
+                NumericKeyboardButton(delimiter) {
+                    internalValue.append(delimiter)
+                    refreshText()
                 }
                 NumericKeyboardButton("0") {
-                    text.append("0")
+                    internalValue.append("0")
+                    refreshText()
                 }
                 Button {
-                    if !text.isEmpty {
-                        text.removeLast()
+                    if !internalValue.isEmpty {
+                        internalValue.removeLast()
                     }
-                    if text == currencySymbol {
-                        text = ""
-                    }
+                    refreshText()
                 } label: {
                     Image(systemName: "delete.backward")
                         .modifier(KeyboardButtonViewModifier(color: .blue))
@@ -141,6 +159,19 @@ struct CustomNumericKeybord: View {
             Rectangle()
                 .fill(.white)
                 .ignoresSafeArea()
+        }
+    }
+    
+    func refreshText() {
+        if internalValue.isEmpty {
+            text = ""
+            return
+        }
+        
+        if isSymbolTrailing {
+            text = internalValue + " " + currencySymbol
+        } else {
+            text = currencySymbol + " " + internalValue
         }
     }
     

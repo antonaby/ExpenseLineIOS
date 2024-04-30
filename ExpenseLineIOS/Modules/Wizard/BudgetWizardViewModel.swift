@@ -34,6 +34,8 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var isFormValid: Bool = false
     @Published var selectedCategory: PlanCategoryEntity?
     
+    var formatter: NumberFormatter
+    
     private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
     private var budgetService: BudgetService
@@ -44,14 +46,27 @@ class BudgetWizardViewModel: ObservableObject {
         self.budgetService = budgetService
         
         self.name = budget.name ?? "My Budget"
-        self.currency = budget.currency ?? "EUR"
+        self.currency = budget.currency ?? "en_US"
         self.type = budget.planTypeValue
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
         self.periodStartsAt = budget.periodStartsAt ?? BudgetWizardViewModel.getFirstDayOfPeriod()
         
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: budget.currency ?? "en_US")
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        
+        self.formatter = formatter
+        
         isValid.sink { [weak self]  isValid in
             guard let self = self else { return }
             self.isFormValid = isValid
+        }
+        .store(in: &cancellables)
+        
+        $currency.sink { [weak self] currency in
+            self?.formatter.locale = Locale(identifier: currency)
         }
         .store(in: &cancellables)
     }
@@ -119,7 +134,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func getCurrencies() -> [String] {
-        return ["USD", "EUR", "RUB", "AMD", "INR"] // TODO: get currencies from DB
+        return ["en_US", "en_GB", "de_DE", "ru_RU", "hy_AM", "ta_IN"] // TODO: get currencies from DB
     }
     
     func getDateRange() -> ClosedRange<Date> {

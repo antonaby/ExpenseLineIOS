@@ -41,6 +41,7 @@
 		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
 		D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */; };
 		D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */; };
+		D2AF81362BE11A0B00E02DDF /* Locale+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF81352BE11A0B00E02DDF /* Locale+Extension.swift */; };
 		D2B7F1992BCFE06E0003C283 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1982BCFE06E0003C283 /* TransactionListView.swift */; };
 		D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */; };
 		D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */; };
@@ -102,6 +103,7 @@
 		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
 		D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverviewView.swift; sourceTree = "<group>"; };
 		D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStatsView.swift; sourceTree = "<group>"; };
+		D2AF81352BE11A0B00E02DDF /* Locale+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+Extension.swift"; sourceTree = "<group>"; };
 		D2B7F1982BCFE06E0003C283 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
 		D2DEFC112BB4348600AC7CA0 /* DataContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataContainer.xcdatamodel; sourceTree = "<group>"; };
 		D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				D22218732BDFD73D00E552E4 /* String+Extension.swift */,
+				D2AF81352BE11A0B00E02DDF /* Locale+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
 				D22218742BDFD73D00E552E4 /* String+Extension.swift in Sources */,
 				D2F7685E2BC95326001CE98C /* TransactionSheetViewModel.swift in Sources */,
+				D2AF81362BE11A0B00E02DDF /* Locale+Extension.swift in Sources */,
 				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
 				D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */,
 				D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */,

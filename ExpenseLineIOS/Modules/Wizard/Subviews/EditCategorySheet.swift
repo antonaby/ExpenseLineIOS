@@ -77,35 +77,46 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     @Published var amount: String
     
     var category: PlanCategoryEntity
-    let currency: String
+    var currencySymbol: String
+    var delimiter: String
+    var isSymbolTrailing: Bool
     
-    init(_ category: PlanCategoryEntity, currency: String) {
+    init(_ category: PlanCategoryEntity, localeId: String) {
         self.category = category
-        self.currency = currency
-        
+        let locale = Locale(identifier: localeId)
+        self.currencySymbol = locale.currencySymbol ?? "$"
+        self.delimiter = locale.decimalSeparator ?? "."
+        self.isSymbolTrailing = locale.isCurrencySymbolTrailing()
         self.name = category.name ?? ""
         
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = currency
-        formatter.usesGroupingSeparator = false
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        formatter.decimalSeparator = ","
-        
-        self.amount = category.amount > 0 
-            ? formatter.string(from: category.amount as NSNumber)!
-            : ""
+        if category.amount > 0 {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.decimalSeparator = delimiter
+            formatter.usesGroupingSeparator = false
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 2
+            let formatted = formatter.string(from: NSNumber(floatLiteral: category.amount)) ?? "0"
+            
+            if isSymbolTrailing {
+                self.amount = formatted + " " + currencySymbol
+            } else {
+                self.amount = currencySymbol + " " + formatted
+            }
+        } else {
+            self.amount = ""
+        }
     }
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
         
         let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = currency
-        formatter.decimalSeparator = ","
-        let number = formatter.number(from: amount)?.doubleValue
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = delimiter
+        let cleanAmount = amount.replacingOccurrences(of: currencySymbol, with: "")
+        
+        let number = formatter.number(from: cleanAmount)?.doubleValue
         category.amount = number ?? 0
         
         return category
@@ -171,7 +182,9 @@ struct EditCategorySheet: View {
                         CustomNumericKeybord(
                             text: $vm.amount,
                             showKeyboard: $showKeyboard,
-                            currencySymbol: vm.currency.currencySymbol
+                            currencySymbol: vm.currencySymbol,
+                            delimiter: vm.delimiter,
+                            isSymbolTrailing: vm.isSymbolTrailing
                         )
                     }
                     .focused($showKeyboard)
@@ -200,5 +213,5 @@ struct EditCategorySheet: View {
     category.iconName = "case"
     category.typeValue = .income
 
-    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, currency: "USD"))
+    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, localeId: "de_DE"))
 }
