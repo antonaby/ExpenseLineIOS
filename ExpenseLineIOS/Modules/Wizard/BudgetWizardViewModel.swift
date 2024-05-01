@@ -71,7 +71,7 @@ class BudgetWizardViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
-    func categoriesForType(_ type: PlanCategoryType) -> [PlanCategoryEntity] {
+    func categoriesForType(_ type: CategoryType) -> [PlanCategoryEntity] {
         let categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
         return categories.filter { $0.typeValue == type }
     }
@@ -83,26 +83,19 @@ class BudgetWizardViewModel: ObservableObject {
     
     func newCategory(_ page: WizzardPage) {
         var category: PlanCategoryEntity
-        
-        // TODO: generate from data
+
         switch page {
         case .income:
             let entity = budgetService.newCategoryEntity(budget)
             entity.typeValue = .income
-            entity.name = "My Income"
-            entity.iconName = "case"
             category = entity
         case .fixed:
             let entity = budgetService.newCategoryEntity(budget)
             entity.typeValue = .outcomeFixed
-            entity.name = "My Fixed Outcome"
-            entity.iconName = "case"
             category = entity
         case .dynamic:
             let entity = budgetService.newCategoryEntity(budget)
             entity.typeValue = .outcomePercent
-            entity.name = "My daily spending"
-            entity.iconName = "car"
             category = entity
         default:
             return

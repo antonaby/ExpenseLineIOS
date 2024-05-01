@@ -136,7 +136,7 @@ class BudgetService {
         }
     }
     
-    private func categoriesByType(budget: BudgetEntity, type: PlanCategoryType) throws -> [PlanCategoryEntity] {
+    private func categoriesByType(budget: BudgetEntity, type: CategoryType) throws -> [PlanCategoryEntity] {
         guard let budgetId = budget.id else { return [] }
         
         let request = PlanCategoryEntity.fetchRequest()
@@ -204,7 +204,7 @@ class BudgetService {
         return result
     }
     
-    private func getPlannedAmount(budget: BudgetEntity, type: PlanCategoryType, percent: Bool = false) throws -> Double {
+    private func getPlannedAmount(budget: BudgetEntity, type: CategoryType, percent: Bool = false) throws -> Double {
         guard let budgetId = budget.id else { return 0 }
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlanCategoryEntity")

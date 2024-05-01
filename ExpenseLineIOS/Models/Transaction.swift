@@ -7,15 +7,7 @@
 
 import Foundation
 
-enum PlanCategoryType: Int, CaseIterable, Identifiable {
-    
-    case income = 1
-    case outcomeFixed = 2
-    case outcomePercent = 3
-    
-    var id: Self { self }
-    
-}
+
 
 struct PlanCategory: Identifiable, Hashable {
     
@@ -24,16 +16,16 @@ struct PlanCategory: Identifiable, Hashable {
     var amount: Decimal
     var percent: Decimal
     var iconName: String
-    var type: PlanCategoryType
+    var type: CategoryType
     var createdAt: Date
     
 }
 
 extension PlanCategoryEntity {
     
-    var typeValue: PlanCategoryType {
+    var typeValue: CategoryType {
         get {
-            PlanCategoryType(rawValue: Int(self.type)) ?? .outcomePercent
+            CategoryType(rawValue: Int(self.type)) ?? .outcomePercent
         }
         set {
             self.type = Int32(newValue.rawValue)

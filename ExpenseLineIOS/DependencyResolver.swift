@@ -31,6 +31,10 @@ extension DependencyResolver {
         resolver.resolve(BudgetService.self)!
     }
     
+    func dataService() -> DataService {
+        resolver.resolve(DataService.self)!
+    }
+    
     
 }
 

@@ -20,7 +20,6 @@ struct MainView: View {
             }
         }
         .environmentObject(appState.resolver)
-        .environmentObject(appState)
         .onAppear {
             appState.loadBudget()
         }

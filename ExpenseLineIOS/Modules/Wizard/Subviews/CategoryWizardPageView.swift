@@ -13,7 +13,7 @@ struct CategoryWizardPageView: View {
     
     let name: String
     let page: WizzardPage
-    let type: PlanCategoryType
+    let type: CategoryType
     
     var body: some View {
         VStack {

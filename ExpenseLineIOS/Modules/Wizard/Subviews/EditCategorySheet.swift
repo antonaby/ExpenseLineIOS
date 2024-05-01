@@ -74,6 +74,7 @@ extension View {
 class EditPlanCategorySheetViewModel: ObservableObject {
     
     @Published var name: String
+    @Published var iconName: String
     @Published var amount: String
     
     var category: PlanCategoryEntity
@@ -88,6 +89,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         self.delimiter = locale.decimalSeparator ?? "."
         self.isSymbolTrailing = locale.isCurrencySymbolTrailing()
         self.name = category.name ?? ""
+        self.iconName = category.iconName ?? "questionmark.app"
         
         if category.amountDecimal > 0 {
             self.amount = category.amountAsString(currencySymbol, delimiter: delimiter, trailing: isSymbolTrailing)
@@ -98,6 +100,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
+        category.iconName = iconName
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -124,6 +127,7 @@ struct EditCategorySheet: View {
     @FocusState private var showKeyboard: Bool
     
     @State var placeholder: String = "Amount"
+    @State var showCategrotyTemplateSheet: Bool = false
     
     var body: some View {
         VStack {
@@ -156,16 +160,26 @@ struct EditCategorySheet: View {
             }
             .padding([.top, .horizontal], 10)
             VStack {
-                Group {
-                    TextField("Name", text: $vm.name)
-                        .font(.title3)
-                        .multilineTextAlignment(.center)
-                        .padding()
+                Button {
+                    showCategrotyTemplateSheet.toggle()
+                } label: {
+                    HStack {
+                        BaseCardView {
+                            Image(systemName: vm.iconName)
+                        }
+                        BaseCardView {
+                            HStack {
+                                Text(vm.name)
+                                Spacer()
+                            }
+                        }
+                    }
+                    .foregroundColor(.black)
+                    .font(.title3)
+                    .padding([.top], 10)
+                    .padding([.horizontal], 10)
                 }
-                .background(RoundedRectangle(cornerRadius: 10).fill(.white))
-                .padding([.top], 10)
-                .padding([.horizontal], 10)
-                Group {
+                BaseCardView {
                     CustomNumericField(text: vm.amount, placeholder: "Amount") {
                         CustomNumericKeybord(
                             text: $vm.amount,
@@ -176,14 +190,15 @@ struct EditCategorySheet: View {
                         )
                     }
                     .focused($showKeyboard)
-                    .padding()
                 }
-                .background(RoundedRectangle(cornerRadius: 10).fill(.white))
                 .padding([.horizontal], 10)
                 .frame(maxHeight: 80)
                 Spacer()
             }
             .background(Color(uiColor: .secondarySystemBackground))
+        }
+        .sheet(isPresented: $showCategrotyTemplateSheet) {
+            CategoryTemplateSelectorView(name: $vm.name, iconName: $vm.iconName)
         }
         .interactiveDismissDisabled(true)
     }
@@ -202,4 +217,5 @@ struct EditCategorySheet: View {
     category.typeValue = .income
 
     return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, localeId: "de_DE"))
+        .environmentObject(DependencyResolver.preview)
 }
