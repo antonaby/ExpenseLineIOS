@@ -12,12 +12,12 @@ class BudgetViewModel: ObservableObject {
     
     @Published var budget: BudgetEntity
     @Published var period: PeriodEntity
-    @Published var totalPlannedIncomeAmount: Double
-    @Published var totalPlannedDynamicPercent: Double
-    @Published var totalFixedOutcomeAmount: Double
-    @Published var totalDynamicOutcomeAmount: Double
-    @Published var plannedDailyOutcome: Double
-    @Published var currentDailyOutcome: Double
+    @Published var totalPlannedIncomeAmount: Decimal
+    @Published var totalPlannedDynamicPercent: Decimal
+    @Published var totalFixedOutcomeAmount: Decimal
+    @Published var totalDynamicOutcomeAmount: Decimal
+    @Published var plannedDailyOutcome: Decimal
+    @Published var currentDailyOutcome: Decimal
     
         
     private let budgetService: BudgetService
@@ -73,11 +73,11 @@ class BudgetViewModel: ObservableObject {
     func updateAmounts() {
         totalPlannedIncomeAmount = categories
             .filter { $0.typeValue == .income }
-            .reduce(0) { $0 + $1.amount }
+            .reduce(0) { $0 + $1.amountDecimal }
         
         totalPlannedDynamicPercent = categories
             .filter { $0.typeValue == .outcomePercent }
-            .reduce(0) { $0 + $1.percent }
+            .reduce(0) { $0 + $1.percentDecimal }
         
         do {
             let fixedCategories = try budgetService.spendingsForFixedCategories(period, budget: budget)
@@ -103,7 +103,7 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    private func calculatePlannedDailyOutcome(_ plannedDynamicAmount: Double, _ currentDynamicAmount: Double) {
+    private func calculatePlannedDailyOutcome(_ plannedDynamicAmount: Decimal, _ currentDynamicAmount: Decimal) {
         guard let startsAt = period.startsAt, let endsAt = period.endstAt
         else {
             return
@@ -111,10 +111,10 @@ class BudgetViewModel: ObservableObject {
         
         // TODO: check a number of days (+1)
         let totalDays = Calendar.current.dateComponents([.day], from: startsAt, to: endsAt).day! + 1
-        plannedDailyOutcome = plannedDynamicAmount / Double(totalDays)
+        plannedDailyOutcome = plannedDynamicAmount / Decimal(totalDays)
         
         let pastDays = Calendar.current.dateComponents([.day], from: startsAt, to: Date()).day! + 1
-        currentDailyOutcome = currentDynamicAmount / Double(pastDays)
+        currentDailyOutcome = currentDynamicAmount / Decimal(pastDays)
     }
    
 }

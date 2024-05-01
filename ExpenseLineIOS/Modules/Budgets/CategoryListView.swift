@@ -17,17 +17,17 @@ struct CategoryCard: View {
             VStack(alignment: .leading) {
                 Text(category.entity.name ?? "")
                 HStack(alignment: .firstTextBaseline) {
-                    Text(category.spendings?.totalAmount ?? 0, format: .number.rounded(increment: 0.01))
+                    Text("\(category.spendings?.totalAmount ?? 0)")
                         .font(.largeTitle)
                     Text(currency)
                         .font(.title3)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                if category.entity.amount > 0 {
-                    Text(category.entity.amount, format: .number.rounded(increment: 0.01))
+                if category.entity.amountDecimal > 0 {
+                    Text("\(category.entity.amountDecimal)")
                         .font(.caption)
-                } else if category.entity.percent > 0 {
-                    Text(category.entity.percent, format: .percent)
+                } else if category.entity.percentDecimal > 0 {
+                    Text("\(category.entity.percentDecimal)")
                         .font(.caption)
                 }
             }

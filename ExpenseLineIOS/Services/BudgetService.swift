@@ -164,7 +164,7 @@ class BudgetService {
         let totalAmountExpressionDescription = NSExpressionDescription()
         totalAmountExpressionDescription.name = "totalAmount"
         totalAmountExpressionDescription.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
-        totalAmountExpressionDescription.expressionResultType = .doubleAttributeType
+        totalAmountExpressionDescription.expressionResultType = .decimalAttributeType
         
         let categoryId = NSExpressionDescription()
         categoryId.name = "categoryId"
@@ -174,12 +174,12 @@ class BudgetService {
         let categoryExpectedAmount = NSExpressionDescription()
         categoryExpectedAmount.name = "expectedAmount"
         categoryExpectedAmount.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "category.amount")])
-        categoryExpectedAmount.expressionResultType = .doubleAttributeType
+        categoryExpectedAmount.expressionResultType = .decimalAttributeType
         
         let categoryExpectedPercent = NSExpressionDescription()
         categoryExpectedPercent.name = "expectedPercent"
         categoryExpectedPercent.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "category.percent")])
-        categoryExpectedPercent.expressionResultType = .doubleAttributeType
+        categoryExpectedPercent.expressionResultType = .decimalAttributeType
         
         request.propertiesToFetch = [categoryId, categoryExpectedAmount, categoryExpectedPercent, totalAmountExpressionDescription]
         request.propertiesToGroupBy = ["category.id"]
@@ -194,9 +194,9 @@ class BudgetService {
             for element in dict {
                 result.append(CategorySpendings(
                     id: element["categoryId"] as! UUID,
-                    totalAmount: element["totalAmount"] as! Double,
-                    expectedAmount: element["expectedAmount"] as! Double,
-                    expectedPercent: element["expectedPercent"] as! Double
+                    totalAmount: element["totalAmount"] as! Decimal,
+                    expectedAmount: element["expectedAmount"] as! Decimal,
+                    expectedPercent: element["expectedPercent"] as! Decimal
                 ))
             }
         }
@@ -319,20 +319,6 @@ class BudgetService {
         }
     }
     
-    func createBudget(budget: Budget, period: Period, categories: [PlanCategory]) throws {
-        let entity = BudgetEntity(context: dm.viewContext)
-        entity.id = budget.id
-        entity.name = budget.name
-        entity.currency = budget.currency
-        entity.planTypeValue = budget.type
-        entity.addToPeriods(getPeriodEntity(period))
-        for category in categories {
-            entity.addToCategories(getPlanCategoryEntity(category))
-        }
-        
-        try dm.sync()
-    }
-    
     func createTransaction(_ transaction: Transaction, category: PlanCategoryEntity, budget: BudgetEntity) throws {
         let entity = TransactionEntity(context: dm.viewContext)
         entity.id = transaction.id
@@ -353,20 +339,5 @@ class BudgetService {
         
         return entity
     }
-    
-    private func getPlanCategoryEntity(_ category: PlanCategory) -> PlanCategoryEntity {
-        let entity = PlanCategoryEntity(context: dm.viewContext)
-        entity.id = category.id
-        entity.name = category.name
-        entity.amount = category.amount
-        entity.percent = category.percent
-        entity.iconName = category.iconName
-        entity.typeValue = category.type
-        entity.createdAt = category.createdAt
-                
-        return entity
-    }
-    
-    
     
 }

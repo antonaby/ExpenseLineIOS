@@ -21,8 +21,8 @@ struct PlanCategory: Identifiable, Hashable {
     
     let id: UUID
     var name: String
-    var amount: Double
-    var percent: Double
+    var amount: Decimal
+    var percent: Decimal
     var iconName: String
     var type: PlanCategoryType
     var createdAt: Date
@@ -36,7 +36,33 @@ extension PlanCategoryEntity {
             PlanCategoryType(rawValue: Int(self.type)) ?? .outcomePercent
         }
         set {
-            self.type = Int64(newValue.rawValue)
+            self.type = Int32(newValue.rawValue)
+        }
+    }
+    
+    var amountValue: NSDecimalNumber {
+        amount ?? NSDecimalNumber(value: 0)
+    }
+    
+    var amountDecimal: Decimal {
+        get {
+            amountValue as Decimal
+        }
+        set {
+            amount = newValue as NSDecimalNumber
+        }
+    }
+    
+    var percentValue: NSDecimalNumber {
+        percent ?? NSDecimalNumber(value: 0)
+    }
+    
+    var percentDecimal: Decimal {
+        get {
+            percentValue as Decimal
+        }
+        set {
+            percent = newValue as NSDecimalNumber
         }
     }
     
@@ -47,7 +73,7 @@ extension PlanCategoryEntity {
         formatter.usesGroupingSeparator = false
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-        let formatted = formatter.string(from: NSNumber(floatLiteral: amount)) ?? "0"
+        let formatted = formatter.string(from: amountValue) ?? "0"
         
         if trailing {
             return formatted + " " + symbol
@@ -78,9 +104,9 @@ struct Transaction: Identifiable, Hashable {
 struct CategorySpendings: Identifiable {
     
     let id: UUID
-    let totalAmount: Double
-    let expectedAmount: Double
-    let expectedPercent: Double
+    let totalAmount: Decimal
+    let expectedAmount: Decimal
+    let expectedPercent: Decimal
     
 }
 

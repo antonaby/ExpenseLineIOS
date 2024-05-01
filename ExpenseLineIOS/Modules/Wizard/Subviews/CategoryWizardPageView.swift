@@ -27,7 +27,7 @@ struct CategoryWizardPageView: View {
                                 Image(systemName: category.iconName ?? "questionmark.app.fill")
                                 Text(category.name ?? "Unknown")
                                 Spacer()
-                                Text(vm.formatter.string(from: NSNumber(floatLiteral: category.amount)) ?? "0")
+                                Text(vm.formatter.string(from: category.amountValue) ?? "0")
                             }
                             .foregroundColor(.black)
                         }

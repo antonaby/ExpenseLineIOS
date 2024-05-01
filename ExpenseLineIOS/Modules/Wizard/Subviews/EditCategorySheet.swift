@@ -89,7 +89,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         self.isSymbolTrailing = locale.isCurrencySymbolTrailing()
         self.name = category.name ?? ""
         
-        if category.amount > 0 {
+        if category.amountDecimal > 0 {
             self.amount = category.amountAsString(currencySymbol, delimiter: delimiter, trailing: isSymbolTrailing)
         } else {
             self.amount = ""
@@ -104,8 +104,8 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         formatter.decimalSeparator = delimiter
         let cleanAmount = amount.replacingOccurrences(of: currencySymbol, with: "")
         
-        let number = formatter.number(from: cleanAmount)?.doubleValue
-        category.amount = number ?? 0
+        let number = formatter.number(from: cleanAmount)?.decimalValue ?? 0
+        category.amount = number as NSDecimalNumber
         
         return category
     }

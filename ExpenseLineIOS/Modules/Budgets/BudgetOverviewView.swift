@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProgressView: View {
     
-    var percent: CGFloat
+    var percent: Double
     
     var body: some View {
         GeometryReader { proxy in
@@ -28,8 +28,8 @@ struct ProgressView: View {
 
 struct DailyExpensesCard: View {
     
-    @Binding var currentExpenses: Double
-    @Binding var plannedExpenses: Double
+    @Binding var currentExpenses: Decimal
+    @Binding var plannedExpenses: Decimal
     
     var currency: String
     
@@ -42,7 +42,7 @@ struct DailyExpensesCard: View {
                     .tint(.gray)
                     .font(.caption)
                 HStack(alignment: .lastTextBaseline) {
-                    Text(currentExpenses, format: .number.rounded(increment: 0.01))
+                    Text("\(currentExpenses)")
                         .font(.largeTitle)
                     Text(currency)
                         .font(.title3)
@@ -50,7 +50,7 @@ struct DailyExpensesCard: View {
                 .padding([.top], 10)
                 ProgressView(percent: getTotalPercent())
                 HStack(alignment: .lastTextBaseline) {
-                    Text(plannedExpenses, format: .number.rounded(increment: 0.01))
+                    Text("\(plannedExpenses)")
                     Text(currency)
                         .font(.caption)
                 }
@@ -78,7 +78,7 @@ struct DailyExpensesCard: View {
             return 1
         }
         
-        return percent
+        return (percent as NSDecimalNumber).doubleValue
     }
 }
 

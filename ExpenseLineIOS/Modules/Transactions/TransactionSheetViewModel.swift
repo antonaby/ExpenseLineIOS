@@ -54,8 +54,8 @@ class TransactionSheetViewModel: ObservableObject {
                     PlanCategory(
                         id: $0.id ?? UUID(),
                         name: $0.name ?? "Unknown",
-                        amount: $0.amount,
-                        percent: $0.percent,
+                        amount: $0.amountDecimal,
+                        percent: $0.percentDecimal,
                         iconName: $0.iconName ?? "Unknown",
                         type: $0.typeValue,
                         createdAt: $0.createdAt ?? Date()
