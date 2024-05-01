@@ -116,40 +116,58 @@ struct CustomNumericKeybord: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button {
-                    showKeyboard.toggle()
-                } label: {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.green)
+            Grid {
+                GridRow {
+                    ForEach(1...3, id: \.self) { index in
+                        NumericKeyboardButton(String(index)) {
+                            internalValue.append("\(index)")
+                            refreshText()
+                        }
+                    }
+                    Button {
+                        if !internalValue.isEmpty {
+                            internalValue.removeLast()
+                        }
+                        refreshText()
+                    } label: {
+                        Image(systemName: "delete.backward")
+                            .modifier(KeyboardButtonViewModifier(color: .blue))
+                    }
                 }
-            }
-            LazyVGrid(columns: Array(repeating: .init(.flexible(), spacing: 10), count: 3), spacing: 10) {
-                ForEach(1...9, id: \.self) { index in
-                    NumericKeyboardButton(String(index)) {
-                        internalValue.append("\(index)")
+                GridRow {
+                    ForEach(4...6, id: \.self) { index in
+                        NumericKeyboardButton(String(index)) {
+                            internalValue.append("\(index)")
+                            refreshText()
+                        }
+                    }
+                    Button {
+                        showKeyboard.toggle()
+                    } label: {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.green)
+                    }
+                }
+                GridRow {
+                    ForEach(7...9, id: \.self) { index in
+                        NumericKeyboardButton(String(index)) {
+                            internalValue.append("\(index)")
+                            refreshText()
+                        }
+                    }
+                }
+                GridRow {
+                    NumericKeyboardButton(delimiter) {
+                        internalValue.append(delimiter)
                         refreshText()
                     }
-                }
-                NumericKeyboardButton(delimiter) {
-                    internalValue.append(delimiter)
-                    refreshText()
-                }
-                NumericKeyboardButton("0") {
-                    internalValue.append("0")
-                    refreshText()
-                }
-                Button {
-                    if !internalValue.isEmpty {
-                        internalValue.removeLast()
+                    NumericKeyboardButton("0") {
+                        internalValue.append("0")
+                        refreshText()
                     }
-                    refreshText()
-                } label: {
-                    Image(systemName: "delete.backward")
-                        .modifier(KeyboardButtonViewModifier(color: .blue))
+                    
                 }
             }
         }
