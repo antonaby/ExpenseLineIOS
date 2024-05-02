@@ -8,7 +8,7 @@
 import Foundation
 
 
-
+// TODO: remove
 struct PlanCategory: Identifiable, Hashable {
     
     let id: UUID
@@ -18,61 +18,6 @@ struct PlanCategory: Identifiable, Hashable {
     var iconName: String
     var type: CategoryType
     var createdAt: Date
-    
-}
-
-extension PlanCategoryEntity {
-    
-    var typeValue: CategoryType {
-        get {
-            CategoryType(rawValue: Int(self.type)) ?? .outcomePercent
-        }
-        set {
-            self.type = Int32(newValue.rawValue)
-        }
-    }
-    
-    var amountValue: NSDecimalNumber {
-        amount ?? NSDecimalNumber(value: 0)
-    }
-    
-    var amountDecimal: Decimal {
-        get {
-            amountValue as Decimal
-        }
-        set {
-            amount = newValue as NSDecimalNumber
-        }
-    }
-    
-    var percentValue: NSDecimalNumber {
-        percent ?? NSDecimalNumber(value: 0)
-    }
-    
-    var percentDecimal: Decimal {
-        get {
-            percentValue as Decimal
-        }
-        set {
-            percent = newValue as NSDecimalNumber
-        }
-    }
-    
-    func amountAsString(_ symbol: String, delimiter: String, trailing: Bool) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.decimalSeparator = delimiter
-        formatter.usesGroupingSeparator = false
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        let formatted = formatter.string(from: amountValue) ?? "0"
-        
-        if trailing {
-            return formatted + " " + symbol
-        } else {
-            return symbol + " " + formatted
-        }
-    }
     
 }
 
