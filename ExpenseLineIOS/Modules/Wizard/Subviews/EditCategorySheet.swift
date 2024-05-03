@@ -74,33 +74,57 @@ extension View {
 
 class EditPlanCategorySheetViewModel: ObservableObject {
     
+    static let defaultSymbol = "$"
+    static let defaultSeparator = "."
+    
     @Published var name: String
     @Published var iconName: String?
     @Published var type: CategoryType
     @Published var amount: String
+    @Published var percent: String
     @Published var isValid: Bool = false
     
     var category: PlanCategoryEntity
-    var currencySymbol: String
-    var delimiter: String
-    var isSymbolTrailing: Bool
+    var locale: Locale
     
     private var cancellables = Set<AnyCancellable>()
+    
+    var currencySymbol: String {
+        locale.currencySymbolOrDefault(EditPlanCategorySheetViewModel.defaultSymbol)
+    }
+    
+    var separator: String {
+        locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator)
+    }
+    
+    var isSymbolTrailing: Bool {
+        locale.isCurrencySymbolTrailing()
+    }
     
     init(_ category: PlanCategoryEntity, localeId: String) {
         self.category = category
         let locale = Locale(identifier: localeId)
-        self.currencySymbol = locale.currencySymbol ?? "$"
-        self.delimiter = locale.decimalSeparator ?? "."
-        self.isSymbolTrailing = locale.isCurrencySymbolTrailing()
+        self.locale = locale
         self.name = category.name ?? ""
         self.iconName = category.iconName
         self.type = category.typeValue
         
         if category.amountDecimal > 0 {
-            self.amount = category.amountAsString(currencySymbol, delimiter: delimiter, trailing: isSymbolTrailing)
+            self.amount = category.amountAsString(
+                symbol: locale.currencySymbolOrDefault(EditPlanCategorySheetViewModel.defaultSymbol),
+                delimiter: locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator),
+                trailing: locale.isCurrencySymbolTrailing()
+            )
         } else {
             self.amount = ""
+        }
+        
+        if category.percentDecimal > 0 {
+            self.percent = category.percentAsString(
+                delimiter: locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator)
+            )
+        } else {
+            self.percent = ""
         }
         
         isFormValid.sink { [weak self] isFormValid in
@@ -113,7 +137,14 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
         category.iconName = iconName
-        category.amount = amountAsDecimalNumber() as NSDecimalNumber
+        if type == .outcomePercent {
+            // TODO: Save percent properly
+            category.percent = convertToDecimalNumber(percent)
+            category.amountDecimal = 0
+        } else {
+            category.amount = convertToDecimalNumber(amount)
+            category.percentDecimal = 0
+        }
         category.typeValue = type
         
         return category
@@ -123,13 +154,14 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
-    private func amountAsDecimalNumber() -> Decimal {
+    private func convertToDecimalNumber(_ value: String) -> NSDecimalNumber {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.decimalSeparator = delimiter
-        let cleanAmount = amount.replacingOccurrences(of: currencySymbol, with: "")
+        formatter.decimalSeparator = separator
+        let cleanAmount = value.replacingOccurrences(of: currencySymbol, with: "")
+        let result = formatter.number(from: cleanAmount)?.decimalValue ?? 0
         
-        return formatter.number(from: cleanAmount)?.decimalValue ?? 0
+        return result as NSDecimalNumber
     }
     
 }
@@ -160,10 +192,34 @@ extension EditPlanCategorySheetViewModel {
             .eraseToAnyPublisher()
     }
     
+    var isPercentValid: AnyPublisher<Bool, Never> {
+        $percent.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .map { percent in
+                !percent.isEmpty
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var isAmountOrPercentValid: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest(isAmountValid, isPercentValid)
+            .map { [weak self] isAmountValid, isPercentValid in
+                guard let self = self else {
+                    return isAmountValid || isPercentValid
+                }
+                
+                if self.type == .outcomePercent {
+                    return isPercentValid
+                }
+                
+                return isAmountValid
+            }
+            .eraseToAnyPublisher()
+    }
+    
     var isFormValid: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest3(isNameValid, isIconSelected, isAmountValid)
-            .map { isNameValid, isIconSelected, isAmountValid in
-                isNameValid && isIconSelected && isAmountValid
+        Publishers.CombineLatest3(isNameValid, isIconSelected, isAmountOrPercentValid)
+            .map { isNameValid, isIconSelected, isAmountOrPercentValid in
+                isNameValid && isIconSelected && isAmountOrPercentValid
             }
             .eraseToAnyPublisher()
     }
@@ -187,32 +243,25 @@ struct EditCategorySheet: View {
     var body: some View {
         VStack {
             HStack {
-                Button {
+                ToolButton(icon: "x.circle", color: .red) {
                     dismiss?(vm.category)
-                } label: {
-                    Text("Cancel")
-                        .foregroundColor(.red)
                 }
                 Spacer()
-                Menu {
-                    Button(role: .destructive) {
-                        delete?(vm.category)
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                     }
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .font(.title3)
-                }
-                AddArrowButton {
+                ToolButton(color: .green) {
                     update?(vm.getUpdatedCategory())
                 }
                 .disabled(!vm.isValid)
             }
             .padding([.top, .horizontal], 10)
+            .padding([.bottom], 5)
+            .font(.title2)
             ScrollView {
-                VStack(spacing: 10) {
-                    HStack {
+                VStack(spacing: 15) {
+                    PromptView {
+                        Text("Chose **icon**, fill **name** and **amount**")
+                            .padding([.top], 10)
+                    }
+                    HStack(spacing: 15) {
                         Button {
                             showCategrotyTemplateSheet.toggle()
                         } label: {
@@ -231,6 +280,32 @@ struct EditCategorySheet: View {
                     .font(.title3)
                     .frame(minHeight: 50)
                     FlexibleCardView {
+                        if vm.type == .outcomePercent {
+                            CustomNumericField(text: vm.percent, placeholder: "Percent") {
+                                CustomNumericKeybord(
+                                    text: $vm.percent,
+                                    showKeyboard: $showKeyboard,
+                                    currencySymbol: "%",
+                                    separator: vm.separator,
+                                    isSymbolTrailing: true
+                                )
+                            }
+                            .focused($showKeyboard)
+                        } else {
+                            CustomNumericField(text: vm.amount, placeholder: "Amount") {
+                                CustomNumericKeybord(
+                                    text: $vm.amount,
+                                    showKeyboard: $showKeyboard,
+                                    currencySymbol: vm.currencySymbol,
+                                    separator: vm.separator,
+                                    isSymbolTrailing: vm.isSymbolTrailing
+                                )
+                            }
+                            .focused($showKeyboard)
+                        }
+                    }
+                    .frame(minHeight: 70)
+                    FlexibleCardView {
                         VStack(spacing: 10) {
                             Text("Catgeory type")
                                 .font(.caption)
@@ -248,26 +323,22 @@ struct EditCategorySheet: View {
                         }
                     }
                     .frame(minHeight: 50)
-                    FlexibleCardView {
-                        CustomNumericField(text: vm.amount, placeholder: "Amount") {
-                            CustomNumericKeybord(
-                                text: $vm.amount,
-                                showKeyboard: $showKeyboard,
-                                currencySymbol: vm.currencySymbol,
-                                delimiter: vm.delimiter,
-                                isSymbolTrailing: vm.isSymbolTrailing
-                            )
-                        }
-                        .focused($showKeyboard)
+                    Menu {
+                        Button(role: .destructive) {
+                            delete?(vm.category)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                         }
+                    } label: {
+                        Text("More actions")
                     }
-                    .frame(minHeight: 70)
                 }
             }
             .padding([.top, .horizontal], 10)
             .background(Color(uiColor: .secondarySystemBackground))
         }
         .sheet(isPresented: $showCategrotyTemplateSheet) {
-            CategoryTemplateSelectorView(name: $vm.name, iconName: $vm.iconName, type: $vm.type)
+            CategoryTemplateSelectorView(name: $vm.name, iconName: $vm.iconName, type: vm.type)
         }
         .interactiveDismissDisabled(true)
         .onDisappear {

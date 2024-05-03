@@ -7,13 +7,17 @@
 
 import SwiftUI
 
-struct AddArrowButton: View {
+struct ToolButton: View {
     
     @Environment(\.isEnabled) var isEnabled
     
+    let icon: String
+    let color: Color
     let action: () -> Void
     
-    init(_ action: @escaping () -> Void) {
+    init(icon: String = "checkmark", color: Color = .blue, action: @escaping () -> Void) {
+        self.icon = icon
+        self.color = color
         self.action = action
     }
     
@@ -21,17 +25,14 @@ struct AddArrowButton: View {
         Button {
             action()
         } label: {
-            Image(systemName: "arrow.up")
-                .frame(width: 30, height: 30)
-                .foregroundColor(.white)
-                .background(bacgroundColor())
-                .clipShape(Circle())
+            Image(systemName: icon)
+                .foregroundColor(iconColor())
         }
     }
     
-    func bacgroundColor() -> some View {
+    private func iconColor() -> Color {
         if isEnabled {
-            return Color.red
+            return color
         }
         
         return Color.gray
@@ -40,5 +41,5 @@ struct AddArrowButton: View {
 }
 
 #Preview {
-    AddArrowButton { print("Nothing") }
+    ToolButton(icon: "checkmark") { print("Nothing") }
 }

@@ -94,7 +94,7 @@ struct CustomNumericKeybord: View {
     @Binding var text: String
     @FocusState.Binding var showKeyboard: Bool
     var currencySymbol: String
-    var delimiter: String
+    var separator: String
     var isSymbolTrailing: Bool
     
     @State private var internalValue: String
@@ -102,12 +102,12 @@ struct CustomNumericKeybord: View {
     init(text: Binding<String>, 
          showKeyboard: FocusState<Bool>.Binding,
          currencySymbol: String,
-         delimiter: String,
+         separator: String,
          isSymbolTrailing: Bool) {
         self._text = text
         self._showKeyboard = showKeyboard
         self.currencySymbol = currencySymbol
-        self.delimiter = delimiter
+        self.separator = separator
         self.isSymbolTrailing = isSymbolTrailing
         self.internalValue = text.wrappedValue
             .replacingOccurrences(of: currencySymbol, with: "")
@@ -159,8 +159,8 @@ struct CustomNumericKeybord: View {
                     }
                 }
                 GridRow {
-                    NumericKeyboardButton(delimiter) {
-                        internalValue.append(delimiter)
+                    NumericKeyboardButton(separator) {
+                        internalValue.append(separator)
                         refreshText()
                     }
                     NumericKeyboardButton("0") {

@@ -26,4 +26,12 @@ extension Locale {
         return false
     }
     
+    func currencySymbolOrDefault(_ defaultValue: String) -> String {
+        currencySymbol ?? defaultValue
+    }
+    
+    func decimalSepapatorOrDefault(_ defaultValue: String) -> String {
+        decimalSeparator ?? defaultValue
+    }
+    
 }

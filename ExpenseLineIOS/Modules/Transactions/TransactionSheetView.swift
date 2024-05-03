@@ -47,7 +47,7 @@ struct TransactionSheetView: View {
                     Text("Cancel")
                 }
                 Spacer()
-                AddArrowButton {
+                ToolButton {
                     vm.createTransaction()
                     dismiss()
                 }
