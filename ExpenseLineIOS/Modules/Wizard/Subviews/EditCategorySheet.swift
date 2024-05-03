@@ -76,6 +76,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
     static let defaultSymbol = "$"
     static let defaultSeparator = "."
+    static let dafaultPercentSymbol = "%"
     
     @Published var name: String
     @Published var iconName: String?
@@ -90,7 +91,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     var currencySymbol: String {
-        locale.currencySymbolOrDefault(EditPlanCategorySheetViewModel.defaultSymbol)
+        return locale.currencySymbolOrDefault(EditPlanCategorySheetViewModel.defaultSymbol)
     }
     
     var separator: String {
@@ -121,7 +122,8 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         
         if category.percentDecimal > 0 {
             self.percent = category.percentAsString(
-                delimiter: locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator)
+                delimiter: locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator),
+                symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol
             )
         } else {
             self.percent = ""
@@ -138,11 +140,10 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         category.name = name
         category.iconName = iconName
         if type == .outcomePercent {
-            // TODO: Save percent properly
-            category.percent = convertToDecimalNumber(percent)
+            category.percent = convertToDecimalNumber(percent, symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol)
             category.amountDecimal = 0
         } else {
-            category.amount = convertToDecimalNumber(amount)
+            category.amount = convertToDecimalNumber(amount, symbol: currencySymbol)
             category.percentDecimal = 0
         }
         category.typeValue = type
@@ -154,11 +155,11 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
-    private func convertToDecimalNumber(_ value: String) -> NSDecimalNumber {
+    private func convertToDecimalNumber(_ value: String, symbol: String) -> NSDecimalNumber {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = separator
-        let cleanAmount = value.replacingOccurrences(of: currencySymbol, with: "")
+        let cleanAmount = value.replacingOccurrences(of: symbol, with: "")
         let result = formatter.number(from: cleanAmount)?.decimalValue ?? 0
         
         return result as NSDecimalNumber
@@ -285,7 +286,7 @@ struct EditCategorySheet: View {
                                 CustomNumericKeybord(
                                     text: $vm.percent,
                                     showKeyboard: $showKeyboard,
-                                    currencySymbol: "%",
+                                    currencySymbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol,
                                     separator: vm.separator,
                                     isSymbolTrailing: true
                                 )

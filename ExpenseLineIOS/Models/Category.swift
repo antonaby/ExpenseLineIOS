@@ -87,16 +87,16 @@ extension PlanCategoryEntity {
         }
     }
     
-    func percentAsString(delimiter: String) -> String {
+    func percentAsString(delimiter: String, symbol: String) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = delimiter
         formatter.usesGroupingSeparator = false
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-        let formatted = formatter.string(from: amountValue) ?? "0"
+        let formatted = formatter.string(from: percentValue) ?? "0"
         
-        return formatted + " %"
+        return formatted + " " + symbol
     }
     
 }
