@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum CategoryType: Int, CaseIterable, Identifiable {
     
@@ -68,6 +69,19 @@ extension PlanCategoryEntity {
         }
         set {
             percent = newValue as NSDecimalNumber
+        }
+    }
+    
+    var colorValue: Color {
+        get {
+            if let value = color {
+                return Color(hex: value) ?? .black
+            }
+            
+            return .black
+        }
+        set {
+            color = newValue.toHex() ?? "000000"
         }
     }
     

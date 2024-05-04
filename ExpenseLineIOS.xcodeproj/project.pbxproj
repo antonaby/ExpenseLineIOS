@@ -24,6 +24,7 @@
 		D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */; };
 		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
 		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
+		D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23416CA2BE616E4000178FB /* Color+Extension.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
 		D2370CD42BDA68FC00B75B4D /* SummaryWizardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */; };
 		D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */; };
@@ -92,6 +93,7 @@
 		D2246B392BBACC4B00556936 /* BudgetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListViewModel.swift; sourceTree = "<group>"; };
 		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
+		D23416CA2BE616E4000178FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D2370CD32BDA68FC00B75B4D /* SummaryWizardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryWizardPage.swift; sourceTree = "<group>"; };
 		D2370CD52BDA702000B75B4D /* WizzardNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WizzardNextButton.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			children = (
 				D22218732BDFD73D00E552E4 /* String+Extension.swift */,
 				D2AF81352BE11A0B00E02DDF /* Locale+Extension.swift */,
+				D23416CA2BE616E4000178FB /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
 				D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */,
+				D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */,
 				D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */,
 				D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */,
 				D20EF2EA2BB19ADD006CF8CD /* ToolButton.swift in Sources */,

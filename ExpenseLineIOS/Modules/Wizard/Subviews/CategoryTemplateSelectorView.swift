@@ -9,30 +9,61 @@ import SwiftUI
 
 struct CategoryTemplateSelectorView: View {
     
+    private let predifinedColors: [Color] = [.red, .blue, .green, .orange, .yellow, .brown]
+    
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var resolver: DependencyResolver
     
-    @Binding var name: String
-    @Binding var iconName: String?
+    @Binding var color: Color
+    @Binding var selectedTemplate: CategoryTemplate?
+    
     var type: CategoryType
     
-    @State var mainTemplates: [CategoryTemplateType] = []
-    @State var otherTemplates: [CategoryTemplate] = []
+    @State private var mainTemplates: [CategoryTemplateType] = []
+    @State private var otherTemplates: [CategoryTemplate] = []
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
-                TemplatesSectionsView(mainTemplates)
-                TemplateSection(name: "Other", templates: otherTemplates)
+        VStack {
+            HStack {
+                Spacer()
+                ToolButton {
+                    dismiss()
+                }
             }
-        }
-        .padding()
-        .background(Color(uiColor: .secondarySystemBackground))
-        .onAppear {
-            let ds = resolver.dataService()
-            
-            mainTemplates = ds.getCategoryTemplates(of: type)
-            otherTemplates = Array(ds.getCategoryTemplates(not: type).map { $0.templates }.joined())
+            .font(.title2)
+            .padding([.top, .horizontal], 10)
+            .padding(.bottom, 5)
+            .background(Color.white)
+            VStack(spacing: 15) {
+                FlexibleCardView {
+                    HStack {
+                        ForEach(predifinedColors, id: \.self) { predifinedColor in
+                            ColorBoxView(predifinedColor, selected: predifinedColor == color)
+                                .frame(maxWidth: .infinity)
+                        }
+                        Divider()
+                        ColorPicker("Color", selection: $color)
+                        .labelsHidden()
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                .frame(maxHeight: 50)
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
+                        TemplatesSectionsView(mainTemplates)
+                        TemplateSection(name: "Other", templates: otherTemplates)
+                    }
+                }
+            }
+            .padding([.top], 10)
+            .padding([.horizontal], 10)
+            .background(Color(uiColor: .secondarySystemBackground))
+            .onAppear {
+                let ds = resolver.dataService()
+                
+                mainTemplates = ds.getCategoryTemplates(of: type)
+                otherTemplates = Array(ds.getCategoryTemplates(not: type).map { $0.templates }.joined())
+            }
         }
     }
     
@@ -48,23 +79,20 @@ struct CategoryTemplateSelectorView: View {
         name sectionName: String,
         templates: [CategoryTemplate]) -> some View {
         Section {
-            ForEach(templates) { category in
+            ForEach(templates) { template in
                 Button {
-                    if name.isEmpty {
-                        name = category.name
-                    }
-                    iconName = category.iconName
-                    dismiss()
+                    selectedTemplate = template
                 } label: {
                     FlexibleCardView {
                         VStack {
-                            Image(systemName: category.iconName)
-                            Text(category.name)
+                            Image(systemName: template.iconName)
+                                .font(.title2)
+                            Text(template.name)
                                 .lineLimit(1)
-                                .font(.caption)
+                                .font(.caption2)
                         }
+                        .foregroundColor(selectedTemplate?.id == template.id ? color : .black)
                     }
-                    .foregroundColor(.black)
                 }
             }
         } header: {
@@ -74,12 +102,30 @@ struct CategoryTemplateSelectorView: View {
         }
     }
     
+    @ViewBuilder
+    func ColorBoxView(_ predifinedColor: Color, selected: Bool) -> some View {
+        Button {
+            color = predifinedColor
+        } label: {
+            ZStack(alignment: .center) {
+                if selected {
+                    Circle()
+                        .strokeBorder(predifinedColor, lineWidth: 2)
+                }
+                Circle()
+                    .foregroundColor(predifinedColor)
+                    .frame(width: 25, height: 25)
+            }
+            .frame(width: 35, height: 35)
+        }
+    }
+    
 }
 
 #Preview {
     CategoryTemplateSelectorView(
-        name: .constant("Preview"),
-        iconName: .constant("case"),
+        color: .constant(.red),
+        selectedTemplate: .constant(nil),
         type: .outcomePercent
     )
     .environmentObject(DependencyResolver.preview)

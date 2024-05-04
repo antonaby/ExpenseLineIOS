@@ -79,7 +79,8 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     static let dafaultPercentSymbol = "%"
     
     @Published var name: String
-    @Published var iconName: String?
+    @Published var template: CategoryTemplate?
+    @Published var color: Color
     @Published var type: CategoryType
     @Published var amount: String
     @Published var percent: String
@@ -107,7 +108,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         let locale = Locale(identifier: localeId)
         self.locale = locale
         self.name = category.name ?? ""
-        self.iconName = category.iconName
+        self.color = category.colorValue
         self.type = category.typeValue
         
         if category.amountDecimal > 0 {
@@ -138,7 +139,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
-        category.iconName = iconName
+        category.iconName = "questionmark"
         if type == .outcomePercent {
             category.percent = convertToDecimalNumber(percent, symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol)
             category.amountDecimal = 0
@@ -147,6 +148,8 @@ class EditPlanCategorySheetViewModel: ObservableObject {
             category.percentDecimal = 0
         }
         category.typeValue = type
+        category.colorValue = color
+        category.templateId = template?.id
         
         return category
     }
@@ -177,14 +180,14 @@ extension EditPlanCategorySheetViewModel {
             .eraseToAnyPublisher()
     }
     
-    var isIconSelected: AnyPublisher<Bool, Never> {
-        $iconName.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-            .map { iconName in
-                iconName != nil
+    var isTemplateSelected: AnyPublisher<Bool, Never> {
+        $template.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .map { template in
+                template != nil
             }
             .eraseToAnyPublisher()
     }
-    
+
     var isAmountValid: AnyPublisher<Bool, Never> {
         $amount.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .map { amount in
@@ -218,9 +221,9 @@ extension EditPlanCategorySheetViewModel {
     }
     
     var isFormValid: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest3(isNameValid, isIconSelected, isAmountOrPercentValid)
-            .map { isNameValid, isIconSelected, isAmountOrPercentValid in
-                isNameValid && isIconSelected && isAmountOrPercentValid
+        Publishers.CombineLatest3(isNameValid, isTemplateSelected, isAmountOrPercentValid)
+            .map { isNameValid, isTemplateSelected, isAmountOrPercentValid in
+                isNameValid && isTemplateSelected && isAmountOrPercentValid
             }
             .eraseToAnyPublisher()
     }
@@ -228,6 +231,8 @@ extension EditPlanCategorySheetViewModel {
 }
 
 struct EditCategorySheet: View {
+    
+    @EnvironmentObject var resolver: DependencyResolver
     
     @Environment(\.updateCategory) private var update
     @Environment(\.deleteCategory) private var delete
@@ -267,9 +272,9 @@ struct EditCategorySheet: View {
                             showCategrotyTemplateSheet.toggle()
                         } label: {
                             FlexibleCardView {
-                                Image(systemName: vm.iconName ?? "questionmark")
+                                Image(systemName: vm.template?.iconName ?? "questionmark")
                             }
-                            .foregroundColor(.black)
+                            .foregroundColor(vm.color)
                             .frame(maxWidth: 50)
                         }
                         FlexibleCardView {
@@ -338,12 +343,24 @@ struct EditCategorySheet: View {
             .padding([.top, .horizontal], 10)
             .background(Color(uiColor: .secondarySystemBackground))
         }
-        .sheet(isPresented: $showCategrotyTemplateSheet) {
-            CategoryTemplateSelectorView(name: $vm.name, iconName: $vm.iconName, type: vm.type)
+        .sheet(isPresented: $showCategrotyTemplateSheet, onDismiss: onIconSelected) {
+            CategoryTemplateSelectorView(color: $vm.color, selectedTemplate: $vm.template, type: vm.type)
         }
         .interactiveDismissDisabled(true)
+        .onAppear {
+            let dataService = resolver.dataService()
+            if let templateId = vm.category.templateId {
+                vm.template = dataService.getTemplateById(templateId)
+            }
+        }
         .onDisappear {
             vm.cancelAll()
+        }
+    }
+    
+    func onIconSelected() {
+        if let template = vm.template {
+            vm.name = template.name
         }
     }
     
@@ -378,8 +395,10 @@ struct EditCategorySheet: View {
     let category = busgetService.newCategoryEntity(budget)
     category.name = "Preview"
     category.amount = 1000
+    category.colorValue = .orange
     category.iconName = "case"
     category.typeValue = .income
+    category.templateId = UUID(uuidString: "4e794d37-e5fb-4574-b105-4ec0a2d46ce9")!
 
     return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, localeId: "de_DE"))
         .environmentObject(DependencyResolver.preview)
