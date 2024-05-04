@@ -139,7 +139,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
-        category.iconName = "questionmark"
+        category.iconName = template?.iconName ?? "questionmark"
         if type == .outcomePercent {
             category.percent = convertToDecimalNumber(percent, symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol)
             category.amountDecimal = 0
