@@ -264,7 +264,7 @@ struct EditCategorySheet: View {
             ScrollView {
                 VStack(spacing: 15) {
                     PromptView {
-                        Text("Chose **icon**, fill **name** and **amount**")
+                        Text("Choose **icon**, fill **name** and **amount**")
                             .padding([.top], 10)
                     }
                     HStack(spacing: 15) {

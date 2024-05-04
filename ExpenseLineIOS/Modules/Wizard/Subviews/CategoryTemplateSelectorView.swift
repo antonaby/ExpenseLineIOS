@@ -38,7 +38,7 @@ struct CategoryTemplateSelectorView: View {
                 FlexibleCardView {
                     HStack {
                         ForEach(predifinedColors, id: \.self) { predifinedColor in
-                            ColorBoxView(predifinedColor, selected: predifinedColor == color)
+                            ColorBoxView(predifinedColor, selected: predifinedColor.toHex() == color.toHex())
                                 .frame(maxWidth: .infinity)
                         }
                         Divider()
