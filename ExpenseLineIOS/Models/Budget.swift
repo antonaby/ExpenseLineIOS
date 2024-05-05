@@ -18,15 +18,6 @@ enum PlanType: Int, CaseIterable, Identifiable {
     
 }
 
-struct Budget: Identifiable, Hashable {
-    
-    let id: UUID
-    let name: String
-    let currency: String
-    let type: PlanType
-    
-}
-
 extension BudgetEntity {
     
     var planTypeValue: PlanType {

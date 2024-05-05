@@ -11,6 +11,7 @@ import Foundation
 class DataService {
     
     private let categories: [CategoryTemplateType]
+    private let currencies: [CurrencyLocale]
     
     init() {
         self.categories = [
@@ -31,6 +32,14 @@ class DataService {
                 CategoryTemplate(id: UUID(uuidString: "49de8df4-564f-471b-bcc0-f77d7c500067")!, name: "Wine", iconName: "wineglass.fill"),
             ]),
         ]
+        self.currencies = [
+            CurrencyLocale(id: "en_US", name: "US Dollar"),
+            CurrencyLocale(id: "en_GB", name: "Pound"),
+            CurrencyLocale(id: "de_DE", name: "EUR"),
+            CurrencyLocale(id: "ru_RU", name: "Rub"),
+            CurrencyLocale(id: "hy_AM", name: "Drum"),
+            CurrencyLocale(id: "ta_IN", name: "RUP")
+        ]
     }
     
     func getCategoryTemplates(of type: CategoryType) -> [CategoryTemplateType] {
@@ -43,6 +52,10 @@ class DataService {
     
     func getTemplateById(_ id: UUID) -> CategoryTemplate? {
         categories.map { $0.templates }.joined().filter { $0.id == id }.first
+    }
+    
+    func getCurrencies() -> [CurrencyLocale] {
+        return currencies
     }
     
 }

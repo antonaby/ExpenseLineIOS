@@ -27,7 +27,6 @@ class BudgetWizardViewModel: ObservableObject {
     
     @Published var name: String
     @Published var currency: String
-    @Published var type: PlanType
     @Published var periodStartsAt: Date
     @Published var dailyReminderAt: Date
     
@@ -45,15 +44,15 @@ class BudgetWizardViewModel: ObservableObject {
         self.budget = budget
         self.budgetService = budgetService
         
-        self.name = budget.name ?? "My Budget"
-        self.currency = budget.currency ?? "en_US"
-        self.type = budget.planTypeValue
+        self.name = budget.name ?? ""
+        let currecny = budget.currency ?? Locale.current.identifier
+        self.currency = currecny
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
-        self.periodStartsAt = budget.periodStartsAt ?? BudgetWizardViewModel.getFirstDayOfPeriod()
+        self.periodStartsAt = budget.periodStartsAt ?? Date().firstDayOfMonth()
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: budget.currency ?? "en_US")
+        formatter.locale = Locale(identifier: currecny)
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
         
@@ -83,7 +82,7 @@ class BudgetWizardViewModel: ObservableObject {
     
     func newCategory(_ page: WizzardPage) {
         var category: PlanCategoryEntity
-
+        
         switch page {
         case .income:
             let entity = budgetService.newCategoryEntity(budget)
@@ -130,24 +129,9 @@ class BudgetWizardViewModel: ObservableObject {
         return ["en_US", "en_GB", "de_DE", "ru_RU", "hy_AM", "ta_IN"] // TODO: get currencies from DB
     }
     
-    func getDateRange() -> ClosedRange<Date> {
-        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
-        let firstDay = Calendar.current.date(from: periodComponents)!
-        
-        return firstDay ... Date()
-    }
-    
-    // TODO: cancel all
-    func cancelAll() {
-        for c in cancellables {
-            c.cancel()
-        }
-    }
-    
     func save() {
         budget.name = name
         budget.currency = currency
-        budget.planTypeValue = type
         budget.dailyRemainderAt = dailyReminderAt
         budget.periodStartsAt = periodStartsAt
         
@@ -163,10 +147,8 @@ class BudgetWizardViewModel: ObservableObject {
         budgetService.rollback()
     }
     
-    // TODO: move to extensions
-    private static func getFirstDayOfPeriod() -> Date {
-        let periodComponents = Calendar.current.dateComponents([.year, .month], from: Date())
-        return Calendar.current.date(from: periodComponents)!
+    func cancelAll() {
+        cancellables.forEach { $0.cancel() }
     }
     
 }

@@ -24,13 +24,11 @@ struct BudgetWizardView: View {
                 }
                 .disabled(currentPage.rawValue == 0)
                 Spacer()
-                Button {
+                ToolButton(icon: "x.circle", color: .red) {
                     vm.rollback()
                     dismiss()
-                } label: {
-                    Label("Close", systemImage: "xmark")
-                        .foregroundColor(Color.red)
                 }
+                .font(.title2)
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPage) {
@@ -69,6 +67,9 @@ struct BudgetWizardView: View {
                 }
                 .presentationDetents([.medium])
         }
+        .onDisappear {
+            vm.cancelAll()
+        }
     }
     
     func nextButtonCaption() -> String {
@@ -95,6 +96,7 @@ struct BudgetWizardView: View {
     do {
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
         return BudgetWizardView(vm: vm)
+            .environmentObject(DependencyResolver.preview)
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -104,6 +106,7 @@ struct BudgetWizardView: View {
     do {
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
         return BudgetWizardView(vm: vm)
+            .environmentObject(DependencyResolver.preview)
     } catch {
         return Text("Something went wrong \(error)")
     }

@@ -10,33 +10,37 @@ import SwiftUI
 struct MainWizardPageView: View {
     
     @ObservedObject var vm: BudgetWizardViewModel
+    @State var currencySheetOpen: Bool = false
     
     var body: some View {
         Form {
             Section(header: Text("Basic")) {
                 TextField("Name", text: $vm.name).padding([.top, .bottom], 5)
+                Button {
+                    currencySheetOpen.toggle()
+                } label: {
+                    HStack {
+                        Text("Currency")
+                        Spacer()
+                        Text(vm.currency)
+                    }
+                    .foregroundColor(.black)
+                }
             }
+            .listRowSeparator(.hidden)
             Section(header: Text("Type")) {
-                Picker("Currency", selection: $vm.currency) {
-                    ForEach(vm.getCurrencies(), id: \.self) { currency in
-                        Text(currency)
-                    }
-                }
-                Picker("Type", selection: $vm.type) {
-                    ForEach(PlanType.allCases) { type in
-                        Text("\(type)")
-                    }
-                }
-                DatePicker("Period Starts at",
+                DatePicker("First Day",
                            selection: $vm.periodStartsAt,
-                           in: vm.getDateRange(),
+                           in: Date().dateRangeFromBegingOfMonth(),
                            displayedComponents: [.date])
-            }
-            Section(header: Text("Reminder")) {
-                DatePicker("Daily reminder",
+                DatePicker("Daily Reminder",
                            selection: $vm.dailyReminderAt,
                            displayedComponents: [.hourAndMinute])
             }
+            .listRowSeparator(.hidden)
+        }
+        .sheet(isPresented: $currencySheetOpen) {
+            CurrencySelectorSheet(currency: $vm.currency)
         }
     }
 }
@@ -44,8 +48,9 @@ struct MainWizardPageView: View {
 #Preview {
     let budget = BudgetEntity(context: DependencyResolver.preview.databaseManager().viewContext)
     budget.name = "Preview"
-    budget.currency = "USD"
+    budget.currency = "en_US"
     budget.planTypeValue = .mountly
     
     return MainWizardPageView(vm: BudgetWizardViewModel(budget, budgetService: DependencyResolver.preview.budgetService()))
+        .environmentObject(DependencyResolver.preview)
 }

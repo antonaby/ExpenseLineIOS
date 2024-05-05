@@ -16,43 +16,38 @@ struct CategoryWizardPageView: View {
     let type: CategoryType
     
     var body: some View {
-        VStack {
-            Form {
-                Section {
-                    ForEach(vm.categoriesForType(type)) { category in
-                        Button {
-                            vm.selectCategory(category)
-                        } label: {
-                            HStack {
-                                Image(systemName: category.iconName ?? "questionmark.app.fill")
-                                Text(category.name ?? "Unknown")
-                                Spacer()
-                                Text(vm.formatter.string(from: category.amountValue) ?? "0")
-                            }
-                            .foregroundColor(.black)
+        Form {
+            Section {
+                ForEach(vm.categoriesForType(type)) { category in
+                    Button {
+                        vm.selectCategory(category)
+                    } label: {
+                        HStack {
+                            Image(systemName: category.iconName ?? "questionmark.app.fill")
+                            Text(category.name ?? "Unknown")
+                            Spacer()
+                            Text(vm.formatter.string(from: category.amountValue) ?? "0")
                         }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                vm.deleteCategory(category)
-                            } label: {
-                                Label("delete", systemImage: "trash.fill")
-                            }
-                        }
-                        .listRowSeparator(.hidden)
+                        .foregroundColor(.black)
                     }
-                    HStack {
-                        Button {
-                            vm.newCategory(page)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button(role: .destructive) {
+                            vm.deleteCategory(category)
                         } label: {
-                            Label("Add", systemImage: "plus")
+                            Label("delete", systemImage: "trash.fill")
                         }
                     }
-                } header: {
-                    Text(name)
+                    .listRowSeparator(.hidden)
                 }
                 HStack {
-                    Text(vm.currency)
+                    Button {
+                        vm.newCategory(page)
+                    } label: {
+                        Label("Add", systemImage: "plus")
+                    }
                 }
+            } header: {
+                Text(name)
             }
         }
     }
