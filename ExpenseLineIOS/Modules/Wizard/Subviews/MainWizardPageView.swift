@@ -22,7 +22,7 @@ struct MainWizardPageView: View {
                     HStack {
                         Text("Currency")
                         Spacer()
-                        Text(vm.currency)
+                        Text(vm.currency.code)
                     }
                     .foregroundColor(.black)
                 }
@@ -51,6 +51,11 @@ struct MainWizardPageView: View {
     budget.currency = "en_US"
     budget.planTypeValue = .mountly
     
-    return MainWizardPageView(vm: BudgetWizardViewModel(budget, budgetService: DependencyResolver.preview.budgetService()))
+    return MainWizardPageView(
+        vm: BudgetWizardViewModel(
+            budget, 
+            budgetService: DependencyResolver.preview.budgetService(),
+            dataService: DependencyResolver.preview.dataService()
+        ))
         .environmentObject(DependencyResolver.preview)
 }

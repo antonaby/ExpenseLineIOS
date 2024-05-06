@@ -26,7 +26,7 @@ enum CategoryActionOperation {
 class BudgetWizardViewModel: ObservableObject {
     
     @Published var name: String
-    @Published var currency: String
+    @Published var currency: CurrencySymbol
     @Published var periodStartsAt: Date
     @Published var dailyReminderAt: Date
     
@@ -38,21 +38,24 @@ class BudgetWizardViewModel: ObservableObject {
     private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
     private var budgetService: BudgetService
+    private var dataService: DataService
     private var cancellables = Set<AnyCancellable>()
     
-    init(_ budget: BudgetEntity, budgetService: BudgetService) {
+    init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
         self.budgetService = budgetService
+        self.dataService = dataService
         
         self.name = budget.name ?? ""
-        let currecny = budget.currency ?? Locale.current.identifier
-        self.currency = currecny
+        let currencyLocaleId = budget.currency ?? Locale.current.identifier
+        let currency = dataService.getCurrensySymbolById(currencyLocaleId) ?? dataService.getDefaultCurrencySymbol()
+        self.currency = currency
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
         self.periodStartsAt = budget.periodStartsAt ?? Date().firstDayOfMonth()
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: currecny)
+        formatter.locale = Locale(identifier: currency.id)
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
         
@@ -65,7 +68,7 @@ class BudgetWizardViewModel: ObservableObject {
         .store(in: &cancellables)
         
         $currency.sink { [weak self] currency in
-            self?.formatter.locale = Locale(identifier: currency)
+            self?.formatter.locale = Locale(identifier: currency.id)
         }
         .store(in: &cancellables)
     }
@@ -131,7 +134,7 @@ class BudgetWizardViewModel: ObservableObject {
     
     func save() {
         budget.name = name
-        budget.currency = currency
+        budget.currency = currency.id
         budget.dailyRemainderAt = dailyReminderAt
         budget.periodStartsAt = periodStartsAt
         
@@ -166,7 +169,7 @@ extension BudgetWizardViewModel {
     var isCurrencyValid: AnyPublisher<Bool, Never> {
         $currency.debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .map { currency in
-                currency.count == 3
+                !currency.id.isEmpty
             }
             .eraseToAnyPublisher()
     }

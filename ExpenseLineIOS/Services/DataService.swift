@@ -11,7 +11,7 @@ import Foundation
 class DataService {
     
     private let categories: [CategoryTemplateType]
-    private let currencies: [CurrencyLocale]
+    private let currencies: [CurrencySymbol]
     
     init() {
         self.categories = [
@@ -33,12 +33,12 @@ class DataService {
             ]),
         ]
         self.currencies = [
-            CurrencyLocale(id: "en_US", name: "US Dollar"),
-            CurrencyLocale(id: "en_GB", name: "Pound"),
-            CurrencyLocale(id: "de_DE", name: "EUR"),
-            CurrencyLocale(id: "ru_RU", name: "Rub"),
-            CurrencyLocale(id: "hy_AM", name: "Drum"),
-            CurrencyLocale(id: "ta_IN", name: "RUP")
+            CurrencySymbol(id: "en_US", name: "United States"),
+            CurrencySymbol(id: "en_GB", name: "Great Britain"),
+            CurrencySymbol(id: "de_DE", name: "Germany"),
+            CurrencySymbol(id: "ru_RU", name: "Russia"),
+            CurrencySymbol(id: "hy_AM", name: "Armenia"),
+            CurrencySymbol(id: "ta_IN", name: "India")
         ]
     }
     
@@ -54,8 +54,16 @@ class DataService {
         categories.map { $0.templates }.joined().filter { $0.id == id }.first
     }
     
-    func getCurrencies() -> [CurrencyLocale] {
+    func getCurrencies() -> [CurrencySymbol] {
         return currencies
+    }
+    
+    func getCurrensySymbolById(_ id: String) -> CurrencySymbol? {
+        currencies.first(where: { $0.id == id })
+    }
+    
+    func getDefaultCurrencySymbol() -> CurrencySymbol {
+        getCurrensySymbolById("en_US")!
     }
     
 }

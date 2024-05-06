@@ -248,8 +248,8 @@
 			children = (
 				D250D4CE2BB828EB0050638C /* Budget.swift */,
 				D2C58AD52BE230CC00F1BB03 /* Category.swift */,
-				D20EF2E32BB19436006CF8CD /* Transaction.swift */,
 				D221C0892BE758170096DF89 /* Currency.swift */,
+				D20EF2E32BB19436006CF8CD /* Transaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

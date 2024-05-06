@@ -55,7 +55,11 @@ struct CategoryWizardPageView: View {
 
 #Preview {
     let budget = BudgetEntity(context: DependencyResolver.preview.databaseManager().viewContext)
-    let vm = BudgetWizardViewModel(budget, budgetService: DependencyResolver.preview.budgetService())
+    let vm = BudgetWizardViewModel(
+        budget,
+        budgetService: DependencyResolver.preview.budgetService(),
+        dataService: DependencyResolver.preview.dataService()
+    )
     return CategoryWizardPageView(
         vm: vm,
         name: "Preview",

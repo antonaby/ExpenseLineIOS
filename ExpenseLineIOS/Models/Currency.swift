@@ -7,13 +7,17 @@
 
 import Foundation
 
-struct CurrencyLocale: Identifiable {
+struct CurrencySymbol: Identifiable {
     
     let id: String
     let name: String
     
     var locale: Locale {
         Locale(identifier: id)
+    }
+    
+    var code: String {
+        locale.currency?.identifier ?? "?"
     }
     
     var symbol: String {
