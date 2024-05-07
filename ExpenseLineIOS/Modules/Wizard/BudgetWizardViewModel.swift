@@ -33,7 +33,8 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var isFormValid: Bool = false
     @Published var selectedCategory: PlanCategoryEntity?
     
-    var formatter: NumberFormatter
+    var currencyFormatter: NumberFormatter
+    var percnetFormatter: NumberFormatter
     
     private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
@@ -53,13 +54,19 @@ class BudgetWizardViewModel: ObservableObject {
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
         self.periodStartsAt = budget.periodStartsAt ?? Date().firstDayOfMonth()
         
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: currency.id)
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = Locale(identifier: currency.id)
+        currencyFormatter.minimumFractionDigits = 0
+        currencyFormatter.maximumFractionDigits = 2
+        self.currencyFormatter = currencyFormatter
         
-        self.formatter = formatter
+        let percentFormatter = NumberFormatter()
+        percentFormatter.numberStyle = .percent
+        percentFormatter.locale = Locale(identifier: currency.id)
+        percentFormatter.minimumFractionDigits = 0
+        percentFormatter.maximumFractionDigits = 2
+        self.percnetFormatter = percentFormatter
         
         isValid.sink { [weak self]  isValid in
             guard let self = self else { return }
@@ -68,7 +75,7 @@ class BudgetWizardViewModel: ObservableObject {
         .store(in: &cancellables)
         
         $currency.sink { [weak self] currency in
-            self?.formatter.locale = Locale(identifier: currency.id)
+            self?.currencyFormatter.locale = Locale(identifier: currency.id)
         }
         .store(in: &cancellables)
     }

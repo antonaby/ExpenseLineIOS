@@ -26,8 +26,8 @@ struct CategoryCard: View {
                 if category.entity.amountDecimal > 0 {
                     Text("\(category.entity.amountDecimal)")
                         .font(.caption)
-                } else if category.entity.percentDecimal > 0 {
-                    Text("\(category.entity.percentDecimal)")
+                } else if category.entity.percentDecimalFraction > 0 {
+                    Text("\(category.entity.percentDecimalFraction)")
                         .font(.caption)
                 }
             }

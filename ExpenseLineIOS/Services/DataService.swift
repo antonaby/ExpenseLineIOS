@@ -58,6 +58,7 @@ class DataService {
         return currencies
     }
     
+    // TODO: check all possible locales
     func getCurrensySymbolById(_ id: String) -> CurrencySymbol? {
         currencies.first(where: { $0.id == id })
     }

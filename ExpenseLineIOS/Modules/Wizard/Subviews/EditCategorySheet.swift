@@ -103,9 +103,9 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         locale.isCurrencySymbolTrailing()
     }
     
-    init(_ category: PlanCategoryEntity, localeId: String) {
+    init(_ category: PlanCategoryEntity, currencySymbol: CurrencySymbol) {
         self.category = category
-        let locale = Locale(identifier: localeId)
+        let locale = currencySymbol.locale
         self.locale = locale
         self.name = category.name ?? ""
         self.color = category.colorValue
@@ -121,7 +121,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
             self.amount = ""
         }
         
-        if category.percentDecimal > 0 {
+        if category.percentDecimalFraction > 0 {
             self.percent = category.percentAsString(
                 delimiter: locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator),
                 symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol
@@ -141,11 +141,11 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         category.name = name
         category.iconName = template?.iconName ?? "questionmark"
         if type == .outcomePercent {
-            category.percent = convertToDecimalNumber(percent, symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol)
+            category.percentDecimalFraction = convertToDecimalNumber(percent, symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol)
             category.amountDecimal = 0
         } else {
-            category.amount = convertToDecimalNumber(amount, symbol: currencySymbol)
-            category.percentDecimal = 0
+            category.amountDecimal = convertToDecimalNumber(amount, symbol: currencySymbol)
+            category.percentDecimalFraction = 0
         }
         category.typeValue = type
         category.colorValue = color
@@ -158,14 +158,14 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
-    private func convertToDecimalNumber(_ value: String, symbol: String) -> NSDecimalNumber {
+    private func convertToDecimalNumber(_ value: String, symbol: String) -> Decimal {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = separator
         let cleanAmount = value.replacingOccurrences(of: symbol, with: "")
         let result = formatter.number(from: cleanAmount)?.decimalValue ?? 0
         
-        return result as NSDecimalNumber
+        return result
     }
     
 }
@@ -400,7 +400,10 @@ struct EditCategorySheet: View {
     category.typeValue = .income
     category.templateId = UUID(uuidString: "4e794d37-e5fb-4574-b105-4ec0a2d46ce9")!
 
-    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, localeId: "de_DE"))
+    return EditCategorySheet(title: "Save", 
+                             vm: EditPlanCategorySheetViewModel(
+                                category,
+                                currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
         .environmentObject(DependencyResolver.preview)
 }
 
@@ -411,6 +414,9 @@ struct EditCategorySheet: View {
     let category = busgetService.newCategoryEntity(budget)
     category.typeValue = .income
 
-    return EditCategorySheet(title: "Save", vm: EditPlanCategorySheetViewModel(category, localeId: "de_DE"))
+    return EditCategorySheet(title: "Save",
+                             vm: EditPlanCategorySheetViewModel(
+                                category,
+                                currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
         .environmentObject(DependencyResolver.preview)
 }

@@ -77,7 +77,7 @@ class BudgetViewModel: ObservableObject {
         
         totalPlannedDynamicPercent = categories
             .filter { $0.typeValue == .outcomePercent }
-            .reduce(0) { $0 + $1.percentDecimal }
+            .reduce(0) { $0 + $1.percentDecimalFraction }
         
         do {
             let fixedCategories = try budgetService.spendingsForFixedCategories(period, budget: budget)

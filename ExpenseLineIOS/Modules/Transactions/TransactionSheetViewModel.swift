@@ -55,7 +55,7 @@ class TransactionSheetViewModel: ObservableObject {
                         id: $0.id ?? UUID(),
                         name: $0.name ?? "Unknown",
                         amount: $0.amountDecimal,
-                        percent: $0.percentDecimal,
+                        percent: $0.percentDecimalFraction,
                         iconName: $0.iconName ?? "Unknown",
                         type: $0.typeValue,
                         createdAt: $0.createdAt ?? Date()

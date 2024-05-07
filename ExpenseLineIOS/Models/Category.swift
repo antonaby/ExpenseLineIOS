@@ -63,12 +63,12 @@ extension PlanCategoryEntity {
         percent ?? NSDecimalNumber(value: 0)
     }
     
-    var percentDecimal: Decimal {
+    var percentDecimalFraction: Decimal {
         get {
-            percentValue as Decimal
+            percentValue as Decimal * 100
         }
         set {
-            percent = newValue as NSDecimalNumber
+            percent = newValue / 100 as NSDecimalNumber
         }
     }
     
@@ -108,7 +108,7 @@ extension PlanCategoryEntity {
         formatter.usesGroupingSeparator = false
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-        let formatted = formatter.string(from: percentValue) ?? "0"
+        let formatted = formatter.string(from: percentDecimalFraction as NSDecimalNumber) ?? "0"
         
         return formatted + " " + symbol
     }
