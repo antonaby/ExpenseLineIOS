@@ -83,15 +83,16 @@ struct CategoryTemplateSelectorView: View {
                 Button {
                     selectedTemplate = template
                 } label: {
-                    FlexibleCardView {
+                    FlexibleCardView(color: selectedTemplate?.id == template.id ? color : .white) {
                         VStack {
                             Image(systemName: template.iconName)
                                 .font(.title2)
+                                .bold()
                             Text(template.name)
                                 .lineLimit(1)
                                 .font(.caption2)
                         }
-                        .foregroundColor(selectedTemplate?.id == template.id ? color : .black)
+                        .foregroundColor(selectedTemplate?.id == template.id ? .white : .black)
                     }
                 }
             }

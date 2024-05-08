@@ -98,6 +98,7 @@ struct CustomNumericKeybord: View {
     var isSymbolTrailing: Bool
     
     @State private var internalValue: String
+    @State private var isEnabled: Bool = true
     
     init(text: Binding<String>, 
          showKeyboard: FocusState<Bool>.Binding,
@@ -178,11 +179,15 @@ struct CustomNumericKeybord: View {
                 .fill(.white)
                 .ignoresSafeArea()
         }
+        .onAppear {
+            checkEnabled()
+        }
     }
     
     func refreshText() {
         if internalValue.isEmpty {
             text = ""
+            isEnabled = true
             return
         }
         
@@ -191,14 +196,24 @@ struct CustomNumericKeybord: View {
         } else {
             text = currencySymbol + " " + internalValue
         }
+        
+        checkEnabled()
+    }
+    
+    func checkEnabled() {
+        let components = internalValue.split(separator: separator)
+        if components.count == 2 {
+            isEnabled = components[1].count < 2
+        }
     }
     
     @ViewBuilder
     func NumericKeyboardButton(_ value: String, onTap: @escaping () -> ()) -> some View {
         Button(action: onTap) {
             Text(value)
-                .modifier(KeyboardButtonViewModifier(color: .black))
+                .modifier(KeyboardButtonViewModifier(color: isEnabled ? .black : .gray))
         }
+        .disabled(!isEnabled)
     }
     
 }

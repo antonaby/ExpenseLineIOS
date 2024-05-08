@@ -77,7 +77,7 @@ struct CategoryWizardPageView: View {
     category2.name = "Preview 2"
     category2.typeValue = .income
     category2.colorValue = .green
-    category2.iconName = "case"
+    category2.iconName = "globe"
     category2.budget = budget
     category2.amountDecimal = 1000000
     
