@@ -25,6 +25,7 @@ struct CategoryWizardPageView: View {
                         HStack {
                             Image(systemName: category.iconName ?? "questionmark")
                                 .foregroundColor(category.colorValue)
+                                .frame(width: 20)
                             Text(category.name ?? "Unknown")
                             Spacer()
                             if category.typeValue == .outcomePercent {
