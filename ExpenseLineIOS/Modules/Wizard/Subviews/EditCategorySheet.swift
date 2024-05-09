@@ -286,6 +286,24 @@ struct EditCategorySheet: View {
                     .font(.title3)
                     .frame(minHeight: 50)
                     FlexibleCardView {
+                        VStack(spacing: 10) {
+                            Text("Catgeory type")
+                                .font(.caption)
+                            HStack {
+                                ForEach(CategoryType.allCases) { categoryType in
+                                    Button {
+                                        vm.type = categoryType
+                                    } label: {
+                                        CategoryLabel(categoryType)
+                                            .frame(maxWidth: .infinity)
+                                            .foregroundColor(categoryType == vm.type ? .green : .black)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .frame(minHeight: 50)
+                    FlexibleCardView {
                         if vm.type == .outcomePercent {
                             CustomNumericField(text: vm.percent, placeholder: "Percent") {
                                 CustomNumericKeybord(
@@ -311,24 +329,6 @@ struct EditCategorySheet: View {
                         }
                     }
                     .frame(minHeight: 70)
-                    FlexibleCardView {
-                        VStack(spacing: 10) {
-                            Text("Catgeory type")
-                                .font(.caption)
-                            HStack {
-                                ForEach(CategoryType.allCases) { categoryType in
-                                    Button {
-                                        vm.type = categoryType
-                                    } label: {
-                                        CategoryLabel(categoryType)
-                                            .frame(maxWidth: .infinity)
-                                            .foregroundColor(categoryType == vm.type ? .green : .black)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .frame(minHeight: 50)
                     Menu {
                         Button(role: .destructive) {
                             delete?(vm.category)
@@ -372,7 +372,7 @@ struct EditCategorySheet: View {
         case .outcomeFixed:
             CategoryLebelView("Mountly", lebel: "house")
         case .outcomePercent:
-            CategoryLebelView("Daily", lebel: "takeoutbag.and.cup.and.straw")
+            CategoryLebelView("Daily %", lebel: "takeoutbag.and.cup.and.straw")
         }
     }
     

@@ -37,6 +37,12 @@ struct CategoryTemplateType: Identifiable {
 
 extension PlanCategoryEntity {
     
+    var nameValue: String {
+        get {
+            name ?? ""
+        }
+    }
+    
     var typeValue: CategoryType {
         get {
             CategoryType(rawValue: Int(self.type)) ?? .outcomePercent

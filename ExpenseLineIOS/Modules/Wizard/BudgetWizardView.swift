@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+enum WizzardPage: Int, Identifiable, CaseIterable {
+    case base = 0
+    case outcome
+    case summary
+    
+    var id: Self { self }
+}
+
 struct BudgetWizardView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -34,16 +42,17 @@ struct BudgetWizardView: View {
             TabView(selection: $currentPage) {
                 MainWizardPageView(vm: vm)
                     .tag(WizzardPage.base)
-                CategoryWizardPageView(vm: vm, name: "Income", page: .income, type: .income)
-                    .tag(WizzardPage.income)
-                CategoryWizardPageView(vm: vm, name: "Fixed Outcome", page: .fixed, type: .outcomeFixed)
-                    .tag(WizzardPage.fixed)
-                CategoryWizardPageView(vm: vm, name: "Daily Spendings", page: .dynamic, type: .outcomePercent)
-                    .tag(WizzardPage.dynamic)
+                CategoryListWizardView(vm: vm, types: [.outcomeFixed, .outcomePercent])
+                    .tag(WizzardPage.outcome)
                 SummaryWizardPage()
                     .tag(WizzardPage.summary)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
+            HStack(spacing: 20) {
+                ForEach(WizzardPage.allCases) { page in
+                    PageIconView(page)
+                }
+            }
+            .padding(.bottom, 10)
             WizzardNextButton(nextButtonCaption()) {
                 if currentPage == .summary {
                     vm.save()
@@ -70,6 +79,31 @@ struct BudgetWizardView: View {
         }
         .onDisappear {
             vm.cancelAll()
+        }
+    }
+    
+    @ViewBuilder
+    func PageIconView(_ page: WizzardPage) -> some View {
+        Button {
+            currentPage = page
+        } label: {
+            FlexibleCardView(color: currentPage == page ? .green : .white) {
+                Image(systemName: getIconForPage(page))
+                    .font(.title2)
+                    .foregroundColor(currentPage == page ? .white : .black)
+            }
+            .frame(width: 50, height: 50)
+        }
+    }
+    
+    func getIconForPage(_ page: WizzardPage) -> String {
+        switch page {
+        case .base:
+            return "case"
+        case .outcome:
+            return "list.bullet"
+        case .summary:
+            return "checkmark"
         }
     }
     

@@ -8,14 +8,6 @@
 import Foundation
 import Combine
 
-enum WizzardPage: Int, Hashable {
-    case base = 0
-    case income
-    case fixed
-    case dynamic
-    case summary
-}
-
 enum CategoryActionOperation {
     case none
     case create
@@ -80,9 +72,9 @@ class BudgetWizardViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
-    func categoriesForType(_ type: CategoryType) -> [PlanCategoryEntity] {
+    func categoriesForType(_ types: [CategoryType]) -> [PlanCategoryEntity] {
         let categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
-        return categories.filter { $0.typeValue == type }
+        return categories.filter { types.contains($0.typeValue) }.sorted(by: { $0.nameValue < $1.nameValue })
     }
     
     func selectCategory(_ category: PlanCategoryEntity) {
@@ -90,24 +82,17 @@ class BudgetWizardViewModel: ObservableObject {
         selectedCategory = category
     }
     
-    func newCategory(_ page: WizzardPage) {
+    func newCategory(_ types: [CategoryType]) {
         var category: PlanCategoryEntity
         
-        switch page {
-        case .income:
+        if types.contains(.income) {
             let entity = budgetService.newCategoryEntity(budget)
             entity.typeValue = .income
             category = entity
-        case .fixed:
+        } else {
             let entity = budgetService.newCategoryEntity(budget)
             entity.typeValue = .outcomeFixed
             category = entity
-        case .dynamic:
-            let entity = budgetService.newCategoryEntity(budget)
-            entity.typeValue = .outcomePercent
-            category = entity
-        default:
-            return
         }
         
         op = .create
