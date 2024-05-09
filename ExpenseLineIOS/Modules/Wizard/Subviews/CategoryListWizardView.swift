@@ -54,6 +54,7 @@ struct CategoryListWizardView: View {
                     .foregroundColor(.black)
                 }
             }
+            .listRowSeparator(.hidden)
         }
     }
 }

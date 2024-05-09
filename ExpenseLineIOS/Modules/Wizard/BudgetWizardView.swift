@@ -33,7 +33,7 @@ struct BudgetWizardView: View {
                     }
                     .disabled(currentPage.rawValue == 0)
                     Spacer()
-                    ToolButton(icon: "x.circle", color: .red) {
+                    ToolButton(icon: "x.circle", color: .gray) {
                         vm.rollback()
                         dismiss()
                     }
@@ -46,14 +46,8 @@ struct BudgetWizardView: View {
                 }
             }
             .padding([.horizontal], 10)
-            TabView(selection: $currentPage) {
-                MainWizardPageView(vm: vm)
-                    .tag(WizzardPage.base)
-                IncomePageWizardView(vm: vm)
-                    .tag(WizzardPage.income)
-                OutcomePageWizardView(vm: vm)
-                    .tag(WizzardPage.outcome)                    
-            }
+            WizardPageView()
+                .padding(.bottom, 5)
             WizzardNextButton(nextButtonCaption()) {
                 if currentPage == .outcome {
                     vm.save()
@@ -80,6 +74,18 @@ struct BudgetWizardView: View {
         }
         .onDisappear {
             vm.cancelAll()
+        }
+    }
+    
+    @ViewBuilder
+    func WizardPageView() -> some View {
+        switch currentPage {
+        case .base:
+            MainWizardPageView(vm: vm)
+        case .income:
+            IncomePageWizardView(vm: vm)
+        case .outcome:
+            OutcomePageWizardView(vm: vm)
         }
     }
     

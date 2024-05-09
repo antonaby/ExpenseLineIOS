@@ -12,8 +12,10 @@ struct IncomePageWizardView: View {
     @ObservedObject var vm: BudgetWizardViewModel
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             CategoryListWizardView(vm: vm, types: [.income])
+            BudgetShortSummaryView(vm: vm)
+                .padding(.horizontal, 20)
         }
         .background(Color(uiColor: .secondarySystemBackground))
     }

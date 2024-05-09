@@ -14,6 +14,8 @@ struct OutcomePageWizardView: View {
     var body: some View {
         VStack {
             CategoryListWizardView(vm: vm, types: [.outcomeFixed, .outcomePercent])
+            BudgetShortSummaryView(vm: vm)
+                .padding(.horizontal, 20)
         }
         .background(Color(uiColor: .secondarySystemBackground))
     }

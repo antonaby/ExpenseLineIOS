@@ -122,8 +122,26 @@ class BudgetWizardViewModel: ObservableObject {
         op = .none
     }
     
-    func getCurrencies() -> [String] {
-        return ["en_US", "en_GB", "de_DE", "ru_RU", "hy_AM", "ta_IN"] // TODO: get currencies from DB
+    func getTotalIncome() -> String {
+        return currencyFormatter.string(from: totalAmountForCategory(.income) as NSDecimalNumber) ?? "0"
+    }
+    
+    func getTotalOutcome() -> String {
+        let totalFixedOutcome = totalAmountForCategory(.outcomeFixed)
+        let totalPercentOutcome = totalAmountForCategory(.income) * totalPercentFractionForCategory(.outcomePercent)
+        let totalOutcome = totalFixedOutcome + totalPercentOutcome
+        
+        return currencyFormatter.string(from: totalOutcome as NSDecimalNumber) ?? "0"
+    }
+    
+    private func totalAmountForCategory(_ type: CategoryType) -> Decimal {
+        let incomeCategories = categoriesForType([type])
+        return incomeCategories.reduce(0) { $0 + $1.amountDecimal }
+    }
+    
+    private func totalPercentFractionForCategory(_ type: CategoryType) -> Decimal {
+        let incomeCategories = categoriesForType([type])
+        return incomeCategories.reduce(0) { $0 + ($1.percentValue as Decimal) }
     }
     
     func save() {
