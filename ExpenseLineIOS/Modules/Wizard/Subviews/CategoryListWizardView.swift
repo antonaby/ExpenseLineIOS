@@ -20,10 +20,10 @@ struct CategoryListWizardView: View {
                     vm.selectCategory(category)
                 } label: {
                     HStack {
-                        Image(systemName: category.iconName ?? "questionmark")
+                        Image(systemName: category.iconNameValue)
                             .foregroundColor(category.colorValue)
                             .frame(width: 20)
-                        Text(category.name ?? "Unknown")
+                        Text(category.nameValue)
                         Spacer()
                         if category.typeValue == .outcomePercent {
                             Text(vm.percnetFormatter.string(from: category.percentValue) ?? "0")
@@ -46,7 +46,12 @@ struct CategoryListWizardView: View {
                 Button {
                     vm.newCategory(types)
                 } label: {
-                    Label("Add", systemImage: "plus")
+                    HStack {
+                        Image(systemName: "plus.circle")
+                            .frame(width: 20)
+                        Text("Add")
+                    }
+                    .foregroundColor(.black)
                 }
             }
         }

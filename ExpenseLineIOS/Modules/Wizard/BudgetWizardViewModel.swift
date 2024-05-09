@@ -74,7 +74,9 @@ class BudgetWizardViewModel: ObservableObject {
     
     func categoriesForType(_ types: [CategoryType]) -> [PlanCategoryEntity] {
         let categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
-        return categories.filter { types.contains($0.typeValue) }.sorted(by: { $0.nameValue < $1.nameValue })
+        return categories
+            .filter { !$0.nameValue.isEmpty && types.contains($0.typeValue) }
+            .sorted(by: { $0.nameValue < $1.nameValue })
     }
     
     func selectCategory(_ category: PlanCategoryEntity) {

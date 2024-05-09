@@ -43,6 +43,12 @@ extension PlanCategoryEntity {
         }
     }
     
+    var iconNameValue: String {
+        get {
+            iconName ?? "questionmark"
+        }
+    }
+    
     var typeValue: CategoryType {
         get {
             CategoryType(rawValue: Int(self.type)) ?? .outcomePercent

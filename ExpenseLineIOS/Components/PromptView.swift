@@ -30,7 +30,7 @@ struct PromptView<Content: View>: View {
     var body: some View {
         if !closed {
             ZStack(alignment: .topTrailing) {
-                //RoundedRectangle(cornerRadius: cornerRadius).fill(color)
+                RoundedRectangle(cornerRadius: cornerRadius).fill(color)
                 ToolButton(icon: "x.circle", color: .gray) {
                     withAnimation {
                         closed.toggle()

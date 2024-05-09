@@ -9,8 +9,8 @@ import SwiftUI
 
 enum WizzardPage: Int, Identifiable, CaseIterable {
     case base = 0
+    case income
     case outcome
-    case summary
     
     var id: Self { self }
 }
@@ -24,37 +24,38 @@ struct BudgetWizardView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    previousPage()
-                } label: {
-                    Label("Back", systemImage: "chevron.backward")
+            ZStack {
+                HStack {
+                    Button {
+                        previousPage()
+                    } label: {
+                        Label("Back", systemImage: "chevron.backward")
+                    }
+                    .disabled(currentPage.rawValue == 0)
+                    Spacer()
+                    ToolButton(icon: "x.circle", color: .red) {
+                        vm.rollback()
+                        dismiss()
+                    }
+                    .font(.title2)
                 }
-                .disabled(currentPage.rawValue == 0)
-                Spacer()
-                ToolButton(icon: "x.circle", color: .red) {
-                    vm.rollback()
-                    dismiss()
+                HStack(spacing: 20) {
+                    ForEach(WizzardPage.allCases) { page in
+                        PageIconView(page)
+                    }
                 }
-                .font(.title2)
             }
             .padding([.horizontal], 10)
             TabView(selection: $currentPage) {
                 MainWizardPageView(vm: vm)
                     .tag(WizzardPage.base)
-                CategoryListWizardView(vm: vm, types: [.outcomeFixed, .outcomePercent])
-                    .tag(WizzardPage.outcome)
-                SummaryWizardPage()
-                    .tag(WizzardPage.summary)
+                IncomePageWizardView(vm: vm)
+                    .tag(WizzardPage.income)
+                OutcomePageWizardView(vm: vm)
+                    .tag(WizzardPage.outcome)                    
             }
-            HStack(spacing: 20) {
-                ForEach(WizzardPage.allCases) { page in
-                    PageIconView(page)
-                }
-            }
-            .padding(.bottom, 10)
             WizzardNextButton(nextButtonCaption()) {
-                if currentPage == .summary {
+                if currentPage == .outcome {
                     vm.save()
                     dismiss()
                 } else {
@@ -89,31 +90,32 @@ struct BudgetWizardView: View {
         } label: {
             FlexibleCardView(color: currentPage == page ? .green : .white) {
                 Image(systemName: getIconForPage(page))
-                    .font(.title2)
                     .foregroundColor(currentPage == page ? .white : .black)
+                    .font(.caption)
+                    .bold()
             }
-            .frame(width: 50, height: 50)
+            .frame(width: 30, height: 30)
         }
     }
     
     func getIconForPage(_ page: WizzardPage) -> String {
         switch page {
         case .base:
+            return "square.and.pencil"
+        case .income:
             return "case"
         case .outcome:
             return "list.bullet"
-        case .summary:
-            return "checkmark"
         }
     }
     
     func nextButtonCaption() -> String {
-        currentPage == .summary ? "Create" : "Next"
+        currentPage == .outcome ? "Create" : "Next"
     }
     
     func nextPage() {
         let nextValue = currentPage.rawValue + 1
-        if  nextValue <= WizzardPage.summary.rawValue {
+        if  nextValue <= WizzardPage.outcome.rawValue {
             currentPage = WizzardPage(rawValue: nextValue) ?? .base
         }
     }
@@ -139,7 +141,68 @@ struct BudgetWizardView: View {
 
 #Preview("Edit Budget") {
     do {
-        let vm = try DependencyResolver.preview.budgetWizzardViewModel()
+        let dm = DependencyResolver.preview.databaseManager()
+        let budget = BudgetEntity(context: dm.viewContext)
+        budget.name = "Preview"
+        budget.currency = "en_US"
+        budget.planTypeValue = .mountly
+        
+        let category1 = PlanCategoryEntity(context: dm.viewContext)
+        category1.id = UUID()
+        category1.name = "Preview 1"
+        category1.typeValue = .outcomeFixed
+        category1.colorValue = .pink
+        category1.iconName = "case"
+        category1.budget = budget
+        category1.amountDecimal = 1000
+        
+        let category2 = PlanCategoryEntity(context: dm.viewContext)
+        category2.id = UUID()
+        category2.name = "Preview 2"
+        category2.typeValue = .outcomeFixed
+        category2.colorValue = .green
+        category2.iconName = "globe"
+        category2.budget = budget
+        category2.amountDecimal = 1000000
+        
+        let category3 = PlanCategoryEntity(context: dm.viewContext)
+        category3.id = UUID()
+        category3.name = "Preview 3"
+        category3.typeValue = .outcomePercent
+        category3.colorValue = .brown
+        category3.iconName = "cup.and.saucer"
+        category3.budget = budget
+        category3.percentDecimalFraction = 15
+        
+        let category4 = PlanCategoryEntity(context: dm.viewContext)
+        category4.id = UUID()
+        category4.name = "Preview 4"
+        category4.typeValue = .outcomePercent
+        category4.colorValue = .green
+        category4.iconName = "takeoutbag.and.cup.and.straw"
+        category4.budget = budget
+        category4.percentDecimalFraction = 20
+        
+        let category5 = PlanCategoryEntity(context: dm.viewContext)
+        category5.id = UUID()
+        category5.name = "Preview 1"
+        category5.typeValue = .income
+        category5.colorValue = .yellow
+        category5.iconName = "case"
+        category5.budget = budget
+        category5.amountDecimal = 1000
+        
+        let category6 = PlanCategoryEntity(context: dm.viewContext)
+        category6.id = UUID()
+        category6.name = "Preview 2"
+        category6.typeValue = .income
+        category6.colorValue = .orange
+        category6.iconName = "globe"
+        category6.budget = budget
+        category6.amountDecimal = 1000000
+        
+        let vm = try DependencyResolver.preview.budgetWizzardViewModel(budget: budget)
+        
         return BudgetWizardView(vm: vm)
             .environmentObject(DependencyResolver.preview)
     } catch {

@@ -39,9 +39,6 @@ struct MainWizardPageView: View {
                            displayedComponents: [.hourAndMinute])
             }
             .listRowSeparator(.hidden)
-            Section {
-                CategoryListWizardView(vm: vm, types: [.income])
-            }
         }
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency)
@@ -55,24 +52,6 @@ struct MainWizardPageView: View {
     budget.name = "Preview"
     budget.currency = "en_US"
     budget.planTypeValue = .mountly
-    
-    let category1 = PlanCategoryEntity(context: dm.viewContext)
-    category1.id = UUID()
-    category1.name = "Preview 1"
-    category1.typeValue = .income
-    category1.colorValue = .green
-    category1.iconName = "case"
-    category1.budget = budget
-    category1.amountDecimal = 1000
-    
-    let category2 = PlanCategoryEntity(context: dm.viewContext)
-    category2.id = UUID()
-    category2.name = "Preview 2"
-    category2.typeValue = .income
-    category2.colorValue = .green
-    category2.iconName = "globe"
-    category2.budget = budget
-    category2.amountDecimal = 1000000
     
     return MainWizardPageView(
         vm: BudgetWizardViewModel(
