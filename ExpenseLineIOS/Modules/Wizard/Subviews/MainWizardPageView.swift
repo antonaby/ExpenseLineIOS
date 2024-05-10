@@ -42,6 +42,8 @@ struct MainWizardPageView: View {
         }
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency)
+                .presentationDetents([.large, .medium])
+                .presentationDragIndicator(.visible)
         }
     }
 }

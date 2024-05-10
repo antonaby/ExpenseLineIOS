@@ -6,6 +6,54 @@
 //
 
 import SwiftUI
+import Combine
+
+class CurrencySelectorSheetViewModel: ObservableObject {
+    
+    @Published var search: String = ""
+    @Published var currencies: [CurrencySymbol] = []
+    private var allCurrencies: [CurrencySymbol] = []
+    private var cancellables = Set<AnyCancellable>()
+    
+    func loadCurrencies(dataService: DataService) {
+        allCurrencies = dataService.getCurrencies()
+        if search.isEmpty {
+            clearSerachFilter()
+        } else {
+            applySearchFilter(search)
+        }
+        
+        $search
+            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value.isEmpty {
+                    self?.clearSerachFilter()
+                } else {
+                    self?.applySearchFilter(value)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func cancelAll() {
+        cancellables.forEach { $0.cancel() }
+    }
+    
+    private func clearSerachFilter() {
+        currencies = allCurrencies
+    }
+    
+    private func applySearchFilter(_ value: String) {
+        let searchString = value.lowercased()
+        
+        currencies = allCurrencies.filter {
+            $0.name.lowercased().contains(searchString) ||
+            $0.code.lowercased().contains(searchString) ||
+            $0.symbol.lowercased().contains(searchString)
+        }
+    }
+    
+}
 
 struct CurrencySelectorSheet: View {
     
@@ -13,30 +61,44 @@ struct CurrencySelectorSheet: View {
     @EnvironmentObject var resolver: DependencyResolver
     
     @Binding var currency: CurrencySymbol
-    @State var currecnies: [CurrencySymbol] = []
+
+    @StateObject var vm = CurrencySelectorSheetViewModel()
     
     var body: some View {
-        List {
-            ForEach(currecnies) { currencySymbol in
-                Button {
-                    currency = currencySymbol
-                    dismiss()
-                } label: {
-                    HStack {
-                        Text(currencySymbol.name)
-                        Text(currencySymbol.symbol)
-                            .bold()
-                        Spacer()
-                        Text(currencySymbol.code)
+        VStack(spacing: 0) {
+            ContentSizeCardView {
+                TextField("Test", text: $vm.search)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            if !vm.currencies.isEmpty {
+                List(vm.currencies) { currencySymbol in
+                    Button {
+                        currency = currencySymbol
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Text(currencySymbol.name)
+                            Text(currencySymbol.symbol)
+                                .bold()
+                            Spacer()
+                            Text(currencySymbol.code)
+                        }
+                        .foregroundColor(.black)
                     }
-                    .foregroundColor(.black)
                 }
+            } else {
+                Text("no results")
+                    .bold()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .listStyle(.grouped)
+        .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
-            let ds = resolver.dataService()
-            currecnies = ds.getCurrencies()
+            vm.loadCurrencies(dataService: resolver.dataService())
+        }
+        .onDisappear {
+            vm.cancelAll()
         }
     }
 }
@@ -45,5 +107,5 @@ struct CurrencySelectorSheet: View {
     CurrencySelectorSheet(
         currency: .constant(CurrencySymbol(id: "en_US", name: "United States"))
     )
-        .environmentObject(DependencyResolver.preview)
+    .environmentObject(DependencyResolver.preview)
 }
