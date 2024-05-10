@@ -67,7 +67,7 @@ struct CurrencySelectorSheet: View {
     var body: some View {
         VStack(spacing: 0) {
             ContentSizeCardView {
-                TextField("Test", text: $vm.search)
+                TextField("Search", text: $vm.search)
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
