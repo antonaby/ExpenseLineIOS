@@ -13,33 +13,52 @@ struct MainWizardPageView: View {
     @State var currencySheetOpen: Bool = false
     
     var body: some View {
-        Form {
-            Section {
-                TextField("Name", text: $vm.name).padding([.top, .bottom], 5)
-                Button {
-                    currencySheetOpen.toggle()
-                } label: {
-                    HStack {
-                        Text("Currency")
-                        Spacer()
-                        Text(vm.currency.code)
-                            .bold()
+        ScrollView {
+            VStack {
+                Text("Basic")
+                    .modifier(FormTitleViewModifier.modifier)
+                Text("Let's add a **name** and choose **currency** of out budget")
+                    .modifier(FormTipViewModifier.modifier)
+                FlexibleCardView {
+                    VStack {
+                        TextField("Name", text: $vm.name)
+                        Divider()
+                        Button {
+                            currencySheetOpen.toggle()
+                        } label: {
+                            HStack {
+                                Text("Currency")
+                                Spacer()
+                                Text(vm.currency.code)
+                                    .bold()
+                            }
+                            .foregroundColor(.black)
+                        }
                     }
-                    .foregroundColor(.black)
+                }
+                Text("Dates")
+                    .modifier(FormTitleViewModifier.modifier)
+                Text("**A first day** is when a new budget period starts")
+                    .modifier(FormTipViewModifier.modifier)
+                Text("**Daily reminded** don't let you forget add today's transactions")
+                    .modifier(FormTipViewModifier.modifier)
+                FlexibleCardView {
+                    VStack {
+                        DatePicker("First Day",
+                                   selection: $vm.periodStartsAt,
+                                   in: Date().dateRangeFromBegingOfMonth(),
+                                   displayedComponents: [.date])
+                        Divider()
+                        DatePicker("Daily Reminder",
+                                   selection: $vm.dailyReminderAt,
+                                   displayedComponents: [.hourAndMinute])
+                    }
                 }
             }
-            .listRowSeparator(.hidden)
-            Section {
-                DatePicker("First Day",
-                           selection: $vm.periodStartsAt,
-                           in: Date().dateRangeFromBegingOfMonth(),
-                           displayedComponents: [.date])
-                DatePicker("Daily Reminder",
-                           selection: $vm.dailyReminderAt,
-                           displayedComponents: [.hourAndMinute])
-            }
-            .listRowSeparator(.hidden)
+            .padding(.top, 5)
+            .padding(.horizontal, 20)
         }
+        .background(Color(uiColor: .secondarySystemBackground))
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency)
                 .presentationDetents([.large, .medium])

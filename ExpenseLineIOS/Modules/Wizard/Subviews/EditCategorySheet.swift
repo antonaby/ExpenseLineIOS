@@ -263,10 +263,13 @@ struct EditCategorySheet: View {
             .font(.title2)
             ScrollView {
                 VStack(spacing: 15) {
-                    PromptView {
-                        Text("Choose **icon**, fill **name** and **amount**")
-                            .padding([.top], 10)
+                    VStack {
+                        Text("Edit category")
+                            .modifier(FormTitleViewModifier.modifier)
+                        Text("Select **icon** and type **name**")
+                            .modifier(FormTipViewModifier.modifier)
                     }
+                    Divider()
                     HStack(spacing: 15) {
                         Button {
                             showCategrotyTemplateSheet.toggle()

@@ -33,7 +33,6 @@ struct BudgetShortSummaryView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
         }
     }
 }

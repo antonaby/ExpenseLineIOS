@@ -26,7 +26,6 @@ struct WizzardNextButton: View {
                 .frame(maxWidth: .infinity)
                 
         }
-        .padding([.horizontal], 20)
         .buttonStyle(.borderedProminent)
         .tint(.green)
     }

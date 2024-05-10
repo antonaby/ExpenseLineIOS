@@ -21,17 +21,20 @@ struct BudgetWizardView: View {
     @State var currentPage: WizzardPage = .base
     
     @StateObject var vm: BudgetWizardViewModel
+    let editMode: Bool
     
     var body: some View {
         VStack {
             ZStack {
                 HStack {
-                    Button {
-                        previousPage()
-                    } label: {
-                        Label("Back", systemImage: "chevron.backward")
+                    if currentPage.rawValue != 0 {
+                        Button {
+                            previousPage()
+                        } label: {
+                            Label("Back", systemImage: "chevron.backward")
+                                .foregroundColor(.black)
+                        }
                     }
-                    .disabled(currentPage.rawValue == 0)
                     Spacer()
                     ToolButton(icon: "x.circle", color: .gray) {
                         vm.rollback()
@@ -48,14 +51,23 @@ struct BudgetWizardView: View {
             .padding([.horizontal], 10)
             WizardPageView()
                 .padding(.bottom, 5)
-            WizzardNextButton(nextButtonCaption()) {
-                if currentPage == .outcome {
-                    vm.save()
-                    dismiss()
-                } else {
-                    nextPage()
+            HStack {
+                if editMode && currentPage != .outcome {
+                    WizzardNextButton("Save") {
+                        vm.save()
+                        dismiss()
+                    }
+                }
+                WizzardNextButton(nextButtonCaption()) {
+                    if currentPage == .outcome {
+                        vm.save()
+                        dismiss()
+                    } else {
+                        nextPage()
+                    }
                 }
             }
+            .padding([.horizontal], 20)
         }
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(item: $vm.selectedCategory) { category in
@@ -116,7 +128,11 @@ struct BudgetWizardView: View {
     }
     
     func nextButtonCaption() -> String {
-        currentPage == .outcome ? "Create" : "Next"
+        if currentPage == .outcome && editMode {
+            return "Save"
+        }
+        
+        return currentPage == .outcome ? "Create" : "Next"
     }
     
     func nextPage() {
@@ -138,7 +154,7 @@ struct BudgetWizardView: View {
 #Preview("New Budget") {
     do {
         let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetWizardView(vm: vm)
+        return BudgetWizardView(vm: vm, editMode: false)
             .environmentObject(DependencyResolver.preview)
     } catch {
         return Text("Something went wrong \(error)")
@@ -209,7 +225,7 @@ struct BudgetWizardView: View {
         
         let vm = try DependencyResolver.preview.budgetWizzardViewModel(budget: budget)
         
-        return BudgetWizardView(vm: vm)
+        return BudgetWizardView(vm: vm, editMode: true)
             .environmentObject(DependencyResolver.preview)
     } catch {
         return Text("Something went wrong \(error)")

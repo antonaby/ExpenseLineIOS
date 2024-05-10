@@ -13,10 +13,20 @@ struct IncomePageWizardView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            VStack {
+                Text("Income")
+                    .modifier(FormTitleViewModifier.modifier)
+                Text("Let's add your salry and other wages")
+                    .modifier(FormTipViewModifier.modifier)
+            }
+            .padding(.bottom, 5)
+            .padding(.horizontal, 20)
+            Divider()
             CategoryListWizardView(vm: vm, types: [.income])
             BudgetShortSummaryView(vm: vm)
                 .padding(.horizontal, 20)
         }
+        .padding(.top, 5)
         .background(Color(uiColor: .secondarySystemBackground))
     }
 }

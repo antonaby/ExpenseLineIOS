@@ -12,11 +12,21 @@ struct OutcomePageWizardView: View {
     @ObservedObject var vm: BudgetWizardViewModel
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+            VStack {
+                Text("Outcome")
+                    .modifier(FormTitleViewModifier.modifier)
+                Text("Daily spendings and montly paiments")
+                    .modifier(FormTipViewModifier.modifier)
+            }
+            .padding(.bottom, 5)
+            .padding(.horizontal, 20)
+            Divider()
             CategoryListWizardView(vm: vm, types: [.outcomeFixed, .outcomePercent])
             BudgetShortSummaryView(vm: vm)
                 .padding(.horizontal, 20)
         }
+        .padding(.top, 5)
         .background(Color(uiColor: .secondarySystemBackground))
     }
 }

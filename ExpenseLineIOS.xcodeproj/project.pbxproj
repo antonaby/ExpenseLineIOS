@@ -45,6 +45,7 @@
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
 		D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */; };
 		D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */; };
+		D26DB1B92BEE487F00450617 /* FormTitleViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */; };
 		D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */; };
 		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
 		D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */; };
@@ -118,6 +119,7 @@
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
 		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
 		D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBundle.swift; sourceTree = "<group>"; };
+		D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTitleViewModifier.swift; sourceTree = "<group>"; };
 		D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardView.swift; sourceTree = "<group>"; };
 		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
 		D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverviewView.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				D2C58ACF2BE22B5E00F1BB03 /* ContentSizeCardView.swift */,
 				D219D9932BE3A69700943018 /* FlexibleCardView.swift */,
 				D25A5B392BE4F8F2009618E4 /* PromptView.swift */,
+				D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
 				D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */,
 				D221C0882BE757200096DF89 /* CurrencySelectorSheet.swift in Sources */,
+				D26DB1B92BEE487F00450617 /* FormTitleViewModifier.swift in Sources */,
 				D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */,
 				D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */,
 				D226FB092BED162100B54654 /* IncomePageWizardView.swift in Sources */,
