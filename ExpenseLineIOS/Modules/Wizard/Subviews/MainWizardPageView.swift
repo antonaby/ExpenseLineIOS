@@ -15,18 +15,22 @@ struct MainWizardPageView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text("Basic")
+                Text("Budget")
                     .modifier(FormTitleViewModifier.modifier)
                 Text("Let's add a **name** and choose **currency** of out budget")
                     .modifier(FormTipViewModifier.modifier)
                 FlexibleCardView {
-                    VStack {
-                        TextField("Name", text: $vm.name)
+                    VStack(spacing: 10) {
+                        HStack {
+                            Image(systemName: "case")
+                            TextField("Name", text: $vm.name)
+                        }
                         Divider()
                         Button {
                             currencySheetOpen.toggle()
                         } label: {
                             HStack {
+                                Image(systemName: "banknote")
                                 Text("Currency")
                                 Spacer()
                                 Text(vm.currency.code)
@@ -36,28 +40,34 @@ struct MainWizardPageView: View {
                         }
                     }
                 }
-                Text("Dates")
+                Text("Preferences")
                     .modifier(FormTitleViewModifier.modifier)
                 Text("**A first day** is when a new budget period starts")
                     .modifier(FormTipViewModifier.modifier)
                 Text("**Daily reminded** don't let you forget add today's transactions")
                     .modifier(FormTipViewModifier.modifier)
                 FlexibleCardView {
-                    VStack {
-                        DatePicker("First Day",
-                                   selection: $vm.periodStartsAt,
-                                   in: Date().dateRangeFromBegingOfMonth(),
-                                   displayedComponents: [.date])
+                    VStack(spacing: 10) {
+                        HStack {
+                            Image(systemName: "calendar")
+                            DatePicker("First Day",
+                                       selection: $vm.periodStartsAt,
+                                       in: Date().dateRangeFromBegingOfMonth(),
+                                       displayedComponents: [.date])
+                        }
                         Divider()
-                        DatePicker("Daily Reminder",
-                                   selection: $vm.dailyReminderAt,
-                                   displayedComponents: [.hourAndMinute])
+                        HStack {
+                            Image(systemName: "clock")
+                            DatePicker("Daily Reminder",
+                                       selection: $vm.dailyReminderAt,
+                                       displayedComponents: [.hourAndMinute])
+                        }
                     }
                 }
             }
-            .padding(.top, 5)
             .padding(.horizontal, 20)
         }
+        .padding(.top, 10)
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency)
