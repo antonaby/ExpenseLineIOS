@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WizzardNextButton: View {
     
+    @Environment(\.isEnabled) var isEnabled
+    
     private let label: String
     private let action: () -> Void
     
@@ -27,7 +29,15 @@ struct WizzardNextButton: View {
                 
         }
         .buttonStyle(.borderedProminent)
-        .tint(.green)
+        .tint(buttonColor())
+    }
+    
+    private func buttonColor() -> Color {
+        if isEnabled {
+            return .green
+        }
+        
+        return Color.gray
     }
 }
 

@@ -52,20 +52,19 @@ struct BudgetWizardView: View {
             WizardPageView()
                 .padding(.bottom, 5)
             HStack {
-                if editMode && currentPage != .outcome {
+                if (editMode && currentPage != .outcome) || currentPage == .outcome  {
                     WizzardNextButton("Save") {
                         vm.save()
                         dismiss()
                     }
+                    .disabled(!vm.isFormValid)
                 }
-                WizzardNextButton(nextButtonCaption()) {
-                    if currentPage == .outcome {
-                        vm.save()
-                        dismiss()
-                    } else {
+                if currentPage != .outcome {
+                    WizzardNextButton("Next") {
                         nextPage()
                     }
                 }
+                
             }
             .padding([.horizontal], 20)
         }
