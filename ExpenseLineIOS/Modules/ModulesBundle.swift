@@ -8,27 +8,7 @@
 import Foundation
 import Swinject
 
-enum ModuleBundleError: Error {
-    case ResolveError(msg: String, reason: Error?)
-}
-
-
-class ModulesBundle: Assembly {
-    
-    func assemble(container: Swinject.Container) {
-        container.register(AppState.self) { resolver in
-            AppState()
-        }.inObjectScope(.container)
-    }
-    
-}
-
 extension DependencyResolver {
-    
-    func appState() -> AppState {
-        // TODO: resolve correctly
-        resolver.resolve(AppState.self)!
-    }
     
     func budgetWizzardViewModel(budget: BudgetEntity? = nil) throws -> BudgetWizardViewModel {
         if let budgetService = resolver.resolve(BudgetService.self), let dataService = resolver.resolve(DataService.self) {
@@ -39,7 +19,7 @@ extension DependencyResolver {
             return BudgetWizardViewModel(budgetService.newBudgetEntity(), budgetService: budgetService, dataService: dataService)
         }
         
-        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
+        throw DependencyResolverError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
     }
     
     func budgetViewModel(_ budget: BudgetEntity) throws -> BudgetViewModel {
@@ -52,7 +32,7 @@ extension DependencyResolver {
             )
         }
         
-        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
+        throw DependencyResolverError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
     }
     
     func transactionSheetViewModel(budget: BudgetEntity) throws -> TransactionSheetViewModel {
@@ -63,7 +43,7 @@ extension DependencyResolver {
             )
         }
         
-        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
+        throw DependencyResolverError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
     }
     
     func budgetListViewModel() throws -> BudgetListViewModel {
@@ -73,7 +53,7 @@ extension DependencyResolver {
             )
         }
         
-        throw ModuleBundleError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
+        throw DependencyResolverError.ResolveError(msg: "Failed to resolve dependencies", reason: nil)
     }
     
 }

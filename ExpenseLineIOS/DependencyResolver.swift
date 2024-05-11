@@ -8,8 +8,13 @@
 import Foundation
 import Swinject
 
+enum DependencyResolverError: Error {
+    case ResolveError(msg: String, reason: Error?)
+}
 
 class DependencyResolver: ObservableObject {
+    
+    static let shared = DependencyResolver(assemblies: DatabaseManagerBundle(), ServiceBundle())
     
     private let assembler: Assembler
         
@@ -41,7 +46,7 @@ extension DependencyResolver {
 #if DEBUG
 extension DependencyResolver {
     
-    public static let preview = DependencyResolver(assemblies: InMemoryDatabaseManagerBundle(), ServiceBundle(), ModulesBundle())
+    public static let preview = DependencyResolver(assemblies: InMemoryDatabaseManagerBundle(), ServiceBundle())
     
 }
 #endif

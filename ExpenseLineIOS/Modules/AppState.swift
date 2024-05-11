@@ -18,15 +18,13 @@ struct BudgetId: Codable {
 class AppState: ObservableObject {
     
     @Published var budget: BudgetEntity?
-    
-    // TODO: move resolver outside
     let resolver: DependencyResolver
     
     private let userDefaults: UserDefaults
     
-    init() {
+    init(_ resolver: DependencyResolver) {
         self.userDefaults = UserDefaults(suiteName: "Budget")!
-        self.resolver = DependencyResolver(assemblies: DatabaseManagerBundle(), ServiceBundle(), ModulesBundle())
+        self.resolver = resolver
     }
     
     func selectBudget(_ budget: BudgetEntity) {

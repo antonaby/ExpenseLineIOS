@@ -99,10 +99,11 @@ struct BudgetListView: View {
     dm.save()
     
     do {
+        let appState = AppState(DependencyResolver.preview)
         let vm = try DependencyResolver.preview.budgetListViewModel()
         return BudgetListView(vm: vm)
-            .environmentObject(AppState())
-            .environmentObject(DependencyResolver.preview)
+            .environmentObject(appState)
+            .environmentObject(appState.resolver)
     } catch {
         return Text("Something went wrong \(error)")
     }

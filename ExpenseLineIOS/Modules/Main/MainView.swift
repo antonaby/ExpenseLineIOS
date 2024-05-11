@@ -9,16 +9,17 @@ import SwiftUI
 
 struct MainView: View {
     
-    @EnvironmentObject var appState: AppState
+    @StateObject var appState: AppState
     
     var body: some View {
-        Group {
+        VStack {
             if let budget = appState.budget {
                 getBudget(budget)
             } else {
                 getBudgetList()
             }
         }
+        .environmentObject(appState)
         .environmentObject(appState.resolver)
         .onAppear {
             appState.loadBudget()
@@ -28,7 +29,7 @@ struct MainView: View {
     func getBudget(_ budget: BudgetEntity) -> some View {
         do {
             let vm = try appState.resolver.budgetViewModel(budget)
-            return AnyView(BudgetView(vm: vm, path: .constant(NavigationPath())))
+            return AnyView(BudgetView(vm: vm))
         } catch {
             // TODO: Show error
             return AnyView(Text("Something went wrong \(error)"))
@@ -48,6 +49,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
-        .environmentObject(AppState())
+    MainView(appState: AppState(DependencyResolver.preview))
 }

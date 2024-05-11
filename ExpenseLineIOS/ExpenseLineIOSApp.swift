@@ -10,12 +10,9 @@ import SwiftUI
 @main
 struct ExpenseLineIOSApp: App {
     
-    @ObservedObject var appState = AppState()
-    
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environmentObject(appState)
+            MainView(appState: AppState(DependencyResolver.shared))
         }
     }
 }

@@ -114,7 +114,7 @@ struct BudgetOverviewView: View {
    
     dm.save()
     
-    let appState = AppState()
+    let appState = AppState(DependencyResolver.preview)
     appState.selectBudget(budget)
     
     do {

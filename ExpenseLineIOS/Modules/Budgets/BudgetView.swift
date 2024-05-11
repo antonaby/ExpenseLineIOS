@@ -11,8 +11,7 @@ import SwiftUI
 struct BudgetView: View {
     
     @StateObject var vm: BudgetViewModel
-    
-    @Binding var path: NavigationPath
+    @State var path = NavigationPath()
     
     @EnvironmentObject var resolver: DependencyResolver
     @EnvironmentObject var appState: AppState
@@ -107,15 +106,15 @@ struct BudgetView: View {
    
     dm.save()
     
-    let appState = AppState()
+    let appState = AppState(DependencyResolver.preview)
     appState.selectBudget(budget)
     
     do {
         let vm = try DependencyResolver.preview.budgetViewModel(budget)
         
-        return BudgetView(vm: vm, path: .constant(NavigationPath()))
-            .environmentObject(DependencyResolver.preview)
+        return BudgetView(vm: vm)
             .environmentObject(appState)
+            .environmentObject(appState.resolver)
     } catch {
         return Text("Something went wrong \(error)")
     }
