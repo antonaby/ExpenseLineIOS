@@ -44,6 +44,10 @@ class BudgetService: ObservableObject {
         dm.viewContext.delete(category)
     }
     
+    func deleteBudget(_ budget: BudgetEntity) {
+        dm.viewContext.delete(budget)
+    }
+    
     func save() throws {
         try dm.sync()
     }

@@ -39,5 +39,15 @@ class BudgetListViewModel: ObservableObject {
         return BudgetWizardViewModel(budgetService.newBudgetEntity(), budgetService: budgetService, dataService: dataService)
     }
     
+    func deleteBudget(_ budget: BudgetEntity) {
+        do {
+            budgetService.deleteBudget(budget)
+            try budgetService.save()
+            budgets = try budgetService.getAllBudgets()
+        } catch {
+            // TODO: show error message
+            print("Something went wrong: \(error)")
+        }
+    }
     
 }
