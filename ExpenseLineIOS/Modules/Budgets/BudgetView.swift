@@ -13,8 +13,9 @@ struct BudgetView: View {
     @StateObject var vm: BudgetViewModel
     @State var path = NavigationPath()
     
-    @EnvironmentObject var resolver: DependencyResolver
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var budgetService: BudgetService
+    @EnvironmentObject var dataService: DataService
     
     @State var transactionSheet: Bool = false
     @State var editBudgetSheetOpen: Bool = false
@@ -57,11 +58,14 @@ struct BudgetView: View {
             }
             .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
-                getTransactionSheet()
+                AnyView(TransactionSheetView(vm: TransactionSheetViewModel(budget: vm.budget, budgetService: budgetService)))
                     .presentationDetents([.medium])
             }
             .fullScreenCover(isPresented: $editBudgetSheetOpen, onDismiss: onBudgetUpdated) {
-                getWizardView()
+                BudgetWizardView(
+                    vm: BudgetWizardViewModel(vm.budget, budgetService: budgetService, dataService: dataService),
+                    editMode: true
+                )
             }
             .onAppear {
                 vm.updateAmounts()
@@ -73,25 +77,6 @@ struct BudgetView: View {
         
     }
     
-    func getWizardView() -> some View {
-        do {
-            let vm = try resolver.budgetWizzardViewModel(budget: vm.budget)
-            return AnyView(BudgetWizardView(vm: vm, editMode: true))
-        } catch {
-            // TODO: show error
-            return AnyView(Text("Something went wrong \(error)"))
-        }
-    }
-    
-    func getTransactionSheet() -> AnyView {
-        do {
-            let vm = try resolver.transactionSheetViewModel(budget: vm.budget)
-            return AnyView(TransactionSheetView(vm: vm))
-        } catch {
-            return AnyView(Text("Something went wrong \(error)"))
-        }
-    }
-    
     func onCategoryUpdated() {
         vm.updateAmounts()
     }
@@ -99,23 +84,21 @@ struct BudgetView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
+    let bundle = ServiceBundle.preview
+    
+    let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
-   
-    dm.save()
     
-    let appState = AppState(DependencyResolver.preview)
+    let appState = AppState(budgetService: bundle.budgetService)
     appState.selectBudget(budget)
     
-    do {
-        let vm = try DependencyResolver.preview.budgetViewModel(budget)
-        
+    if let vm = appState.budgetViewModel(budget) {
         return BudgetView(vm: vm)
             .environmentObject(appState)
-            .environmentObject(appState.resolver)
-    } catch {
-        return Text("Something went wrong \(error)")
+            .modifier(ServiceBundleViewModifier(bundle: bundle))
+    } else {
+        return Text("Seomthing went wrong")
     }
 }

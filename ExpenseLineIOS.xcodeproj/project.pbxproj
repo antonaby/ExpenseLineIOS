@@ -41,10 +41,7 @@
 		D2563E502BD7D9A800D28F65 /* CategoryListWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */; };
 		D25A5B3A2BE4F8F2009618E4 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25A5B392BE4F8F2009618E4 /* PromptView.swift */; };
 		D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */; };
-		D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = D263EC6C2BB6E97600BA4287 /* Swinject */; };
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
-		D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */; };
-		D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */; };
 		D26DB1B92BEE487F00450617 /* FormTitleViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */; };
 		D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */; };
 		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
@@ -117,8 +114,6 @@
 		D25A5B392BE4F8F2009618E4 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptView.swift; sourceTree = "<group>"; };
 		D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumericField.swift; sourceTree = "<group>"; };
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
-		D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyResolver.swift; sourceTree = "<group>"; };
-		D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBundle.swift; sourceTree = "<group>"; };
 		D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTitleViewModifier.swift; sourceTree = "<group>"; };
 		D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardView.swift; sourceTree = "<group>"; };
 		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
@@ -140,7 +135,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D263EC6D2BB6E97600BA4287 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,7 +187,6 @@
 				D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */,
 				D20EF2B02BB18CFB006CF8CD /* Preview Content */,
 				D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */,
-				D263EC702BB6ED2F00BA4287 /* DependencyResolver.swift */,
 			);
 			path = ExpenseLineIOS;
 			sourceTree = "<group>";
@@ -230,7 +223,6 @@
 				D2705E592BC01D45003426A8 /* Wizard */,
 				D250D4D02BB829950050638C /* Budgets */,
 				D2F7685C2BC952F7001CE98C /* Transactions */,
-				D263EC722BB6EDFB00BA4287 /* ModulesBundle.swift */,
 				D2246B3B2BBAD67B00556936 /* AppState.swift */,
 			);
 			path = Modules;
@@ -374,7 +366,6 @@
 			);
 			name = ExpenseLineIOS;
 			packageProductDependencies = (
-				D263EC6C2BB6E97600BA4287 /* Swinject */,
 			);
 			productName = ExpenseLineIOS;
 			productReference = D20EF2A72BB18CFA006CF8CD /* ExpenseLineIOS.app */;
@@ -449,7 +440,6 @@
 			);
 			mainGroup = D20EF29E2BB18CFA006CF8CD;
 			packageReferences = (
-				D263EC6B2BB6E97600BA4287 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = D20EF2A82BB18CFA006CF8CD /* Products */;
 			projectDirPath = "";
@@ -511,7 +501,6 @@
 				D221C08A2BE758170096DF89 /* Currency.swift in Sources */,
 				D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */,
 				D24CA2992BD295F400896BC6 /* DataService.swift in Sources */,
-				D263EC712BB6ED2F00BA4287 /* DependencyResolver.swift in Sources */,
 				D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */,
 				D2B7F1992BCFE06E0003C283 /* TransactionListView.swift in Sources */,
 				D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */,
@@ -522,7 +511,6 @@
 				D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D219D9942BE3A69700943018 /* FlexibleCardView.swift in Sources */,
-				D263EC732BB6EDFB00BA4287 /* ModulesBundle.swift in Sources */,
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
 				D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */,
@@ -868,25 +856,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		D263EC6B2BB6E97600BA4287 /* XCRemoteSwiftPackageReference "Swinject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.4;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D263EC6C2BB6E97600BA4287 /* Swinject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D263EC6B2BB6E97600BA4287 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */ = {

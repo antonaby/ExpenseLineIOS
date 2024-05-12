@@ -232,7 +232,7 @@ extension EditPlanCategorySheetViewModel {
 
 struct EditCategorySheet: View {
     
-    @EnvironmentObject var resolver: DependencyResolver
+    @EnvironmentObject var dataService: DataService
     
     @Environment(\.updateCategory) private var update
     @Environment(\.deleteCategory) private var delete
@@ -351,7 +351,6 @@ struct EditCategorySheet: View {
         }
         .interactiveDismissDisabled(true)
         .onAppear {
-            let dataService = resolver.dataService()
             if let templateId = vm.category.templateId {
                 vm.template = dataService.getTemplateById(templateId)
             }
@@ -392,10 +391,9 @@ struct EditCategorySheet: View {
 }
 
 #Preview("Existing") {
-    let busgetService = DependencyResolver.preview.budgetService()
-    let budget = busgetService.newBudgetEntity()
-    
-    let category = busgetService.newCategoryEntity(budget)
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
+    let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview"
     category.amount = 1000
     category.colorValue = .orange
@@ -404,22 +402,19 @@ struct EditCategorySheet: View {
     category.templateId = UUID(uuidString: "4e794d37-e5fb-4574-b105-4ec0a2d46ce9")!
 
     return EditCategorySheet(title: "Save", 
-                             vm: EditPlanCategorySheetViewModel(
-                                category,
-                                currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
-        .environmentObject(DependencyResolver.preview)
+                             vm: EditPlanCategorySheetViewModel(category,
+                                                                currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
+        .environmentObject(bundle.budgetService)
 }
 
 #Preview("New") {
-    let busgetService = DependencyResolver.preview.budgetService()
-    let budget = busgetService.newBudgetEntity()
-    
-    let category = busgetService.newCategoryEntity(budget)
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
+    let category = bundle.budgetService.newCategoryEntity(budget)
     category.typeValue = .income
 
-    return EditCategorySheet(title: "Save",
-                             vm: EditPlanCategorySheetViewModel(
-                                category,
-                                currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
-        .environmentObject(DependencyResolver.preview)
+    return EditCategorySheet(title: "Save", 
+                             vm: EditPlanCategorySheetViewModel(category,
+                                                                currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
+        .environmentObject(bundle.budgetService)
 }

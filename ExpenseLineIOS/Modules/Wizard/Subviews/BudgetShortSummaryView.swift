@@ -38,10 +38,12 @@ struct BudgetShortSummaryView: View {
 }
 
 #Preview {
-    do {
-        let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetShortSummaryView(vm: vm)
-    } catch {
-        return Text("Something went wrong \(error)")
-    }
+    let bundle = ServiceBundle.preview
+    let vm = BudgetWizardViewModel(
+        bundle.budgetService.newBudgetEntity(),
+        budgetService: bundle.budgetService,
+        dataService: bundle.dataService
+    )
+    
+    return BudgetShortSummaryView(vm: vm)
 }

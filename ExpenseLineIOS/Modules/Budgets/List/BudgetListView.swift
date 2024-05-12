@@ -11,11 +11,9 @@ import SwiftUI
 struct BudgetListView: View {
     
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var resolver: DependencyResolver
     
     @StateObject var vm: BudgetListViewModel
     @State var isWizzardOpen = false
-    @State var selectedBudget: BudgetEntity?
     
     var body: some View {
         VStack {
@@ -30,7 +28,7 @@ struct BudgetListView: View {
                                 .font(.title2)
                             Spacer()
                             Button {
-                                selectedBudget = budget
+                                vm.selectedBudget = budget
                             } label: {
                                 Text("Edit")
                             }
@@ -61,33 +59,24 @@ struct BudgetListView: View {
         .onAppear {
             vm.loadBudgets()
         }
-        .fullScreenCover(item: $selectedBudget, onDismiss: onBudgetCreated) { budget in
-            getWizardView(budget: budget)
+        .fullScreenCover(item: $vm.selectedBudget, onDismiss: onBudgetCreated) { budget in
+            BudgetWizardView(vm: vm.budgetWizzardViewModel(), editMode: true)
         }
         .fullScreenCover(isPresented: $isWizzardOpen, onDismiss: onBudgetCreated) {
-            getWizardView()
+            BudgetWizardView(vm: vm.budgetWizzardViewModel(), editMode: false)
         }
     }
     
     func onBudgetCreated() {
-        selectedBudget = nil
+        vm.selectedBudget = nil
         vm.loadBudgets()
-    }
-    
-    func getWizardView(budget: BudgetEntity? = nil) -> some View {
-        do {
-            let vm = try resolver.budgetWizzardViewModel(budget: budget)
-            return AnyView(BudgetWizardView(vm: vm, editMode: false))
-        } catch {
-            // TODO: show error
-            return AnyView(Text("Something went wrong \(error)"))
-        }
     }
     
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
+    let bundle = ServiceBundle.preview
+    let dm = bundle.databaseManager
     let budget1 = BudgetEntity(context: dm.viewContext)
     budget1.id = UUID()
     budget1.name = "Budget 1"
@@ -96,14 +85,14 @@ struct BudgetListView: View {
     budget2.id = UUID()
     budget2.name = "Budget 2"
     
-    dm.save()
-    
     do {
-        let appState = AppState(DependencyResolver.preview)
-        let vm = try DependencyResolver.preview.budgetListViewModel()
-        return BudgetListView(vm: vm)
+        try dm.sync()
+        let appState = AppState(budgetService: bundle.budgetService)
+        return BudgetListView(vm:
+                                BudgetListViewModel(budgetService: bundle.budgetService,
+                                                    dataService: bundle.dataService))
             .environmentObject(appState)
-            .environmentObject(appState.resolver)
+            .modifier(ServiceBundleViewModifier(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }

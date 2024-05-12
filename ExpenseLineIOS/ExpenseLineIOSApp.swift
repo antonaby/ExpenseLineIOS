@@ -10,9 +10,12 @@ import SwiftUI
 @main
 struct ExpenseLineIOSApp: App {
     
+    let serviceBundle = ServiceBundle()
+    
     var body: some Scene {
         WindowGroup {
-            MainView(appState: AppState(DependencyResolver.shared))
+            MainView(appState: AppState(budgetService: serviceBundle.budgetService))
+                .modifier(ServiceBundleViewModifier(bundle: serviceBundle))
         }
     }
 }

@@ -6,39 +6,36 @@
 //
 
 import Foundation
-import Swinject
+import SwiftUI
 
-class DatabaseManagerBundle: Assembly {
+struct ServiceBundle {
     
-    func assemble(container: Swinject.Container) {
-        container.register(DatabaseManager.self) { _ in
-            DatabaseManager(inMemory: false)
-        }.inObjectScope(.container)
+    static var preview: ServiceBundle {
+        ServiceBundle(inMemory: true)
+    }
+    
+    let databaseManager: DatabaseManager
+    let budgetService: BudgetService
+    let dataService: DataService
+    
+    init(inMemory: Bool = false) {
+        databaseManager = DatabaseManager()
+        databaseManager.initializeStore(inMemory: inMemory)
+        budgetService = BudgetService(dm: databaseManager)
+        dataService = DataService()
     }
     
 }
 
-#if DEBUG
-class InMemoryDatabaseManagerBundle: Assembly {
+struct ServiceBundleViewModifier: ViewModifier {
     
-    func assemble(container: Swinject.Container) {
-        container.register(DatabaseManager.self) { _ in
-            DatabaseManager(inMemory: true)
-        }.inObjectScope(.container)
-    }
+    let bundle: ServiceBundle
     
-}
-#endif
-
-class ServiceBundle: Assembly {
-    
-    func assemble(container: Swinject.Container) {
-        container.register(BudgetService.self) { resolver in
-            BudgetService(dm: resolver.resolve(DatabaseManager.self)!)
-        }.inObjectScope(.container)
-        container.register(DataService.self) { _ in
-            DataService()
-        }.inObjectScope(.container)
+    func body(content: Content) -> some View {
+        content
+            .environmentObject(bundle.databaseManager)
+            .environmentObject(bundle.budgetService)
+            .environmentObject(bundle.dataService)
     }
     
 }

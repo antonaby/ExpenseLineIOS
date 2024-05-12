@@ -107,22 +107,22 @@ struct BudgetOverviewView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
+    let bundle = ServiceBundle.preview
+    let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
    
-    dm.save()
-    
-    let appState = AppState(DependencyResolver.preview)
+    let appState = AppState(budgetService: bundle.budgetService)
     appState.selectBudget(budget)
     
-    do {
-        let vm = try DependencyResolver.preview.budgetViewModel(budget)
+    if let vm = appState.budgetViewModel(budget) {
         vm.currentDailyOutcome = 20
         vm.plannedDailyOutcome = 100
         return BudgetOverviewView(vm: vm, transactionSheet: .constant(false))
-    } catch {
-        return Text("Something went wrong \(error)")
+            .environmentObject(appState)
+            .modifier(ServiceBundleViewModifier(bundle: bundle))
+    } else {
+        return Text("Seomthing went wrong")
     }
 }

@@ -14,17 +14,17 @@ struct BudgetId: Codable {
     
 }
 
-
 class AppState: ObservableObject {
     
+    @Published var showError: Bool?
     @Published var budget: BudgetEntity?
-    let resolver: DependencyResolver
-    
+
+    private let budgetService: BudgetService
     private let userDefaults: UserDefaults
     
-    init(_ resolver: DependencyResolver) {
-        self.userDefaults = UserDefaults(suiteName: "Budget")!
-        self.resolver = resolver
+    init(budgetService: BudgetService) {
+        self.userDefaults = UserDefaults(suiteName: "Budget")! // TODO: check nil
+        self.budgetService = budgetService
     }
     
     func selectBudget(_ budget: BudgetEntity) {
@@ -41,14 +41,27 @@ class AppState: ObservableObject {
         budget = getBudget()
     }
     
+    func budgetViewModel(_ budget: BudgetEntity) -> BudgetViewModel? {
+        do {
+            return BudgetViewModel(
+                budget: budget,
+                period: try budgetService.getOrCreateLastPeriod(budget),
+                budgetService: budgetService
+            )
+        } catch {
+            showError = true
+        }
+        
+        return nil
+    }
+
     private func getBudget() -> BudgetEntity? {
         if let data = userDefaults.data(forKey: "budgetId") {
             do {
                 let decoder = JSONDecoder()
                 let budgetId = try decoder.decode(BudgetId.self, from: data)
                 if let id = budgetId.id {
-                    let bs = resolver.budgetService()
-                    return try bs.getBudgetById(id)
+                    return try budgetService.getBudgetById(id)
                 }
             } catch {
                 // TODO: show error

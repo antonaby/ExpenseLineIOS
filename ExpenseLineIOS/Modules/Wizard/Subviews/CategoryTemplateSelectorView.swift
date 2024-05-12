@@ -12,7 +12,7 @@ struct CategoryTemplateSelectorView: View {
     private let predifinedColors: [Color] = [.red, .blue, .green, .orange, .yellow, .brown]
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var resolver: DependencyResolver
+    @EnvironmentObject var dataService: DataService
     
     @Binding var color: Color
     @Binding var selectedTemplate: CategoryTemplate?
@@ -59,10 +59,8 @@ struct CategoryTemplateSelectorView: View {
             .padding([.horizontal], 10)
             .background(Color(uiColor: .secondarySystemBackground))
             .onAppear {
-                let ds = resolver.dataService()
-                
-                mainTemplates = ds.getCategoryTemplates(of: type)
-                otherTemplates = Array(ds.getCategoryTemplates(not: type).map { $0.templates }.joined())
+                mainTemplates = dataService.getCategoryTemplates(of: type)
+                otherTemplates = Array(dataService.getCategoryTemplates(not: type).map { $0.templates }.joined())
             }
         }
     }
@@ -129,5 +127,5 @@ struct CategoryTemplateSelectorView: View {
         selectedTemplate: .constant(nil),
         type: .outcomePercent
     )
-    .environmentObject(DependencyResolver.preview)
+    .environmentObject(ServiceBundle.preview.dataService)
 }

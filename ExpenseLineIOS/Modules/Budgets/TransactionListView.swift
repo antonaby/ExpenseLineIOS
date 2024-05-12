@@ -52,15 +52,15 @@ struct TransactionListView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
-    let budgetService = DependencyResolver.preview.budgetService()
+    let bundle = ServiceBundle.preview
+    
+    let dm = bundle.databaseManager
+    let budgetService = bundle.budgetService
     
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
    
-    dm.save()
-    
     do {
         let category1 = PlanCategoryEntity(context: dm.viewContext)
         category1.id = UUID()
@@ -79,8 +79,6 @@ struct TransactionListView: View {
         category2.iconName = "preview"
         category2.typeValue = .outcomeFixed
         category2.createdAt = Date()
-        
-        dm.save()
         
         try budgetService.createTransaction(
             Transaction(id: UUID(), name: "Test 1", amount: 15, createdAt: Date()),
@@ -106,8 +104,14 @@ struct TransactionListView: View {
             budget: budget
         )
         
-        let vm = try DependencyResolver.preview.budgetViewModel(budget)
-        return TransactionListView(vm: vm)
+        let appState = AppState(budgetService: bundle.budgetService)
+        appState.selectBudget(budget)
+        
+        if let vm = appState.budgetViewModel(budget) {
+            return TransactionListView(vm: vm)
+        } else {
+            return Text("Seomthing went wrong")
+        }
     } catch {
         return Text("Something went wrong \(error)")
     }

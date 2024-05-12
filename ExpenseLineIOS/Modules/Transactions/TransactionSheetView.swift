@@ -96,7 +96,9 @@ struct TransactionSheetView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
+    let bundle = ServiceBundle.preview
+    
+    let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
@@ -113,12 +115,5 @@ struct TransactionSheetView: View {
     category3.name = "Thrid"
     category3.budget = budget
     
-    dm.save()
-    
-    do {
-        let vm = try DependencyResolver.preview.transactionSheetViewModel(budget: budget)
-        return TransactionSheetView(vm: vm)
-    } catch {
-        return Text("Something went wrong \(error)")
-    }
+    return TransactionSheetView(vm: TransactionSheetViewModel(budget: budget, budgetService: bundle.budgetService))
 }

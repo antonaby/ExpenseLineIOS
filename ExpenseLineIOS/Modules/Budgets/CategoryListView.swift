@@ -56,8 +56,10 @@ struct CategoryListView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
-    let budgetService = DependencyResolver.preview.budgetService()
+    let bundle = ServiceBundle.preview
+    
+    let dm = bundle.databaseManager
+    let budgetService = bundle.budgetService
     
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
@@ -108,7 +110,11 @@ struct CategoryListView: View {
             budget: budget
         )
         
-        let vm = try DependencyResolver.preview.budgetViewModel(budget)
+        let vm = BudgetViewModel(
+            budget: budget,
+            period: try budgetService.getOrCreateLastPeriod(budget),
+            budgetService: budgetService
+        )
         return CategoryListView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")

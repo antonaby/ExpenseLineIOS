@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainWizardPageView: View {
     
+    @EnvironmentObject var dataService: DataService
+    
     @ObservedObject var vm: BudgetWizardViewModel
     @State var currencySheetOpen: Bool = false
     
@@ -70,7 +72,7 @@ struct MainWizardPageView: View {
         .padding(.top, 10)
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(isPresented: $currencySheetOpen) {
-            CurrencySelectorSheet(currency: $vm.currency)
+            CurrencySelectorSheet(currency: $vm.currency, vm: CurrencySelectorSheetViewModel(dataService: dataService))
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
         }
@@ -78,7 +80,8 @@ struct MainWizardPageView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
+    let bundle = ServiceBundle.preview
+    let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     budget.name = "Preview"
     budget.currency = "en_US"
@@ -87,8 +90,8 @@ struct MainWizardPageView: View {
     return MainWizardPageView(
         vm: BudgetWizardViewModel(
             budget, 
-            budgetService: DependencyResolver.preview.budgetService(),
-            dataService: DependencyResolver.preview.dataService()
+            budgetService: bundle.budgetService,
+            dataService: bundle.dataService
         ))
-        .environmentObject(DependencyResolver.preview)
+    .modifier(ServiceBundleViewModifier(bundle: bundle))
 }

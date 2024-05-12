@@ -18,12 +18,11 @@ class BudgetViewModel: ObservableObject {
     @Published var totalDynamicOutcomeAmount: Decimal
     @Published var plannedDailyOutcome: Decimal
     @Published var currentDailyOutcome: Decimal
-    
-        
+            
     private let budgetService: BudgetService
     let categories: [PlanCategoryEntity]
     
-    init(budget: BudgetEntity, period: PeriodEntity, categories: [PlanCategoryEntity], budgetService: BudgetService) {
+    init(budget: BudgetEntity, period: PeriodEntity, budgetService: BudgetService) {
         self.budget = budget
         self.period = period
         self.totalPlannedIncomeAmount = 0
@@ -32,7 +31,7 @@ class BudgetViewModel: ObservableObject {
         self.totalDynamicOutcomeAmount = 0
         self.plannedDailyOutcome = 0
         self.currentDailyOutcome = 0
-        self.categories = categories
+        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
         self.budgetService = budgetService
     }
         

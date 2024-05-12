@@ -151,82 +151,83 @@ struct BudgetWizardView: View {
 }
 
 #Preview("New Budget") {
-    do {
-        let vm = try DependencyResolver.preview.budgetWizzardViewModel()
-        return BudgetWizardView(vm: vm, editMode: false)
-            .environmentObject(DependencyResolver.preview)
-    } catch {
-        return Text("Something went wrong \(error)")
-    }
+    let bundle = ServiceBundle.preview
+    let vm = BudgetWizardViewModel(
+        bundle.budgetService.newBudgetEntity(),
+        budgetService: bundle.budgetService,
+        dataService: bundle.dataService
+    )
+    
+    return BudgetWizardView(vm: vm, editMode: false)
 }
 
 #Preview("Edit Budget") {
-    do {
-        let dm = DependencyResolver.preview.databaseManager()
-        let budget = BudgetEntity(context: dm.viewContext)
-        budget.name = "Preview"
-        budget.currency = "en_US"
-        budget.planTypeValue = .mountly
-        
-        let category1 = PlanCategoryEntity(context: dm.viewContext)
-        category1.id = UUID()
-        category1.name = "Preview 1"
-        category1.typeValue = .outcomeFixed
-        category1.colorValue = .pink
-        category1.iconName = "case"
-        category1.budget = budget
-        category1.amountDecimal = 1000
-        
-        let category2 = PlanCategoryEntity(context: dm.viewContext)
-        category2.id = UUID()
-        category2.name = "Preview 2"
-        category2.typeValue = .outcomeFixed
-        category2.colorValue = .green
-        category2.iconName = "globe"
-        category2.budget = budget
-        category2.amountDecimal = 1000000
-        
-        let category3 = PlanCategoryEntity(context: dm.viewContext)
-        category3.id = UUID()
-        category3.name = "Preview 3"
-        category3.typeValue = .outcomePercent
-        category3.colorValue = .brown
-        category3.iconName = "cup.and.saucer"
-        category3.budget = budget
-        category3.percentDecimalFraction = 15
-        
-        let category4 = PlanCategoryEntity(context: dm.viewContext)
-        category4.id = UUID()
-        category4.name = "Preview 4"
-        category4.typeValue = .outcomePercent
-        category4.colorValue = .green
-        category4.iconName = "takeoutbag.and.cup.and.straw"
-        category4.budget = budget
-        category4.percentDecimalFraction = 20
-        
-        let category5 = PlanCategoryEntity(context: dm.viewContext)
-        category5.id = UUID()
-        category5.name = "Preview 1"
-        category5.typeValue = .income
-        category5.colorValue = .yellow
-        category5.iconName = "case"
-        category5.budget = budget
-        category5.amountDecimal = 1000
-        
-        let category6 = PlanCategoryEntity(context: dm.viewContext)
-        category6.id = UUID()
-        category6.name = "Preview 2"
-        category6.typeValue = .income
-        category6.colorValue = .orange
-        category6.iconName = "globe"
-        category6.budget = budget
-        category6.amountDecimal = 1000000
-        
-        let vm = try DependencyResolver.preview.budgetWizzardViewModel(budget: budget)
-        
-        return BudgetWizardView(vm: vm, editMode: true)
-            .environmentObject(DependencyResolver.preview)
-    } catch {
-        return Text("Something went wrong \(error)")
-    }
+    let bundle = ServiceBundle.preview
+    let dm = bundle.databaseManager
+    let budget = BudgetEntity(context: dm.viewContext)
+    budget.name = "Preview"
+    budget.currency = "en_US"
+    budget.planTypeValue = .mountly
+    
+    let category1 = PlanCategoryEntity(context: dm.viewContext)
+    category1.id = UUID()
+    category1.name = "Preview 1"
+    category1.typeValue = .outcomeFixed
+    category1.colorValue = .pink
+    category1.iconName = "case"
+    category1.budget = budget
+    category1.amountDecimal = 1000
+    
+    let category2 = PlanCategoryEntity(context: dm.viewContext)
+    category2.id = UUID()
+    category2.name = "Preview 2"
+    category2.typeValue = .outcomeFixed
+    category2.colorValue = .green
+    category2.iconName = "globe"
+    category2.budget = budget
+    category2.amountDecimal = 1000000
+    
+    let category3 = PlanCategoryEntity(context: dm.viewContext)
+    category3.id = UUID()
+    category3.name = "Preview 3"
+    category3.typeValue = .outcomePercent
+    category3.colorValue = .brown
+    category3.iconName = "cup.and.saucer"
+    category3.budget = budget
+    category3.percentDecimalFraction = 15
+    
+    let category4 = PlanCategoryEntity(context: dm.viewContext)
+    category4.id = UUID()
+    category4.name = "Preview 4"
+    category4.typeValue = .outcomePercent
+    category4.colorValue = .green
+    category4.iconName = "takeoutbag.and.cup.and.straw"
+    category4.budget = budget
+    category4.percentDecimalFraction = 20
+    
+    let category5 = PlanCategoryEntity(context: dm.viewContext)
+    category5.id = UUID()
+    category5.name = "Preview 1"
+    category5.typeValue = .income
+    category5.colorValue = .yellow
+    category5.iconName = "case"
+    category5.budget = budget
+    category5.amountDecimal = 1000
+    
+    let category6 = PlanCategoryEntity(context: dm.viewContext)
+    category6.id = UUID()
+    category6.name = "Preview 2"
+    category6.typeValue = .income
+    category6.colorValue = .orange
+    category6.iconName = "globe"
+    category6.budget = budget
+    category6.amountDecimal = 1000000
+    
+    let vm = BudgetWizardViewModel(
+        budget,
+        budgetService: bundle.budgetService,
+        dataService: bundle.dataService
+    )
+    
+    return BudgetWizardView(vm: vm, editMode: true)
 }

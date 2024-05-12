@@ -12,10 +12,16 @@ class CurrencySelectorSheetViewModel: ObservableObject {
     
     @Published var search: String = ""
     @Published var currencies: [CurrencySymbol] = []
+    
+    private let dataService: DataService
     private var allCurrencies: [CurrencySymbol] = []
     private var cancellables = Set<AnyCancellable>()
     
-    func loadCurrencies(dataService: DataService) {
+    init(dataService: DataService) {
+        self.dataService = dataService
+    }
+    
+    func loadCurrencies() {
         allCurrencies = dataService.getCurrencies()
         if search.isEmpty {
             clearSerachFilter()
@@ -58,11 +64,9 @@ class CurrencySelectorSheetViewModel: ObservableObject {
 struct CurrencySelectorSheet: View {
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var resolver: DependencyResolver
     
     @Binding var currency: CurrencySymbol
-
-    @StateObject var vm = CurrencySelectorSheetViewModel()
+    @StateObject var vm: CurrencySelectorSheetViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -95,7 +99,7 @@ struct CurrencySelectorSheet: View {
         }
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
-            vm.loadCurrencies(dataService: resolver.dataService())
+            vm.loadCurrencies()
         }
         .onDisappear {
             vm.cancelAll()
@@ -104,8 +108,8 @@ struct CurrencySelectorSheet: View {
 }
 
 #Preview {
-    CurrencySelectorSheet(
-        currency: .constant(CurrencySymbol(id: "en_US", name: "United States"))
-    )
-    .environmentObject(DependencyResolver.preview)
+    let bundle = ServiceBundle.preview
+    return CurrencySelectorSheet(currency: .constant(CurrencySymbol(id: "en_US", name: "United States")),
+                                 vm: CurrencySelectorSheetViewModel(dataService: bundle.dataService))
+
 }

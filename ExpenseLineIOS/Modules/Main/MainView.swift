@@ -9,45 +9,27 @@ import SwiftUI
 
 struct MainView: View {
     
+    @EnvironmentObject var budgetService: BudgetService
+    @EnvironmentObject var dataServise: DataService
     @StateObject var appState: AppState
     
     var body: some View {
         VStack {
-            if let budget = appState.budget {
-                getBudget(budget)
+            if let budget = appState.budget, let vm = appState.budgetViewModel(budget) {
+                BudgetView(vm: vm)
             } else {
-                getBudgetList()
+                BudgetListView(vm: BudgetListViewModel(budgetService: budgetService, dataService: dataServise))
             }
         }
         .environmentObject(appState)
-        .environmentObject(appState.resolver)
         .onAppear {
             appState.loadBudget()
         }
     }
-    
-    func getBudget(_ budget: BudgetEntity) -> some View {
-        do {
-            let vm = try appState.resolver.budgetViewModel(budget)
-            return AnyView(BudgetView(vm: vm))
-        } catch {
-            // TODO: Show error
-            return AnyView(Text("Something went wrong \(error)"))
-        }
-    }
-    
-    func getBudgetList() -> some View {
-        do {
-            let vm = try appState.resolver.budgetListViewModel()
-            return AnyView(BudgetListView(vm: vm))
-        } catch {
-            // TODO: Show error
-            return AnyView(Text("Something went wrong \(error)"))
-        }
-    }
-    
 }
 
 #Preview {
-    MainView(appState: AppState(DependencyResolver.preview))
+    let bundle = ServiceBundle.preview
+    return MainView(appState: AppState(budgetService: bundle.budgetService))
+        .modifier(ServiceBundleViewModifier(bundle: bundle))
 }

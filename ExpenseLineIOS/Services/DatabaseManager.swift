@@ -17,7 +17,7 @@ enum DatabaseManagerError: Error {
 
 class DatabaseManager: ObservableObject {
     
-    private let container: NSPersistentContainer
+    private var container: NSPersistentContainer
     
     var viewContext: NSManagedObjectContext {
         get {
@@ -25,9 +25,11 @@ class DatabaseManager: ObservableObject {
         }
     }
     
-    init(inMemory: Bool = false) {
+    init() {
         container = NSPersistentContainer(name: "DataContainer")
-        
+    }
+    
+    func initializeStore(inMemory: Bool = false) {
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -52,17 +54,6 @@ class DatabaseManager: ObservableObject {
     func rollback() {
         guard container.viewContext.hasChanges else { return }
         container.viewContext.rollback()
-    }
-    
-    // TODO: remove
-    func save() {
-        guard container.viewContext.hasChanges else { return }
-        
-        do {
-            try container.viewContext.save()
-        } catch {
-            fatalError("Failed to save data \(error)")
-        }
     }
     
 }

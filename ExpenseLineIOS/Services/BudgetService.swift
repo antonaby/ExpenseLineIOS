@@ -10,11 +10,12 @@ import CoreData
 
 enum BudgetServiceError: Error {
     
+    case MissingDataError(msg: String, reason: Error?)
     case FetchError(msg: String, reason: Error?)
     
 }
 
-class BudgetService {
+class BudgetService: ObservableObject {
     
     private let dm: DatabaseManager
     
@@ -272,13 +273,14 @@ class BudgetService {
         }
     }
     
-    func getOrCreateLastPeriod(_ budgetId: UUID) throws -> PeriodEntity {
-        if let period = try getLastPeriod(budgetId) {
+    func getOrCreateLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity {
+        if let period = try getLastPeriod(budget) {
             return period
         }
     
         let entity = PeriodEntity(context: dm.viewContext)
         entity.id = UUID()
+        entity.budget = budget
         
         let startComponents = Calendar.current.dateComponents([.year, .month], from: Date())
         let periodStartsAt = Calendar.current.date(from: startComponents)!
@@ -294,7 +296,9 @@ class BudgetService {
         return entity
     }
     
-    func getLastPeriod(_ budgetId: UUID) throws -> PeriodEntity? {
+    func getLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity? {
+        guard let budgetId = budget.id else { throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil) }
+        
         let request = PeriodEntity.fetchRequest()
         request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "startsAt", ascending: false)]

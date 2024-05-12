@@ -32,7 +32,9 @@ struct OutcomePageWizardView: View {
 }
 
 #Preview {
-    let dm = DependencyResolver.preview.databaseManager()
+    let bundle = ServiceBundle.preview
+    
+    let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     budget.currency = "en_US"
     
@@ -74,8 +76,8 @@ struct OutcomePageWizardView: View {
     
     let vm = BudgetWizardViewModel(
         budget,
-        budgetService: DependencyResolver.preview.budgetService(),
-        dataService: DependencyResolver.preview.dataService()
+        budgetService: bundle.budgetService,
+        dataService: bundle.dataService
     )
     
     return OutcomePageWizardView(vm: vm)

@@ -8,7 +8,7 @@
 import Foundation
 
 
-class DataService {
+class DataService: ObservableObject {
     
     private let categories: [CategoryTemplateType]
     private let currencies: [CurrencySymbol]
