@@ -27,13 +27,10 @@ struct ServiceBundle {
     
 }
 
-struct ServiceBundleViewModifier: ViewModifier {
+extension View {
     
-    let bundle: ServiceBundle
-    
-    func body(content: Content) -> some View {
-        content
-            .environmentObject(bundle.databaseManager)
+    func serviceBundle(_ bundle: ServiceBundle) -> some View {
+        self.environmentObject(bundle.databaseManager)
             .environmentObject(bundle.budgetService)
             .environmentObject(bundle.dataService)
     }

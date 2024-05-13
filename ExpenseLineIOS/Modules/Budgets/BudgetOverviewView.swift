@@ -121,7 +121,7 @@ struct BudgetOverviewView: View {
         vm.plannedDailyOutcome = 100
         return BudgetOverviewView(vm: vm, transactionSheet: .constant(false))
             .environmentObject(appState)
-            .modifier(ServiceBundleViewModifier(bundle: bundle))
+            .serviceBundle(bundle)
     } else {
         return Text("Seomthing went wrong")
     }

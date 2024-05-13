@@ -97,7 +97,7 @@ struct BudgetView: View {
     if let vm = appState.budgetViewModel(budget) {
         return BudgetView(vm: vm)
             .environmentObject(appState)
-            .modifier(ServiceBundleViewModifier(bundle: bundle))
+            .serviceBundle(bundle)
     } else {
         return Text("Seomthing went wrong")
     }

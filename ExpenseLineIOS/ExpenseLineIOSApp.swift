@@ -15,7 +15,7 @@ struct ExpenseLineIOSApp: App {
     var body: some Scene {
         WindowGroup {
             MainView(appState: AppState(budgetService: serviceBundle.budgetService))
-                .modifier(ServiceBundleViewModifier(bundle: serviceBundle))
+                .serviceBundle(serviceBundle)
         }
     }
 }

@@ -93,5 +93,5 @@ struct MainWizardPageView: View {
             budgetService: bundle.budgetService,
             dataService: bundle.dataService
         ))
-    .modifier(ServiceBundleViewModifier(bundle: bundle))
+    .serviceBundle(bundle)
 }
