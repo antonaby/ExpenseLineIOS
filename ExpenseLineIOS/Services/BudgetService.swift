@@ -56,15 +56,62 @@ class BudgetService: ObservableObject {
         dm.rollback()
     }
     
+    func getLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity? {
+        guard let budgetId = budget.id else { throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil) }
+        
+        let currentDate = Date()
+        let request = PeriodEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "budget.id == %@ AND startsAt <= %@ AND endsAt >= %@",
+            budgetId as CVarArg, currentDate as NSDate, currentDate as NSDate)
+        request.sortDescriptors = [NSSortDescriptor(key: "startsAt", ascending: false)]
+        request.fetchLimit = 1
+        
+        do {
+            return try dm.viewContext.fetch(request).first
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget periods", reason: error)
+        }
+    }
     
+    func getOrCreateLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity {
+        if let period = try getLastPeriod(budget) {
+            return period
+        }
     
+        let entity = PeriodEntity(context: dm.viewContext)
+        entity.id = UUID()
+        entity.budget = budget
+        
+        let currentDate = Date().addingTimeInterval(60) // Add 1 minute in case it's still the previous month
+        entity.startsAt = currentDate.firstDayOfMonth()
+        entity.endsAt = currentDate.lastDayOfMonth()
+        
+        try dm.sync()
+        
+        return entity
+    }
     
+    func getBudgetPeriods(_ budget: BudgetEntity) throws -> [PeriodEntity] {
+        guard let budgetId = budget.id else { throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil) }
+        
+        let request = PeriodEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "startsAt", ascending: false)]
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget periods", reason: error)
+        }
+    }
+        
     
     // TODO: Review
     func getAllTransactions(_ period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
         guard
             let starsAt = period.startsAt,
-            let endsAt = period.endstAt,
+            let endsAt = period.endsAt,
             let budgetId = budget.id
         else {
             return []
@@ -153,7 +200,7 @@ class BudgetService: ObservableObject {
     private func spendingsPerCategory(_ period: PeriodEntity, budget: BudgetEntity, categories: [PlanCategoryEntity]) throws -> [CategorySpendings] {
         guard
             let starsAt = period.startsAt,
-            let endsAt = period.endstAt,
+            let endsAt = period.endsAt,
             let budgetId = budget.id
         else {
             return []
@@ -236,7 +283,7 @@ class BudgetService: ObservableObject {
     func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Double {
         guard 
             let starsAt = period.startsAt,
-            let endsAt = period.endstAt,
+            let endsAt = period.endsAt,
             let budgetId = budget.id
         else {
             return 0
@@ -277,55 +324,9 @@ class BudgetService: ObservableObject {
         }
     }
     
-    func getOrCreateLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity {
-        if let period = try getLastPeriod(budget) {
-            return period
-        }
     
-        let entity = PeriodEntity(context: dm.viewContext)
-        entity.id = UUID()
-        entity.budget = budget
-        
-        let startComponents = Calendar.current.dateComponents([.year, .month], from: Date())
-        let periodStartsAt = Calendar.current.date(from: startComponents)!
-        entity.startsAt = periodStartsAt
-        
-        var endComponents = DateComponents()
-        endComponents.month = 1
-        endComponents.second = -1
-        entity.endstAt = Calendar.current.date(byAdding: endComponents, to: periodStartsAt)!
-        
-        try dm.sync()
-        
-        return entity
-    }
     
-    func getLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity? {
-        guard let budgetId = budget.id else { throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil) }
-        
-        let request = PeriodEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "startsAt", ascending: false)]
-        request.fetchLimit = 1
-        
-        do {
-            return try dm.viewContext.fetch(request).first
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget periods", reason: error)
-        }
-    }
     
-    func getBudgetPeriods(_ budgetId: UUID) throws -> [PeriodEntity] {
-        let request = PeriodEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "startsAt", ascending: false)]
-        
-        do {
-            return try dm.viewContext.fetch(request)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget periods", reason: error)
-        }
-    }
     
     func createTransaction(_ transaction: Transaction, category: PlanCategoryEntity, budget: BudgetEntity) throws {
         let entity = TransactionEntity(context: dm.viewContext)
@@ -343,7 +344,7 @@ class BudgetService: ObservableObject {
         let entity = PeriodEntity(context: dm.viewContext)
         entity.id = period.id
         entity.startsAt = period.startsAt
-        entity.endstAt = period.endsAt
+        entity.endsAt = period.endsAt
         
         return entity
     }

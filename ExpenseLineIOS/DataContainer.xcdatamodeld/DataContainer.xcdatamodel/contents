@@ -12,7 +12,7 @@
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionEntity" inverseName="budget" inverseEntity="TransactionEntity"/>
     </entity>
     <entity name="PeriodEntity" representedClassName="PeriodEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="endstAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endsAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="startsAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetEntity" inverseName="periods" inverseEntity="BudgetEntity"/>

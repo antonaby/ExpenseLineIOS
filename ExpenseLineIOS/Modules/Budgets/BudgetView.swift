@@ -19,31 +19,32 @@ struct BudgetView: View {
     
     @State var transactionSheet: Bool = false
     @State var editBudgetSheetOpen: Bool = false
+    @State var changePeriodSheetOpen: Bool = false
     
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
-                ZStack {
-                    Button {
-                        appState.unselectBudget()
-                    } label: {
-                        Text(vm.budget.name ?? "Unknown")
-                            .font(.title2)
-                            .tint(.black)
+                VStack {
+                    HStack {
+                        Button {
+                            appState.unselectBudget()
+                        } label: {
+                            Text(vm.budget.name ?? "Unknown")
+                                .font(.largeTitle)
+                                .tint(.black)
+                        }
+                        Button {
+                            editBudgetSheetOpen.toggle()
+                        } label: {
+                            Image(systemName: "pencil")
+                                .font(.title3)
+                                .tint(.green)
+                        }
                     }
-                    .frame(maxWidth: .infinity)
-                    Button {
-                        editBudgetSheetOpen.toggle()
-                    } label: {
-                        Image(systemName: "pencil")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding([.trailing], 10)
+                    PeriodView()
                 }
-                Text(vm.getPeriodName())
-                    .font(.caption)
-                    .padding([.horizontal], 10)
-                    .background(RoundedRectangle(cornerRadius: 3).foregroundColor(.green))
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .background(Color.white)
                 TabView {
                     BudgetOverviewView(vm: vm, transactionSheet: $transactionSheet)
                         .tabItem { Image(systemName: "house") }
@@ -58,18 +59,42 @@ struct BudgetView: View {
             }
             .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
-                AnyView(TransactionSheetView(vm: TransactionSheetViewModel(budget: vm.budget, budgetService: budgetService)))
+                AnyView(TransactionSheetView(
+                    vm: TransactionSheetViewModel(budget: vm.budget, budgetService: budgetService)))
                     .presentationDetents([.medium])
+            }
+            .sheet(isPresented: $changePeriodSheetOpen) {
+                PeriodListView(selected: $vm.period, 
+                               vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
+                    .presentationDetents([.large, .medium])
+                    .presentationDragIndicator(.visible)
             }
             .fullScreenCover(isPresented: $editBudgetSheetOpen, onDismiss: onBudgetUpdated) {
                 BudgetWizardView(
                     vm: BudgetWizardViewModel(vm.budget, budgetService: budgetService, dataService: dataService),
                     editMode: true
                 )
+                
             }
             .onAppear {
-                vm.updateAmounts()
+                vm.loadCurrentBudgetPeriod()
             }
+        }
+    }
+    
+    @ViewBuilder
+    func PeriodView() -> some View {
+        if let period = vm.period {
+            Button {
+                changePeriodSheetOpen.toggle()
+            } label: {
+                Text(period.currentMonth)
+            }
+            .buttonStyle(.borderless)
+            .tint(.green)
+            .padding(.bottom, 5)
+        } else {
+            Text("Loading...")
         }
     }
     
@@ -91,14 +116,38 @@ struct BudgetView: View {
     budget.id = UUID()
     budget.name = "Preview"
     
+    let currentDate = Date()
+        
+    let period1 = PeriodEntity(context: dm.viewContext)
+    period1.id = UUID()
+    period1.startsAt = currentDate.firstDayOfMonth()
+    period1.endsAt = currentDate.lastDayOfMonth()
+    period1.budget = budget
+    
+    let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentDate)!
+    let period2 = PeriodEntity(context: dm.viewContext)
+    period2.id = UUID()
+    period2.startsAt = previousMonth.firstDayOfMonth()
+    period2.endsAt = previousMonth.lastDayOfMonth()
+    period2.budget = budget
+    
+    let previousMonth2 = Calendar.current.date(byAdding: .month, value: -2, to: currentDate)!
+    let period3 = PeriodEntity(context: dm.viewContext)
+    period3.id = UUID()
+    period3.startsAt = previousMonth2.firstDayOfMonth()
+    period3.endsAt = previousMonth2.lastDayOfMonth()
+    period3.budget = budget
+    
     let appState = AppState(budgetService: bundle.budgetService)
     appState.selectBudget(budget)
     
-    if let vm = appState.budgetViewModel(budget) {
-        return BudgetView(vm: vm)
-            .environmentObject(appState)
-            .serviceBundle(bundle)
-    } else {
-        return Text("Seomthing went wrong")
+    do {
+        try dm.sync()
+    } catch {
+        print("Something went wrong \(error)")
     }
+    
+    return BudgetView(vm: BudgetViewModel(budget: budget, budgetService: bundle.budgetService))
+        .environmentObject(appState)
+        .serviceBundle(bundle)
 }

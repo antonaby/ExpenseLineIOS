@@ -40,20 +40,6 @@ class AppState: ObservableObject {
     func loadBudget() {
         budget = getBudget()
     }
-    
-    func budgetViewModel(_ budget: BudgetEntity) -> BudgetViewModel? {
-        do {
-            return BudgetViewModel(
-                budget: budget,
-                period: try budgetService.getOrCreateLastPeriod(budget),
-                budgetService: budgetService
-            )
-        } catch {
-            showError = true
-        }
-        
-        return nil
-    }
 
     private func getBudget() -> BudgetEntity? {
         if let data = userDefaults.data(forKey: "budgetId") {

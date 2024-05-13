@@ -116,13 +116,10 @@ struct BudgetOverviewView: View {
     let appState = AppState(budgetService: bundle.budgetService)
     appState.selectBudget(budget)
     
-    if let vm = appState.budgetViewModel(budget) {
-        vm.currentDailyOutcome = 20
-        vm.plannedDailyOutcome = 100
-        return BudgetOverviewView(vm: vm, transactionSheet: .constant(false))
-            .environmentObject(appState)
-            .serviceBundle(bundle)
-    } else {
-        return Text("Seomthing went wrong")
-    }
+    let vm = BudgetViewModel(budget: budget, budgetService: bundle.budgetService)
+    vm.currentDailyOutcome = 20
+    vm.plannedDailyOutcome = 100
+    return BudgetOverviewView(vm: vm, transactionSheet: .constant(false))
+        .environmentObject(appState)
+        .serviceBundle(bundle)
 }

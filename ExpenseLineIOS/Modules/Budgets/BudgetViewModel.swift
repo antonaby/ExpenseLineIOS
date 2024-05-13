@@ -11,7 +11,8 @@ import Foundation
 class BudgetViewModel: ObservableObject {
     
     @Published var budget: BudgetEntity
-    @Published var period: PeriodEntity
+    @Published var period: PeriodEntity? = nil
+    
     @Published var totalPlannedIncomeAmount: Decimal
     @Published var totalPlannedDynamicPercent: Decimal
     @Published var totalFixedOutcomeAmount: Decimal
@@ -22,18 +23,28 @@ class BudgetViewModel: ObservableObject {
     private let budgetService: BudgetService
     let categories: [PlanCategoryEntity]
     
-    init(budget: BudgetEntity, period: PeriodEntity, budgetService: BudgetService) {
+    init(budget: BudgetEntity, budgetService: BudgetService) {
         self.budget = budget
-        self.period = period
+        self.budgetService = budgetService
+        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
+        
         self.totalPlannedIncomeAmount = 0
         self.totalPlannedDynamicPercent = 0
         self.totalFixedOutcomeAmount = 0
         self.totalDynamicOutcomeAmount = 0
         self.plannedDailyOutcome = 0
         self.currentDailyOutcome = 0
-        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
-        self.budgetService = budgetService
     }
+    
+    func loadCurrentBudgetPeriod() {
+        do {
+            period = try budgetService.getOrCreateLastPeriod(budget)
+        } catch {
+            // TODO: add notification
+            print("Something went wrong \(error)")
+        }
+    }
+    
         
     func getCurrency() -> String {
         // TODO: add proper currency
@@ -41,6 +52,8 @@ class BudgetViewModel: ObservableObject {
     }
     
     func getCategoryInfos() -> [CategoryInfo] {
+        guard let period = period else { return [] }
+        
         do {
             let byCategory = try budgetService
                 .spendingsForAllCategories(period, budget: budget)
@@ -62,14 +75,9 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    func getPeriodName() -> String {
-        guard let starts = period.startsAt else { return "Unknown" }
-        
-        let month = Calendar.current.component(.month, from: starts)
-        return Calendar.current.monthSymbols[month - 1]
-    }
-    
     func updateAmounts() {
+        guard let period = period else { return }
+        
         totalPlannedIncomeAmount = categories
             .filter { $0.typeValue == .income }
             .reduce(0) { $0 + $1.amountDecimal }
@@ -93,6 +101,8 @@ class BudgetViewModel: ObservableObject {
     }
     
     func getAllTransactions() -> [TransactionEntity] {
+        guard let period = period else { return [] }
+        
         do {
             return try budgetService.getAllTransactions(period, budget: budget)
         } catch {
@@ -103,7 +113,7 @@ class BudgetViewModel: ObservableObject {
     }
     
     private func calculatePlannedDailyOutcome(_ plannedDynamicAmount: Decimal, _ currentDynamicAmount: Decimal) {
-        guard let startsAt = period.startsAt, let endsAt = period.endstAt
+        guard let startsAt = period?.startsAt, let endsAt = period?.endsAt
         else {
             return
         }
