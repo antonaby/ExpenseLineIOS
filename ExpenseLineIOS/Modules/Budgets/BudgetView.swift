@@ -45,17 +45,23 @@ struct BudgetView: View {
                 }
                 .frame(maxWidth: .infinity, minHeight: 100)
                 .background(Color.white)
-                TabView {
-                    BudgetOverviewView(vm: vm, transactionSheet: $transactionSheet)
-                        .tabItem { Image(systemName: "house") }
-                    CategoryListView(vm: vm)
-                        .tabItem { Image(systemName: "menucard") }
-                    TransactionListView(vm: vm)
-                        .tabItem { Image(systemName: "list.clipboard") }
-                    BudgetStatsView()
-                        .tabItem { Image(systemName: "chart.pie") }
+                ZStack(alignment: .bottomTrailing) {
+                    TabView {
+                        BudgetOverviewView(vm: vm)
+                            .tabItem { Image(systemName: "house") }
+                        CategoryListView(vm: vm)
+                            .tabItem { Image(systemName: "menucard") }
+                        TransactionListView(vm: vm)
+                            .tabItem { Image(systemName: "list.clipboard") }
+                        BudgetStatsView()
+                            .tabItem { Image(systemName: "chart.pie") }
+                    }
+                    .padding([.horizontal], 20)
+                    AddExpenseButton {
+                        transactionSheet.toggle()
+                    }
+                    .offset(x: -20, y: -70)
                 }
-                .padding([.horizontal], 15)
             }
             .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
@@ -147,7 +153,9 @@ struct BudgetView: View {
         print("Something went wrong \(error)")
     }
     
-    return BudgetView(vm: BudgetViewModel(budget: budget, budgetService: bundle.budgetService))
+    return BudgetView(vm: BudgetViewModel(
+        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
+    ))
         .environmentObject(appState)
         .serviceBundle(bundle)
 }

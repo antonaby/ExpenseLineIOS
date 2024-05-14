@@ -13,21 +13,46 @@ class BudgetViewModel: ObservableObject {
     @Published var budget: BudgetEntity
     @Published var period: PeriodEntity? = nil
     
+    
     @Published var totalPlannedIncomeAmount: Decimal
     @Published var totalPlannedDynamicPercent: Decimal
     @Published var totalFixedOutcomeAmount: Decimal
     @Published var totalDynamicOutcomeAmount: Decimal
     @Published var plannedDailyOutcome: Decimal
     @Published var currentDailyOutcome: Decimal
-            
-    private let budgetService: BudgetService
-    let categories: [PlanCategoryEntity]
+
+    let categories: [PlanCategoryEntity] // TODO: review
     
-    init(budget: BudgetEntity, budgetService: BudgetService) {
+    var currency: CurrencySymbol
+    private var currencyFormatter: NumberFormatter
+    private var percnetFormatter: NumberFormatter
+    
+    private let budgetService: BudgetService
+    private let dataService: DataService
+    
+    init(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
         self.budgetService = budgetService
-        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
+        self.dataService = dataService
+        let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
+        self.currency = currency
         
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = Locale(identifier: currency.id)
+        currencyFormatter.minimumFractionDigits = 0
+        currencyFormatter.maximumFractionDigits = 2
+        self.currencyFormatter = currencyFormatter
+        
+        let percentFormatter = NumberFormatter()
+        percentFormatter.numberStyle = .percent
+        percentFormatter.locale = Locale(identifier: currency.id)
+        percentFormatter.minimumFractionDigits = 0
+        percentFormatter.maximumFractionDigits = 2
+        self.percnetFormatter = percentFormatter
+        
+        // TODO: review
+        self.categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
         self.totalPlannedIncomeAmount = 0
         self.totalPlannedDynamicPercent = 0
         self.totalFixedOutcomeAmount = 0
@@ -45,10 +70,13 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
+    func formatAmount(_ amount: Decimal) -> String {
+        if let fomatted = currencyFormatter.string(from: amount as NSDecimalNumber) {
+            return fomatted
+        }
         
-    func getCurrency() -> String {
-        // TODO: add proper currency
-        budget.currency ?? "USD"
+        print("Error, amount: \(amount) can't be formatted") // TODO: send error event
+        return "?"
     }
     
     func getCategoryInfos() -> [CategoryInfo] {

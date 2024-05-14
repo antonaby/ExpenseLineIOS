@@ -16,7 +16,11 @@ struct MainView: View {
     var body: some View {
         VStack {
             if let budget = appState.budget {
-                BudgetView(vm: BudgetViewModel(budget: budget, budgetService: budgetService))
+                BudgetView(vm: BudgetViewModel(
+                    budget: budget,
+                    budgetService: budgetService,
+                    dataService: dataServise)
+                )
             } else {
                 BudgetListView(vm: BudgetListViewModel(budgetService: budgetService, dataService: dataServise))
             }

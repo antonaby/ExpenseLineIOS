@@ -67,4 +67,8 @@ class DataService: ObservableObject {
         getCurrensySymbolById("en_US")!
     }
     
+    func getCurrencySymbolOrDefault(_ id: String) -> CurrencySymbol {
+        getCurrensySymbolById(id) ?? getDefaultCurrencySymbol()
+    }
+    
 }

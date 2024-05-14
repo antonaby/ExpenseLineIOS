@@ -28,10 +28,7 @@ struct ProgressView: View {
 
 struct DailyExpensesCard: View {
     
-    @Binding var currentExpenses: Decimal
-    @Binding var plannedExpenses: Decimal
-    
-    var currency: String
+    @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
         Group {
@@ -41,17 +38,17 @@ struct DailyExpensesCard: View {
                 Text("Money you can spend today")
                     .tint(.gray)
                     .font(.caption)
-                HStack(alignment: .lastTextBaseline) {
-                    Text("\(currentExpenses)")
+                HStack {
+                    Text(vm.formatAmount(vm.currentDailyOutcome))
                         .font(.largeTitle)
-                    Text(currency)
-                        .font(.title3)
                 }
                 .padding([.top], 10)
                 ProgressView(percent: getTotalPercent())
                 HStack(alignment: .lastTextBaseline) {
-                    Text("\(plannedExpenses)")
-                    Text(currency)
+                    Text(vm.formatAmount(0))
+                        .font(.caption)
+                    Spacer()
+                    Text(vm.formatAmount(vm.plannedDailyOutcome))
                         .font(.caption)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -65,15 +62,15 @@ struct DailyExpensesCard: View {
     }
     
     func getTotalPercent() -> Double {
-        if currentExpenses <= 0 {
+        if vm.currentDailyOutcome <= 0 {
             return 0
         }
         
-        if plannedExpenses <= 0 {
+        if vm.plannedDailyOutcome <= 0 {
             return 1
         }
         
-        let percent = currentExpenses / plannedExpenses
+        let percent = vm.currentDailyOutcome / vm.plannedDailyOutcome
         if percent > 1 {
             return 1
         }
@@ -82,26 +79,16 @@ struct DailyExpensesCard: View {
     }
 }
 
-
 struct BudgetOverviewView: View {
     
     @ObservedObject var vm: BudgetViewModel
-    @Binding var transactionSheet: Bool
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
+        ScrollView {
             VStack {
-                DailyExpensesCard(
-                    currentExpenses: $vm.currentDailyOutcome,
-                    plannedExpenses: $vm.plannedDailyOutcome,
-                    currency: vm.getCurrency()
-                )
+                DailyExpensesCard(vm: vm)
                 Spacer()
             }
-            AddExpenseButton {
-                transactionSheet.toggle()
-            }
-            .offset(y: -10)
         }.background(Color(uiColor: .secondarySystemBackground))
     }
 }
@@ -112,14 +99,13 @@ struct BudgetOverviewView: View {
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
+    budget.currency = "en_US"
    
-    let appState = AppState(budgetService: bundle.budgetService)
-    appState.selectBudget(budget)
-    
-    let vm = BudgetViewModel(budget: budget, budgetService: bundle.budgetService)
+    let vm = BudgetViewModel(
+        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
+    )
     vm.currentDailyOutcome = 20
     vm.plannedDailyOutcome = 100
-    return BudgetOverviewView(vm: vm, transactionSheet: .constant(false))
-        .environmentObject(appState)
+    return BudgetOverviewView(vm: vm)
         .serviceBundle(bundle)
 }

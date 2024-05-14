@@ -29,4 +29,10 @@ extension BudgetEntity {
         }
     }
     
+    var currencyValue: String {
+        get {
+            currency ?? Locale.current.identifier
+        }
+    }
+    
 }

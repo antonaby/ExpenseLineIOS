@@ -10,7 +10,7 @@ import SwiftUI
 struct TransactionCard: View {
     
     let transaction: TransactionEntity
-    let currency: String
+    let currency: CurrencySymbol
     
     var body: some View {
         Group {
@@ -21,7 +21,7 @@ struct TransactionCard: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(transaction.amount, format: .number.rounded(increment: 0.01))
                         .font(.largeTitle)
-                    Text(currency)
+                    Text(currency.code)
                         .font(.title3)
                 }.frame(maxWidth: .infinity, alignment: .leading)
                 Text(transaction.createdAt ?? Date(), format: .dateTime)
@@ -43,7 +43,7 @@ struct TransactionListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(vm.getAllTransactions()) { transaction in
-                    TransactionCard(transaction: transaction, currency: vm.getCurrency())
+                    TransactionCard(transaction: transaction, currency: vm.currency)
                 }
             }
             Spacer()
@@ -107,7 +107,9 @@ struct TransactionListView: View {
         let appState = AppState(budgetService: bundle.budgetService)
         appState.selectBudget(budget)
         
-        return TransactionListView(vm: BudgetViewModel(budget: budget, budgetService: bundle.budgetService))
+        return TransactionListView(vm: BudgetViewModel(
+            budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
+        ))
     } catch {
         return Text("Something went wrong \(error)")
     }

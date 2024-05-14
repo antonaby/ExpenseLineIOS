@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoryCard: View {
     
     let category: CategoryInfo
-    let currency: String
+    let currency: CurrencySymbol
     
     var body: some View {
         Group {
@@ -19,7 +19,7 @@ struct CategoryCard: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text("\(category.spendings?.totalAmount ?? 0)")
                         .font(.largeTitle)
-                    Text(currency)
+                    Text(currency.code)
                         .font(.title3)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -47,7 +47,7 @@ struct CategoryListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(vm.getCategoryInfos()) { category in
-                    CategoryCard(category: category, currency: vm.getCurrency())
+                    CategoryCard(category: category, currency: vm.currency)
                 }
             }
             Spacer()
@@ -112,7 +112,8 @@ struct CategoryListView: View {
         
         let vm = BudgetViewModel(
             budget: budget,
-            budgetService: budgetService
+            budgetService: budgetService,
+            dataService: bundle.dataService
         )
         return CategoryListView(vm: vm)
     } catch {

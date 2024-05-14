@@ -40,8 +40,7 @@ class BudgetWizardViewModel: ObservableObject {
         self.dataService = dataService
         
         self.name = budget.name ?? ""
-        let currencyLocaleId = budget.currency ?? Locale.current.identifier
-        let currency = dataService.getCurrensySymbolById(currencyLocaleId) ?? dataService.getDefaultCurrencySymbol()
+        let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.currency = currency
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
         self.periodStartsAt = budget.periodStartsAt ?? Date().firstDayOfMonth()
