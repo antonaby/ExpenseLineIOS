@@ -36,24 +36,25 @@ struct TransactionSheetView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var vm: TransactionSheetViewModel
     
+    @FocusState private var showKeyboard: Bool
     @State var path = NavigationPath()
     
     var body: some View {
         VStack {
             HStack {
-                Button {
+                ToolButton(icon: "x.circle", color: .red) {
                     dismiss()
-                } label: {
-                    Text("Cancel")
                 }
                 Spacer()
-                ToolButton {
+                ToolButton(color: .green) {
                     vm.createTransaction()
                     dismiss()
                 }
                 .disabled(!vm.isValid)
             }
             .padding([.horizontal, .top], 15)
+            .padding([.bottom], 5)
+            .font(.title2)
             NavigationStack(path: $path) {
                 Form {
                     Section {
@@ -74,10 +75,16 @@ struct TransactionSheetView: View {
                         Text("Base")
                     }
                     Section {
-                        TextField("Amount", value: $vm.amount, format: .number.rounded(increment: 0.01))
-                            .font(.title)
-                            .multilineTextAlignment(.center)
-                            .keyboardType(.decimalPad)
+                        CustomNumericField(text: vm.amount, placeholder: "Amount") {
+                            CustomNumericKeybord(
+                                text: $vm.amount,
+                                showKeyboard: $showKeyboard,
+                                currencySymbol: vm.currencySymbol,
+                                separator: vm.separator,
+                                isSymbolTrailing: vm.isSymbolTrailing
+                            )
+                        }
+                        .focused($showKeyboard)
                     } header: {
                         Text("Amount")
                     }
@@ -91,6 +98,9 @@ struct TransactionSheetView: View {
         }
         .onAppear {
             vm.loadCetegories()
+        }
+        .onDisappear {
+            vm.cancelAll()
         }
     }
 }
@@ -115,5 +125,8 @@ struct TransactionSheetView: View {
     category3.name = "Thrid"
     category3.budget = budget
     
-    return TransactionSheetView(vm: TransactionSheetViewModel(budget: budget, budgetService: bundle.budgetService))
+    let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
+    
+    return TransactionSheetView(
+        vm: TransactionSheetViewModel(budget: budget, currency: symbol, budgetService: bundle.budgetService))
 }

@@ -404,7 +404,7 @@ struct EditCategorySheet: View {
     return EditCategorySheet(title: "Save", 
                              vm: EditPlanCategorySheetViewModel(category,
                                                                 currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
-        .environmentObject(bundle.budgetService)
+    .serviceBundle(bundle)
 }
 
 #Preview("New") {
@@ -416,5 +416,5 @@ struct EditCategorySheet: View {
     return EditCategorySheet(title: "Save", 
                              vm: EditPlanCategorySheetViewModel(category,
                                                                 currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
-        .environmentObject(bundle.budgetService)
+    .serviceBundle(bundle)
 }

@@ -11,11 +11,14 @@ import Combine
 class TransactionSheetViewModel: ObservableObject {
     
     @Published var name: String
-    @Published var amount: Double
+    @Published var amount: String
     @Published var isValid: Bool
     @Published var category: PlanCategory?
     @Published var date: Date
     @Published var categories: [PlanCategory]
+    
+    let currency: CurrencySymbol
+    let locale: Locale
     
     private let budget: BudgetEntity
     private let budgetService: BudgetService
@@ -24,12 +27,26 @@ class TransactionSheetViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var categoryEntities: [PlanCategoryEntity] = []
     
-    init(budget: BudgetEntity, budgetService: BudgetService) {
+    var currencySymbol: String {
+        return locale.currencySymbolOrDefault(EditPlanCategorySheetViewModel.defaultSymbol)
+    }
+    
+    var separator: String {
+        locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator)
+    }
+    
+    var isSymbolTrailing: Bool {
+        locale.isCurrencySymbolTrailing()
+    }
+    
+    init(budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
         self.budget = budget
         self.budgetService = budgetService
+        self.currency = currency
+        self.locale = currency.locale
         
         self.name = ""
-        self.amount = 0
+        self.amount = ""
         self.isValid = false
         self.category = nil
         self.date = Date()
@@ -79,7 +96,7 @@ class TransactionSheetViewModel: ObservableObject {
         if let entity = categoryEntity {
             do {
                 try budgetService.createTransaction(
-                    Transaction(id: UUID(), name: name, amount: amount, createdAt: date),
+                    Transaction(id: UUID(), name: name, amount: convertToDecimalNumber(amount, symbol: currencySymbol), createdAt: date),
                     category: entity,
                     budget: budget
                 )
@@ -88,6 +105,20 @@ class TransactionSheetViewModel: ObservableObject {
                 print("Error: \(error)")
             }
         }
+    }
+    
+    func cancelAll() {
+        cancellables.forEach { $0.cancel() }
+    }
+    
+    private func convertToDecimalNumber(_ value: String, symbol: String) -> Double {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = separator
+        let cleanAmount = value.replacingOccurrences(of: symbol, with: "")
+        let result = formatter.number(from: cleanAmount)?.decimalValue ?? 0
+        
+        return Double(truncating: result as NSDecimalNumber)
     }
     
 }
@@ -116,7 +147,7 @@ private extension TransactionSheetViewModel {
         $amount
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .map { amount in
-                amount > 0
+                !amount.isEmpty
             }
             .eraseToAnyPublisher()
     }
