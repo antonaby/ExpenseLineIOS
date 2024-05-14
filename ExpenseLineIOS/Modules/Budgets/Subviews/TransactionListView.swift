@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TransactionCard: View {
     
+    @ObservedObject var vm: BudgetViewModel
     let transaction: TransactionEntity
-    let currency: CurrencySymbol
     
     var body: some View {
         Group {
@@ -19,10 +19,8 @@ struct TransactionCard: View {
                     .font(.caption)
                 Text(transaction.name ?? "")
                 HStack(alignment: .firstTextBaseline) {
-                    Text(transaction.amount, format: .number.rounded(increment: 0.01))
+                    Text(vm.formatAmount(transaction.amountDecimal))
                         .font(.largeTitle)
-                    Text(currency.code)
-                        .font(.title3)
                 }.frame(maxWidth: .infinity, alignment: .leading)
                 Text(transaction.createdAt ?? Date(), format: .dateTime)
                     .font(.caption)
@@ -43,7 +41,7 @@ struct TransactionListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(vm.getAllTransactions()) { transaction in
-                    TransactionCard(transaction: transaction, currency: vm.currency)
+                    TransactionCard(vm: vm, transaction: transaction)
                 }
             }
             Spacer()
@@ -70,6 +68,7 @@ struct TransactionListView: View {
         category1.iconName = "preview"
         category1.typeValue = .outcomePercent
         category1.createdAt = Date()
+        category1.budget = budget
         
         let category2 = PlanCategoryEntity(context: dm.viewContext)
         category2.id = UUID()
@@ -79,6 +78,7 @@ struct TransactionListView: View {
         category2.iconName = "preview"
         category2.typeValue = .outcomeFixed
         category2.createdAt = Date()
+        category2.budget = budget
         
         try budgetService.createTransaction(
             Transaction(id: UUID(), name: "Test 1", amount: 15, createdAt: Date()),
@@ -104,12 +104,14 @@ struct TransactionListView: View {
             budget: budget
         )
         
-        let appState = AppState(budgetService: bundle.budgetService)
-        appState.selectBudget(budget)
+        let vm = BudgetViewModel(
+            budget: budget,
+            budgetService: bundle.budgetService,
+            dataService: bundle.dataService
+        )
+        vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
         
-        return TransactionListView(vm: BudgetViewModel(
-            budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
-        ))
+        return TransactionListView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
     }

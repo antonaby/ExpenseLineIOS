@@ -7,6 +7,23 @@
 
 import Foundation
 
+extension TransactionEntity {
+    
+    var amountValue: NSDecimalNumber {
+        amount ?? NSDecimalNumber(value: 0)
+    }
+    
+    var amountDecimal: Decimal {
+        get {
+            amountValue as Decimal
+        }
+        set {
+            amount = newValue as NSDecimalNumber
+        }
+    }
+    
+}
+
 
 // TODO: remove
 struct PlanCategory: Identifiable, Hashable {
@@ -33,7 +50,7 @@ struct Transaction: Identifiable, Hashable {
     
     let id: UUID
     var name: String
-    var amount: Double
+    var amount: Decimal
     var createdAt: Date
     
 }

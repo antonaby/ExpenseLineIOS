@@ -111,14 +111,14 @@ class TransactionSheetViewModel: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
-    private func convertToDecimalNumber(_ value: String, symbol: String) -> Double {
+    private func convertToDecimalNumber(_ value: String, symbol: String) -> Decimal {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = separator
         let cleanAmount = value.replacingOccurrences(of: symbol, with: "")
         let result = formatter.number(from: cleanAmount)?.decimalValue ?? 0
         
-        return Double(truncating: result as NSDecimalNumber)
+        return result
     }
     
 }

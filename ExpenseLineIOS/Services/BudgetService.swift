@@ -324,15 +324,11 @@ class BudgetService: ObservableObject {
         }
     }
     
-    
-    
-    
-    
     func createTransaction(_ transaction: Transaction, category: PlanCategoryEntity, budget: BudgetEntity) throws {
         let entity = TransactionEntity(context: dm.viewContext)
         entity.id = transaction.id
         entity.name = transaction.name
-        entity.amount = transaction.amount
+        entity.amount = transaction.amount as NSDecimalNumber
         entity.createdAt = transaction.createdAt
         entity.category = category
         entity.budget = budget
