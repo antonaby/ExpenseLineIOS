@@ -43,11 +43,12 @@ struct TransactionSheetView: View {
         VStack {
             HStack {
                 ToolButton(icon: "x.circle", color: .red) {
+                    vm.rollback()
                     dismiss()
                 }
                 Spacer()
                 ToolButton(color: .green) {
-                    vm.createTransaction()
+                    vm.save()
                     dismiss()
                 }
                 .disabled(!vm.isValid)
@@ -95,6 +96,7 @@ struct TransactionSheetView: View {
                 }
             }
         }
+        .interactiveDismissDisabled(true)
         .onAppear {
             vm.loadCetegories()
         }

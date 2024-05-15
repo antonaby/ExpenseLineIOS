@@ -39,6 +39,14 @@ class BudgetService: ObservableObject {
         return entity
     }
     
+    func newTransactionEntity(_ budget: BudgetEntity) -> TransactionEntity {
+        let entity = TransactionEntity(context: dm.viewContext)
+        entity.id = UUID()
+        entity.budget = budget
+        
+        return entity
+    }
+    
     func deleteCategory(_ category: PlanCategoryEntity, budget: BudgetEntity) {
         budget.removeFromCategories(category)
         dm.viewContext.delete(category)
@@ -331,29 +339,6 @@ class BudgetService: ObservableObject {
         }
         
         return 0
-    }
-    
-    
-    
-    func createTransaction(_ transaction: Transaction, category: PlanCategoryEntity, budget: BudgetEntity) throws {
-        let entity = TransactionEntity(context: dm.viewContext)
-        entity.id = transaction.id
-        entity.name = transaction.name
-        entity.amount = transaction.amount as NSDecimalNumber
-        entity.createdAt = transaction.createdAt
-        entity.category = category
-        entity.budget = budget
-        
-        try dm.sync()
-    }
-    
-    private func getPeriodEntity(_ period: Period) -> PeriodEntity {
-        let entity = PeriodEntity(context: dm.viewContext)
-        entity.id = period.id
-        entity.startsAt = period.startsAt
-        entity.endsAt = period.endsAt
-        
-        return entity
     }
     
 }

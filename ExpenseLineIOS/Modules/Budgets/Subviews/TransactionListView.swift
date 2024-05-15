@@ -80,29 +80,29 @@ struct TransactionListView: View {
         category2.createdAt = Date()
         category2.budget = budget
         
-        try budgetService.createTransaction(
-            Transaction(id: UUID(), name: "Test 1", amount: 15, createdAt: Date()),
-            category: category1,
-            budget: budget
-        )
+        let transaction1 = budgetService.newTransactionEntity(budget)
+        transaction1.name = "Test 1"
+        transaction1.amountDecimal = 12
+        transaction1.createdAt = Date()
+        transaction1.category = category1
         
-        try budgetService.createTransaction(
-            Transaction(id: UUID(), name: "Test 2", amount: 40, createdAt: Date()),
-            category: category1,
-            budget: budget
-        )
+        let transaction2 = budgetService.newTransactionEntity(budget)
+        transaction2.name = "Test 2"
+        transaction2.amountDecimal = 40
+        transaction2.createdAt = Date()
+        transaction2.category = category1
         
-        try budgetService.createTransaction(
-            Transaction(id: UUID(), name: "Test 3", amount: 300, createdAt: Date()),
-            category: category2,
-            budget: budget
-        )
+        let transaction3 = budgetService.newTransactionEntity(budget)
+        transaction3.name = "Test 3"
+        transaction3.amountDecimal = 300
+        transaction3.createdAt = Date()
+        transaction3.category = category2
         
-        try budgetService.createTransaction(
-            Transaction(id: UUID(), name: "Test 4", amount: 800, createdAt: Date()),
-            category: category2,
-            budget: budget
-        )
+        let transaction4 = budgetService.newTransactionEntity(budget)
+        transaction4.name = "Test 4"
+        transaction4.amountDecimal = 800
+        transaction4.createdAt = Date()
+        transaction4.category = category2
         
         let vm = BudgetViewModel(
             budget: budget,

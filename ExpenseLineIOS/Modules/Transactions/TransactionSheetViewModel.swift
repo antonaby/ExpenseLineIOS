@@ -17,6 +17,8 @@ class TransactionSheetViewModel: ObservableObject {
     @Published var date: Date
     @Published var categories: [PlanCategoryEntity]
     
+    var transaction: TransactionEntity
+    
     let currency: CurrencySymbol
     let locale: Locale
     
@@ -44,6 +46,7 @@ class TransactionSheetViewModel: ObservableObject {
         self.budgetService = budgetService
         self.currency = currency
         self.locale = currency.locale
+        self.transaction = budgetService.newTransactionEntity(budget)
         
         self.name = ""
         self.amount = ""
@@ -70,23 +73,23 @@ class TransactionSheetViewModel: ObservableObject {
         }
     }
     
-    func createTransaction() {
-        guard let category = category else {
-            // TODO: handle error
-            print("Category not selected")
-            return
-        }
+    func save() {
+        transaction.name = name
+        transaction.amountDecimal = convertToDecimalNumber(amount, symbol: currencySymbol)
+        transaction.category = category
+        transaction.budget = budget
+        transaction.createdAt = date
         
         do {
-            try budgetService.createTransaction(
-                Transaction(id: UUID(), name: name, amount: convertToDecimalNumber(amount, symbol: currencySymbol), createdAt: date),
-                category: category,
-                budget: budget
-            )
+            try budgetService.save()
         } catch {
             // TODO: show error
-            print("Error: \(error)")
+            print("Something went wrong \(error)")
         }
+    }
+    
+    func rollback() {
+        budgetService.rollback()
     }
     
     func cancelAll() {
