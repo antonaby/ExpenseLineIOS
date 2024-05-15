@@ -35,6 +35,23 @@ struct CategoryTemplateType: Identifiable {
     
 }
 
+struct CategorySpendings: Identifiable {
+    
+    let id: UUID
+    let totalAmount: Decimal
+    let expectedAmount: Decimal
+    let expectedPercent: Decimal
+    
+}
+
+struct CategoryInfo: Identifiable {
+    
+    let id: UUID
+    let entity: PlanCategoryEntity
+    let spendings: CategorySpendings?
+    
+}
+
 extension PlanCategoryEntity {
     
     var nameValue: String {
