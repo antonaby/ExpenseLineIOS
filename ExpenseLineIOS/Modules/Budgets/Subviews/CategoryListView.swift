@@ -115,6 +115,8 @@ struct CategoryListView: View {
             budgetService: budgetService,
             dataService: bundle.dataService
         )
+        vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
+        
         return CategoryListView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")
