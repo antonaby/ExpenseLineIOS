@@ -106,7 +106,7 @@ struct TransactionSheetView: View {
     }
 }
 
-#Preview {
+#Preview("New") {
     let bundle = ServiceBundle.preview
     
     let dm = bundle.databaseManager
@@ -135,5 +135,43 @@ struct TransactionSheetView: View {
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
     return TransactionSheetView(
-        vm: TransactionSheetViewModel(budget: budget, currency: symbol, budgetService: bundle.budgetService))
+        vm: TransactionSheetViewModel(transaction: nil, budget: budget, currency: symbol, budgetService: bundle.budgetService))
+}
+
+#Preview("Existing") {
+    let bundle = ServiceBundle.preview
+    
+    let dm = bundle.databaseManager
+    let budget = BudgetEntity(context: dm.viewContext)
+    budget.id = UUID()
+    budget.name = "Preview"
+    
+    let category1 = PlanCategoryEntity(context: dm.viewContext)
+    category1.id = UUID()
+    category1.name = "Test"
+    category1.budget = budget
+    category1.typeValue = .income
+    
+    let category2 = PlanCategoryEntity(context: dm.viewContext)
+    category2.id = UUID()
+    category2.name = "Other"
+    category2.budget = budget
+    category2.typeValue = .outcomeFixed
+    
+    let category3 = PlanCategoryEntity(context: dm.viewContext)
+    category3.id = UUID()
+    category3.name = "Thrid"
+    category3.budget = budget
+    category3.typeValue = .outcomePercent
+    
+    let transaction = bundle.budgetService.newTransactionEntity(budget)
+    transaction.name = "Preview"
+    transaction.amountDecimal = 200
+    transaction.createdAt = Date().addingTimeInterval(-360)
+    transaction.category = category2
+    
+    let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
+    
+    return TransactionSheetView(
+        vm: TransactionSheetViewModel(transaction: transaction, budget: budget, currency: symbol, budgetService: bundle.budgetService))
 }

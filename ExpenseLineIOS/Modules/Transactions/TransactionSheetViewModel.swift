@@ -12,7 +12,7 @@ class TransactionSheetViewModel: ObservableObject {
     
     @Published var name: String
     @Published var amount: String
-    @Published var isValid: Bool
+    @Published var isValid: Bool = false
     @Published var category: PlanCategoryEntity?
     @Published var date: Date
     @Published var categories: [PlanCategoryEntity]
@@ -41,18 +41,27 @@ class TransactionSheetViewModel: ObservableObject {
         locale.isCurrencySymbolTrailing()
     }
     
-    init(budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
+    init(transaction: TransactionEntity?, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
         self.budget = budget
         self.budgetService = budgetService
         self.currency = currency
         self.locale = currency.locale
-        self.transaction = budgetService.newTransactionEntity(budget)
+        if let transactionEntity = transaction {
+            self.transaction = transactionEntity
+            self.name = transactionEntity.nameValue
+            self.amount = transactionEntity.amountAsString(symbol: locale.currencySymbolOrDefault(EditPlanCategorySheetViewModel.defaultSymbol),
+                                                           delimiter: locale.decimalSepapatorOrDefault(EditPlanCategorySheetViewModel.defaultSeparator),
+                                                           trailing: locale.isCurrencySymbolTrailing())
+            self.category = transactionEntity.category
+            self.date = transactionEntity.createdAtValue
+        } else {
+            self.transaction = budgetService.newTransactionEntity(budget)
+            self.name = ""
+            self.amount = ""
+            self.category = nil
+            self.date = Date()
+        }
         
-        self.name = ""
-        self.amount = ""
-        self.isValid = false
-        self.category = nil
-        self.date = Date()
         self.categories = []
         
         isFormValid

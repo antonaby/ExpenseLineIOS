@@ -65,11 +65,11 @@ struct BudgetView: View {
             }
             .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
-                AnyView(TransactionSheetView(
-                    vm: TransactionSheetViewModel(
-                            budget: vm.budget, currency: vm.currency, budgetService: budgetService)
-                            )
-                        )
+                TransactionSheetView(
+                    vm: TransactionSheetViewModel(transaction: nil,
+                                                  budget: vm.budget,
+                                                  currency: vm.currency,
+                                                  budgetService: budgetService))
                     .presentationDetents([.medium])
             }
             .sheet(isPresented: $changePeriodSheetOpen) {

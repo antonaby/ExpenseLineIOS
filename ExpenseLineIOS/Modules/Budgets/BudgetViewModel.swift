@@ -12,7 +12,7 @@ class BudgetViewModel: ObservableObject {
     
     @Published var budget: BudgetEntity
     @Published var period: PeriodEntity? = nil
-    
+    @Published var transactions: [TransactionEntity] = []
     
     @Published var totalPlannedIncomeAmount: Decimal
     @Published var totalPlannedDynamicPercent: Decimal
@@ -128,15 +128,14 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    func getAllTransactions() -> [TransactionEntity] {
-        guard let period = period else { return [] }
+    func loadTransactions() {
+        guard let period = period else { return }
         
         do {
-            return try budgetService.getAllTransactions(period, budget: budget)
+            transactions = try budgetService.getAllTransactions(period, budget: budget)
         } catch {
             // TODO: show error
             print("Something went wrong \(error)")
-            return []
         }
     }
     

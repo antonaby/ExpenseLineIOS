@@ -136,8 +136,6 @@ class BudgetService: ObservableObject {
         throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil)
     }
         
-    
-    // TODO: Review
     func getAllTransactions(_ period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
         guard
             let starsAt = period.startsAt,
@@ -151,6 +149,7 @@ class BudgetService: ObservableObject {
         request.predicate = NSPredicate(
             format: "createdAt BETWEEN {%@, %@} AND budget.id == %@",
             starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
         
         do {
             return try dm.viewContext.fetch(request)
@@ -158,6 +157,9 @@ class BudgetService: ObservableObject {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions by budget id", reason: error)
         }
     }
+    
+    // TODO: Review
+    
     
     func getBudgetById(_ budgetId: UUID) throws -> BudgetEntity? {
         let request = BudgetEntity.fetchRequest()

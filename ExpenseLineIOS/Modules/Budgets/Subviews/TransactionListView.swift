@@ -12,41 +12,70 @@ struct TransactionCard: View {
     @ObservedObject var vm: BudgetViewModel
     let transaction: TransactionEntity
     
+    @Binding var selectedTransaction: TransactionEntity?
+    
     var body: some View {
-        Group {
-            VStack(alignment: .leading) {
-                Text(transaction.category?.name ?? "")
-                    .font(.caption)
-                Text(transaction.name ?? "")
-                HStack(alignment: .firstTextBaseline) {
-                    Text(vm.formatAmount(transaction.amountDecimal))
-                        .font(.largeTitle)
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                Text(transaction.createdAt ?? Date(), format: .dateTime)
-                    .font(.caption)
+        VStack(alignment: .leading) {
+            HStack {
+                VStack(alignment: .listRowSeparatorLeading) {
+                    Text(transaction.category?.name ?? "")
+                        .font(.caption)
+                    Text(transaction.name ?? "")
+                }
+                Spacer()
+                Button {
+                    selectedTransaction = transaction
+                } label: {
+                    Image(systemName: "ellipsis")
+                }
             }
-            .padding([.horizontal], 15)
-            .padding([.vertical], 5)
+            HStack(alignment: .firstTextBaseline) {
+                Text(vm.formatAmount(transaction.amountDecimal))
+                    .font(.largeTitle)
+            }.frame(maxWidth: .infinity, alignment: .leading)
+            Text(transaction.createdAt ?? Date(), format: .dateTime)
+                .font(.caption)
         }
-        .frame(maxWidth: .infinity)
+        .padding([.horizontal], 15)
+        .padding([.vertical], 5)
         .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
     }
 }
 
 struct TransactionListView: View {
     
+    @EnvironmentObject var budgetService: BudgetService
+    
     @ObservedObject var vm: BudgetViewModel
+    @State var selectedTransaction: TransactionEntity?
     
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(vm.getAllTransactions()) { transaction in
-                    TransactionCard(vm: vm, transaction: transaction)
+                ForEach(vm.transactions) { transaction in
+                    TransactionCard(vm: vm, transaction: transaction, selectedTransaction: $selectedTransaction)
                 }
             }
             Spacer()
-        }.background(Color(uiColor: .secondarySystemBackground))
+        }
+        .background(Color(uiColor: .secondarySystemBackground))
+        .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
+            TransactionSheetView(
+                vm: TransactionSheetViewModel(transaction: transaction,
+                                              budget: vm.budget,
+                                              currency: vm.currency,
+                                              budgetService: budgetService))
+                .presentationDetents([.medium])
+        }
+        .onAppear {
+            vm.loadTransactions()
+        }
     }
+    
+    func onTransactionUpdated() {
+        vm.loadTransactions()
+    }
+    
 }
 
 #Preview {
@@ -112,6 +141,7 @@ struct TransactionListView: View {
         vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
         
         return TransactionListView(vm: vm)
+            .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
     }
