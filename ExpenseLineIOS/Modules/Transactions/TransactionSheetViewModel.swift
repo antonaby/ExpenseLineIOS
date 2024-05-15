@@ -13,9 +13,9 @@ class TransactionSheetViewModel: ObservableObject {
     @Published var name: String
     @Published var amount: String
     @Published var isValid: Bool
-    @Published var category: PlanCategory?
+    @Published var category: PlanCategoryEntity?
     @Published var date: Date
-    @Published var categories: [PlanCategory]
+    @Published var categories: [PlanCategoryEntity]
     
     let currency: CurrencySymbol
     let locale: Locale
@@ -62,22 +62,8 @@ class TransactionSheetViewModel: ObservableObject {
     }
     
     func loadCetegories() {
-        guard let budgetId = budget.id else { return }
-        
         do {
-            categoryEntities = try budgetService.getCategoriesOfBudget(budgetId)
-            categories = categoryEntities
-                .map {
-                    PlanCategory(
-                        id: $0.id ?? UUID(),
-                        name: $0.name ?? "Unknown",
-                        amount: $0.amountDecimal,
-                        percent: $0.percentDecimalFraction,
-                        iconName: $0.iconName ?? "Unknown",
-                        type: $0.typeValue,
-                        createdAt: $0.createdAt ?? Date()
-                    )
-                }
+            categories = try budgetService.getCategoriesOfBudget(budget, types: [.outcomeFixed, .outcomePercent])
         } catch {
             // TODO: show error
             print("Something went wrong \(error)")
@@ -85,25 +71,21 @@ class TransactionSheetViewModel: ObservableObject {
     }
     
     func createTransaction() {
-        let categoryEntity = categoryEntities.filter {
-            if let entityId = $0.id, let categoryId = category?.id {
-                return entityId == categoryId
-            }
-            
-            return false
-        }.first
+        guard let category = category else {
+            // TODO: handle error
+            print("Category not selected")
+            return
+        }
         
-        if let entity = categoryEntity {
-            do {
-                try budgetService.createTransaction(
-                    Transaction(id: UUID(), name: name, amount: convertToDecimalNumber(amount, symbol: currencySymbol), createdAt: date),
-                    category: entity,
-                    budget: budget
-                )
-            } catch {
-                // TODO: show error
-                print("Error: \(error)")
-            }
+        do {
+            try budgetService.createTransaction(
+                Transaction(id: UUID(), name: name, amount: convertToDecimalNumber(amount, symbol: currencySymbol), createdAt: date),
+                category: category,
+                budget: budget
+            )
+        } catch {
+            // TODO: show error
+            print("Error: \(error)")
         }
     }
     

@@ -10,8 +10,8 @@ import SwiftUI
 struct CategorySelectorView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding var category: PlanCategory?
-    @Binding var categories: [PlanCategory]
+    @Binding var category: PlanCategoryEntity?
+    @Binding var categories: [PlanCategoryEntity]
     
     var body: some View {
         VStack {
@@ -21,7 +21,7 @@ struct CategorySelectorView: View {
                         category = ctg
                         dismiss()
                     } label: {
-                        Text(ctg.name)
+                        Text(ctg.nameValue)
                     }
                 }
             }
@@ -65,12 +65,11 @@ struct TransactionSheetView: View {
                             CategorySelectorView(category: $vm.category, categories: $vm.categories)
                         } label: {
                             if let category = vm.category {
-                                Text(category.name)
+                                Text(category.nameValue)
                             } else {
                                 Text("Select Category")
                             }
                         }
-
                     } header: {
                         Text("Base")
                     }
@@ -114,16 +113,22 @@ struct TransactionSheetView: View {
     budget.name = "Preview"
     
     let category1 = PlanCategoryEntity(context: dm.viewContext)
+    category1.id = UUID()
     category1.name = "Test"
     category1.budget = budget
+    category1.typeValue = .income
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
+    category2.id = UUID()
     category2.name = "Other"
     category2.budget = budget
+    category2.typeValue = .outcomeFixed
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
+    category3.id = UUID()
     category3.name = "Thrid"
     category3.budget = budget
+    category3.typeValue = .outcomePercent
     
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
