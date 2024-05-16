@@ -27,24 +27,41 @@ struct BudgetView: View {
                 VStack {
                     HStack {
                         Button {
-                            appState.unselectBudget()
-                        } label: {
-                            Text(vm.budget.name ?? "Unknown")
-                                .font(.largeTitle)
-                                .tint(.black)
-                        }
-                        Button {
                             editBudgetSheetOpen.toggle()
                         } label: {
-                            Image(systemName: "pencil")
-                                .font(.title3)
-                                .tint(.green)
+                            Text(vm.budget.name ?? "Unknown")
+                                .font(.title2)
+                                .tint(.black)
                         }
                     }
                     PeriodView()
+                        .bold()
                 }
-                .frame(maxWidth: .infinity, minHeight: 100)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 20)
                 .background(Color.white)
+                .overlay(alignment: .topLeading) {
+                    Button {
+                        appState.unselectBudget()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.title2)
+                            .padding(.leading, 10)
+                            .padding(.top, 5)
+                    }
+                    .tint(.green)
+                }
+                .overlay(alignment: .topTrailing) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "gear")
+                            .font(.title2)
+                            .padding(.trailing, 10)
+                            .padding(.top, 5)
+                    }
+                    .tint(.green)
+                }
                 ZStack(alignment: .bottomTrailing) {
                     TabView {
                         BudgetOverviewView(vm: vm)
@@ -56,7 +73,6 @@ struct BudgetView: View {
                         BudgetStatsView()
                             .tabItem { Image(systemName: "chart.pie") }
                     }
-                    .padding([.horizontal], 20)
                     AddExpenseButton {
                         transactionSheet.toggle()
                     }
@@ -122,6 +138,7 @@ struct BudgetView: View {
     let bundle = ServiceBundle.preview
     
     let dm = bundle.databaseManager
+    let budgetService = bundle.budgetService
     let budget = BudgetEntity(context: dm.viewContext)
     budget.id = UUID()
     budget.name = "Preview"
@@ -147,6 +164,50 @@ struct BudgetView: View {
     period3.startsAt = previousMonth2.firstDayOfMonth()
     period3.endsAt = previousMonth2.lastDayOfMonth()
     period3.budget = budget
+    
+    let category1 = PlanCategoryEntity(context: dm.viewContext)
+    category1.id = UUID()
+    category1.name = "Preview 1"
+    category1.amount = 0
+    category1.percent = 0.2
+    category1.iconName = "preview"
+    category1.typeValue = .outcomePercent
+    category1.createdAt = Date()
+    category1.budget = budget
+    
+    let category2 = PlanCategoryEntity(context: dm.viewContext)
+    category2.id = UUID()
+    category2.name = "Preview 2"
+    category2.amount = 2000
+    category2.percent = 0
+    category2.iconName = "preview"
+    category2.typeValue = .outcomeFixed
+    category2.createdAt = Date()
+    category2.budget = budget
+    
+    let transaction1 = budgetService.newTransactionEntity(budget)
+    transaction1.name = "Test 1"
+    transaction1.amountDecimal = 12
+    transaction1.createdAt = Date()
+    transaction1.category = category1
+    
+    let transaction2 = budgetService.newTransactionEntity(budget)
+    transaction2.name = "Test 2"
+    transaction2.amountDecimal = 40
+    transaction2.createdAt = Date()
+    transaction2.category = category1
+    
+    let transaction3 = budgetService.newTransactionEntity(budget)
+    transaction3.name = "Test 3"
+    transaction3.amountDecimal = 300
+    transaction3.createdAt = Date()
+    transaction3.category = category2
+    
+    let transaction4 = budgetService.newTransactionEntity(budget)
+    transaction4.name = "Test 4"
+    transaction4.amountDecimal = 800
+    transaction4.createdAt = Date()
+    transaction4.category = category2
     
     let appState = AppState(budgetService: bundle.budgetService)
     appState.selectBudget(budget)
