@@ -24,28 +24,29 @@ struct BudgetListView: View {
                             NoBudgetView()
                         } else {
                             ForEach(vm.budgets) { budget in
-                                Button {
-                                    appState.selectBudget(budget)
-                                } label: {
-                                    ContentSizeCardView {
-                                        HStack {
+                                ContentSizeCardView {
+                                    HStack {
+                                        Button {
+                                            appState.selectBudget(budget)
+                                        } label: {
                                             Text(budget.name ?? "Unknown")
                                                 .font(.title2)
-                                            Spacer()
-                                            Menu {
-                                                Button {
-                                                    vm.selectedBudget = budget
-                                                } label: {
-                                                    Text("Edit")
-                                                }
-                                                Button(role: .destructive) {
-                                                    vm.deleteBudget(budget)
-                                                } label: {
-                                                    Text("Delete")
-                                                }
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                        Menu {
+                                            Button {
+                                                vm.selectedBudget = budget
                                             } label: {
-                                                Image(systemName: "ellipsis").font(.title2)
+                                                Text("Edit")
                                             }
+                                            Button(role: .destructive) {
+                                                vm.deleteBudget(budget)
+                                            } label: {
+                                                Text("Delete")
+                                            }
+                                        } label: {
+                                            Image(systemName: "ellipsis").font(.title2)
+                                                .padding(.leading, 10)
                                         }
                                     }
                                     .tint(.black)
