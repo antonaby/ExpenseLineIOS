@@ -14,17 +14,14 @@ struct CategorySelectorView: View {
     @Binding var categories: [PlanCategoryEntity]
     
     var body: some View {
-        VStack {
-            Form {
-                ForEach(categories) { ctg in
-                    Button {
-                        category = ctg
-                        dismiss()
-                    } label: {
-                        Text(ctg.nameValue)
-                    }
-                }
+        List(categories) { ctg in
+            Button {
+                category = ctg
+                dismiss()
+            } label: {
+                Text(ctg.nameValue)
             }
+            .tint(.black)
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -37,7 +34,6 @@ struct TransactionSheetView: View {
     @StateObject var vm: TransactionSheetViewModel
     
     @FocusState private var showKeyboard: Bool
-    @State var path = NavigationPath()
     
     var body: some View {
         VStack {
@@ -53,47 +49,64 @@ struct TransactionSheetView: View {
                 }
                 .disabled(!vm.isValid)
             }
-            .padding([.horizontal, .top], 15)
+            .padding([.horizontal, .top], 10)
             .padding([.bottom], 5)
             .font(.title2)
-            NavigationStack(path: $path) {
-                Form {
-                    Section {
-                        TextField(text: $vm.name) {
-                            Text("Name")
+            NavigationStack {
+                ScrollView {
+                    VStack(spacing: 15) {
+                        VStack {
+                            Text("Transaction")
+                                .modifier(FormTitleViewModifier.modifier)
                         }
-                        NavigationLink {
-                            CategorySelectorView(category: $vm.category, categories: $vm.categories)
-                        } label: {
-                            if let category = vm.category {
-                                Text(category.nameValue)
-                            } else {
-                                Text("Select Category")
+                        Divider()
+                        FlexibleCardView {
+                            VStack(alignment: .leading, spacing: 20) {
+                                HStack {
+                                    Image(systemName: "dollarsign.arrow.circlepath")
+                                    TextField(text: $vm.name) {
+                                        Text("Name")
+                                    }
+                                }
+                                NavigationLink {
+                                    CategorySelectorView(category: $vm.category, categories: $vm.categories)
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "takeoutbag.and.cup.and.straw")
+                                            .tint(.black)
+                                        if let category = vm.category {
+                                            Text(category.nameValue)
+                                                .tint(.green)
+                                        } else {
+                                            Text("Category")
+                                                .tint(.gray)
+                                        }
+                                    }
+                                }
                             }
                         }
-                    } header: {
-                        Text("Base")
-                    }
-                    Section {
-                        CustomNumericField(text: vm.amount, placeholder: "Amount") {
-                            CustomNumericKeybord(
-                                text: $vm.amount,
-                                showKeyboard: $showKeyboard,
-                                currencySymbol: vm.currencySymbol,
-                                separator: vm.separator,
-                                isSymbolTrailing: vm.isSymbolTrailing
-                            )
+                        FlexibleCardView {
+                            CustomNumericField(text: vm.amount, placeholder: "Amount") {
+                                CustomNumericKeybord(
+                                    text: $vm.amount,
+                                    showKeyboard: $showKeyboard,
+                                    currencySymbol: vm.currencySymbol,
+                                    separator: vm.separator,
+                                    isSymbolTrailing: vm.isSymbolTrailing
+                                )
+                            }
+                            .focused($showKeyboard)
                         }
-                        .focused($showKeyboard)
-                    } header: {
-                        Text("Amount")
+                        FlexibleCardView {
+                            HStack {
+                                Image(systemName: "calendar")
+                                DatePicker("Date", selection: $vm.date, in: ...Date())
+                            }
+                        }
                     }
-                    Section {
-                        DatePicker("Date", selection: $vm.date, in: ...Date())
-                    } header: {
-                        Text("Other")
-                    }
+                    .padding([.top, .horizontal], 10)
                 }
+                .background(Color(uiColor: .secondarySystemBackground))
             }
         }
         .interactiveDismissDisabled(true)
