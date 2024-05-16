@@ -39,14 +39,14 @@ class BudgetViewModel: ObservableObject {
         
         let currencyFormatter = NumberFormatter()
         currencyFormatter.numberStyle = .currency
-        currencyFormatter.locale = Locale(identifier: currency.id)
+        currencyFormatter.locale = currency.locale
         currencyFormatter.minimumFractionDigits = 0
         currencyFormatter.maximumFractionDigits = 2
         self.currencyFormatter = currencyFormatter
         
         let percentFormatter = NumberFormatter()
         percentFormatter.numberStyle = .percent
-        percentFormatter.locale = Locale(identifier: currency.id)
+        percentFormatter.locale = currency.locale
         percentFormatter.minimumFractionDigits = 0
         percentFormatter.maximumFractionDigits = 2
         self.percnetFormatter = percentFormatter

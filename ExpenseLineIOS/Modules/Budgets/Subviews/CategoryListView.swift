@@ -13,29 +13,28 @@ struct CategoryCard: View {
     let currency: CurrencySymbol
     
     var body: some View {
-        Group {
-            VStack(alignment: .leading) {
-                Text(category.entity.name ?? "")
-                HStack(alignment: .firstTextBaseline) {
-                    Text("\(category.spendings?.totalAmount ?? 0)")
-                        .font(.largeTitle)
-                    Text(currency.code)
-                        .font(.title3)
+        FlexibleCardView {
+            NavigationLink(value: category.entity) {
+                VStack(alignment: .leading) {
+                    Text(category.entity.name ?? "")
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("\(category.spendings?.totalAmount ?? 0)")
+                            .font(.largeTitle)
+                        Text(currency.code)
+                            .font(.title3)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    if category.entity.amountDecimal > 0 {
+                        Text("\(category.entity.amountDecimal)")
+                            .font(.caption)
+                    } else if category.entity.percentDecimalFraction > 0 {
+                        Text("\(category.entity.percentDecimalFraction)")
+                            .font(.caption)
+                    }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                if category.entity.amountDecimal > 0 {
-                    Text("\(category.entity.amountDecimal)")
-                        .font(.caption)
-                } else if category.entity.percentDecimalFraction > 0 {
-                    Text("\(category.entity.percentDecimalFraction)")
-                        .font(.caption)
-                }
+                .tint(.black)
             }
-            .padding([.horizontal], 15)
-            .padding([.vertical], 5)
         }
-        .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
     }
 }
 

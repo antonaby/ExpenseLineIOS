@@ -25,7 +25,6 @@ class TransactionSheetViewModel: ObservableObject {
     private let budget: BudgetEntity
     private let budgetService: BudgetService
     
-    // TODO: cancel all
     private var cancellables = Set<AnyCancellable>()
     private var categoryEntities: [PlanCategoryEntity] = []
     

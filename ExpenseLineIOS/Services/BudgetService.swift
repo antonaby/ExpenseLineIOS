@@ -158,6 +158,28 @@ class BudgetService: ObservableObject {
         }
     }
     
+    func getAllTransactionsForCategory(_ category: PlanCategoryEntity, period: PeriodEntity) throws -> [TransactionEntity] {
+        guard
+            let starsAt = period.startsAt,
+            let endsAt = period.endsAt,
+            let categoryId = category.id
+        else {
+            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
+        }
+        
+        let request = TransactionEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "createdAt BETWEEN {%@, %@} AND category.id == %@",
+            starsAt as NSDate, endsAt as NSDate, categoryId as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions for category", reason: error)
+        }
+    }
+    
     // TODO: Review
     
     

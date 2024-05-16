@@ -36,6 +36,8 @@
 		D23B85172BF22E8300A62196 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B85162BF22E8300A62196 /* Period.swift */; };
 		D23B851A2BF235D600A62196 /* PeriodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B85192BF235D600A62196 /* PeriodListView.swift */; };
 		D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23EE3322BC66B7C0088B246 /* BudgetService.swift */; };
+		D247B4E62BF619F7004E72A4 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E52BF619F7004E72A4 /* CategoryView.swift */; };
+		D247B4E82BF61A08004E72A4 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */; };
 		D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */; };
 		D24CA2972BD2944C00896BC6 /* MainWizardPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */; };
 		D24CA2992BD295F400896BC6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2982BD295F400896BC6 /* DataService.swift */; };
@@ -110,6 +112,8 @@
 		D23B85162BF22E8300A62196 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		D23B85192BF235D600A62196 /* PeriodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodListView.swift; sourceTree = "<group>"; };
 		D23EE3322BC66B7C0088B246 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
+		D247B4E52BF619F7004E72A4 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWizardPageView.swift; sourceTree = "<group>"; };
 		D24CA2982BD295F400896BC6 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 		D20EF2D62BB18E20006CF8CD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D247B4E42BF619E8004E72A4 /* Category */,
 				D2350E682BBC3592002B93A0 /* Main */,
 				D2705E592BC01D45003426A8 /* Wizard */,
 				D26B5C262BCAB45400371E41 /* List */,
@@ -307,6 +312,15 @@
 				D23B85192BF235D600A62196 /* PeriodListView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D247B4E42BF619E8004E72A4 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				D247B4E52BF619F7004E72A4 /* CategoryView.swift */,
+				D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		D24CA2952BD2942200896BC6 /* Subviews */ = {
@@ -511,6 +525,7 @@
 				D250D4CF2BB828EB0050638C /* Budget.swift in Sources */,
 				D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */,
 				D221C0862BE755000096DF89 /* Date+Extension.swift in Sources */,
+				D247B4E62BF619F7004E72A4 /* CategoryView.swift in Sources */,
 				D2C58AD42BE22F5800F1BB03 /* CategoryTemplateSelectorView.swift in Sources */,
 				D23B851A2BF235D600A62196 /* PeriodListView.swift in Sources */,
 				D221C08A2BE758170096DF89 /* Currency.swift in Sources */,
@@ -524,6 +539,7 @@
 				D20EF2D52BB18DFA006CF8CD /* BudgetView.swift in Sources */,
 				D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */,
 				D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */,
+				D247B4E82BF61A08004E72A4 /* CategoryViewModel.swift in Sources */,
 				D20EF2DC2BB18EB6006CF8CD /* AddExpenseButton.swift in Sources */,
 				D219D9942BE3A69700943018 /* FlexibleCardView.swift in Sources */,
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
