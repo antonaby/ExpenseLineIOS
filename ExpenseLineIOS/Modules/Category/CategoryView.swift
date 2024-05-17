@@ -10,13 +10,42 @@ import SwiftUI
 
 struct CategoryView: View {
     
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var budgetService: BudgetService
     
     @State var selectedTransaction: TransactionEntity? = nil
+    @State var selectedCategory: PlanCategoryEntity? = nil
     @StateObject var vm: CategoryViewModel
     
     var body: some View {
         VStack {
+            ContentSizeCardView {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: vm.category.iconNameValue)
+                            .foregroundColor(vm.category.colorValue)
+                        Text(vm.category.nameValue)
+                        Spacer()
+                        Button {
+                            selectedCategory = vm.category
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .foregroundColor(.green)
+                        }
+                    }
+                    HStack {
+                        Text(vm.formatAmount(vm.category.amountDecimal))
+                        Text("/")
+                        Text(vm.formatAmount(vm.totalAmount))
+                            
+                    }
+                    .font(.largeTitle)
+                    .bold()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            Text("Transactions")
+                .bold()
             ScrollView {
                 LazyVStack {
                     ForEach(vm.transactions) { transaction in
@@ -37,7 +66,8 @@ struct CategoryView: View {
                                     .bold()
                                 Text(vm.formatDate(transaction.createdAt))
                                     .font(.caption)
-                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                 }
@@ -51,6 +81,23 @@ struct CategoryView: View {
                                               budget: vm.budget,
                                               currency: vm.currency,
                                               budgetService: budgetService))
+                .presentationDetents([.medium])
+        }
+        .sheet(item: $selectedCategory) { category in
+            EditCategorySheet(title: "Save",
+                              vm: EditPlanCategorySheetViewModel(category, currencySymbol: vm.currency))
+                .onUpdateCategory { category in
+                    vm.updateCategory(category)
+                    selectedCategory = nil
+                }
+                .onDeleteCategory { category in
+                    vm.deleteCategory(category)
+                    selectedCategory = nil
+                    dismiss()
+                }
+                .onDismissCategory { category in
+                    selectedCategory = nil
+                }
                 .presentationDetents([.medium])
         }
         .onAppear {
@@ -72,6 +119,8 @@ struct CategoryView: View {
     category.name = "Preview"
     category.typeValue = .outcomeFixed
     category.amountDecimal = 1000
+    category.iconName = "cup.and.saucer"
+    category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)
     transaction1.name = "Transaction 1"

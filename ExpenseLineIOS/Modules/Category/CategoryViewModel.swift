@@ -11,9 +11,10 @@ import Foundation
 class CategoryViewModel: ObservableObject {
     
     @Published var transactions: [TransactionEntity] = []
+    @Published var totalAmount: Decimal = 0
+    @Published var category: PlanCategoryEntity
     
     var budget: BudgetEntity
-    var category: PlanCategoryEntity
     var currency: CurrencySymbol
     var period: PeriodEntity
     
@@ -48,9 +49,25 @@ class CategoryViewModel: ObservableObject {
     func loadTransactions() {
         do {
             transactions = try budgetService.getAllTransactionsForCategory(category, period: period)
+            totalAmount = transactions.reduce(0) { $0 + $1.amountDecimal }
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")
+        }
+    }
+    
+    func updateCategory(_ category: PlanCategoryEntity) {
+        self.category = category
+        loadTransactions()
+    }
+    
+    func deleteCategory(_ category: PlanCategoryEntity) {
+        do {
+            budgetService.deleteCategory(category, budget: budget)
+            try budgetService.save()
+        } catch {
+            // TODO: handle error
+            print("Somwthing went wrong \(error)")
         }
     }
     

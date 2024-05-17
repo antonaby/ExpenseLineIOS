@@ -109,7 +109,6 @@ struct BudgetView: View {
                         currency: vm.currency,
                         budgetService: budgetService)
                     )
-                    .navigationTitle(category.nameValue)
                 }
             }
             .onAppear {

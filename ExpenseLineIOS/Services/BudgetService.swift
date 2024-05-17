@@ -12,6 +12,7 @@ enum BudgetServiceError: Error {
     
     case MissingDataError(msg: String, reason: Error?)
     case FetchError(msg: String, reason: Error?)
+    case SaveError(msg: String, reason: Error?)
     
 }
 
@@ -64,6 +65,28 @@ class BudgetService: ObservableObject {
         dm.rollback()
     }
     
+    func getBudgetById(_ budgetId: UUID) throws -> BudgetEntity? {
+        let request = BudgetEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", budgetId as CVarArg)
+        request.fetchLimit = 1
+        
+        do {
+            return try dm.viewContext.fetch(request).first
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget by id", reason: error)
+        }
+    }
+    
+    func getAllBudgets() throws -> [BudgetEntity] {
+        let request = BudgetEntity.fetchRequest()
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget by id", reason: error)
+        }
+    }
+    
     func getLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity? {
         let budgetId = try getBudgetId(budget)
         
@@ -95,7 +118,11 @@ class BudgetService: ObservableObject {
         entity.startsAt = currentDate.firstDayOfMonth()
         entity.endsAt = currentDate.lastDayOfMonth()
         
-        try dm.sync()
+        do {
+            try dm.sync()
+        } catch {
+            throw BudgetServiceError.SaveError(msg: "Failed to save period", reason: error)
+        }
         
         return entity
     }
@@ -127,14 +154,6 @@ class BudgetService: ObservableObject {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch categories", reason: error)
         }
     }
-    
-    private func getBudgetId(_ budget: BudgetEntity) throws -> UUID {
-        if let id = budget.id {
-            return id
-        }
-        
-        throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil)
-    }
         
     func getAllTransactions(_ period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
         guard
@@ -142,7 +161,7 @@ class BudgetService: ObservableObject {
             let endsAt = period.endsAt,
             let budgetId = budget.id
         else {
-            return []
+            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
         }
         
         let request = TransactionEntity.fetchRequest()
@@ -180,30 +199,20 @@ class BudgetService: ObservableObject {
         }
     }
     
+    private func getBudgetId(_ budget: BudgetEntity) throws -> UUID {
+        if let id = budget.id {
+            return id
+        }
+        
+        throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil)
+    }
+    
     // TODO: Review
     
     
-    func getBudgetById(_ budgetId: UUID) throws -> BudgetEntity? {
-        let request = BudgetEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", budgetId as CVarArg)
-        request.fetchLimit = 1
-        
-        do {
-            return try dm.viewContext.fetch(request).first
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget by id", reason: error)
-        }
-    }
     
-    func getAllBudgets() throws -> [BudgetEntity] {
-        let request = BudgetEntity.fetchRequest()
-        
-        do {
-            return try dm.viewContext.fetch(request)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget by id", reason: error)
-        }
-    }
+    
+    
     
     func getTotalPlannedBudget(budget: BudgetEntity) throws -> Double {
         do {
