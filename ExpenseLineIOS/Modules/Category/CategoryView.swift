@@ -10,7 +10,9 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @Binding var selectedTransaction: TransactionEntity?
+    @EnvironmentObject var budgetService: BudgetService
+    
+    @State var selectedTransaction: TransactionEntity? = nil
     @StateObject var vm: CategoryViewModel
     
     var body: some View {
@@ -43,9 +45,21 @@ struct CategoryView: View {
         }
         .padding(.horizontal, 10)
         .background(Color(uiColor: .secondarySystemBackground))
+        .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
+            TransactionSheetView(
+                vm: TransactionSheetViewModel(transaction: transaction,
+                                              budget: vm.budget,
+                                              currency: vm.currency,
+                                              budgetService: budgetService))
+                .presentationDetents([.medium])
+        }
         .onAppear {
             vm.loadTransactions()
         }
+    }
+    
+    func onTransactionUpdated() {
+        vm.loadTransactions()
     }
 }
 
@@ -82,10 +96,12 @@ struct CategoryView: View {
         let vm = CategoryViewModel(
             category: category,
             period: period,
+            budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
             budgetService: budgetService
         )
-        return CategoryView(selectedTransaction: .constant(nil), vm: vm)
+        return CategoryView(vm: vm)
+            .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
     }

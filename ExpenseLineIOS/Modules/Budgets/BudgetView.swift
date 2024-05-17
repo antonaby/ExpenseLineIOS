@@ -21,8 +21,6 @@ struct BudgetView: View {
     @State var editBudgetSheetOpen: Bool = false
     @State var changePeriodSheetOpen: Bool = false
     
-    @State var selectedTransaction: TransactionEntity?
-    
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
@@ -90,14 +88,6 @@ struct BudgetView: View {
                                                   budgetService: budgetService))
                     .presentationDetents([.medium])
             }
-            .sheet(item: $selectedTransaction, onDismiss: onCategoryUpdated) { transaction in
-                TransactionSheetView(
-                    vm: TransactionSheetViewModel(transaction: transaction,
-                                                  budget: vm.budget,
-                                                  currency: vm.currency,
-                                                  budgetService: budgetService))
-                    .presentationDetents([.medium])
-            }
             .sheet(isPresented: $changePeriodSheetOpen) {
                 PeriodListView(selected: $vm.period, 
                                vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
@@ -112,9 +102,10 @@ struct BudgetView: View {
             }
             .navigationDestination(for: PlanCategoryEntity.self) { category in
                 if let period = vm.period {
-                    CategoryView(selectedTransaction: $selectedTransaction, vm: CategoryViewModel(
+                    CategoryView(vm: CategoryViewModel(
                         category: category,
                         period: period,
+                        budget: vm.budget,
                         currency: vm.currency,
                         budgetService: budgetService)
                     )

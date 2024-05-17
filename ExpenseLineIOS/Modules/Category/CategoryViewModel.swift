@@ -12,8 +12,11 @@ class CategoryViewModel: ObservableObject {
     
     @Published var transactions: [TransactionEntity] = []
     
-    private var category: PlanCategoryEntity
-    private var period: PeriodEntity
+    var budget: BudgetEntity
+    var category: PlanCategoryEntity
+    var currency: CurrencySymbol
+    var period: PeriodEntity
+    
     private var budgetService: BudgetService
     private var currencyFormatter: NumberFormatter
     private var dateFormatter: DateFormatter
@@ -22,9 +25,11 @@ class CategoryViewModel: ObservableObject {
         category.nameValue
     }
     
-    init(category: PlanCategoryEntity, period: PeriodEntity, currency: CurrencySymbol, budgetService: BudgetService) {
+    init(category: PlanCategoryEntity, period: PeriodEntity, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
         self.category = category
         self.period = period
+        self.budget = budget
+        self.currency = currency
         self.budgetService = budgetService
         
         let currencyFormatter = NumberFormatter()
