@@ -44,36 +44,37 @@ struct CategoryView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding(.horizontal, 10)
             Text("Transactions")
                 .bold()
-            ScrollView {
-                LazyVStack {
-                    ForEach(vm.transactions) { transaction in
-                        FlexibleCardView {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text(transaction.nameValue)
-                                    Spacer()
-                                    Button {
-                                        selectedTransaction = transaction
-                                    } label: {
-                                        Image(systemName: "ellipsis")
-                                    }
-                                    .tint(.green)
-                                }
-                                Text(vm.formatAmount(transaction.amountDecimal))
-                                    .font(.title2)
-                                    .bold()
-                                Text(vm.formatDate(transaction.createdAt))
-                                    .font(.caption)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+            List(vm.transactions) { transaction in
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(transaction.nameValue)
+                        Spacer()
+                        Button {
+                            selectedTransaction = transaction
+                        } label: {
+                            Image(systemName: "ellipsis")
                         }
+                        .tint(.green)
+                    }
+                    Text(vm.formatAmount(transaction.amountDecimal))
+                        .font(.title2)
+                        .bold()
+                    Text(vm.formatDate(transaction.createdAt))
+                        .font(.caption)
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button(role: .destructive) {
+                        vm.deleteTransaction(transaction)
+                    } label: {
+                        Label("delete", systemImage: "trash.fill")
                     }
                 }
             }
+            .listStyle(.plain)
         }
-        .padding(.horizontal, 10)
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
             TransactionSheetView(

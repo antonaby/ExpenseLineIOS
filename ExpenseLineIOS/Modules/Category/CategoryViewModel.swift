@@ -71,6 +71,17 @@ class CategoryViewModel: ObservableObject {
         }
     }
     
+    func deleteTransaction(_ transaction: TransactionEntity) {
+        do {
+            budgetService.deleteTransaction(transaction, budget: budget)
+            try budgetService.save()
+        } catch {
+            // TODO: handle error
+            print("Somwthing went wrong \(error)")
+        }
+        loadTransactions()
+    }
+    
     func formatAmount(_ amount: Decimal) -> String {
         if let fomatted = currencyFormatter.string(from: amount as NSDecimalNumber) {
             return fomatted

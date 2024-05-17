@@ -53,6 +53,11 @@ class BudgetService: ObservableObject {
         dm.viewContext.delete(category)
     }
     
+    func deleteTransaction(_ transaction: TransactionEntity, budget: BudgetEntity) {
+        budget.removeFromTransactions(transaction)
+        dm.viewContext.delete(transaction)
+    }
+    
     func deleteBudget(_ budget: BudgetEntity) {
         dm.viewContext.delete(budget)
     }
