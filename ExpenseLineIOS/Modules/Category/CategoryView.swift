@@ -20,11 +20,13 @@ struct CategoryView: View {
     var body: some View {
         VStack {
             ContentSizeCardView {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Image(systemName: vm.category.iconNameValue)
                             .foregroundColor(vm.category.colorValue)
+                            .font(.title)
                         Text(vm.category.nameValue)
+                            .font(.title2)
                         Spacer()
                         Button {
                             selectedCategory = vm.category
@@ -34,13 +36,13 @@ struct CategoryView: View {
                         }
                     }
                     HStack {
-                        Text(vm.formatAmount(vm.category.amountDecimal))
-                        Text("/")
                         Text(vm.formatAmount(vm.totalAmount))
-                            
                     }
                     .font(.largeTitle)
                     .bold()
+                    ProgressView(percent: vm.percentSpent())
+                    Text("Planned: " + vm.formatAmount(vm.category.amountDecimal))
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }

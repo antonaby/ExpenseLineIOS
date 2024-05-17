@@ -46,6 +46,23 @@ class CategoryViewModel: ObservableObject {
         self.dateFormatter = dateFormatter
     }
     
+    func percentSpent() -> Double {
+        if totalAmount <= 0 {
+            return 0
+        }
+        
+        if category.amountDecimal <= 0 {
+            return 1
+        }
+        
+        let percent = totalAmount / category.amountDecimal
+        if percent > 1 {
+            return 1
+        }
+        
+        return Double(truncating: percent as NSNumber)
+    }
+    
     func loadTransactions() {
         do {
             transactions = try budgetService.getAllTransactionsForCategory(category, period: period)
