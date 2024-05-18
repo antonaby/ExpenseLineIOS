@@ -19,7 +19,6 @@ class BudgetWizardViewModel: ObservableObject {
     
     @Published var name: String
     @Published var currency: CurrencySymbol
-    @Published var periodStartsAt: Date
     @Published var dailyReminderAt: Date
     
     @Published var isFormValid: Bool = false
@@ -43,7 +42,6 @@ class BudgetWizardViewModel: ObservableObject {
         let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.currency = currency
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
-        self.periodStartsAt = budget.periodStartsAt ?? Date().firstDayOfMonth()
         
         let currencyFormatter = NumberFormatter()
         currencyFormatter.numberStyle = .currency
@@ -134,7 +132,6 @@ class BudgetWizardViewModel: ObservableObject {
         budget.name = name
         budget.currency = currency.id
         budget.dailyRemainderAt = dailyReminderAt
-        budget.periodStartsAt = periodStartsAt
         
         do {
             try budgetService.save()

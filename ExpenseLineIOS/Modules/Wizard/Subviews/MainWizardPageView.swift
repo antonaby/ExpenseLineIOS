@@ -44,20 +44,10 @@ struct MainWizardPageView: View {
                 }
                 Text("Preferences")
                     .modifier(FormTitleViewModifier.modifier)
-                Text("**A first day** is when a new budget period starts")
-                    .modifier(FormTipViewModifier.modifier)
                 Text("**Daily reminded** don't let you forget add today's transactions")
                     .modifier(FormTipViewModifier.modifier)
                 FlexibleCardView {
                     VStack(spacing: 10) {
-                        HStack {
-                            Image(systemName: "calendar")
-                            DatePicker("First Day",
-                                       selection: $vm.periodStartsAt,
-                                       in: Date().dateRangeFromBegingOfMonth(),
-                                       displayedComponents: [.date])
-                        }
-                        Divider()
                         HStack {
                             Image(systemName: "clock")
                             DatePicker("Daily Reminder",
