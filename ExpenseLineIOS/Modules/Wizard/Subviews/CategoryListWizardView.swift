@@ -26,7 +26,7 @@ struct CategoryListWizardView: View {
                         Text(category.nameValue)
                         Spacer()
                         if category.typeValue == .outcomePercent {
-                            Text(vm.percnetFormatter.string(from: category.percentValue) ?? "0")
+                            Text(vm.percentFormatter.string(from: category.percentValue) ?? "0")
                         } else {
                             Text(vm.currencyFormatter.string(from: category.amountValue) ?? "0")
                         }

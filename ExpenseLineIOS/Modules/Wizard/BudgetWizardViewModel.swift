@@ -26,7 +26,7 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var selectedCategory: PlanCategoryEntity?
     
     var currencyFormatter: NumberFormatter
-    var percnetFormatter: NumberFormatter
+    var percentFormatter: NumberFormatter
     
     private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
@@ -57,7 +57,7 @@ class BudgetWizardViewModel: ObservableObject {
         percentFormatter.locale = Locale(identifier: currency.id)
         percentFormatter.minimumFractionDigits = 0
         percentFormatter.maximumFractionDigits = 2
-        self.percnetFormatter = percentFormatter
+        self.percentFormatter = percentFormatter
         
         isValid.sink { [weak self]  isValid in
             guard let self = self else { return }
@@ -72,10 +72,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func categoriesForType(_ types: [CategoryType]) -> [PlanCategoryEntity] {
-        let categories = budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
-        return categories
-            .filter { !$0.nameValue.isEmpty && types.contains($0.typeValue) }
-            .sorted(by: { $0.nameValue < $1.nameValue })
+        budget.categoriesForType(types, skipUnnamed: true)
     }
     
     func selectCategory(_ category: PlanCategoryEntity) {
@@ -122,25 +119,15 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func getTotalIncome() -> String {
-        return currencyFormatter.string(from: totalAmountForCategory(.income) as NSDecimalNumber) ?? "0"
+        return currencyFormatter.string(from: budget.totalAmountForCategoryType(.income) as NSDecimalNumber) ?? "0"
     }
     
     func getTotalOutcome() -> String {
-        let totalFixedOutcome = totalAmountForCategory(.outcomeFixed)
-        let totalPercentOutcome = totalAmountForCategory(.income) * totalPercentFractionForCategory(.outcomePercent)
+        let totalFixedOutcome = budget.totalAmountForCategoryType(.outcomeFixed)
+        let totalPercentOutcome = budget.totalAmountForCategoryType(.income) * budget.totalPercentForCategoryType(.outcomePercent)
         let totalOutcome = totalFixedOutcome + totalPercentOutcome
         
         return currencyFormatter.string(from: totalOutcome as NSDecimalNumber) ?? "0"
-    }
-    
-    private func totalAmountForCategory(_ type: CategoryType) -> Decimal {
-        let incomeCategories = categoriesForType([type])
-        return incomeCategories.reduce(0) { $0 + $1.amountDecimal }
-    }
-    
-    private func totalPercentFractionForCategory(_ type: CategoryType) -> Decimal {
-        let incomeCategories = categoriesForType([type])
-        return incomeCategories.reduce(0) { $0 + ($1.percentValue as Decimal) }
     }
     
     func save() {

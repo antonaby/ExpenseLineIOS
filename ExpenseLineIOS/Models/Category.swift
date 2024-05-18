@@ -92,6 +92,15 @@ extension PlanCategoryEntity {
         percent ?? NSDecimalNumber(value: 0)
     }
     
+    var percentDecimal: Decimal {
+        get {
+            percentValue as Decimal
+        }
+        set {
+            percent = newValue as NSDecimalNumber
+        }
+    }
+    
     var percentDecimalFraction: Decimal {
         get {
             percentValue as Decimal * 100

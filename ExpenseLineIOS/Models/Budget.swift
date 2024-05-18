@@ -35,4 +35,27 @@ extension BudgetEntity {
         }
     }
     
+    func totalAmountForCategoryType(_ type: CategoryType) -> Decimal {
+        let incomeCategories = categoriesForType([type])
+        return incomeCategories.reduce(0) { $0 + $1.amountDecimal }
+    }
+    
+    func totalPercentForCategoryType(_ type: CategoryType) -> Decimal {
+        let incomeCategories = categoriesForType([type])
+        return incomeCategories.reduce(0) { $0 + ($1.percentDecimal) }
+    }
+    
+    func categoriesForType(_ types: [CategoryType], skipUnnamed: Bool = false) -> [PlanCategoryEntity] {
+        let categories = categories?.allObjects as? [PlanCategoryEntity] ?? []
+        if skipUnnamed {
+            return categories
+                .filter { !$0.nameValue.isEmpty && types.contains($0.typeValue) }
+                .sorted(by: { $0.nameValue < $1.nameValue })
+        }
+        
+        return categories
+            .filter { types.contains($0.typeValue) }
+            .sorted(by: { $0.nameValue < $1.nameValue })
+    }
+    
 }

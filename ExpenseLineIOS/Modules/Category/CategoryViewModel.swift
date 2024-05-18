@@ -21,6 +21,7 @@ class CategoryViewModel: ObservableObject {
     private var budgetService: BudgetService
     private var currencyFormatter: NumberFormatter
     private var dateFormatter: DateFormatter
+    private var percentFormatter: NumberFormatter
     
     var name: String {
         category.nameValue
@@ -44,6 +45,13 @@ class CategoryViewModel: ObservableObject {
         dateFormatter.locale = Locale.current
         dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
         self.dateFormatter = dateFormatter
+        
+        let percentFormatter = NumberFormatter()
+        percentFormatter.numberStyle = .percent
+        percentFormatter.locale = Locale(identifier: currency.id)
+        percentFormatter.minimumFractionDigits = 0
+        percentFormatter.maximumFractionDigits = 2
+        self.percentFormatter = percentFormatter
     }
     
     func percentSpent() -> Double {
@@ -51,16 +59,33 @@ class CategoryViewModel: ObservableObject {
             return 0
         }
         
-        if category.amountDecimal <= 0 {
-            return 1
+        if category.typeValue == .outcomeFixed {
+            if category.amountDecimal <= 0 {
+                return 1
+            }
+            let percent = totalAmount / category.amountDecimal
+            if percent > 1 {
+                return 1
+            }
+            return Double(truncating: percent as NSNumber)
+        } else if category.typeValue == .outcomePercent {
+            if category.percentDecimal <= 0 {
+                return 1
+            }
+                        
+            let percent = totalAmount / getPlannedAmountFromPercent()
+            if percent > 1 {
+                return 1
+            }
+            return Double(truncating: percent as NSNumber)
         }
         
-        let percent = totalAmount / category.amountDecimal
-        if percent > 1 {
-            return 1
-        }
-        
-        return Double(truncating: percent as NSNumber)
+        return 0
+    }
+    
+    func getPlannedAmountFromPercent() -> Decimal {
+        let income = budget.totalAmountForCategoryType(.income)
+        return income * category.percentDecimal
     }
     
     func loadTransactions() {
@@ -105,6 +130,15 @@ class CategoryViewModel: ObservableObject {
         }
         
         print("Error, amount: \(amount) can't be formatted") // TODO: send error event
+        return "?"
+    }
+    
+    func formatPercent(_ percent: Decimal) -> String {
+        if let fomatted = percentFormatter.string(from: percent as NSDecimalNumber) {
+            return fomatted
+        }
+        
+        print("Error, amount: \(percent) can't be formatted") // TODO: send error event
         return "?"
     }
     
