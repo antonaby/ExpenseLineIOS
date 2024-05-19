@@ -44,11 +44,11 @@ struct CategorySpendings: Identifiable {
     
 }
 
-struct CategoryInfo: Identifiable {
+struct CategoryData: Identifiable {
     
     let id: UUID
     let entity: PlanCategoryEntity
-    let spendings: CategorySpendings?
+    let spendings: CategorySpendings
     
 }
 

@@ -9,26 +9,27 @@ import SwiftUI
 
 struct CategoryCard: View {
     
-    let category: CategoryInfo
-    let currency: CurrencySymbol
+    let category: CategoryData
+    @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
         FlexibleCardView {
             NavigationLink(value: category.entity) {
-                VStack(alignment: .leading) {
-                    Text(category.entity.name ?? "")
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("\(category.spendings?.totalAmount ?? 0)")
-                            .font(.largeTitle)
-                        Text(currency.code)
-                            .font(.title3)
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack {
+                        Image(systemName: category.entity.iconNameValue)
+                            .foregroundColor(category.entity.colorValue)
+                        Text(category.entity.nameValue)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    if category.entity.amountDecimal > 0 {
-                        Text("\(category.entity.amountDecimal)")
+                    Text(vm.formatAmount(category.spendings.totalAmount))
+                        .font(.largeTitle)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ProgressView(percent: getPercentSpent())
+                    if category.entity.typeValue == .outcomePercent {
+                        Text(vm.formatPercent(category.entity.percentDecimal))
                             .font(.caption)
-                    } else if category.entity.percentDecimalFraction > 0 {
-                        Text("\(category.entity.percentDecimalFraction)")
+                    } else if category.entity.typeValue == .outcomeFixed {
+                        Text(vm.formatAmount(category.entity.amountDecimal))
                             .font(.caption)
                     }
                 }
@@ -36,6 +37,30 @@ struct CategoryCard: View {
             }
         }
     }
+    
+    func getPercentSpent() -> Double {
+        if category.entity.typeValue == .outcomeFixed {
+            if category.entity.amountDecimal <= 0 {
+                return 1
+            }
+            
+            let percent = category.spendings.totalAmount / category.entity.amountDecimal
+            return Double(truncating: percent as NSNumber)
+        }
+        
+        if category.entity.typeValue == .outcomePercent {
+            if category.entity.percentDecimal <= 0 {
+                return 1
+            }
+            
+            let expectedAmount = vm.totalPlannedIncomeAmount * category.entity.percentDecimal
+            let percent = category.spendings.totalAmount / expectedAmount
+            return Double(truncating: percent as NSNumber)
+        }
+        
+        return 1
+    }
+    
 }
 
 struct CategoryListView: View {
@@ -45,12 +70,17 @@ struct CategoryListView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(vm.getCategoryInfos()) { category in
-                    CategoryCard(category: category, currency: vm.currency)
+                ForEach(vm.categories) { category in
+                    CategoryCard(category: category, vm: vm)
                 }
             }
             Spacer()
-        }.background(Color(uiColor: .secondarySystemBackground))
+        }
+        .padding(.horizontal, 15)
+        .background(Color(uiColor: .secondarySystemBackground))
+        .onAppear {
+            vm.loadCategories()
+        }
     }
 }
 
@@ -70,7 +100,8 @@ struct CategoryListView: View {
         category1.name = "Preview 1"
         category1.amount = 0
         category1.percent = 0.2
-        category1.iconName = "preview"
+        category1.iconName = "case"
+        category1.colorValue = .orange
         category1.typeValue = .outcomePercent
         category1.createdAt = Date()
         category1.budget = budget
@@ -80,7 +111,8 @@ struct CategoryListView: View {
         category2.name = "Preview 2"
         category2.amount = 2000
         category2.percent = 0
-        category2.iconName = "preview"
+        category2.iconName = "gym.bag"
+        category2.colorValue = .green
         category2.typeValue = .outcomeFixed
         category2.createdAt = Date()
         category2.budget = budget
@@ -115,6 +147,7 @@ struct CategoryListView: View {
             dataService: bundle.dataService
         )
         vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
+        vm.totalPlannedIncomeAmount = 1000
         
         return CategoryListView(vm: vm)
     } catch {

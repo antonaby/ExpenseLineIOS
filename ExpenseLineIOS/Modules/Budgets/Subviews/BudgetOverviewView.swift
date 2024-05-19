@@ -70,7 +70,11 @@ struct BudgetOverviewView: View {
                 DailyExpensesCard(vm: vm)
                 Spacer()
             }
-        }.background(Color(uiColor: .secondarySystemBackground))
+        }
+        .background(Color(uiColor: .secondarySystemBackground))
+        .onAppear {
+            vm.updateAmounts()
+        }
     }
 }
 

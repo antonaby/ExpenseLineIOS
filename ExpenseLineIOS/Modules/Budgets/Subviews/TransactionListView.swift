@@ -17,10 +17,13 @@ struct TransactionCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
+                Image(systemName: transaction.category?.iconNameValue ?? "questionmark")
+                    .foregroundColor(transaction.category?.colorValue ?? .black)
                 VStack(alignment: .listRowSeparatorLeading) {
-                    Text(transaction.category?.name ?? "")
+                    Text(transaction.category?.name ?? "?")
                         .font(.caption)
-                    Text(transaction.name ?? "")
+                    Text(transaction.name ?? "?")
+                        .bold()
                 }
                 Spacer()
                 Button {
@@ -29,11 +32,10 @@ struct TransactionCard: View {
                     Image(systemName: "ellipsis")
                 }
             }
-            HStack(alignment: .firstTextBaseline) {
-                Text(vm.formatAmount(transaction.amountDecimal))
-                    .font(.largeTitle)
-            }.frame(maxWidth: .infinity, alignment: .leading)
-            Text(transaction.createdAt ?? Date(), format: .dateTime)
+            Text(vm.formatAmount(transaction.amountDecimal))
+                .font(.largeTitle)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(vm.formatDate(transaction.createdAt))
                 .font(.caption)
         }
         .padding([.horizontal], 15)
@@ -58,6 +60,7 @@ struct TransactionListView: View {
             }
             Spacer()
         }
+        .padding(.horizontal, 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
             TransactionSheetView(
@@ -94,8 +97,9 @@ struct TransactionListView: View {
         category1.name = "Preview 1"
         category1.amount = 0
         category1.percent = 0.2
-        category1.iconName = "preview"
+        category1.iconName = "case"
         category1.typeValue = .outcomePercent
+        category1.colorValue = .orange
         category1.createdAt = Date()
         category1.budget = budget
         
@@ -104,8 +108,9 @@ struct TransactionListView: View {
         category2.name = "Preview 2"
         category2.amount = 2000
         category2.percent = 0
-        category2.iconName = "preview"
+        category2.iconName = "cup.and.saucer"
         category2.typeValue = .outcomeFixed
+        category2.colorValue = .green
         category2.createdAt = Date()
         category2.budget = budget
         

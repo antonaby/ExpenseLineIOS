@@ -173,7 +173,7 @@ class BudgetService: ObservableObject {
         request.predicate = NSPredicate(
             format: "createdAt BETWEEN {%@, %@} AND budget.id == %@",
             starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
             return try dm.viewContext.fetch(request)
@@ -195,13 +195,54 @@ class BudgetService: ObservableObject {
         request.predicate = NSPredicate(
             format: "createdAt BETWEEN {%@, %@} AND category.id == %@",
             starsAt as NSDate, endsAt as NSDate, categoryId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
             return try dm.viewContext.fetch(request)
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions for category", reason: error)
         }
+    }
+    
+    func getSpendingsForCategories(_ period: PeriodEntity, budget: BudgetEntity, types: [CategoryType]) throws -> [CategorySpendings] {
+        do {
+            let categories = try getCategoriesOfBudget(budget, types: types)
+            return try getSpendingsPerCategory(period, budget: budget, categories: categories)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch dynamic category spendings", reason: error)
+        }
+    }
+    
+    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Double {
+        guard
+            let starsAt = period.startsAt,
+            let endsAt = period.endsAt,
+            let budgetId = budget.id
+        else {
+            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
+        }
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TransactionEntity")
+        request.resultType = .dictionaryResultType
+        
+        let totalAmountExpressionDescription = NSExpressionDescription()
+        totalAmountExpressionDescription.name = "totalAmount"
+        totalAmountExpressionDescription.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
+        totalAmountExpressionDescription.expressionResultType = .doubleAttributeType
+        
+        request.propertiesToFetch = [totalAmountExpressionDescription]
+        request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@", starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
+        
+        do {
+            let results = try dm.viewContext.fetch(request) as? [NSDictionary]
+            if let dict = results, let first = dict.first {
+                return first["totalAmount"] as! Double
+            }
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch total outcome", reason: error)
+        }
+        
+        throw BudgetServiceError.FetchError(msg: "Failed to fetch total outcome, some data is not returned", reason: nil)
     }
     
     private func getBudgetId(_ budget: BudgetEntity) throws -> UUID {
@@ -212,64 +253,13 @@ class BudgetService: ObservableObject {
         throw BudgetServiceError.MissingDataError(msg: "Missing budget id", reason: nil)
     }
     
-    // TODO: Review
-    
-    
-    
-    
-    
-    
-    func getTotalPlannedBudget(budget: BudgetEntity) throws -> Double {
-        do {
-            return try getPlannedAmount(budget: budget, type: .income)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to get planned income amount", reason: error)
-        }
-    }
-    
-    func spendingsForAllCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
-        do {
-            let categories = try getCategoriesOfBudget(budget, types: [.outcomeFixed, .outcomePercent])
-            return try spendingsPerCategory(period, budget: budget, categories: categories)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch dynamic category spendings", reason: error)
-        }
-    }
-    
-    func spendingsForFixedCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
-        do {
-            let categories = try categoriesByType(budget: budget, type: .outcomeFixed)
-            return try spendingsPerCategory(period, budget: budget, categories: categories)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch dynamic category spendings", reason: error)
-        }
-    }
-    
-    func spendingsForDynamicCategories(_ period: PeriodEntity, budget: BudgetEntity) throws -> [CategorySpendings] {
-        do {
-            let categories = try categoriesByType(budget: budget, type: .outcomePercent)
-            return try spendingsPerCategory(period, budget: budget, categories: categories)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch dynamic category spendings", reason: error)
-        }
-    }
-    
-    private func categoriesByType(budget: BudgetEntity, type: CategoryType) throws -> [PlanCategoryEntity] {
-        guard let budgetId = budget.id else { return [] }
-        
-        let request = PlanCategoryEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "budget.id == %@ AND type == %d", budgetId as CVarArg, type.rawValue as NSInteger)
-        
-        return try dm.viewContext.fetch(request)
-    }
-    
-    private func spendingsPerCategory(_ period: PeriodEntity, budget: BudgetEntity, categories: [PlanCategoryEntity]) throws -> [CategorySpendings] {
+    private func getSpendingsPerCategory(_ period: PeriodEntity, budget: BudgetEntity, categories: [PlanCategoryEntity]) throws -> [CategorySpendings] {
         guard
             let starsAt = period.startsAt,
             let endsAt = period.endsAt,
             let budgetId = budget.id
         else {
-            return []
+            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
         }
         
         let categoryIds = categories
@@ -320,63 +310,6 @@ class BudgetService: ObservableObject {
         }
         
         return result
-    }
-    
-    private func getPlannedAmount(budget: BudgetEntity, type: CategoryType, percent: Bool = false) throws -> Double {
-        guard let budgetId = budget.id else { return 0 }
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlanCategoryEntity")
-        request.resultType = .dictionaryResultType
-        
-        let totalAmountExpressionDescription = NSExpressionDescription()
-        totalAmountExpressionDescription.name = "totalAmount"
-        totalAmountExpressionDescription.expression = NSExpression(
-            forFunction: "sum:",
-            arguments: [NSExpression(forKeyPath: percent ? "percent" : "amount")])
-        totalAmountExpressionDescription.expressionResultType = .doubleAttributeType
-        
-        request.propertiesToFetch = [totalAmountExpressionDescription]
-        request.predicate = NSPredicate(format: "budget.id == %@ AND type == %d", budgetId as CVarArg, type.rawValue as NSInteger)
-        
-        let results = try dm.viewContext.fetch(request) as? [NSDictionary]
-        if let dict = results, let first = dict.first {
-            return first["totalAmount"] as! Double
-        }
-        
-        return 0
-    }
-    
-    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Double {
-        guard 
-            let starsAt = period.startsAt,
-            let endsAt = period.endsAt,
-            let budgetId = budget.id
-        else {
-            return 0
-        }
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TransactionEntity")
-        request.resultType = .dictionaryResultType
-        
-        let totalAmountExpressionDescription = NSExpressionDescription()
-        totalAmountExpressionDescription.name = "totalAmount"
-        totalAmountExpressionDescription.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
-        totalAmountExpressionDescription.expressionResultType = .doubleAttributeType
-        
-        request.propertiesToFetch = [totalAmountExpressionDescription]
-        request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@", starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
-        
-        do {
-            let results = try dm.viewContext.fetch(request) as? [NSDictionary]
-            if let dict = results, let first = dict.first {
-                return first["totalAmount"] as! Double
-            }
-        } catch {
-            print("Error \(error.localizedDescription)")
-            return 0
-        }
-        
-        return 0
     }
     
 }

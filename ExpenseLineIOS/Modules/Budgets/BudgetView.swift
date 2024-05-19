@@ -113,7 +113,6 @@ struct BudgetView: View {
             }
             .onAppear {
                 vm.loadCurrentBudgetPeriod()
-                vm.updateAmounts()
             }
         }
     }
