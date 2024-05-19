@@ -15,26 +15,48 @@ struct CategoryCard: View {
     var body: some View {
         FlexibleCardView {
             NavigationLink(value: category.entity) {
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Image(systemName: category.entity.iconNameValue)
-                            .foregroundColor(category.entity.colorValue)
-                        Text(category.entity.nameValue)
+                HStack {
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack {
+                            Image(systemName: category.entity.iconNameValue)
+                                .foregroundColor(category.entity.colorValue)
+                            Text(category.entity.nameValue)
+                        }
+                        Text(vm.formatAmount(category.spendings.totalAmount))
+                            .font(.largeTitle)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if category.entity.typeValue == .outcomePercent {
+                            PlannedViewPercent()
+                        } else if category.entity.typeValue == .outcomeFixed {
+                            PlannedViewFixed()
+                        }
                     }
-                    Text(vm.formatAmount(category.spendings.totalAmount))
-                        .font(.largeTitle)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    ProgressView(percent: getPercentSpent())
-                    if category.entity.typeValue == .outcomePercent {
-                        Text(vm.formatPercent(category.entity.percentDecimal))
-                            .font(.caption)
-                    } else if category.entity.typeValue == .outcomeFixed {
-                        Text(vm.formatAmount(category.entity.amountDecimal))
-                            .font(.caption)
-                    }
+                    CircularProgressView(progress: getPercentSpent(), lineWidth: 10)
+                        .frame(width: 75, height: 75)
+                        .padding(.trailing, 5)
                 }
                 .tint(.black)
             }
+        }
+    }
+    
+    @ViewBuilder
+    func PlannedViewPercent() -> some View {
+        HStack {
+            Image(systemName: "dollarsign.arrow.circlepath")
+            Text(vm.formatPercent(category.entity.percentDecimal))
+                .bold()
+            Text("≈" + vm.formatAmount(getExpectedAmount()))
+                .font(.caption)
+        }
+    }
+    
+    @ViewBuilder
+    func PlannedViewFixed() -> some View {
+        HStack {
+            Image(systemName: "dollarsign.arrow.circlepath")
+            Text(vm.formatAmount(category.entity.amountDecimal))
+                .bold()
         }
     }
     
@@ -59,6 +81,14 @@ struct CategoryCard: View {
         }
         
         return 1
+    }
+    
+    func getExpectedAmount() -> Decimal {
+        if category.entity.percentDecimal <= 0 {
+            return 0
+        }
+        
+        return vm.totalPlannedIncomeAmount * category.entity.percentDecimal
     }
     
 }

@@ -168,6 +168,18 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
+    func deleteTransaction(_ transaction: TransactionEntity) {
+        do {
+            budgetService.deleteTransaction(transaction, budget: budget)
+            try budgetService.save()
+        } catch {
+            // TODO: handle error
+            print("Somwthing went wrong \(error)")
+        }
+        
+        loadTransactions()
+    }
+    
     private func calculatePlannedDailyOutcome(_ plannedDynamicAmount: Decimal, _ currentDynamicAmount: Decimal) {
         guard let startsAt = period?.startsAt, let endsAt = period?.endsAt
         else {

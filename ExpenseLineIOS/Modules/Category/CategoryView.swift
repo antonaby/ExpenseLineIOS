@@ -49,20 +49,15 @@ struct CategoryView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 15)
             Text("Transactions")
                 .bold()
             List(vm.transactions) { transaction in
                 VStack(alignment: .leading) {
-                    HStack {
+                    Button {
+                        selectedTransaction = transaction
+                    } label: {
                         Text(transaction.nameValue)
-                        Spacer()
-                        Button {
-                            selectedTransaction = transaction
-                        } label: {
-                            Image(systemName: "ellipsis")
-                        }
-                        .tint(.green)
                     }
                     Text(vm.formatAmount(transaction.amountDecimal))
                         .font(.title2)
@@ -113,22 +108,23 @@ struct CategoryView: View {
      
     @ViewBuilder
     func PlannedViewPercent() -> some View {
-        VStack(alignment: .trailing) {
-            HStack {
-                Text("Planned:")
-                Text(vm.formatPercent(vm.category.percentDecimal))
-                    .bold()
-            }
+        HStack {
+            Image(systemName: "dollarsign.arrow.circlepath")
+            Text(vm.formatPercent(vm.category.percentDecimal))
+                .bold()
             Text("≈" + vm.formatAmount(vm.getPlannedAmountFromPercent()))
                 .font(.caption)
         }
-        .frame(maxWidth: .infinity, alignment: .trailing)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     @ViewBuilder
     func PlannedViewFixed() -> some View {
-        Text("Planned: " + vm.formatAmount(vm.category.amountDecimal))
-            .frame(maxWidth: .infinity, alignment: .trailing)
+        HStack{
+            Image(systemName: "dollarsign.arrow.circlepath")
+            Text(vm.formatAmount(vm.category.amountDecimal))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     func onTransactionUpdated() {

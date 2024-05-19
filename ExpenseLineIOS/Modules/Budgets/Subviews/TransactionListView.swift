@@ -15,7 +15,7 @@ struct TransactionCard: View {
     @Binding var selectedTransaction: TransactionEntity?
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 5) {
             HStack {
                 Image(systemName: transaction.category?.iconNameValue ?? "questionmark")
                     .foregroundColor(transaction.category?.colorValue ?? .black)
@@ -26,11 +26,21 @@ struct TransactionCard: View {
                         .bold()
                 }
                 Spacer()
-                Button {
-                    selectedTransaction = transaction
+                Menu {
+                    Button {
+                        selectedTransaction = transaction
+                    } label: {
+                        Text("Edit")
+                    }
+                    Button(role: .destructive) {
+                        vm.deleteTransaction(transaction)
+                    } label: {
+                        Text("Delete")
+                    }
                 } label: {
                     Image(systemName: "ellipsis")
                 }
+                
             }
             Text(vm.formatAmount(transaction.amountDecimal))
                 .font(.largeTitle)
