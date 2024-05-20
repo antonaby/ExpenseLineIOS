@@ -79,7 +79,6 @@ struct BudgetView: View {
                     .offset(x: -20, y: -70)
                 }
             }
-            .background(Color(uiColor: .secondarySystemBackground))
             .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
                 TransactionSheetView(
                     vm: TransactionSheetViewModel(transaction: nil,
@@ -173,6 +172,10 @@ struct BudgetView: View {
     period3.startsAt = previousMonth2.firstDayOfMonth()
     period3.endsAt = previousMonth2.lastDayOfMonth()
     period3.budget = budget
+    
+    let plannedCategory = budgetService.newCategoryEntity(budget)
+    plannedCategory.typeValue = .income
+    plannedCategory.amountDecimal = 2000
     
     let category1 = PlanCategoryEntity(context: dm.viewContext)
     category1.id = UUID()

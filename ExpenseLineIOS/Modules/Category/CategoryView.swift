@@ -40,7 +40,7 @@ struct CategoryView: View {
                     }
                     .font(.largeTitle)
                     .bold()
-                    ProgressView(percent: vm.percentSpent())
+                    ProgressView(progress: vm.percentSpent())
                     if vm.category.typeValue == .outcomePercent {
                         PlannedViewPercent()
                     } else {

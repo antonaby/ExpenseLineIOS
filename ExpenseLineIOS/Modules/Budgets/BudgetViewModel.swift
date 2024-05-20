@@ -15,12 +15,12 @@ class BudgetViewModel: ObservableObject {
     @Published var categories: [CategoryData] = []
     @Published var transactions: [TransactionEntity] = []
     
-    @Published var totalPlannedIncomeAmount: Decimal
-    @Published var totalPlannedDynamicPercent: Decimal
-    @Published var totalFixedOutcomeAmount: Decimal
-    @Published var totalDynamicOutcomeAmount: Decimal
-    @Published var plannedDailyOutcome: Decimal
-    @Published var currentDailyOutcome: Decimal
+    @Published var totalPlannedIncome: Decimal
+    @Published var totalPlannedFixedOutcome: Decimal
+    @Published var totalPlannedPercentOutcome: Decimal
+    @Published var totalPlannedPercentOutcomeAmount: Decimal
+    @Published var totalOutcome: Decimal
+    @Published var totalPlannedDailyOutcome: Decimal
     
     var currency: CurrencySymbol
     
@@ -55,7 +55,7 @@ class BudgetViewModel: ObservableObject {
         percentFormatter.numberStyle = .percent
         percentFormatter.locale = currency.locale
         percentFormatter.minimumFractionDigits = 0
-        percentFormatter.maximumFractionDigits = 2
+        percentFormatter.maximumFractionDigits = 0
         self.percentFormatter = percentFormatter
         
         let dateFormatter = DateFormatter()
@@ -63,12 +63,12 @@ class BudgetViewModel: ObservableObject {
         dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
         self.dateFormatter = dateFormatter
         
-        self.totalPlannedIncomeAmount = 0
-        self.totalPlannedDynamicPercent = 0
-        self.totalFixedOutcomeAmount = 0
-        self.totalDynamicOutcomeAmount = 0
-        self.plannedDailyOutcome = 0
-        self.currentDailyOutcome = 0
+        self.totalPlannedIncome = 0
+        self.totalPlannedFixedOutcome = 0
+        self.totalPlannedPercentOutcome = 0
+        self.totalPlannedPercentOutcomeAmount = 0
+        self.totalOutcome = 0
+        self.totalPlannedDailyOutcome = 0
     }
     
     func loadCurrentBudgetPeriod() {
@@ -138,22 +138,24 @@ class BudgetViewModel: ObservableObject {
     }
     
     func updateAmounts() {
-        guard let period = period else { return }
+        guard let period = period
+        else {
+            return
+        }
         
-        totalPlannedIncomeAmount = budget.totalAmountForCategoryType(.income)
-        totalPlannedDynamicPercent = budget.totalPercentForCategoryType(.outcomePercent)
+        totalPlannedIncome = budget.totalAmountForCategoryType(.income)
+        totalPlannedFixedOutcome = budget.totalAmountForCategoryType(.outcomeFixed)
+        totalPlannedPercentOutcome = budget.totalPercentForCategoryType(.outcomePercent)
+        totalPlannedPercentOutcomeAmount = totalPlannedIncome * totalPlannedPercentOutcome
+        
+        let daysInPeriod = Calendar.current.numberOfDaysBetween(from: period.startsAt!, to: period.endsAt!)
+        totalPlannedDailyOutcome = totalPlannedPercentOutcomeAmount / Decimal(daysInPeriod)
         
         do {
-            let fixedCategories = try budgetService.getSpendingsForCategories(period, budget: budget, types: [.outcomeFixed])
-            totalFixedOutcomeAmount = fixedCategories.reduce(0) { $0 + $1.totalAmount }
-            
-            let dynamicCategories = try budgetService.getSpendingsForCategories(period, budget: budget, types: [.outcomePercent])
-            totalDynamicOutcomeAmount = dynamicCategories.reduce(0) { $0 + $1.totalAmount }
-            
-            calculatePlannedDailyOutcome(totalPlannedIncomeAmount * totalPlannedDynamicPercent, totalDynamicOutcomeAmount)
+            totalOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget)
         } catch {
-            // TODO: shopw error
-            print("Error \(error)")
+            // TODO: show error
+            print("Something went wrong \(error)")
         }
     }
     
@@ -180,18 +182,4 @@ class BudgetViewModel: ObservableObject {
         loadTransactions()
     }
     
-    private func calculatePlannedDailyOutcome(_ plannedDynamicAmount: Decimal, _ currentDynamicAmount: Decimal) {
-        guard let startsAt = period?.startsAt, let endsAt = period?.endsAt
-        else {
-            return
-        }
-        
-        // TODO: check a number of days (+1)
-        let totalDays = Calendar.current.dateComponents([.day], from: startsAt, to: endsAt).day! + 1
-        plannedDailyOutcome = plannedDynamicAmount / Decimal(totalDays)
-        
-        let pastDays = Calendar.current.dateComponents([.day], from: startsAt, to: Date()).day! + 1
-        currentDailyOutcome = currentDynamicAmount / Decimal(pastDays)
-    }
-   
 }

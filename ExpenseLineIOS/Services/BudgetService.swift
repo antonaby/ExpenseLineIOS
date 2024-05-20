@@ -213,7 +213,7 @@ class BudgetService: ObservableObject {
         }
     }
     
-    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Double {
+    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Decimal {
         guard
             let starsAt = period.startsAt,
             let endsAt = period.endsAt,
@@ -228,7 +228,7 @@ class BudgetService: ObservableObject {
         let totalAmountExpressionDescription = NSExpressionDescription()
         totalAmountExpressionDescription.name = "totalAmount"
         totalAmountExpressionDescription.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
-        totalAmountExpressionDescription.expressionResultType = .doubleAttributeType
+        totalAmountExpressionDescription.expressionResultType = .decimalAttributeType
         
         request.propertiesToFetch = [totalAmountExpressionDescription]
         request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@", starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
@@ -236,7 +236,7 @@ class BudgetService: ObservableObject {
         do {
             let results = try dm.viewContext.fetch(request) as? [NSDictionary]
             if let dict = results, let first = dict.first {
-                return first["totalAmount"] as! Double
+                return first["totalAmount"] as! Decimal
             }
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch total outcome", reason: error)

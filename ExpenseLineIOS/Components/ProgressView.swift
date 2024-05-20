@@ -9,13 +9,22 @@ import SwiftUI
 
 struct ProgressView: View {
     
-    var percent: Double
+    var progress: Double
     var color: Color
     var height: CGFloat
     
-    init(percent: Double, color: Color = .green, height: CGFloat = 10) {
-        self.percent = percent
-        self.color = color
+    init(progress: Double, color: Color = .green, fullColor: Color = .red, height: CGFloat = 10) {
+        if progress >= 1 {
+            self.progress = 1
+            self.color = fullColor
+        } else {
+            if progress < 0 {
+                self.progress = 0
+            } else {
+                self.progress = progress
+            }
+            self.color = color
+        }
         self.height = height
     }
     
@@ -25,7 +34,7 @@ struct ProgressView: View {
                 RoundedRectangle(cornerRadius: 5, style: .continuous)
                     .foregroundColor(color.opacity(0.3))
                 RoundedRectangle(cornerRadius: 5, style: .continuous)
-                    .frame(width: proxy.size.width * percent, alignment: .leading)
+                    .frame(width: proxy.size.width * progress, alignment: .leading)
                     .foregroundColor(color)
             }
         }.frame(maxHeight: height)
@@ -33,6 +42,14 @@ struct ProgressView: View {
     
 }
 
-#Preview {
-    ProgressView(percent: 0.3)
+#Preview("0%") {
+    ProgressView(progress: 0)
+}
+
+#Preview("30%") {
+    ProgressView(progress: 0.3)
+}
+
+#Preview("Full") {
+    ProgressView(progress: 1)
 }

@@ -7,74 +7,102 @@
 
 import SwiftUI
 
-struct DailyExpensesCard: View {
-    
-    @ObservedObject var vm: BudgetViewModel
-    
-    var body: some View {
-        Group {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Average Daily Spending")
-                    .font(.title)
-                Text("Money you can spend today")
-                    .tint(.gray)
-                    .font(.caption)
-                HStack {
-                    Text(vm.formatAmount(vm.currentDailyOutcome))
-                        .font(.largeTitle)
-                }
-                .padding([.top], 10)
-                ProgressView(percent: getTotalPercent())
-                HStack(alignment: .lastTextBaseline) {
-                    Text(vm.formatAmount(0))
-                        .font(.caption)
-                    Spacer()
-                    Text(vm.formatAmount(vm.plannedDailyOutcome))
-                        .font(.caption)
-                }
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding([.horizontal], 15)
-            .padding([.vertical], 5)
-        }
-        .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
-    }
-    
-    func getTotalPercent() -> Double {
-        if vm.currentDailyOutcome <= 0 {
-            return 0
-        }
-        
-        if vm.plannedDailyOutcome <= 0 {
-            return 1
-        }
-        
-        let percent = vm.currentDailyOutcome / vm.plannedDailyOutcome
-        if percent > 1 {
-            return 1
-        }
-        
-        return (percent as NSDecimalNumber).doubleValue
-    }
-}
-
 struct BudgetOverviewView: View {
     
     @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
-        ScrollView {
-            VStack {
-                DailyExpensesCard(vm: vm)
-                Spacer()
+        VStack {
+            CircularProgressView(progress: getTotalPercentSpent()) {
+                VStack {
+                    Text(vm.formatPercent(getTotalPercentSpentDecimal()))
+                        .font(.title)
+                        .bold()
+                    Text("Spent")
+                        .foregroundColor(.gray)
+                        .font(.caption)
+                }
+            }
+            .frame(width: 150, height: 150)
+            HStack {
+                Image(systemName: "arrow.down")
+                    .foregroundColor(.red)
+                Text(vm.formatAmount(vm.totalOutcome))
+            }
+            .font(.largeTitle)
+            HStack {
+                VStack {
+                    HStack {
+                        Image(systemName: "arrow.up")
+                            .foregroundColor(.green)
+                        Text("Budget")
+                    }
+                    Text(vm.formatAmount(vm.totalPlannedIncome))
+                        .font(.title2)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                Divider()
+                    .frame(height: 50)
+                VStack {
+                    HStack {
+                        Image(systemName: "arrow.up")
+                            .foregroundColor(.green)
+                        Text("Daily")
+                    }
+                    Text(vm.formatAmount(vm.totalPlannedDailyOutcome))
+                        .font(.title2)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            
+            HStack {
+                VStack {
+                    HStack {
+                        Image(systemName: "arrow.down")
+                            .foregroundColor(.red)
+                        Text("Fixed")
+                    }
+                    Text(vm.formatAmount(vm.totalPlannedFixedOutcome))
+                        .font(.title2)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                Divider()
+                    .frame(height: 50)
+                VStack {
+                    HStack {
+                        Image(systemName: "arrow.down")
+                            .foregroundColor(.red)
+                        Text("Dynamic")
+                    }
+                    HStack {
+                        Text(vm.formatPercent(vm.totalPlannedPercentOutcome))
+                            .font(.title2)
+                        Text("≈" + vm.formatAmount(vm.totalPlannedPercentOutcomeAmount))
+                            .font(.caption)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .background(Color(uiColor: .secondarySystemBackground))
+        .padding(.horizontal, 15)
         .onAppear {
             vm.updateAmounts()
         }
+    }
+    
+    func getTotalPercentSpentDecimal() -> Decimal {
+        if vm.totalPlannedIncome <= 0 {
+            return 1
+        }
+        if vm.totalOutcome <= 0 {
+            return 0
+        }
+        
+        return vm.totalOutcome / vm.totalPlannedIncome
+    }
+    
+    func getTotalPercentSpent() -> Double {
+        return Double(truncating: getTotalPercentSpentDecimal() as NSNumber)
     }
 }
 
@@ -89,8 +117,7 @@ struct BudgetOverviewView: View {
     let vm = BudgetViewModel(
         budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
     )
-    vm.currentDailyOutcome = 20
-    vm.plannedDailyOutcome = 100
+
     return BudgetOverviewView(vm: vm)
         .serviceBundle(bundle)
 }

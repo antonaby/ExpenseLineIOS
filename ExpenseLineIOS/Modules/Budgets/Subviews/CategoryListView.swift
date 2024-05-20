@@ -31,9 +31,16 @@ struct CategoryCard: View {
                             PlannedViewFixed()
                         }
                     }
-                    CircularProgressView(progress: getPercentSpent(), lineWidth: 10)
-                        .frame(width: 75, height: 75)
-                        .padding(.trailing, 5)
+                    CircularProgressView(progress: getPercentSpent(), lineWidth: 10) {
+                        VStack {
+                            Text(vm.formatPercent(getPercentSpentDecimal()))
+                            Text("Spent")
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                        }
+                    }
+                    .frame(width: 85, height: 85)
+                    .padding(.trailing, 5)
                 }
                 .tint(.black)
             }
@@ -61,13 +68,16 @@ struct CategoryCard: View {
     }
     
     func getPercentSpent() -> Double {
+        return Double(truncating: getPercentSpentDecimal() as NSNumber)
+    }
+    
+    func getPercentSpentDecimal() -> Decimal {
         if category.entity.typeValue == .outcomeFixed {
             if category.entity.amountDecimal <= 0 {
                 return 1
             }
             
-            let percent = category.spendings.totalAmount / category.entity.amountDecimal
-            return Double(truncating: percent as NSNumber)
+            return category.spendings.totalAmount / category.entity.amountDecimal
         }
         
         if category.entity.typeValue == .outcomePercent {
@@ -75,9 +85,8 @@ struct CategoryCard: View {
                 return 1
             }
             
-            let expectedAmount = vm.totalPlannedIncomeAmount * category.entity.percentDecimal
-            let percent = category.spendings.totalAmount / expectedAmount
-            return Double(truncating: percent as NSNumber)
+            let expectedAmount = vm.totalPlannedIncome * category.entity.percentDecimal
+            return category.spendings.totalAmount / expectedAmount
         }
         
         return 1
@@ -88,7 +97,7 @@ struct CategoryCard: View {
             return 0
         }
         
-        return vm.totalPlannedIncomeAmount * category.entity.percentDecimal
+        return vm.totalPlannedIncome * category.entity.percentDecimal
     }
     
 }
@@ -107,6 +116,7 @@ struct CategoryListView: View {
             Spacer()
         }
         .padding(.horizontal, 15)
+        .padding(.top, 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
             vm.loadCategories()
@@ -177,7 +187,7 @@ struct CategoryListView: View {
             dataService: bundle.dataService
         )
         vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
-        vm.totalPlannedIncomeAmount = 1000
+        vm.totalPlannedIncome = 1000
         
         return CategoryListView(vm: vm)
     } catch {

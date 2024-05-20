@@ -36,6 +36,7 @@
 		D23B85172BF22E8300A62196 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B85162BF22E8300A62196 /* Period.swift */; };
 		D23B851A2BF235D600A62196 /* PeriodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B85192BF235D600A62196 /* PeriodListView.swift */; };
 		D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23EE3322BC66B7C0088B246 /* BudgetService.swift */; };
+		D244C0722BFB74530015EA61 /* Celendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D244C0712BFB74530015EA61 /* Celendar+Extension.swift */; };
 		D247B4E62BF619F7004E72A4 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E52BF619F7004E72A4 /* CategoryView.swift */; };
 		D247B4E82BF61A08004E72A4 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */; };
 		D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */; };
@@ -114,6 +115,7 @@
 		D23B85162BF22E8300A62196 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		D23B85192BF235D600A62196 /* PeriodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodListView.swift; sourceTree = "<group>"; };
 		D23EE3322BC66B7C0088B246 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
+		D244C0712BFB74530015EA61 /* Celendar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Celendar+Extension.swift"; sourceTree = "<group>"; };
 		D247B4E52BF619F7004E72A4 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				D2AF81352BE11A0B00E02DDF /* Locale+Extension.swift */,
 				D23416CA2BE616E4000178FB /* Color+Extension.swift */,
 				D221C0852BE755000096DF89 /* Date+Extension.swift */,
+				D244C0712BFB74530015EA61 /* Celendar+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */,
 				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
 				D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */,
+				D244C0722BFB74530015EA61 /* Celendar+Extension.swift in Sources */,
 				D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */,
 				D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */,
 				D2F7685B2BC952A6001CE98C /* TransactionSheetView.swift in Sources */,
