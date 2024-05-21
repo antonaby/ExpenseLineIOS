@@ -24,70 +24,50 @@ struct BudgetOverviewView: View {
                 }
             }
             .frame(width: 150, height: 150)
-            HStack {
-                Image(systemName: "arrow.down")
-                    .foregroundColor(.red)
-                Text(vm.formatAmount(vm.totalOutcome))
+            Grid {
+                GridRow {
+                    Text("Spent")
+                    Text("Left")
+                }
+                .font(.caption)
+                GridRow {
+                    AmountView(vm.totalOutcome) {
+                        vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                    }
+                    AmountView(vm.totalBudgetLeft) {
+                        $0 < 0
+                    }
+                }
+                .font(.title2)
+                .frame(maxWidth: .infinity)
+                GridRow {
+                    Text("Fixed")
+                    Text("Flexible")
+                }
+                .font(.caption)
+                GridRow {
+                    AmountView(vm.totalFixedOutcome) {
+                        vm.totalPlannedFixedOutcome - $0 < 0
+                    }
+                    AmountView(vm.totalPercentOutcome) {
+                        vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                    }
+                }
+                .font(.title2)
+                .frame(maxWidth: .infinity)
             }
-            .font(.largeTitle)
-            HStack {
-                VStack {
-                    HStack {
-                        Image(systemName: "arrow.up")
-                            .foregroundColor(.green)
-                        Text("Budget")
-                    }
-                    Text(vm.formatAmount(vm.totalPlannedIncome))
-                        .font(.title2)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                Divider()
-                    .frame(height: 50)
-                VStack {
-                    HStack {
-                        Image(systemName: "arrow.up")
-                            .foregroundColor(.green)
-                        Text("Daily")
-                    }
-                    Text(vm.formatAmount(vm.totalPlannedDailyOutcome))
-                        .font(.title2)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
-            
-            HStack {
-                VStack {
-                    HStack {
-                        Image(systemName: "arrow.down")
-                            .foregroundColor(.red)
-                        Text("Fixed")
-                    }
-                    Text(vm.formatAmount(vm.totalPlannedFixedOutcome))
-                        .font(.title2)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                Divider()
-                    .frame(height: 50)
-                VStack {
-                    HStack {
-                        Image(systemName: "arrow.down")
-                            .foregroundColor(.red)
-                        Text("Dynamic")
-                    }
-                    HStack {
-                        Text(vm.formatPercent(vm.totalPlannedPercentOutcome))
-                            .font(.title2)
-                        Text("≈" + vm.formatAmount(vm.totalPlannedPercentOutcomeAmount))
-                            .font(.caption)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
+            .padding(.top, 20)
         }
         .padding(.horizontal, 15)
         .onAppear {
             vm.updateAmounts()
         }
+    }
+    
+    @ViewBuilder
+    func AmountView(_ amount: Decimal, isSpent: (Decimal) -> Bool) -> some View {
+        Text(vm.formatAmount(amount))
+            .foregroundColor(isSpent(amount) ? .red : .black)
     }
     
     func getTotalPercentSpentDecimal() -> Decimal {
@@ -106,7 +86,7 @@ struct BudgetOverviewView: View {
     }
 }
 
-#Preview {
+#Preview("OK") {
     let bundle = ServiceBundle.preview
     let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
@@ -117,6 +97,38 @@ struct BudgetOverviewView: View {
     let vm = BudgetViewModel(
         budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
     )
+    
+    vm.totalPlannedIncome = 3500
+    vm.totalPlannedFixedOutcome = 600
+    vm.totalPlannedPercentOutcomeAmount = 1500
+    vm.totalOutcome = 2000
+    vm.totalBudgetLeft = 1500
+    vm.totalFixedOutcome = 450
+    vm.totalPercentOutcome = 1450
+
+    return BudgetOverviewView(vm: vm)
+        .serviceBundle(bundle)
+}
+
+#Preview("Spent") {
+    let bundle = ServiceBundle.preview
+    let dm = bundle.databaseManager
+    let budget = BudgetEntity(context: dm.viewContext)
+    budget.id = UUID()
+    budget.name = "Preview"
+    budget.currency = "en_US"
+   
+    let vm = BudgetViewModel(
+        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
+    )
+    
+    vm.totalPlannedIncome = 3500
+    vm.totalPlannedFixedOutcome = 600
+    vm.totalPlannedPercentOutcomeAmount = 1500
+    vm.totalOutcome = 4000
+    vm.totalBudgetLeft = -500
+    vm.totalFixedOutcome = 650
+    vm.totalPercentOutcome = 1550
 
     return BudgetOverviewView(vm: vm)
         .serviceBundle(bundle)

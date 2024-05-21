@@ -79,7 +79,7 @@ struct BudgetView: View {
                     .offset(x: -20, y: -70)
                 }
             }
-            .sheet(isPresented: $transactionSheet, onDismiss: onCategoryUpdated) {
+            .sheet(isPresented: $transactionSheet, onDismiss: onTransactionUpdated) {
                 TransactionSheetView(
                     vm: TransactionSheetViewModel(transaction: nil,
                                                   budget: vm.budget,
@@ -136,7 +136,7 @@ struct BudgetView: View {
         
     }
     
-    func onCategoryUpdated() {
+    func onTransactionUpdated() {
         vm.updateAmounts()
     }
     

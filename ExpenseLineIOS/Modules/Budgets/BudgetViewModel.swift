@@ -15,12 +15,14 @@ class BudgetViewModel: ObservableObject {
     @Published var categories: [CategoryData] = []
     @Published var transactions: [TransactionEntity] = []
     
-    @Published var totalPlannedIncome: Decimal
-    @Published var totalPlannedFixedOutcome: Decimal
-    @Published var totalPlannedPercentOutcome: Decimal
-    @Published var totalPlannedPercentOutcomeAmount: Decimal
-    @Published var totalOutcome: Decimal
-    @Published var totalPlannedDailyOutcome: Decimal
+    var totalPlannedIncome: Decimal
+    var totalPlannedFixedOutcome: Decimal
+    var totalPlannedPercentOutcome: Decimal
+    var totalPlannedPercentOutcomeAmount: Decimal
+    var totalOutcome: Decimal
+    var totalFixedOutcome: Decimal
+    var totalPercentOutcome: Decimal
+    var totalBudgetLeft: Decimal
     
     var currency: CurrencySymbol
     
@@ -68,7 +70,9 @@ class BudgetViewModel: ObservableObject {
         self.totalPlannedPercentOutcome = 0
         self.totalPlannedPercentOutcomeAmount = 0
         self.totalOutcome = 0
-        self.totalPlannedDailyOutcome = 0
+        self.totalFixedOutcome = 0
+        self.totalPercentOutcome = 0
+        self.totalBudgetLeft = 0
     }
     
     func loadCurrentBudgetPeriod() {
@@ -148,15 +152,17 @@ class BudgetViewModel: ObservableObject {
         totalPlannedPercentOutcome = budget.totalPercentForCategoryType(.outcomePercent)
         totalPlannedPercentOutcomeAmount = totalPlannedIncome * totalPlannedPercentOutcome
         
-        let daysInPeriod = Calendar.current.numberOfDaysBetween(from: period.startsAt!, to: period.endsAt!)
-        totalPlannedDailyOutcome = totalPlannedPercentOutcomeAmount / Decimal(daysInPeriod)
-        
         do {
-            totalOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget)
+            totalFixedOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomeFixed])
+            totalPercentOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomePercent])
+            totalOutcome = totalFixedOutcome + totalPercentOutcome
+            totalBudgetLeft = totalPlannedIncome - totalOutcome
         } catch {
             // TODO: show error
             print("Something went wrong \(error)")
         }
+        
+        objectWillChange.send()
     }
     
     func loadTransactions() {

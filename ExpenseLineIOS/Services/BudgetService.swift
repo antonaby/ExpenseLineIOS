@@ -213,7 +213,7 @@ class BudgetService: ObservableObject {
         }
     }
     
-    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity) throws -> Decimal {
+    func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity, types: [CategoryType]) throws -> Decimal {
         guard
             let starsAt = period.startsAt,
             let endsAt = period.endsAt,
@@ -221,6 +221,11 @@ class BudgetService: ObservableObject {
         else {
             throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
         }
+        
+        let categories = try getCategoriesOfBudget(budget, types: types)
+        let categoryIds = categories
+            .filter { $0.id != nil }
+            .map { $0.id! }
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TransactionEntity")
         request.resultType = .dictionaryResultType
@@ -231,7 +236,8 @@ class BudgetService: ObservableObject {
         totalAmountExpressionDescription.expressionResultType = .decimalAttributeType
         
         request.propertiesToFetch = [totalAmountExpressionDescription]
-        request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@", starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
+        request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@ AND category.id IN %@",
+                                        starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg, categoryIds as NSArray)
         
         do {
             let results = try dm.viewContext.fetch(request) as? [NSDictionary]
