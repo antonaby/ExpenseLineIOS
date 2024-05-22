@@ -31,7 +31,7 @@ struct BudgetOverviewView: View {
                 }
             }
             .frame(width: 250, height: 250)
-            Grid {
+            Grid(alignment: .leading, horizontalSpacing: 50, verticalSpacing: 10) {
                 GridRow {
                     SpendingTitleView("Spent", color: .green)
                     SpendingTitleView("Left", color: .green.opacity(0.3))
@@ -45,7 +45,6 @@ struct BudgetOverviewView: View {
                     }
                 }
                 .font(.title2)
-                .frame(maxWidth: .infinity)
                 GridRow {
                     SpendingTitleView("Fixed", color: .purple)
                     SpendingTitleView("Flexible", color: .orange)
@@ -60,9 +59,8 @@ struct BudgetOverviewView: View {
                     }
                 }
                 .font(.title2)
-                .frame(maxWidth: .infinity)
             }
-            .padding(.top, 20)
+            .padding(.top, 30)
         }
         .padding(.horizontal, 15)
         .onAppear {
@@ -85,6 +83,7 @@ struct BudgetOverviewView: View {
             Text(text)
         }
         .font(.caption)
+        .frame(width: 80, alignment: .leading)
     }
     
     func getTotalSpentDecimal() -> Decimal {
