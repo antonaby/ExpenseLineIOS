@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct SpenginsStat: Identifiable {
+    
+    var id: Int
+    var date: Date
+    var value: Decimal
+    
+}
+
 extension TransactionEntity {
     
     var nameValue: String {

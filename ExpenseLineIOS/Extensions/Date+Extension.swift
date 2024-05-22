@@ -31,4 +31,12 @@ extension Date {
         return Calendar.current.date(from: components as DateComponents)!
     }
     
+    func plusDay(_ days: Int) -> Date {
+        return Calendar.current.date(byAdding: .day, value: days, to: self)!
+    }
+    
+    func plusMonth(_ months: Int) -> Date {
+        return Calendar.current.date(byAdding: .month, value: months, to: self)!
+    }
+    
 }

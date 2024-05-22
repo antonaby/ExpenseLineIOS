@@ -70,7 +70,7 @@ struct BudgetView: View {
                             .tabItem { Image(systemName: "menucard") }
                         TransactionListView(vm: vm)
                             .tabItem { Image(systemName: "list.clipboard") }
-                        BudgetStatsView()
+                        BudgetStatsView(vm: vm)
                             .tabItem { Image(systemName: "chart.pie") }
                     }
                     AddExpenseButton {
