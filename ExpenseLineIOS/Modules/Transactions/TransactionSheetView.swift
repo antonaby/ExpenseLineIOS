@@ -19,7 +19,11 @@ struct CategorySelectorView: View {
                 category = ctg
                 dismiss()
             } label: {
-                Text(ctg.nameValue)
+                HStack {
+                    Image(systemName: ctg.iconNameValue)
+                        .foregroundColor(ctg.colorValue)
+                    Text(ctg.nameValue)
+                }
             }
             .tint(.black)
         }
@@ -43,6 +47,9 @@ struct TransactionSheetView: View {
                     dismiss()
                 }
                 Spacer()
+                Text("Transaction")
+                    .font(.headline)
+                Spacer()
                 ToolButton(color: .green) {
                     vm.save()
                     dismiss()
@@ -55,33 +62,37 @@ struct TransactionSheetView: View {
             NavigationStack {
                 ScrollView {
                     VStack(spacing: 15) {
-                        VStack {
-                            Text("Transaction")
-                                .modifier(FormTitleViewModifier.modifier)
+                        FlexibleCardView {
+                            NavigationLink {
+                                CategorySelectorView(category: $vm.category, categories: $vm.categories)
+                            } label: {
+                                HStack {
+                                    Image(systemName: vm.category?.iconNameValue ?? "questionmark")
+                                        .foregroundColor(vm.category?.colorValue ?? .black)
+                                    if let category = vm.category {
+                                        Text(category.nameValue)
+                                    } else {
+                                        Text("Choose category")
+                                    }
+                                }
+                                .foregroundColor(.black)
+                                .font(.title2)
+                            }
                         }
-                        Divider()
                         FlexibleCardView {
                             VStack(alignment: .leading, spacing: 20) {
                                 HStack {
-                                    Image(systemName: "dollarsign.arrow.circlepath")
+                                    Image(systemName: "wallet.pass")
+                                        .frame(width: 25)
                                     TextField(text: $vm.name) {
                                         Text("Name")
                                     }
                                 }
-                                NavigationLink {
-                                    CategorySelectorView(category: $vm.category, categories: $vm.categories)
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "takeoutbag.and.cup.and.straw")
-                                            .tint(.black)
-                                        if let category = vm.category {
-                                            Text(category.nameValue)
-                                                .tint(.green)
-                                        } else {
-                                            Text("Category")
-                                                .tint(.gray)
-                                        }
-                                    }
+                                
+                                HStack {
+                                    Image(systemName: "calendar")
+                                        .frame(width: 25)
+                                    DatePicker("Date", selection: $vm.date, in: ...Date())
                                 }
                             }
                         }
@@ -96,12 +107,6 @@ struct TransactionSheetView: View {
                                 )
                             }
                             .focused($showKeyboard)
-                        }
-                        FlexibleCardView {
-                            HStack {
-                                Image(systemName: "calendar")
-                                DatePicker("Date", selection: $vm.date, in: ...Date())
-                            }
                         }
                     }
                     .padding([.top, .horizontal], 10)
@@ -132,18 +137,24 @@ struct TransactionSheetView: View {
     category1.name = "Test"
     category1.budget = budget
     category1.typeValue = .income
+    category1.colorValue = .blue
+    category1.iconName = "bag"
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
     category2.id = UUID()
     category2.name = "Other"
     category2.budget = budget
     category2.typeValue = .outcomeFixed
+    category2.colorValue = .cyan
+    category2.iconName = "car"
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
     category3.id = UUID()
     category3.name = "Thrid"
     category3.budget = budget
     category3.typeValue = .outcomePercent
+    category3.colorValue = .green
+    category3.iconName = "takeoutbag.and.cup.and.straw"
     
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
@@ -164,18 +175,24 @@ struct TransactionSheetView: View {
     category1.name = "Test"
     category1.budget = budget
     category1.typeValue = .income
+    category1.colorValue = .blue
+    category1.iconName = "bag"
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
     category2.id = UUID()
     category2.name = "Other"
     category2.budget = budget
     category2.typeValue = .outcomeFixed
+    category2.colorValue = .cyan
+    category2.iconName = "car"
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
     category3.id = UUID()
     category3.name = "Thrid"
     category3.budget = budget
     category3.typeValue = .outcomePercent
+    category3.colorValue = .green
+    category3.iconName = "takeoutbag.and.cup.and.straw"
     
     let transaction = bundle.budgetService.newTransactionEntity(budget)
     transaction.name = "Preview"

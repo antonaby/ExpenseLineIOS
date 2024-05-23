@@ -253,6 +253,9 @@ struct EditCategorySheet: View {
                     dismiss?(vm.category)
                 }
                 Spacer()
+                Text("Category")
+                    .font(.headline)
+                Spacer()
                 ToolButton(color: .green) {
                     update?(vm.getUpdatedCategory())
                 }
@@ -263,13 +266,6 @@ struct EditCategorySheet: View {
             .font(.title2)
             ScrollView {
                 VStack(spacing: 15) {
-                    VStack {
-                        Text("Edit category")
-                            .modifier(FormTitleViewModifier.modifier)
-                        Text("Select **icon** and type **name**")
-                            .modifier(FormTipViewModifier.modifier)
-                    }
-                    Divider()
                     HStack(spacing: 15) {
                         Button {
                             showCategrotyTemplateSheet.toggle()
@@ -374,7 +370,7 @@ struct EditCategorySheet: View {
         case .outcomeFixed:
             CategoryLebelView("Mountly", lebel: "house")
         case .outcomePercent:
-            CategoryLebelView("Daily %", lebel: "takeoutbag.and.cup.and.straw")
+            CategoryLebelView("Flexible %", lebel: "takeoutbag.and.cup.and.straw")
         }
     }
     
