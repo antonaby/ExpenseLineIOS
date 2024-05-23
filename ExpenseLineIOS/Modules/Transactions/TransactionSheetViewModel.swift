@@ -87,8 +87,10 @@ class TransactionSheetViewModel: ObservableObject {
         transaction.category = category
         transaction.budget = budget
         transaction.createdAt = date
+        transaction.day = Calendar.current.startOfDay(for: date)
         
         do {
+            transaction.period = try budgetService.getPeriodByDate(for: date, budget: budget)
             try budgetService.save()
         } catch {
             // TODO: show error

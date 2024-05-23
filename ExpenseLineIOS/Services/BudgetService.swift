@@ -110,16 +110,40 @@ class BudgetService: ObservableObject {
         }
     }
     
+    func getPeriodByDate(for date: Date, budget: BudgetEntity) throws -> PeriodEntity {
+        let budgetId = try getBudgetId(budget)
+        
+        let request = PeriodEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "budget.id == %@ AND startsAt <= %@ AND endsAt >= %@",
+            budgetId as CVarArg, date as NSDate, date as NSDate)
+        request.fetchLimit = 1
+        
+        do {
+            if let period = try dm.viewContext.fetch(request).first {
+                return period
+            }
+            
+            return try createPeriod(for: date, budget: budget)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch budget periods", reason: error)
+        }
+    }
+    
     func getOrCreateLastPeriod(_ budget: BudgetEntity) throws -> PeriodEntity {
         if let period = try getLastPeriod(budget) {
             return period
         }
     
+        return try createPeriod(for: Date(), budget: budget)
+    }
+    
+    private func createPeriod(for date: Date, budget: BudgetEntity) throws -> PeriodEntity {
         let entity = PeriodEntity(context: dm.viewContext)
         entity.id = UUID()
         entity.budget = budget
         
-        let currentDate = Date().addingTimeInterval(60) // Add 1 minute in case it's still the previous month
+        let currentDate = date.addingTimeInterval(60) // Add 1 minute in case it's still the previous month
         entity.startsAt = currentDate.firstDayOfMonth()
         entity.endsAt = currentDate.lastDayOfMonth()
         
@@ -213,6 +237,109 @@ class BudgetService: ObservableObject {
         }
     }
     
+    func getSpendingsForPeriodByDay(_ period: PeriodEntity, budget: BudgetEntity, types: [CategoryType]) throws -> [SpenginsStat] {
+        guard
+            let starsAt = period.startsAt,
+            let endsAt = period.endsAt,
+            let budgetId = budget.id
+        else {
+            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
+        }
+        
+        do {
+            let categories = try getCategoriesOfBudget(budget, types: types)
+            let categoryIds = categories
+                .filter { $0.id != nil }
+                .map { $0.id! }
+            
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TransactionEntity")
+            request.resultType = .dictionaryResultType
+            
+            let day = NSExpressionDescription()
+            day.name = "day"
+            day.expression = NSExpression(format: "day")
+            day.expressionResultType = .dateAttributeType
+            
+            let spendings = NSExpressionDescription()
+            spendings.name = "spendings"
+            spendings.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
+            spendings.expressionResultType = .decimalAttributeType
+            
+            request.propertiesToFetch = [day, spendings]
+            request.propertiesToGroupBy = ["day"]
+            request.sortDescriptors = [NSSortDescriptor(key: "day", ascending: true)]
+            request.predicate = NSPredicate(format: "createdAt BETWEEN {%@, %@} AND budget.id == %@ AND category.id IN %@ AND day != nil",
+                                            starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg, categoryIds as NSArray)
+            
+            let statResult = try dm.viewContext.fetch(request) as? [NSDictionary]
+            var result: [SpenginsStat] = []
+            if let dict = statResult {
+                var i = 0
+                for element in dict {
+                    result.append(SpenginsStat(
+                        id: i,
+                        date: element["day"] as! Date,
+                        value: element["spendings"] as! Decimal
+                    ))
+                    i += 1
+                }
+            }
+            
+            return result
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch daily spending for period", reason: error)
+        }
+    }
+    
+    func getSpendingsForLastNPeriods(for numberOfPeriods: Int, budget: BudgetEntity, types: [CategoryType]) throws -> [SpenginsStat] {
+        let budgetId = try getBudgetId(budget)
+        
+        do {
+            let categories = try getCategoriesOfBudget(budget, types: types)
+            let categoryIds = categories.filter { $0.id != nil }.map { $0.id! }
+            
+            let periods = try getLastNPeriods(for: numberOfPeriods, budget: budget)
+            let periodIds = periods.filter { $0.id != nil }.map { $0.id! }
+            
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TransactionEntity")
+            request.resultType = .dictionaryResultType
+            
+            let period = NSExpressionDescription()
+            period.name = "period"
+            period.expression = NSExpression(format: "period.startsAt")
+            period.expressionResultType = .dateAttributeType
+            
+            let spendings = NSExpressionDescription()
+            spendings.name = "spendings"
+            spendings.expression = NSExpression(forFunction: "sum:", arguments: [NSExpression(forKeyPath: "amount")])
+            spendings.expressionResultType = .decimalAttributeType
+            
+            request.propertiesToFetch = [period, spendings]
+            request.propertiesToGroupBy = ["period.startsAt"]
+            request.sortDescriptors = [NSSortDescriptor(key: "period.startsAt", ascending: true)]
+            request.predicate = NSPredicate(format: "budget.id == %@ AND category.id IN %@ AND period.id IN %@ AND period != nil",
+                                            budgetId as CVarArg, categoryIds as NSArray, periodIds as NSArray)
+            
+            let statResult = try dm.viewContext.fetch(request) as? [NSDictionary]
+            var result: [SpenginsStat] = []
+            if let dict = statResult {
+                var i = 0
+                for element in dict {
+                    result.append(SpenginsStat(
+                        id: i,
+                        date: element["period"] as! Date,
+                        value: element["spendings"] as! Decimal
+                    ))
+                    i += 1
+                }
+            }
+            
+            return result
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch daily spending for period", reason: error)
+        }
+    }
+    
     func getTotalOutcomeForPeriod(_ period: PeriodEntity, budget: BudgetEntity, types: [CategoryType]) throws -> Decimal {
         guard
             let starsAt = period.startsAt,
@@ -249,6 +376,17 @@ class BudgetService: ObservableObject {
         }
         
         throw BudgetServiceError.FetchError(msg: "Failed to fetch total outcome, some data is not returned", reason: nil)
+    }
+    
+    private func getLastNPeriods(for numberOfPeriods: Int, budget: BudgetEntity) throws -> [PeriodEntity] {
+        let budgetId = try getBudgetId(budget)
+        
+        let request = PeriodEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        request.fetchLimit = numberOfPeriods
+        request.sortDescriptors = [NSSortDescriptor(key: "startsAt", ascending: false)]
+        
+        return try dm.viewContext.fetch(request)
     }
     
     private func getBudgetId(_ budget: BudgetEntity) throws -> UUID {

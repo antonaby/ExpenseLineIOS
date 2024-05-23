@@ -179,33 +179,23 @@ class BudgetViewModel: ObservableObject {
     }
     
     func loadDaySpendings() {
-        daySpendings = [
-            SpenginsStat(id: 0, date: Date(), value: 10),
-            SpenginsStat(id: 1, date: Date().plusDay(1), value: 20),
-            SpenginsStat(id: 2, date: Date().plusDay(2), value: 10),
-            SpenginsStat(id: 3, date: Date().plusDay(3), value: 40),
-            SpenginsStat(id: 4, date: Date().plusDay(4), value: 100),
-            SpenginsStat(id: 5, date: Date().plusDay(5), value: 20),
-            SpenginsStat(id: 6, date: Date().plusDay(6), value: 15),
-            SpenginsStat(id: 7, date: Date().plusDay(7), value: 0),
-            SpenginsStat(id: 8, date: Date().plusDay(8), value: 20),
-            SpenginsStat(id: 9, date: Date().plusDay(9), value: 80),
-        ]
+        guard let period = period else { return }
+        
+        do {
+            daySpendings = try budgetService.getSpendingsForPeriodByDay(period, budget: budget, types: [.outcomeFixed, .outcomePercent])
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
     }
     
     func loadMonthSpendings() {
-        monthSpendings = [
-            SpenginsStat(id: 0, date: Date(), value: 10),
-            SpenginsStat(id: 1, date: Date().plusMonth(-1), value: 200),
-            SpenginsStat(id: 2, date: Date().plusMonth(-2), value: 100),
-            SpenginsStat(id: 3, date: Date().plusMonth(-3), value: 400),
-            SpenginsStat(id: 4, date: Date().plusMonth(-4), value: 1000),
-            SpenginsStat(id: 5, date: Date().plusMonth(-5), value: 200),
-            SpenginsStat(id: 6, date: Date().plusMonth(-6), value: 150),
-            SpenginsStat(id: 7, date: Date().plusMonth(-7), value: 10),
-            SpenginsStat(id: 8, date: Date().plusMonth(-8), value: 200),
-            SpenginsStat(id: 9, date: Date().plusMonth(-9), value: 800),
-        ]
+        do {
+            monthSpendings = try budgetService.getSpendingsForLastNPeriods(for: 12, budget: budget, types: [.outcomeFixed, .outcomePercent])
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
     }
     
     func deleteTransaction(_ transaction: TransactionEntity) {
