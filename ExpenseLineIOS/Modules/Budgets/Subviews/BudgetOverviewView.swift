@@ -64,7 +64,7 @@ struct BudgetOverviewView: View {
         }
         .padding(.horizontal, 15)
         .onAppear {
-            vm.updateAmounts()
+            vm.loadData(for: .overview)
         }
     }
     

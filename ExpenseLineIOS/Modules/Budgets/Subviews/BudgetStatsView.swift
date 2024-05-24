@@ -63,8 +63,7 @@ struct BudgetStatsView: View {
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
             if loadStats {
-                vm.loadDaySpendings()
-                vm.loadMonthSpendings()
+                vm.loadData(for: .stats)
             }
         }
     }

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct BudgetView: View {
     
     @StateObject var vm: BudgetViewModel
@@ -63,15 +62,19 @@ struct BudgetView: View {
                     .tint(.green)
                 }
                 ZStack(alignment: .bottomTrailing) {
-                    TabView {
+                    TabView(selection: $vm.currenPage) {
                         BudgetOverviewView(vm: vm)
                             .tabItem { Image(systemName: "house") }
+                            .tag(BudgetViewPage.overview)
                         CategoryListView(vm: vm)
                             .tabItem { Image(systemName: "menucard") }
+                            .tag(BudgetViewPage.categories)
                         TransactionListView(vm: vm)
                             .tabItem { Image(systemName: "list.clipboard") }
+                            .tag(BudgetViewPage.transactions)
                         BudgetStatsView(vm: vm)
                             .tabItem { Image(systemName: "chart.pie") }
+                            .tag(BudgetViewPage.stats)
                     }
                     AddExpenseButton {
                         transactionSheet.toggle()
@@ -87,8 +90,8 @@ struct BudgetView: View {
                                                   budgetService: budgetService))
                     .presentationDetents([.medium])
             }
-            .sheet(isPresented: $changePeriodSheetOpen) {
-                PeriodListView(selected: $vm.period, 
+            .sheet(isPresented: $changePeriodSheetOpen, onDismiss: onPeriodUpdated) {
+                PeriodListView(selected: $vm.period,
                                vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
                     .presentationDetents([.large, .medium])
                     .presentationDragIndicator(.visible)
@@ -134,11 +137,15 @@ struct BudgetView: View {
     }
     
     func onBudgetUpdated() {
-        
+        vm.reloadBudget()
+    }
+    
+    func onPeriodUpdated() {
+        vm.reloadPage()
     }
     
     func onTransactionUpdated() {
-        vm.updateAmounts()
+        vm.reloadPage()
     }
     
 }

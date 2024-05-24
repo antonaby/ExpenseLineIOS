@@ -119,7 +119,7 @@ struct CategoryListView: View {
         .padding(.top, 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
-            vm.loadCategories()
+            vm.loadData(for: .categories)
         }
     }
 }

@@ -7,8 +7,16 @@
 
 import Foundation
 
+enum BudgetViewPage: Hashable {
+    case overview
+    case categories
+    case transactions
+    case stats
+}
 
 class BudgetViewModel: ObservableObject {
+    
+    @Published var currenPage: BudgetViewPage
     
     @Published var budget: BudgetEntity
     @Published var period: PeriodEntity? = nil
@@ -17,20 +25,20 @@ class BudgetViewModel: ObservableObject {
     @Published var daySpendings: [SpenginsStat] = []
     @Published var monthSpendings: [SpenginsStat] = []
     
-    var totalPlannedIncome: Decimal
-    var totalPlannedFixedOutcome: Decimal
-    var totalPlannedPercentOutcome: Decimal
-    var totalPlannedPercentOutcomeAmount: Decimal
-    var totalOutcome: Decimal
-    var totalFixedOutcome: Decimal
-    var totalPercentOutcome: Decimal
-    var totalBudgetLeft: Decimal
-    
     var currency: CurrencySymbol
     
-    private var currencyFormatter: NumberFormatter
-    private var percentFormatter: NumberFormatter
-    private var dateFormatter: DateFormatter
+    var totalPlannedIncome: Decimal = 0
+    var totalPlannedFixedOutcome: Decimal = 0
+    var totalPlannedPercentOutcome: Decimal = 0
+    var totalPlannedPercentOutcomeAmount: Decimal = 0
+    var totalOutcome: Decimal = 0
+    var totalFixedOutcome: Decimal = 0
+    var totalPercentOutcome: Decimal = 0
+    var totalBudgetLeft: Decimal = 0
+    
+    private var currencyFormatter: NumberFormatter = NumberFormatter()
+    private var percentFormatter: NumberFormatter = NumberFormatter()
+    private var dateFormatter: DateFormatter = DateFormatter()
     
     private let budgetService: BudgetService
     private let dataService: DataService
@@ -41,40 +49,13 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    init(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) {
+    init(budget: BudgetEntity, page: BudgetViewPage = .overview, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
+        self.currenPage = page
         self.budgetService = budgetService
         self.dataService = dataService
-        let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
-        self.currency = currency
-        
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.numberStyle = .currency
-        currencyFormatter.locale = currency.locale
-        currencyFormatter.minimumFractionDigits = 0
-        currencyFormatter.maximumFractionDigits = 2
-        self.currencyFormatter = currencyFormatter
-        
-        let percentFormatter = NumberFormatter()
-        percentFormatter.numberStyle = .percent
-        percentFormatter.locale = currency.locale
-        percentFormatter.minimumFractionDigits = 0
-        percentFormatter.maximumFractionDigits = 0
-        self.percentFormatter = percentFormatter
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
-        self.dateFormatter = dateFormatter
-        
-        self.totalPlannedIncome = 0
-        self.totalPlannedFixedOutcome = 0
-        self.totalPlannedPercentOutcome = 0
-        self.totalPlannedPercentOutcomeAmount = 0
-        self.totalOutcome = 0
-        self.totalFixedOutcome = 0
-        self.totalPercentOutcome = 0
-        self.totalBudgetLeft = 0
+        self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
+        createFormatters(locale: currency.locale)
     }
     
     func loadCurrentBudgetPeriod() {
@@ -83,6 +64,41 @@ class BudgetViewModel: ObservableObject {
         } catch {
             // TODO: add notification
             print("Something went wrong \(error)")
+        }
+    }
+    
+    func reloadBudget() {
+        do {
+            if let budgetId = budget.id, let loadedBudget = try budgetService.getBudgetById(budgetId) {
+                budget = loadedBudget
+                currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
+                createFormatters(locale: currency.locale)
+            }
+        } catch {
+            // TODO: handle exception
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    func reloadPage() {
+        loadData(for: currenPage)
+    }
+    
+    func loadData(for page: BudgetViewPage) {
+        switch page {
+        case .overview:
+            loadAmounts()
+            break
+        case .categories:
+            loadCategories()
+            break
+        case .transactions:
+            loadTransactions()
+            break
+        case .stats:
+            loadDaySpendings()
+            loadMonthSpendings()
+            break
         }
     }
     
@@ -112,7 +128,64 @@ class BudgetViewModel: ObservableObject {
         return "?"
     }
     
-    func loadCategories() {
+    func deleteTransaction(_ transaction: TransactionEntity) {
+        do {
+            budgetService.deleteTransaction(transaction, budget: budget)
+            try budgetService.save()
+        } catch {
+            // TODO: handle error
+            print("Somwthing went wrong \(error)")
+        }
+        
+        loadTransactions()
+    }
+    
+    private func createFormatters(locale: Locale) {
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = locale
+        currencyFormatter.minimumFractionDigits = 0
+        currencyFormatter.maximumFractionDigits = 2
+        self.currencyFormatter = currencyFormatter
+        
+        let percentFormatter = NumberFormatter()
+        percentFormatter.numberStyle = .percent
+        percentFormatter.locale = locale
+        percentFormatter.minimumFractionDigits = 0
+        percentFormatter.maximumFractionDigits = 0
+        self.percentFormatter = percentFormatter
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
+        self.dateFormatter = dateFormatter
+    }
+    
+    private func loadAmounts() {
+        guard let period = period
+        else {
+            return
+        }
+        
+        totalPlannedIncome = budget.totalAmountForCategoryType(.income)
+        totalPlannedFixedOutcome = budget.totalAmountForCategoryType(.outcomeFixed)
+        totalPlannedPercentOutcome = budget.totalPercentForCategoryType(.outcomePercent)
+        totalPlannedPercentOutcomeAmount = totalPlannedIncome * totalPlannedPercentOutcome
+        
+        do {
+            totalFixedOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomeFixed])
+            totalPercentOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomePercent])
+            totalOutcome = totalFixedOutcome + totalPercentOutcome
+            totalBudgetLeft = totalPlannedIncome - totalOutcome
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+        }
+        
+        objectWillChange.send()
+    }
+    
+    private func loadCategories() {
         guard let period = period else { return }
         
         do {
@@ -143,31 +216,7 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    func updateAmounts() {
-        guard let period = period
-        else {
-            return
-        }
-        
-        totalPlannedIncome = budget.totalAmountForCategoryType(.income)
-        totalPlannedFixedOutcome = budget.totalAmountForCategoryType(.outcomeFixed)
-        totalPlannedPercentOutcome = budget.totalPercentForCategoryType(.outcomePercent)
-        totalPlannedPercentOutcomeAmount = totalPlannedIncome * totalPlannedPercentOutcome
-        
-        do {
-            totalFixedOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomeFixed])
-            totalPercentOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomePercent])
-            totalOutcome = totalFixedOutcome + totalPercentOutcome
-            totalBudgetLeft = totalPlannedIncome - totalOutcome
-        } catch {
-            // TODO: show error
-            print("Something went wrong \(error)")
-        }
-        
-        objectWillChange.send()
-    }
-    
-    func loadTransactions() {
+    private func loadTransactions() {
         guard let period = period else { return }
         
         do {
@@ -178,7 +227,7 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    func loadDaySpendings() {
+    private func loadDaySpendings() {
         guard let period = period else { return }
         
         do {
@@ -189,25 +238,13 @@ class BudgetViewModel: ObservableObject {
         }
     }
     
-    func loadMonthSpendings() {
+    private func loadMonthSpendings() {
         do {
             monthSpendings = try budgetService.getSpendingsForLastNPeriods(for: 12, budget: budget, types: [.outcomeFixed, .outcomePercent])
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")
         }
-    }
-    
-    func deleteTransaction(_ transaction: TransactionEntity) {
-        do {
-            budgetService.deleteTransaction(transaction, budget: budget)
-            try budgetService.save()
-        } catch {
-            // TODO: handle error
-            print("Somwthing went wrong \(error)")
-        }
-        
-        loadTransactions()
     }
     
 }

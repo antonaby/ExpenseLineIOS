@@ -22,6 +22,7 @@ struct CategorySelectorView: View {
                 HStack {
                     Image(systemName: ctg.iconNameValue)
                         .foregroundColor(ctg.colorValue)
+                        .frame(width: 25)
                     Text(ctg.nameValue)
                 }
             }

@@ -82,12 +82,12 @@ struct TransactionListView: View {
                 .presentationDetents([.medium])
         }
         .onAppear {
-            vm.loadTransactions()
+            vm.loadData(for: .transactions)
         }
     }
     
     func onTransactionUpdated() {
-        vm.loadTransactions()
+        vm.loadData(for: .transactions)
     }
     
 }
