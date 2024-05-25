@@ -34,6 +34,9 @@ struct MainView: View {
 
 #Preview {
     let bundle = ServiceBundle.preview
-    return MainView(appState: AppState(budgetService: bundle.budgetService))
-        .serviceBundle(bundle)
+    return MainView(appState: AppState(
+        budgetService: bundle.budgetService,
+        settingsService: bundle.settingsService)
+    )
+    .serviceBundle(bundle)
 }

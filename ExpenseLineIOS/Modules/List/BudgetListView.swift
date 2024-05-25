@@ -124,7 +124,7 @@ struct BudgetListView: View {
     let bundle = ServiceBundle.preview
   
     do {
-        let appState = AppState(budgetService: bundle.budgetService)
+        let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
         return BudgetListView(vm:
                                 BudgetListViewModel(budgetService: bundle.budgetService,
                                                     dataService: bundle.dataService))
@@ -147,7 +147,7 @@ struct BudgetListView: View {
     
     do {
         try dm.sync()
-        let appState = AppState(budgetService: bundle.budgetService)
+        let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
         return BudgetListView(vm:
                                 BudgetListViewModel(budgetService: bundle.budgetService,
                                                     dataService: bundle.dataService))

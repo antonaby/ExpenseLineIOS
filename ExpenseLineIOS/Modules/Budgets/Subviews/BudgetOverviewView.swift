@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BudgetOverviewView: View {
     
+    @EnvironmentObject var setting: SettingsService
     @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
@@ -19,7 +20,8 @@ struct BudgetOverviewView: View {
                     getFixedSpent(),
                     getPercentSpent()
                 ],
-                colors: [.green, .purple, .orange]
+                colors: [.green, .purple, .orange],
+                gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
             ) {
                 VStack {
                     Text(vm.formatPercent(getTotalSpentDecimal()))
@@ -146,6 +148,8 @@ struct BudgetOverviewView: View {
     vm.totalFixedOutcome = 450
     vm.totalPercentOutcome = 1000
 
+    bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
+    
     return BudgetOverviewView(vm: vm)
         .serviceBundle(bundle)
 }
@@ -170,6 +174,8 @@ struct BudgetOverviewView: View {
     vm.totalFixedOutcome = 450
     vm.totalPercentOutcome = 1550
 
+    bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
+    
     return BudgetOverviewView(vm: vm)
         .serviceBundle(bundle)
 }
@@ -194,6 +200,8 @@ struct BudgetOverviewView: View {
     vm.totalFixedOutcome = 650
     vm.totalPercentOutcome = 1550
 
+    bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
+    
     return BudgetOverviewView(vm: vm)
         .serviceBundle(bundle)
 }

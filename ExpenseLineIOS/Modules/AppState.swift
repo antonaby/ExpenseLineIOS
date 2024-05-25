@@ -8,33 +8,27 @@
 import Foundation
 
 
-struct BudgetId: Codable {
-    
-    var id: UUID?
-    
-}
-
 class AppState: ObservableObject {
     
     @Published var showError: Bool?
     @Published var budget: BudgetEntity?
 
     private let budgetService: BudgetService
-    private let userDefaults: UserDefaults
+    private let settingsService: SettingsService
     
-    init(budgetService: BudgetService) {
-        self.userDefaults = UserDefaults(suiteName: "Budget")! // TODO: check nil
+    init(budgetService: BudgetService, settingsService: SettingsService) {
         self.budgetService = budgetService
+        self.settingsService = settingsService
     }
     
     func selectBudget(_ budget: BudgetEntity) {
         self.budget = budget
-        saveBudgetId(budget.id)
+        settingsService.setBudgetId(budget.id)
     }
     
     func unselectBudget() {
         budget = nil
-        saveBudgetId(nil)
+        settingsService.setBudgetId(nil)
     }
     
     func loadBudget() {
@@ -42,13 +36,9 @@ class AppState: ObservableObject {
     }
 
     private func getBudget() -> BudgetEntity? {
-        if let data = userDefaults.data(forKey: "budgetId") {
+        if let budgetId = settingsService.getBudgetId() {
             do {
-                let decoder = JSONDecoder()
-                let budgetId = try decoder.decode(BudgetId.self, from: data)
-                if let id = budgetId.id {
-                    return try budgetService.getBudgetById(id)
-                }
+                return try budgetService.getBudgetById(budgetId)
             } catch {
                 // TODO: show error
                 print("Can't fetch budget info: \(error)")
@@ -56,17 +46,6 @@ class AppState: ObservableObject {
         }
         
         return nil
-    }
-    
-    private func saveBudgetId(_ id: UUID?) {
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(BudgetId(id: id))
-            userDefaults.set(data, forKey: "budgetId")
-        } catch {
-            // TODO: show error
-            print("Can't save budget info: \(error)")
-        }
     }
     
 }

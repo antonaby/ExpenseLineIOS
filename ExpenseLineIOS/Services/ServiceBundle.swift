@@ -17,12 +17,14 @@ struct ServiceBundle {
     let databaseManager: DatabaseManager
     let budgetService: BudgetService
     let dataService: DataService
+    let settingsService: SettingsService
     
     init(inMemory: Bool = false) {
         databaseManager = DatabaseManager()
         databaseManager.initializeStore(inMemory: inMemory)
         budgetService = BudgetService(dm: databaseManager)
         dataService = DataService()
+        settingsService = SettingsService()
     }
     
 }
@@ -33,6 +35,7 @@ extension View {
         self.environmentObject(bundle.databaseManager)
             .environmentObject(bundle.budgetService)
             .environmentObject(bundle.dataService)
+            .environmentObject(bundle.settingsService)
     }
     
 }

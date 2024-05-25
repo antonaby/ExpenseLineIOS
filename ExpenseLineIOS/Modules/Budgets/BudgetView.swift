@@ -233,7 +233,7 @@ struct BudgetView: View {
     transaction4.createdAt = Date()
     transaction4.category = category2
     
-    let appState = AppState(budgetService: bundle.budgetService)
+    let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
     appState.selectBudget(budget)
     
     do {
