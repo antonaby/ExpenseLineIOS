@@ -18,6 +18,10 @@ extension Date {
         return firstDayOfMonth() ... self
     }
     
+    func currentDateAt(at hour: Int) -> Date {
+        return Calendar.current.date(bySettingHour: hour, minute: 0, second: 0, of: self)!
+    }
+    
     func lastDayOfMonth() -> Date {
         let components = Calendar.current.dateComponents([.year, .month], from: self) as NSDateComponents
         components.month += 1

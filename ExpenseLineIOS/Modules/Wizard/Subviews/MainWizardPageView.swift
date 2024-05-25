@@ -16,11 +16,7 @@ struct MainWizardPageView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                Text("Budget")
-                    .modifier(FormTitleViewModifier.modifier)
-                Text("Let's add a **name** and choose **currency** of out budget")
-                    .modifier(FormTipViewModifier.modifier)
+            VStack(spacing: 15) {
                 FlexibleCardView {
                     VStack(spacing: 10) {
                         HStack {
@@ -44,8 +40,6 @@ struct MainWizardPageView: View {
                 }
                 Text("Preferences")
                     .modifier(FormTitleViewModifier.modifier)
-                Text("**Daily reminded** don't let you forget add today's transactions")
-                    .modifier(FormTipViewModifier.modifier)
                 FlexibleCardView {
                     VStack(spacing: 10) {
                         HStack {
@@ -57,9 +51,7 @@ struct MainWizardPageView: View {
                     }
                 }
             }
-            .padding(.horizontal, 20)
         }
-        .padding(.top, 10)
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency, vm: CurrencySelectorSheetViewModel(dataService: dataService))

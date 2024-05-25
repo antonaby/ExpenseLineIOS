@@ -41,7 +41,7 @@ class BudgetWizardViewModel: ObservableObject {
         self.name = budget.name ?? ""
         let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.currency = currency
-        self.dailyReminderAt = budget.dailyRemainderAt ?? Date()
+        self.dailyReminderAt = budget.dailyRemainderAt ?? Date().currentDateAt(at: 20)
         
         let currencyFormatter = NumberFormatter()
         currencyFormatter.numberStyle = .currency
@@ -78,19 +78,9 @@ class BudgetWizardViewModel: ObservableObject {
         selectedCategory = category
     }
     
-    func newCategory(_ types: [CategoryType]) {
-        var category: PlanCategoryEntity
-        
-        if types.contains(.income) {
-            let entity = budgetService.newCategoryEntity(budget)
-            entity.typeValue = .income
-            category = entity
-        } else {
-            let entity = budgetService.newCategoryEntity(budget)
-            entity.typeValue = .outcomeFixed
-            category = entity
-        }
-        
+    func newCategory(_ type: CategoryType) {
+        var category = budgetService.newCategoryEntity(budget)
+        category.typeValue = type
         op = .create
         selectedCategory = category
     }

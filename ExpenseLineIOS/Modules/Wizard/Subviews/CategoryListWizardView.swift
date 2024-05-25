@@ -11,11 +11,11 @@ struct CategoryListWizardView: View {
     
     @ObservedObject var vm: BudgetWizardViewModel
     
-    let types: [CategoryType]
+    let type: CategoryType
     
     var body: some View {
         List {
-            ForEach(vm.categoriesForType(types)) { category in
+            ForEach(vm.categoriesForType([type])) { category in
                 Button {
                     vm.selectCategory(category)
                 } label: {
@@ -44,7 +44,7 @@ struct CategoryListWizardView: View {
             }
             HStack {
                 Button {
-                    vm.newCategory(types)
+                    vm.newCategory(type)
                 } label: {
                     HStack {
                         Image(systemName: "plus.circle")
@@ -56,6 +56,7 @@ struct CategoryListWizardView: View {
             }
             .listRowSeparator(.hidden)
         }
+        .listStyle(.plain)
     }
 }
 
@@ -109,7 +110,7 @@ struct CategoryListWizardView: View {
     
     return CategoryListWizardView(
         vm: vm,
-        types: [.outcomeFixed, .outcomePercent]
+        type: .outcomeFixed
     )
 }
 
@@ -162,7 +163,7 @@ struct CategoryListWizardView: View {
     
     return CategoryListWizardView(
         vm: vm,
-        types: [.outcomeFixed, .outcomePercent]
+        type: .outcomePercent
     )
 }
 

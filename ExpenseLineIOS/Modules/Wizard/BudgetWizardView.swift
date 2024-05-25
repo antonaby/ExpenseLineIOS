@@ -10,7 +10,8 @@ import SwiftUI
 enum WizzardPage: Int, Identifiable, CaseIterable {
     case base = 0
     case income
-    case outcome
+    case outcomeFixed
+    case outcomeFlexible
     
     var id: Self { self }
 }
@@ -24,7 +25,7 @@ struct BudgetWizardView: View {
     let editMode: Bool
     
     var body: some View {
-        VStack {
+        VStack(spacing: 15) {
             ZStack {
                 HStack {
                     if currentPage.rawValue != 0 {
@@ -42,32 +43,22 @@ struct BudgetWizardView: View {
                     }
                     .font(.title2)
                 }
-                HStack(spacing: 20) {
+                HStack(spacing: 10) {
                     ForEach(WizzardPage.allCases) { page in
                         PageIconView(page)
                     }
                 }
             }
-            .padding([.horizontal], 10)
+            Text(getPageTitle())
+                .modifier(FormTitleViewModifier.modifier)
             WizardPageView()
-                .padding(.bottom, 5)
-            HStack {
-                if (editMode && currentPage != .outcome) || currentPage == .outcome  {
-                    WizzardNextButton("Save") {
-                        vm.save()
-                        dismiss()
-                    }
-                    .disabled(!vm.isFormValid)
-                }
-                if currentPage != .outcome {
-                    WizzardNextButton("Next") {
-                        nextPage()
-                    }
-                }
-                
+            if editMode {
+                EditModeControlView()
+            } else {
+                CreateModeControlView()
             }
-            .padding([.horizontal], 20)
         }
+        .padding(.horizontal, 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .sheet(item: $vm.selectedCategory) { category in
             EditCategorySheet(title: "Save",
@@ -89,14 +80,47 @@ struct BudgetWizardView: View {
     }
     
     @ViewBuilder
+    func EditModeControlView() -> some View {
+        HStack {
+            WizzardNextButton("Save") {
+                vm.save()
+                dismiss()
+            }
+            .disabled(!vm.isFormValid)
+            if currentPage != .outcomeFlexible {
+                WizzardNextButton("Next") {
+                    nextPage()
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func CreateModeControlView() -> some View {
+        if currentPage != .outcomeFlexible {
+            WizzardNextButton("Next") {
+                nextPage()
+            }
+        } else {
+            WizzardNextButton("Save") {
+                vm.save()
+                dismiss()
+            }
+            .disabled(!vm.isFormValid)
+        }
+    }
+ 
+    @ViewBuilder
     func WizardPageView() -> some View {
         switch currentPage {
         case .base:
             MainWizardPageView(vm: vm)
         case .income:
-            IncomePageWizardView(vm: vm)
-        case .outcome:
-            OutcomePageWizardView(vm: vm)
+            OutcomePageWizardView(vm: vm, type: .income)
+        case .outcomeFixed:
+            OutcomePageWizardView(vm: vm, type: .outcomeFixed)
+        case .outcomeFlexible:
+            OutcomePageWizardView(vm: vm, type: .outcomePercent)
         }
     }
     
@@ -121,22 +145,29 @@ struct BudgetWizardView: View {
             return "square.and.pencil"
         case .income:
             return "case"
-        case .outcome:
+        case .outcomeFixed:
             return "list.bullet"
+        case .outcomeFlexible:
+            return "dollarsign.arrow.circlepath"
         }
     }
     
-    func nextButtonCaption() -> String {
-        if currentPage == .outcome && editMode {
-            return "Save"
+    func getPageTitle() -> String {
+        switch currentPage {
+        case .base:
+            return "Budget"
+        case .income:
+            return "Wages & Income"
+        case .outcomeFixed:
+            return "Montly Spendings"
+        case .outcomeFlexible:
+            return "Flexible Spendings"
         }
-        
-        return currentPage == .outcome ? "Create" : "Next"
     }
     
     func nextPage() {
         let nextValue = currentPage.rawValue + 1
-        if  nextValue <= WizzardPage.outcome.rawValue {
+        if  nextValue <= WizzardPage.outcomeFlexible.rawValue {
             currentPage = WizzardPage(rawValue: nextValue) ?? .base
         }
     }
@@ -159,6 +190,7 @@ struct BudgetWizardView: View {
     )
     
     return BudgetWizardView(vm: vm, editMode: false)
+        .serviceBundle(bundle)
 }
 
 #Preview("Edit Budget") {
@@ -207,7 +239,7 @@ struct BudgetWizardView: View {
     
     let category5 = PlanCategoryEntity(context: dm.viewContext)
     category5.id = UUID()
-    category5.name = "Preview 1"
+    category5.name = "Preview 1 Income"
     category5.typeValue = .income
     category5.colorValue = .yellow
     category5.iconName = "case"
@@ -216,7 +248,7 @@ struct BudgetWizardView: View {
     
     let category6 = PlanCategoryEntity(context: dm.viewContext)
     category6.id = UUID()
-    category6.name = "Preview 2"
+    category6.name = "Preview 2 Income"
     category6.typeValue = .income
     category6.colorValue = .orange
     category6.iconName = "globe"
@@ -230,4 +262,5 @@ struct BudgetWizardView: View {
     )
     
     return BudgetWizardView(vm: vm, editMode: true)
+        .serviceBundle(bundle)
 }
