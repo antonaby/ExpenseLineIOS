@@ -25,7 +25,7 @@ struct SettingsView: View {
                 }
                 .font(.title2)
             }
-            .padding(.horizontal, 5)
+            .padding(.horizontal, 20)
             Form {
                 Section {
                     ForEach($preferences) { $preference in
@@ -38,7 +38,9 @@ struct SettingsView: View {
                     Text("Appearance")
                 }
             }
-        }.onAppear {
+        }
+        .background(Color(uiColor: .secondarySystemBackground))
+        .onAppear {
             preferences = preferences.map {
                 BoolUserPreference(
                     id: $0.id,
