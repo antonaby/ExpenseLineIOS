@@ -14,61 +14,76 @@ struct BudgetListView: View {
     
     @StateObject var vm: BudgetListViewModel
     @State var isWizzardOpen = false
+    @State var settingsSheetOpen: Bool = false
     
     var body: some View {
         VStack {
-            GeometryReader { geometry in
-                ScrollView {
-                    VStack {
-                        if vm.budgets.isEmpty {
-                            NoBudgetView()
-                        } else {
-                            ForEach(vm.budgets) { budget in
-                                ContentSizeCardView {
-                                    HStack {
-                                        Button {
-                                            appState.selectBudget(budget)
-                                        } label: {
-                                            Text(budget.name ?? "Unknown")
-                                                .font(.title2)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                        }
-                                        Menu {
+            HStack {
+                Spacer()
+                Button {
+                    settingsSheetOpen.toggle()
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.title2)
+                        .padding(.trailing, 10)
+                        .padding(.top, 5)
+                }
+                .tint(.green)
+            }
+            VStack {
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack {
+                            if vm.budgets.isEmpty {
+                                NoBudgetView()
+                            } else {
+                                ForEach(vm.budgets) { budget in
+                                    ContentSizeCardView {
+                                        HStack {
                                             Button {
-                                                vm.selectedBudget = budget
+                                                appState.selectBudget(budget)
                                             } label: {
-                                                Text("Edit")
+                                                Text(budget.name ?? "Unknown")
+                                                    .font(.title2)
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
                                             }
-                                            Button(role: .destructive) {
-                                                vm.deleteBudget(budget)
+                                            Menu {
+                                                Button {
+                                                    vm.selectedBudget = budget
+                                                } label: {
+                                                    Text("Edit")
+                                                }
+                                                Button(role: .destructive) {
+                                                    vm.deleteBudget(budget)
+                                                } label: {
+                                                    Text("Delete")
+                                                }
                                             } label: {
-                                                Text("Delete")
+                                                Image(systemName: "ellipsis").font(.title2)
+                                                    .padding(.leading, 10)
                                             }
-                                        } label: {
-                                            Image(systemName: "ellipsis").font(.title2)
-                                                .padding(.leading, 10)
                                         }
+                                        .tint(.black)
                                     }
-                                    .tint(.black)
                                 }
                             }
                         }
+                        .frame(width: geometry.size.width)
+                        .frame(minHeight: geometry.size.height)
                     }
-                    .frame(width: geometry.size.width)
-                    .frame(minHeight: geometry.size.height)
                 }
+                Button {
+                    isWizzardOpen.toggle()
+                } label: {
+                    Text("Create")
+                        .font(.title2)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
             }
-            Button {
-                isWizzardOpen.toggle()
-            } label: {
-                Text("Create")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.green)
+            .padding(.horizontal, 15)
         }
-        .padding(.horizontal, 20)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
             vm.loadBudgets()
@@ -79,10 +94,17 @@ struct BudgetListView: View {
         .fullScreenCover(isPresented: $isWizzardOpen, onDismiss: onBudgetCreated) {
             BudgetWizardView(vm: vm.budgetWizzardViewModel(), editMode: false)
         }
+        .fullScreenCover(isPresented: $settingsSheetOpen, onDismiss: onSettingsUpdated) {
+            SettingsView()
+        }
     }
     
     func onBudgetCreated() {
         vm.selectedBudget = nil
+        vm.loadBudgets()
+    }
+    
+    func onSettingsUpdated() {
         vm.loadBudgets()
     }
     

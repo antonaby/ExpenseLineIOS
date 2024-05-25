@@ -19,6 +19,7 @@ struct BudgetView: View {
     @State var transactionSheet: Bool = false
     @State var editBudgetSheetOpen: Bool = false
     @State var changePeriodSheetOpen: Bool = false
+    @State var settingsSheetOpen: Bool = false
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -52,7 +53,7 @@ struct BudgetView: View {
                 }
                 .overlay(alignment: .topTrailing) {
                     Button {
-                        
+                        settingsSheetOpen.toggle()
                     } label: {
                         Image(systemName: "gear")
                             .font(.title2)
@@ -101,6 +102,9 @@ struct BudgetView: View {
                     vm: BudgetWizardViewModel(vm.budget, budgetService: budgetService, dataService: dataService),
                     editMode: true
                 )
+            }
+            .fullScreenCover(isPresented: $settingsSheetOpen, onDismiss: onBudgetUpdated) {
+                SettingsView()
             }
             .navigationDestination(for: PlanCategoryEntity.self) { category in
                 if let period = vm.period {
