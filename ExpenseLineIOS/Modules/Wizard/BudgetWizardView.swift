@@ -26,28 +26,28 @@ struct BudgetWizardView: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            ZStack {
-                HStack {
-                    if currentPage.rawValue != 0 {
-                        Button {
-                            previousPage()
-                        } label: {
-                            Label("Back", systemImage: "chevron.backward")
-                                .foregroundColor(.black)
-                        }
-                    }
-                    Spacer()
-                    ToolButton(icon: "x.circle", color: .gray) {
-                        vm.rollback()
-                        dismiss()
-                    }
-                    .font(.title2)
+            HStack(spacing: 15) {
+                ForEach(WizzardPage.allCases) { page in
+                    PageIconView(page)
                 }
-                HStack(spacing: 10) {
-                    ForEach(WizzardPage.allCases) { page in
-                        PageIconView(page)
+            }
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .leading) {
+                if currentPage.rawValue != 0 {
+                    Button {
+                        previousPage()
+                    } label: {
+                        Label("Back", systemImage: "chevron.backward")
+                            .foregroundColor(.black)
                     }
                 }
+            }
+            .overlay(alignment: .trailing) {
+                ToolButton(icon: "x.circle", color: .gray) {
+                    vm.rollback()
+                    dismiss()
+                }
+                .font(.title2)
             }
             Text(getPageTitle())
                 .modifier(FormTitleViewModifier.modifier)
@@ -141,7 +141,7 @@ struct BudgetWizardView: View {
         Button {
             currentPage = page
         } label: {
-            FlexibleCardView(color: currentPage == page ? .green : .white) {
+            FlexibleCardView(cornerRadius: 7, color: currentPage == page ? .green : .white) {
                 Image(systemName: getIconForPage(page))
                     .foregroundColor(currentPage == page ? .white : .black)
                     .font(.caption)
