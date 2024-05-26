@@ -28,6 +28,7 @@
 		D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2246B3B2BBAD67B00556936 /* AppState.swift */; };
 		D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0A2BED175000B54654 /* OutcomePageWizardView.swift */; };
 		D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */; };
+		D22AB4CF2C0318B500306F5B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = D22AB4CE2C0318B500306F5B /* countries.json */; };
 		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
 		D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23416CA2BE616E4000178FB /* Color+Extension.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
@@ -109,6 +110,7 @@
 		D2246B3B2BBAD67B00556936 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D226FB0A2BED175000B54654 /* OutcomePageWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomePageWizardView.swift; sourceTree = "<group>"; };
 		D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetShortSummaryView.swift; sourceTree = "<group>"; };
+		D22AB4CE2C0318B500306F5B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		D23416CA2BE616E4000178FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		D20EF2A92BB18CFA006CF8CD /* ExpenseLineIOS */ = {
 			isa = PBXGroup;
 			children = (
+				D22AB4CE2C0318B500306F5B /* countries.json */,
 				D22218722BDFD72600E552E4 /* Extensions */,
 				D20EF2E22BB19427006CF8CD /* Models */,
 				D239608D2BB2E95C0071547D /* Services */,
@@ -508,6 +511,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D22AB4CF2C0318B500306F5B /* countries.json in Resources */,
 				D20EF2B22BB18CFB006CF8CD /* Preview Assets.xcassets in Resources */,
 				D20EF2AF2BB18CFB006CF8CD /* Assets.xcassets in Resources */,
 			);

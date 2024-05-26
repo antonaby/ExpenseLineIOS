@@ -7,11 +7,25 @@
 
 import Foundation
 
+struct CurrencyLocale: Codable {
+    var locale: String
+    var currency: String
+    var symbol: String
+}
+
+struct CountryCurrency: Codable {
+    var code: String
+    var name: String
+    var defaultLocale: String
+    var locales: [CurrencyLocale]
+}
 
 class DataService: ObservableObject {
     
     private let categories: [CategoryTemplateType]
     private let currencies: [CurrencySymbol]
+    
+    private let countryCurrencies: [CountryCurrency]
     
     init() {
         self.categories = [
@@ -32,6 +46,27 @@ class DataService: ObservableObject {
                 CategoryTemplate(id: UUID(uuidString: "49de8df4-564f-471b-bcc0-f77d7c500067")!, name: "Wine", iconName: "wineglass.fill"),
             ]),
         ]
+        
+        var loadedCountryCurrencies: [CountryCurrency]? = nil
+        
+        if let filepath = Bundle.main.url(forResource: "countries", withExtension: "json") {
+            do {
+                if let data = try? Data(contentsOf: filepath) {
+                    let decoder = JSONDecoder()
+                    loadedCountryCurrencies = try decoder.decode([CountryCurrency].self, from: data)
+                }
+            } catch {
+                // TODO: handle error
+                print("something went wrong")
+            }
+        }
+        
+        if let parsedCountryCurrencies = loadedCountryCurrencies {
+            countryCurrencies = parsedCountryCurrencies
+        } else {
+            countryCurrencies = []
+        }
+        
         self.currencies = [
             CurrencySymbol(id: "en_US", name: "United States"),
             CurrencySymbol(id: "en_GB", name: "Great Britain"),

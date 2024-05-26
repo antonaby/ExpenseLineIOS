@@ -1,0 +1,5143 @@
+[
+    {
+      "defaultLocale" : "uz_Arab_AF",
+      "name" : "Afghanistan",
+      "code" : "AF",
+      "locales" : [
+        {
+          "symbol" : "؋",
+          "locale" : "uz_Arab_AF",
+          "currency" : "AFN"
+        },
+        {
+          "currency" : "AFN",
+          "symbol" : "؋",
+          "locale" : "ps_AF"
+        },
+        {
+          "symbol" : "؋",
+          "currency" : "AFN",
+          "locale" : "fa_AF"
+        }
+      ]
+    },
+    {
+      "name" : "Albania",
+      "defaultLocale" : "en_AL",
+      "code" : "AL",
+      "locales" : [
+        {
+          "currency" : "ALL",
+          "locale" : "en_AL",
+          "symbol" : "ALL"
+        },
+        {
+          "currency" : "ALL",
+          "symbol" : "Lekë",
+          "locale" : "sq_AL"
+        }
+      ]
+    },
+    {
+      "name" : "Algeria",
+      "locales" : [
+        {
+          "currency" : "DZD",
+          "symbol" : "DA",
+          "locale" : "kab_DZ"
+        },
+        {
+          "symbol" : "د.ج.‏",
+          "locale" : "ar_DZ",
+          "currency" : "DZD"
+        },
+        {
+          "symbol" : "DA",
+          "currency" : "DZD",
+          "locale" : "fr_DZ"
+        }
+      ],
+      "defaultLocale" : "kab_DZ",
+      "code" : "DZ"
+    },
+    {
+      "name" : "American Samoa",
+      "locales" : [
+        {
+          "currency" : "USD",
+          "locale" : "sm_AS",
+          "symbol" : "US$"
+        },
+        {
+          "currency" : "USD",
+          "symbol" : "$",
+          "locale" : "en_AS"
+        }
+      ],
+      "defaultLocale" : "en_AS",
+      "code" : "AS"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "ca_AD"
+        }
+      ],
+      "code" : "AD",
+      "defaultLocale" : "ca_AD",
+      "name" : "Andorra"
+    },
+    {
+      "code" : "AO",
+      "defaultLocale" : "ln_AO",
+      "locales" : [
+        {
+          "locale" : "ln_AO",
+          "currency" : "AOA",
+          "symbol" : "Kz"
+        },
+        {
+          "currency" : "AOA",
+          "symbol" : "Kz",
+          "locale" : "pt_AO"
+        }
+      ],
+      "name" : "Angola"
+    },
+    {
+      "defaultLocale" : "en_AI",
+      "name" : "Anguilla",
+      "code" : "AI",
+      "locales" : [
+        {
+          "currency" : "XCD",
+          "symbol" : "$",
+          "locale" : "en_AI"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_AG",
+      "code" : "AG",
+      "name" : "Antigua & Barbuda",
+      "locales" : [
+        {
+          "locale" : "es_AG",
+          "currency" : "XCD",
+          "symbol" : "XCD"
+        },
+        {
+          "locale" : "en_AG",
+          "currency" : "XCD",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "code" : "AR",
+      "defaultLocale" : "en_AR",
+      "name" : "Argentina",
+      "locales" : [
+        {
+          "currency" : "ARS",
+          "locale" : "en_AR",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "es_AR",
+          "currency" : "ARS",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "hy_AM",
+      "name" : "Armenia",
+      "locales" : [
+        {
+          "symbol" : "֏",
+          "locale" : "hy_AM",
+          "currency" : "AMD"
+        }
+      ],
+      "code" : "AM"
+    },
+    {
+      "code" : "AW",
+      "locales" : [
+        {
+          "locale" : "nl_AW",
+          "symbol" : "Afl.",
+          "currency" : "AWG"
+        }
+      ],
+      "defaultLocale" : "nl_AW",
+      "name" : "Aruba"
+    },
+    {
+      "code" : "AU",
+      "defaultLocale" : "en_AU",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "currency" : "AUD",
+          "locale" : "en_AU"
+        }
+      ],
+      "name" : "Australia"
+    },
+    {
+      "name" : "Austria",
+      "code" : "AT",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "en_AT"
+        },
+        {
+          "currency" : "EUR",
+          "locale" : "de_AT",
+          "symbol" : "€"
+        }
+      ],
+      "defaultLocale" : "en_AT"
+    },
+    {
+      "code" : "AZ",
+      "defaultLocale" : "az_Latn_AZ",
+      "name" : "Azerbaijan",
+      "locales" : [
+        {
+          "symbol" : "₼",
+          "currency" : "AZN",
+          "locale" : "az_Latn_AZ"
+        },
+        {
+          "currency" : "AZN",
+          "symbol" : "₼",
+          "locale" : "az_Cyrl_AZ"
+        }
+      ]
+    },
+    {
+      "name" : "Bahamas",
+      "code" : "BS",
+      "locales" : [
+        {
+          "locale" : "en_BS",
+          "currency" : "BSD",
+          "symbol" : "$"
+        },
+        {
+          "symbol" : "BSD",
+          "locale" : "es_BS",
+          "currency" : "BSD"
+        }
+      ],
+      "defaultLocale" : "en_BS"
+    },
+    {
+      "name" : "Bahrain",
+      "locales" : [
+        {
+          "currency" : "BHD",
+          "symbol" : "د.ب.‏",
+          "locale" : "ar_BH"
+        }
+      ],
+      "defaultLocale" : "ar_BH",
+      "code" : "BH"
+    },
+    {
+      "defaultLocale" : "en_BD",
+      "name" : "Bangladesh",
+      "code" : "BD",
+      "locales" : [
+        {
+          "currency" : "BDT",
+          "locale" : "ccp_BD",
+          "symbol" : "৳"
+        },
+        {
+          "locale" : "en_BD",
+          "currency" : "BDT",
+          "symbol" : "৳"
+        },
+        {
+          "locale" : "rhg_Rohg_BD",
+          "currency" : "BDT",
+          "symbol" : "BDT"
+        },
+        {
+          "locale" : "bn_BD",
+          "currency" : "BDT",
+          "symbol" : "৳"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_BB",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "en_BB",
+          "currency" : "BBD"
+        },
+        {
+          "locale" : "es_BB",
+          "symbol" : "BBD",
+          "currency" : "BBD"
+        }
+      ],
+      "name" : "Barbados",
+      "code" : "BB"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "Br",
+          "locale" : "be_BY",
+          "currency" : "BYN"
+        },
+        {
+          "currency" : "BYN",
+          "symbol" : "Br",
+          "locale" : "ru_BY"
+        }
+      ],
+      "code" : "BY",
+      "name" : "Belarus",
+      "defaultLocale" : "be_BY"
+    },
+    {
+      "code" : "BE",
+      "locales" : [
+        {
+          "locale" : "fr_BE",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "currency" : "EUR",
+          "locale" : "nl_BE",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "de_BE",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "en_BE"
+        },
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "wa_BE"
+        }
+      ],
+      "defaultLocale" : "en_BE",
+      "name" : "Belgium"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "es_BZ",
+          "symbol" : "$",
+          "currency" : "BZD"
+        },
+        {
+          "locale" : "en_BZ",
+          "symbol" : "$",
+          "currency" : "BZD"
+        }
+      ],
+      "name" : "Belize",
+      "code" : "BZ",
+      "defaultLocale" : "en_BZ"
+    },
+    {
+      "defaultLocale" : "yo_BJ",
+      "locales" : [
+        {
+          "locale" : "yo_BJ",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        },
+        {
+          "currency" : "XOF",
+          "locale" : "fr_BJ",
+          "symbol" : "F CFA"
+        }
+      ],
+      "code" : "BJ",
+      "name" : "Benin"
+    },
+    {
+      "name" : "Bermuda",
+      "defaultLocale" : "en_BM",
+      "code" : "BM",
+      "locales" : [
+        {
+          "symbol" : "BMD",
+          "currency" : "BMD",
+          "locale" : "es_BM"
+        },
+        {
+          "currency" : "BMD",
+          "locale" : "en_BM",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "name" : "Bhutan",
+      "code" : "BT",
+      "locales" : [
+        {
+          "currency" : "BTN",
+          "locale" : "dz_BT",
+          "symbol" : "Nu."
+        }
+      ],
+      "defaultLocale" : "dz_BT"
+    },
+    {
+      "name" : "Bolivia",
+      "defaultLocale" : "qu_BO",
+      "locales" : [
+        {
+          "currency" : "BOB",
+          "symbol" : "Bs",
+          "locale" : "qu_BO"
+        },
+        {
+          "symbol" : "Bs",
+          "currency" : "BOB",
+          "locale" : "es_BO"
+        }
+      ],
+      "code" : "BO"
+    },
+    {
+      "code" : "BA",
+      "defaultLocale" : "hr_BA",
+      "locales" : [
+        {
+          "locale" : "hr_BA",
+          "symbol" : "KM",
+          "currency" : "BAM"
+        },
+        {
+          "locale" : "sr_Latn_BA",
+          "symbol" : "KM",
+          "currency" : "BAM"
+        },
+        {
+          "locale" : "sr_Cyrl_BA",
+          "symbol" : "КМ",
+          "currency" : "BAM"
+        },
+        {
+          "symbol" : "KM",
+          "locale" : "bs_Latn_BA",
+          "currency" : "BAM"
+        },
+        {
+          "symbol" : "КМ",
+          "locale" : "bs_Cyrl_BA",
+          "currency" : "BAM"
+        }
+      ],
+      "name" : "Bosnia & Herzegovina"
+    },
+    {
+      "defaultLocale" : "en_BW",
+      "name" : "Botswana",
+      "code" : "BW",
+      "locales" : [
+        {
+          "currency" : "BWP",
+          "locale" : "tn_BW",
+          "symbol" : "P"
+        },
+        {
+          "locale" : "en_BW",
+          "currency" : "BWP",
+          "symbol" : "P"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "R$",
+          "currency" : "BRL",
+          "locale" : "kgp_BR"
+        },
+        {
+          "locale" : "en_BR",
+          "currency" : "BRL",
+          "symbol" : "R$"
+        },
+        {
+          "locale" : "es_BR",
+          "currency" : "BRL",
+          "symbol" : "R$"
+        },
+        {
+          "locale" : "pt_BR",
+          "symbol" : "R$",
+          "currency" : "BRL"
+        },
+        {
+          "symbol" : "R$",
+          "locale" : "yrl_BR",
+          "currency" : "BRL"
+        }
+      ],
+      "defaultLocale" : "en_BR",
+      "name" : "Brazil",
+      "code" : "BR"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_VG",
+          "symbol" : "US$",
+          "currency" : "USD"
+        },
+        {
+          "symbol" : "USD",
+          "locale" : "es_VG",
+          "currency" : "USD"
+        }
+      ],
+      "code" : "VG",
+      "name" : "British Virgin Islands",
+      "defaultLocale" : "en_VG"
+    },
+    {
+      "defaultLocale" : "en_BN",
+      "code" : "BN",
+      "locales" : [
+        {
+          "currency" : "BND",
+          "symbol" : "$",
+          "locale" : "ms_Arab_BN"
+        },
+        {
+          "locale" : "ms_BN",
+          "currency" : "BND",
+          "symbol" : "$"
+        },
+        {
+          "symbol" : "$",
+          "currency" : "BND",
+          "locale" : "en_BN"
+        }
+      ],
+      "name" : "Brunei"
+    },
+    {
+      "code" : "BG",
+      "defaultLocale" : "en_BG",
+      "name" : "Bulgaria",
+      "locales" : [
+        {
+          "locale" : "bg_BG",
+          "currency" : "BGN",
+          "symbol" : "лв."
+        },
+        {
+          "currency" : "BGN",
+          "symbol" : "BGN",
+          "locale" : "en_BG"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "XOF",
+          "symbol" : "F CFA",
+          "locale" : "fr_BF"
+        },
+        {
+          "symbol" : "𞤅𞤊𞤀",
+          "locale" : "ff_Adlm_BF",
+          "currency" : "XOF"
+        },
+        {
+          "locale" : "ff_Latn_BF",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        }
+      ],
+      "code" : "BF",
+      "name" : "Burkina Faso",
+      "defaultLocale" : "fr_BF"
+    },
+    {
+      "name" : "Burundi",
+      "defaultLocale" : "en_BI",
+      "locales" : [
+        {
+          "locale" : "fr_BI",
+          "symbol" : "FBu",
+          "currency" : "BIF"
+        },
+        {
+          "locale" : "en_BI",
+          "currency" : "BIF",
+          "symbol" : "FBu"
+        },
+        {
+          "currency" : "BIF",
+          "locale" : "rn_BI",
+          "symbol" : "FBu"
+        }
+      ],
+      "code" : "BI"
+    },
+    {
+      "code" : "KH",
+      "defaultLocale" : "km_KH",
+      "locales" : [
+        {
+          "locale" : "km_KH",
+          "symbol" : "៛",
+          "currency" : "KHR"
+        }
+      ],
+      "name" : "Cambodia"
+    },
+    {
+      "defaultLocale" : "en_CM",
+      "name" : "Cameroon",
+      "locales" : [
+        {
+          "symbol" : "𞤊𞤅𞤊𞤀",
+          "currency" : "XAF",
+          "locale" : "ff_Adlm_CM"
+        },
+        {
+          "currency" : "XAF",
+          "symbol" : "FCFA",
+          "locale" : "ksf_CM"
+        },
+        {
+          "currency" : "XAF",
+          "locale" : "agq_CM",
+          "symbol" : "FCFA"
+        },
+        {
+          "symbol" : "FCFA",
+          "currency" : "XAF",
+          "locale" : "nmg_CM"
+        },
+        {
+          "locale" : "mgo_CM",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        },
+        {
+          "currency" : "XAF",
+          "symbol" : "FCFA",
+          "locale" : "jgo_CM"
+        },
+        {
+          "currency" : "XAF",
+          "locale" : "bas_CM",
+          "symbol" : "FCFA"
+        },
+        {
+          "symbol" : "FCFA",
+          "locale" : "kkj_CM",
+          "currency" : "XAF"
+        },
+        {
+          "locale" : "yav_CM",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        },
+        {
+          "locale" : "ff_Latn_CM",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        },
+        {
+          "currency" : "XAF",
+          "locale" : "dua_CM",
+          "symbol" : "FCFA"
+        },
+        {
+          "symbol" : "FCFA",
+          "currency" : "XAF",
+          "locale" : "nnh_CM"
+        },
+        {
+          "locale" : "fr_CM",
+          "symbol" : "FCFA",
+          "currency" : "XAF"
+        },
+        {
+          "currency" : "XAF",
+          "symbol" : "FCFA",
+          "locale" : "ewo_CM"
+        },
+        {
+          "currency" : "XAF",
+          "symbol" : "FCFA",
+          "locale" : "mua_CM"
+        },
+        {
+          "locale" : "en_CM",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        }
+      ],
+      "code" : "CM"
+    },
+    {
+      "code" : "CA",
+      "name" : "Canada",
+      "defaultLocale" : "en_CA",
+      "locales" : [
+        {
+          "currency" : "CAD",
+          "symbol" : "$",
+          "locale" : "en_CA"
+        },
+        {
+          "symbol" : "CA$",
+          "currency" : "CAD",
+          "locale" : "mic_CA"
+        },
+        {
+          "locale" : "moh_CA",
+          "currency" : "CAD",
+          "symbol" : "CA$"
+        },
+        {
+          "locale" : "es_CA",
+          "currency" : "CAD",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "pqm_CA",
+          "currency" : "CAD",
+          "symbol" : "CA$"
+        },
+        {
+          "symbol" : "$",
+          "currency" : "CAD",
+          "locale" : "fr_CA"
+        },
+        {
+          "currency" : "CAD",
+          "symbol" : "CA$",
+          "locale" : "iu_CA"
+        }
+      ]
+    },
+    {
+      "code" : "IC",
+      "locales" : [
+        {
+          "locale" : "es_IC",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ],
+      "name" : "Canary Islands",
+      "defaultLocale" : "es_IC"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "​",
+          "locale" : "pt_CV",
+          "currency" : "CVE"
+        },
+        {
+          "currency" : "CVE",
+          "locale" : "en_CV",
+          "symbol" : "​"
+        },
+        {
+          "locale" : "kea_CV",
+          "symbol" : "​",
+          "currency" : "CVE"
+        }
+      ],
+      "defaultLocale" : "en_CV",
+      "name" : "Cape Verde",
+      "code" : "CV"
+    },
+    {
+      "defaultLocale" : "es_BQ",
+      "code" : "BQ",
+      "locales" : [
+        {
+          "locale" : "es_BQ",
+          "symbol" : "USD",
+          "currency" : "USD"
+        },
+        {
+          "locale" : "nl_BQ",
+          "currency" : "USD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Caribbean Netherlands"
+    },
+    {
+      "name" : "Cayman Islands",
+      "locales" : [
+        {
+          "locale" : "en_KY",
+          "currency" : "KYD",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "es_KY",
+          "currency" : "KYD",
+          "symbol" : "KYD"
+        }
+      ],
+      "defaultLocale" : "en_KY",
+      "code" : "KY"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "ln_CF",
+          "symbol" : "FCFA",
+          "currency" : "XAF"
+        },
+        {
+          "symbol" : "FCFA",
+          "locale" : "fr_CF",
+          "currency" : "XAF"
+        },
+        {
+          "locale" : "sg_CF",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        }
+      ],
+      "name" : "Central African Republic",
+      "defaultLocale" : "ln_CF",
+      "code" : "CF"
+    },
+    {
+      "name" : "Ceuta & Melilla",
+      "locales" : [
+        {
+          "locale" : "es_EA",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ],
+      "defaultLocale" : "es_EA",
+      "code" : "EA"
+    },
+    {
+      "defaultLocale" : "ar_TD",
+      "name" : "Chad",
+      "code" : "TD",
+      "locales" : [
+        {
+          "symbol" : "FCFA",
+          "locale" : "ar_TD",
+          "currency" : "XAF"
+        },
+        {
+          "currency" : "XAF",
+          "symbol" : "FCFA",
+          "locale" : "fr_TD"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "US$",
+          "locale" : "en_IO",
+          "currency" : "USD"
+        }
+      ],
+      "name" : "Chagos Archipelago",
+      "defaultLocale" : "en_IO",
+      "code" : "IO"
+    },
+    {
+      "name" : "Chile",
+      "defaultLocale" : "en_CL",
+      "locales" : [
+        {
+          "currency" : "CLP",
+          "symbol" : "CLP",
+          "locale" : "arn_CL"
+        },
+        {
+          "symbol" : "$",
+          "currency" : "CLP",
+          "locale" : "es_CL"
+        },
+        {
+          "locale" : "en_CL",
+          "currency" : "CLP",
+          "symbol" : "$"
+        }
+      ],
+      "code" : "CL"
+    },
+    {
+      "defaultLocale" : "en_CN",
+      "code" : "CN",
+      "name" : "China mainland",
+      "locales" : [
+        {
+          "currency" : "CNY",
+          "symbol" : "¥",
+          "locale" : "zh_Hans_CN"
+        },
+        {
+          "currency" : "CNY",
+          "locale" : "en_CN",
+          "symbol" : "¥"
+        },
+        {
+          "symbol" : "¥",
+          "currency" : "CNY",
+          "locale" : "zh_Hant_CN"
+        },
+        {
+          "locale" : "ug_CN",
+          "currency" : "CNY",
+          "symbol" : "￥"
+        },
+        {
+          "locale" : "bo_CN",
+          "currency" : "CNY",
+          "symbol" : "¥"
+        },
+        {
+          "locale" : "ko_CN",
+          "symbol" : "CN¥",
+          "currency" : "CNY"
+        },
+        {
+          "symbol" : "CN¥",
+          "locale" : "hmn_CN",
+          "currency" : "CNY"
+        },
+        {
+          "locale" : "za_CN",
+          "currency" : "CNY",
+          "symbol" : "CN¥"
+        },
+        {
+          "currency" : "CNY",
+          "symbol" : "¥",
+          "locale" : "yue_Hans_CN"
+        },
+        {
+          "locale" : "ii_CN",
+          "currency" : "CNY",
+          "symbol" : "¥"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_CX",
+      "code" : "CX",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "currency" : "AUD",
+          "locale" : "en_CX"
+        }
+      ],
+      "name" : "Christmas Island"
+    },
+    {
+      "name" : "Cocos (Keeling) Islands",
+      "defaultLocale" : "en_CC",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "en_CC",
+          "currency" : "AUD"
+        }
+      ],
+      "code" : "CC"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "es_CO",
+          "currency" : "COP"
+        },
+        {
+          "symbol" : "$",
+          "locale" : "en_CO",
+          "currency" : "COP"
+        },
+        {
+          "currency" : "COP",
+          "symbol" : "$",
+          "locale" : "yrl_CO"
+        }
+      ],
+      "name" : "Colombia",
+      "code" : "CO",
+      "defaultLocale" : "en_CO"
+    },
+    {
+      "code" : "KM",
+      "locales" : [
+        {
+          "symbol" : "CF",
+          "currency" : "KMF",
+          "locale" : "fr_KM"
+        },
+        {
+          "currency" : "KMF",
+          "locale" : "ar_KM",
+          "symbol" : "CF"
+        }
+      ],
+      "defaultLocale" : "fr_KM",
+      "name" : "Comoros"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "FCFA",
+          "locale" : "ln_CG",
+          "currency" : "XAF"
+        },
+        {
+          "locale" : "fr_CG",
+          "symbol" : "FCFA",
+          "currency" : "XAF"
+        }
+      ],
+      "defaultLocale" : "ln_CG",
+      "name" : "Congo - Brazzaville",
+      "code" : "CG"
+    },
+    {
+      "code" : "CD",
+      "locales" : [
+        {
+          "currency" : "CDF",
+          "locale" : "fr_CD",
+          "symbol" : "FC"
+        },
+        {
+          "locale" : "sw_CD",
+          "currency" : "CDF",
+          "symbol" : "FC"
+        },
+        {
+          "currency" : "CDF",
+          "symbol" : "FC",
+          "locale" : "lu_CD"
+        },
+        {
+          "locale" : "ln_CD",
+          "currency" : "CDF",
+          "symbol" : "FC"
+        }
+      ],
+      "name" : "Congo - Kinshasa",
+      "defaultLocale" : "fr_CD"
+    },
+    {
+      "defaultLocale" : "en_CK",
+      "name" : "Cook Islands",
+      "code" : "CK",
+      "locales" : [
+        {
+          "locale" : "en_CK",
+          "currency" : "NZD",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "code" : "CR",
+      "defaultLocale" : "es_CR",
+      "name" : "Costa Rica",
+      "locales" : [
+        {
+          "currency" : "CRC",
+          "locale" : "es_CR",
+          "symbol" : "₡"
+        }
+      ]
+    },
+    {
+      "name" : "Croatia",
+      "defaultLocale" : "hr_HR",
+      "code" : "HR",
+      "locales" : [
+        {
+          "locale" : "hr_HR",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ]
+    },
+    {
+      "name" : "Cuba",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "es_CU",
+          "currency" : "CUP"
+        }
+      ],
+      "defaultLocale" : "es_CU",
+      "code" : "CU"
+    },
+    {
+      "name" : "Curaçao",
+      "code" : "CW",
+      "defaultLocale" : "es_CW",
+      "locales" : [
+        {
+          "locale" : "es_CW",
+          "symbol" : "ANG",
+          "currency" : "ANG"
+        },
+        {
+          "locale" : "nl_CW",
+          "currency" : "ANG",
+          "symbol" : "NAf."
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_CY",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "locale" : "en_CY",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "el_CY",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "tr_CY",
+          "currency" : "EUR"
+        }
+      ],
+      "name" : "Cyprus",
+      "code" : "CY"
+    },
+    {
+      "code" : "CZ",
+      "locales" : [
+        {
+          "currency" : "CZK",
+          "locale" : "cs_CZ",
+          "symbol" : "Kč"
+        },
+        {
+          "locale" : "en_CZ",
+          "symbol" : "CZK",
+          "currency" : "CZK"
+        }
+      ],
+      "name" : "Czechia",
+      "defaultLocale" : "en_CZ"
+    },
+    {
+      "code" : "CI",
+      "locales" : [
+        {
+          "currency" : "XOF",
+          "symbol" : "F CFA",
+          "locale" : "fr_CI"
+        }
+      ],
+      "name" : "Côte d’Ivoire",
+      "defaultLocale" : "fr_CI"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "kr.",
+          "locale" : "da_DK",
+          "currency" : "DKK"
+        },
+        {
+          "symbol" : "kr.",
+          "currency" : "DKK",
+          "locale" : "fo_DK"
+        },
+        {
+          "currency" : "DKK",
+          "symbol" : "kr.",
+          "locale" : "en_DK"
+        }
+      ],
+      "name" : "Denmark",
+      "code" : "DK",
+      "defaultLocale" : "en_DK"
+    },
+    {
+      "code" : "DG",
+      "name" : "Diego Garcia",
+      "defaultLocale" : "en_DG",
+      "locales" : [
+        {
+          "currency" : "USD",
+          "symbol" : "US$",
+          "locale" : "en_DG"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "so_DJ",
+      "code" : "DJ",
+      "locales" : [
+        {
+          "symbol" : "Fdj",
+          "locale" : "so_DJ",
+          "currency" : "DJF"
+        },
+        {
+          "symbol" : "Fdj",
+          "locale" : "fr_DJ",
+          "currency" : "DJF"
+        },
+        {
+          "locale" : "ar_DJ",
+          "currency" : "DJF",
+          "symbol" : "Fdj"
+        }
+      ],
+      "name" : "Djibouti"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "es_DM",
+          "currency" : "XCD",
+          "symbol" : "XCD"
+        },
+        {
+          "currency" : "XCD",
+          "locale" : "en_DM",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Dominica",
+      "code" : "DM",
+      "defaultLocale" : "en_DM"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "es_DO",
+          "currency" : "DOP",
+          "symbol" : "RD$"
+        }
+      ],
+      "defaultLocale" : "es_DO",
+      "name" : "Dominican Republic",
+      "code" : "DO"
+    },
+    {
+      "defaultLocale" : "es_EC",
+      "code" : "EC",
+      "locales" : [
+        {
+          "locale" : "es_EC",
+          "currency" : "USD",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "USD",
+          "symbol" : "$",
+          "locale" : "qu_EC"
+        }
+      ],
+      "name" : "Ecuador"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "EGP",
+          "locale" : "ar_EG",
+          "symbol" : "ج.م.‏"
+        }
+      ],
+      "name" : "Egypt",
+      "defaultLocale" : "ar_EG",
+      "code" : "EG"
+    },
+    {
+      "code" : "SV",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "currency" : "USD",
+          "locale" : "es_SV"
+        }
+      ],
+      "defaultLocale" : "es_SV",
+      "name" : "El Salvador"
+    },
+    {
+      "defaultLocale" : "fr_GQ",
+      "name" : "Equatorial Guinea",
+      "locales" : [
+        {
+          "locale" : "fr_GQ",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        },
+        {
+          "symbol" : "FCFA",
+          "locale" : "es_GQ",
+          "currency" : "XAF"
+        },
+        {
+          "locale" : "pt_GQ",
+          "currency" : "XAF",
+          "symbol" : "FCFA"
+        }
+      ],
+      "code" : "GQ"
+    },
+    {
+      "name" : "Eritrea",
+      "defaultLocale" : "en_ER",
+      "code" : "ER",
+      "locales" : [
+        {
+          "currency" : "ERN",
+          "symbol" : "Nfk",
+          "locale" : "tig_ER"
+        },
+        {
+          "currency" : "ERN",
+          "symbol" : "Nfk",
+          "locale" : "gez_ER"
+        },
+        {
+          "locale" : "byn_ER",
+          "currency" : "ERN",
+          "symbol" : "Nfk"
+        },
+        {
+          "locale" : "ti_ER",
+          "symbol" : "Nfk",
+          "currency" : "ERN"
+        },
+        {
+          "currency" : "ERN",
+          "locale" : "en_ER",
+          "symbol" : "Nfk"
+        },
+        {
+          "symbol" : "Nfk",
+          "currency" : "ERN",
+          "locale" : "ar_ER"
+        }
+      ]
+    },
+    {
+      "name" : "Estonia",
+      "defaultLocale" : "en_EE",
+      "code" : "EE",
+      "locales" : [
+        {
+          "locale" : "et_EE",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "ie_EE",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "en_EE",
+          "symbol" : "€",
+          "currency" : "EUR"
+        }
+      ]
+    },
+    {
+      "code" : "SZ",
+      "defaultLocale" : "en_SZ",
+      "name" : "Eswatini",
+      "locales" : [
+        {
+          "locale" : "ss_SZ",
+          "currency" : "SZL",
+          "symbol" : "E"
+        },
+        {
+          "currency" : "SZL",
+          "locale" : "en_SZ",
+          "symbol" : "E"
+        }
+      ]
+    },
+    {
+      "name" : "Ethiopia",
+      "code" : "ET",
+      "locales" : [
+        {
+          "currency" : "ETB",
+          "symbol" : "ETB",
+          "locale" : "gez_ET"
+        },
+        {
+          "symbol" : "Br",
+          "locale" : "wal_ET",
+          "currency" : "ETB"
+        },
+        {
+          "currency" : "ETB",
+          "symbol" : "Br",
+          "locale" : "om_ET"
+        },
+        {
+          "symbol" : "Br",
+          "currency" : "ETB",
+          "locale" : "ti_ET"
+        },
+        {
+          "locale" : "so_ET",
+          "currency" : "ETB",
+          "symbol" : "Br"
+        },
+        {
+          "symbol" : "ብር",
+          "locale" : "am_ET",
+          "currency" : "ETB"
+        }
+      ],
+      "defaultLocale" : "gez_ET"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "FKP",
+          "symbol" : "£",
+          "locale" : "en_FK"
+        }
+      ],
+      "name" : "Falkland Islands",
+      "code" : "FK",
+      "defaultLocale" : "en_FK"
+    },
+    {
+      "defaultLocale" : "fo_FO",
+      "code" : "FO",
+      "locales" : [
+        {
+          "locale" : "fo_FO",
+          "symbol" : "kr",
+          "currency" : "DKK"
+        }
+      ],
+      "name" : "Faroe Islands"
+    },
+    {
+      "code" : "FJ",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "en_FJ",
+          "currency" : "FJD"
+        }
+      ],
+      "name" : "Fiji",
+      "defaultLocale" : "en_FJ"
+    },
+    {
+      "defaultLocale" : "en_FI",
+      "name" : "Finland",
+      "locales" : [
+        {
+          "locale" : "en_FI",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "sv_FI",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "se_FI",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "smn_FI",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "currency" : "EUR",
+          "locale" : "fi_FI",
+          "symbol" : "€"
+        }
+      ],
+      "code" : "FI"
+    },
+    {
+      "name" : "France",
+      "code" : "FR",
+      "locales" : [
+        {
+          "locale" : "pt_FR",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "co_FR",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "gsw_FR"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "oc_FR",
+          "currency" : "EUR"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "en_FR"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "ca_FR"
+        },
+        {
+          "locale" : "fr_FR",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "br_FR",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ],
+      "defaultLocale" : "en_FR"
+    },
+    {
+      "name" : "French Guiana",
+      "defaultLocale" : "fr_GF",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "locale" : "fr_GF",
+          "currency" : "EUR"
+        }
+      ],
+      "code" : "GF"
+    },
+    {
+      "defaultLocale" : "fr_PF",
+      "code" : "PF",
+      "locales" : [
+        {
+          "currency" : "XPF",
+          "symbol" : "FCFP",
+          "locale" : "fr_PF"
+        }
+      ],
+      "name" : "French Polynesia"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "XAF",
+          "symbol" : "FCFA",
+          "locale" : "fr_GA"
+        }
+      ],
+      "name" : "Gabon",
+      "defaultLocale" : "fr_GA",
+      "code" : "GA"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "ff_Adlm_GM",
+          "currency" : "GMD",
+          "symbol" : "D"
+        },
+        {
+          "currency" : "GMD",
+          "symbol" : "D",
+          "locale" : "en_GM"
+        },
+        {
+          "currency" : "GMD",
+          "locale" : "ff_Latn_GM",
+          "symbol" : "D"
+        }
+      ],
+      "defaultLocale" : "en_GM",
+      "code" : "GM",
+      "name" : "Gambia"
+    },
+    {
+      "name" : "Georgia",
+      "locales" : [
+        {
+          "symbol" : "₾",
+          "currency" : "GEL",
+          "locale" : "ka_GE"
+        },
+        {
+          "symbol" : "₾",
+          "currency" : "GEL",
+          "locale" : "os_GE"
+        }
+      ],
+      "defaultLocale" : "ka_GE",
+      "code" : "GE"
+    },
+    {
+      "code" : "DE",
+      "name" : "Germany",
+      "defaultLocale" : "en_DE",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "en_DE"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "de_DE"
+        },
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "nds_DE"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "hsb_DE",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "ksh_DE",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "dsb_DE"
+        }
+      ]
+    },
+    {
+      "code" : "GH",
+      "locales" : [
+        {
+          "symbol" : "GH₵",
+          "locale" : "ee_GH",
+          "currency" : "GHS"
+        },
+        {
+          "symbol" : "GH₵",
+          "locale" : "ak_GH",
+          "currency" : "GHS"
+        },
+        {
+          "currency" : "GHS",
+          "locale" : "ha_GH",
+          "symbol" : "GH₵"
+        },
+        {
+          "locale" : "en_GH",
+          "currency" : "GHS",
+          "symbol" : "GH₵"
+        },
+        {
+          "currency" : "GHS",
+          "symbol" : "GH₵",
+          "locale" : "ff_Adlm_GH"
+        },
+        {
+          "currency" : "GHS",
+          "symbol" : "GHS",
+          "locale" : "gaa_GH"
+        },
+        {
+          "symbol" : "GH₵",
+          "currency" : "GHS",
+          "locale" : "ff_Latn_GH"
+        }
+      ],
+      "defaultLocale" : "en_GH",
+      "name" : "Ghana"
+    },
+    {
+      "name" : "Gibraltar",
+      "locales" : [
+        {
+          "locale" : "en_GI",
+          "currency" : "GIP",
+          "symbol" : "£"
+        }
+      ],
+      "code" : "GI",
+      "defaultLocale" : "en_GI"
+    },
+    {
+      "name" : "Greece",
+      "defaultLocale" : "en_GR",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "el_GR"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "en_GR",
+          "currency" : "EUR"
+        }
+      ],
+      "code" : "GR"
+    },
+    {
+      "defaultLocale" : "kl_GL",
+      "name" : "Greenland",
+      "locales" : [
+        {
+          "locale" : "kl_GL",
+          "currency" : "DKK",
+          "symbol" : "kr."
+        },
+        {
+          "symbol" : "kr.",
+          "currency" : "DKK",
+          "locale" : "da_GL"
+        }
+      ],
+      "code" : "GL"
+    },
+    {
+      "name" : "Grenada",
+      "defaultLocale" : "en_GD",
+      "locales" : [
+        {
+          "currency" : "XCD",
+          "symbol" : "XCD",
+          "locale" : "es_GD"
+        },
+        {
+          "currency" : "XCD",
+          "symbol" : "$",
+          "locale" : "en_GD"
+        }
+      ],
+      "code" : "GD"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "fr_GP",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ],
+      "code" : "GP",
+      "defaultLocale" : "fr_GP",
+      "name" : "Guadeloupe"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "USD",
+          "symbol" : "$",
+          "locale" : "en_GU"
+        }
+      ],
+      "defaultLocale" : "en_GU",
+      "name" : "Guam",
+      "code" : "GU"
+    },
+    {
+      "name" : "Guatemala",
+      "defaultLocale" : "es_GT",
+      "code" : "GT",
+      "locales" : [
+        {
+          "symbol" : "Q",
+          "currency" : "GTQ",
+          "locale" : "es_GT"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "£",
+          "locale" : "en_GG",
+          "currency" : "GBP"
+        }
+      ],
+      "defaultLocale" : "en_GG",
+      "name" : "Guernsey",
+      "code" : "GG"
+    },
+    {
+      "defaultLocale" : "kpe_GN",
+      "name" : "Guinea",
+      "locales" : [
+        {
+          "locale" : "kpe_GN",
+          "currency" : "GNF",
+          "symbol" : "FG"
+        },
+        {
+          "locale" : "fr_GN",
+          "currency" : "GNF",
+          "symbol" : "FG"
+        },
+        {
+          "locale" : "ff_Adlm_GN",
+          "currency" : "GNF",
+          "symbol" : "FG"
+        },
+        {
+          "locale" : "nqo_GN",
+          "currency" : "GNF",
+          "symbol" : "߿"
+        },
+        {
+          "locale" : "ff_Latn_GN",
+          "symbol" : "FG",
+          "currency" : "GNF"
+        }
+      ],
+      "code" : "GN"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "pt_GW",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        },
+        {
+          "symbol" : "𞤅𞤊𞤀",
+          "locale" : "ff_Adlm_GW",
+          "currency" : "XOF"
+        },
+        {
+          "symbol" : "F CFA",
+          "currency" : "XOF",
+          "locale" : "ff_Latn_GW"
+        }
+      ],
+      "name" : "Guinea-Bissau",
+      "defaultLocale" : "pt_GW",
+      "code" : "GW"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_GY",
+          "symbol" : "$",
+          "currency" : "GYD"
+        },
+        {
+          "currency" : "GYD",
+          "symbol" : "GYD",
+          "locale" : "es_GY"
+        }
+      ],
+      "defaultLocale" : "en_GY",
+      "name" : "Guyana",
+      "code" : "GY"
+    },
+    {
+      "defaultLocale" : "fr_HT",
+      "locales" : [
+        {
+          "currency" : "HTG",
+          "symbol" : "G",
+          "locale" : "fr_HT"
+        },
+        {
+          "currency" : "HTG",
+          "locale" : "es_HT",
+          "symbol" : "HTG"
+        }
+      ],
+      "name" : "Haiti",
+      "code" : "HT"
+    },
+    {
+      "code" : "HN",
+      "defaultLocale" : "es_HN",
+      "locales" : [
+        {
+          "locale" : "es_HN",
+          "currency" : "HNL",
+          "symbol" : "L"
+        }
+      ],
+      "name" : "Honduras"
+    },
+    {
+      "defaultLocale" : "en_HK",
+      "code" : "HK",
+      "locales" : [
+        {
+          "symbol" : "HK$",
+          "locale" : "zh_Hans_HK",
+          "currency" : "HKD"
+        },
+        {
+          "locale" : "en_HK",
+          "currency" : "HKD",
+          "symbol" : "HK$"
+        },
+        {
+          "symbol" : "HK$",
+          "locale" : "zh_Hant_HK",
+          "currency" : "HKD"
+        },
+        {
+          "locale" : "yue_Hant_HK",
+          "currency" : "HKD",
+          "symbol" : "HK$"
+        }
+      ],
+      "name" : "Hong Kong"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "HUF",
+          "locale" : "en_HU",
+          "currency" : "HUF"
+        },
+        {
+          "currency" : "HUF",
+          "locale" : "hu_HU",
+          "symbol" : "Ft"
+        }
+      ],
+      "name" : "Hungary",
+      "defaultLocale" : "en_HU",
+      "code" : "HU"
+    },
+    {
+      "code" : "IS",
+      "defaultLocale" : "is_IS",
+      "name" : "Iceland",
+      "locales" : [
+        {
+          "currency" : "ISK",
+          "locale" : "is_IS",
+          "symbol" : "kr."
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "ta_IN"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "sat_Olck_IN"
+        },
+        {
+          "locale" : "mni_Mtei_IN",
+          "symbol" : "₹",
+          "currency" : "INR"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "ks_Deva_IN"
+        },
+        {
+          "currency" : "INR",
+          "locale" : "sa_IN",
+          "symbol" : "₹"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "as_IN"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "gu_IN"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "bo_IN"
+        },
+        {
+          "symbol" : "₹",
+          "locale" : "mni_Beng_IN",
+          "currency" : "INR"
+        },
+        {
+          "currency" : "INR",
+          "locale" : "kn_IN",
+          "symbol" : "₹"
+        },
+        {
+          "currency" : "INR",
+          "locale" : "sat_Deva_IN",
+          "symbol" : "₹"
+        },
+        {
+          "currency" : "INR",
+          "locale" : "te_IN",
+          "symbol" : "₹"
+        },
+        {
+          "locale" : "ne_IN",
+          "currency" : "INR",
+          "symbol" : "₹"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "bho_IN"
+        },
+        {
+          "locale" : "hi_IN",
+          "currency" : "INR",
+          "symbol" : "₹"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "doi_IN"
+        },
+        {
+          "symbol" : "₹",
+          "locale" : "ur_Aran_IN",
+          "currency" : "INR"
+        },
+        {
+          "locale" : "kok_IN",
+          "symbol" : "₹",
+          "currency" : "INR"
+        },
+        {
+          "locale" : "mai_IN",
+          "symbol" : "₹",
+          "currency" : "INR"
+        },
+        {
+          "locale" : "ccp_IN",
+          "currency" : "INR",
+          "symbol" : "₹"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "pa_Guru_IN"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "raj_IN"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "hi_Latn_IN"
+        },
+        {
+          "symbol" : "₹",
+          "locale" : "nnp_IN",
+          "currency" : "INR"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "sd_Deva_IN"
+        },
+        {
+          "symbol" : "₹",
+          "currency" : "INR",
+          "locale" : "ml_IN"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "ur_Arab_IN"
+        },
+        {
+          "locale" : "or_IN",
+          "currency" : "INR",
+          "symbol" : "₹"
+        },
+        {
+          "locale" : "ks_Arab_IN",
+          "symbol" : "₹",
+          "currency" : "INR"
+        },
+        {
+          "locale" : "bgc_IN",
+          "currency" : "INR",
+          "symbol" : "₹"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "bn_IN"
+        },
+        {
+          "currency" : "INR",
+          "locale" : "mr_IN",
+          "symbol" : "₹"
+        },
+        {
+          "symbol" : "₹",
+          "locale" : "ks_Aran_IN",
+          "currency" : "INR"
+        },
+        {
+          "locale" : "en_IN",
+          "currency" : "INR",
+          "symbol" : "₹"
+        },
+        {
+          "currency" : "INR",
+          "symbol" : "₹",
+          "locale" : "brx_IN"
+        }
+      ],
+      "name" : "India",
+      "defaultLocale" : "en_IN",
+      "code" : "IN"
+    },
+    {
+      "code" : "ID",
+      "locales" : [
+        {
+          "locale" : "en_ID",
+          "symbol" : "Rp",
+          "currency" : "IDR"
+        },
+        {
+          "symbol" : "Rp",
+          "currency" : "IDR",
+          "locale" : "su_Latn_ID"
+        },
+        {
+          "locale" : "ms_ID",
+          "symbol" : "Rp",
+          "currency" : "IDR"
+        },
+        {
+          "symbol" : "IDR",
+          "currency" : "IDR",
+          "locale" : "rej_Rjng_ID"
+        },
+        {
+          "locale" : "rej_ID",
+          "currency" : "IDR",
+          "symbol" : "IDR"
+        },
+        {
+          "locale" : "id_ID",
+          "symbol" : "Rp",
+          "currency" : "IDR"
+        },
+        {
+          "symbol" : "Rp",
+          "currency" : "IDR",
+          "locale" : "jv_ID"
+        }
+      ],
+      "name" : "Indonesia",
+      "defaultLocale" : "en_ID"
+    },
+    {
+      "defaultLocale" : "fa_IR",
+      "code" : "IR",
+      "locales" : [
+        {
+          "locale" : "fa_IR",
+          "currency" : "IRR",
+          "symbol" : "ریال"
+        },
+        {
+          "symbol" : "IRR",
+          "locale" : "mzn_IR",
+          "currency" : "IRR"
+        },
+        {
+          "currency" : "IRR",
+          "locale" : "lrc_IR",
+          "symbol" : "IRR"
+        },
+        {
+          "currency" : "IRR",
+          "locale" : "ckb_IR",
+          "symbol" : "IRR"
+        }
+      ],
+      "name" : "Iran"
+    },
+    {
+      "name" : "Iraq",
+      "defaultLocale" : "mid_IQ",
+      "code" : "IQ",
+      "locales" : [
+        {
+          "locale" : "mid_IQ",
+          "currency" : "IQD",
+          "symbol" : "IQD"
+        },
+        {
+          "locale" : "lrc_IQ",
+          "symbol" : "د.ع.‏",
+          "currency" : "IQD"
+        },
+        {
+          "locale" : "ar_IQ",
+          "currency" : "IQD",
+          "symbol" : "د.ع.‏"
+        },
+        {
+          "locale" : "ckb_IQ",
+          "currency" : "IQD",
+          "symbol" : "د.ع.‏"
+        },
+        {
+          "symbol" : "IQD",
+          "locale" : "syr_IQ",
+          "currency" : "IQD"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_IE",
+      "code" : "IE",
+      "name" : "Ireland",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "en_IE"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "ga_IE"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_IM",
+      "name" : "Isle of Man",
+      "code" : "IM",
+      "locales" : [
+        {
+          "currency" : "GBP",
+          "symbol" : "£",
+          "locale" : "en_IM"
+        },
+        {
+          "currency" : "GBP",
+          "locale" : "gv_IM",
+          "symbol" : "£"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_IL",
+      "name" : "Israel",
+      "code" : "IL",
+      "locales" : [
+        {
+          "locale" : "he_IL",
+          "currency" : "ILS",
+          "symbol" : "₪"
+        },
+        {
+          "currency" : "ILS",
+          "locale" : "ar_IL",
+          "symbol" : "₪"
+        },
+        {
+          "currency" : "ILS",
+          "symbol" : "₪",
+          "locale" : "en_IL"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "scn_IT",
+      "locales" : [
+        {
+          "locale" : "scn_IT",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "it_IT",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "lij_IT",
+          "currency" : "EUR"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "de_IT"
+        },
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "lmo_IT"
+        },
+        {
+          "locale" : "fur_IT",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "ca_IT"
+        },
+        {
+          "locale" : "sc_IT",
+          "symbol" : "€",
+          "currency" : "EUR"
+        }
+      ],
+      "code" : "IT",
+      "name" : "Italy"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "en_JM",
+          "currency" : "JMD"
+        }
+      ],
+      "defaultLocale" : "en_JM",
+      "name" : "Jamaica",
+      "code" : "JM"
+    },
+    {
+      "defaultLocale" : "en_JP",
+      "code" : "JP",
+      "name" : "Japan",
+      "locales" : [
+        {
+          "symbol" : "¥",
+          "locale" : "zh_Hant_JP",
+          "currency" : "JPY"
+        },
+        {
+          "locale" : "zh_Hans_JP",
+          "currency" : "JPY",
+          "symbol" : "JP¥"
+        },
+        {
+          "symbol" : "JP¥",
+          "locale" : "ain_JP",
+          "currency" : "JPY"
+        },
+        {
+          "currency" : "JPY",
+          "symbol" : "¥",
+          "locale" : "en_JP"
+        },
+        {
+          "locale" : "ja_JP",
+          "currency" : "JPY",
+          "symbol" : "¥"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_JE",
+      "code" : "JE",
+      "locales" : [
+        {
+          "currency" : "GBP",
+          "symbol" : "£",
+          "locale" : "en_JE"
+        }
+      ],
+      "name" : "Jersey"
+    },
+    {
+      "name" : "Jordan",
+      "defaultLocale" : "ar_JO",
+      "locales" : [
+        {
+          "currency" : "JOD",
+          "symbol" : "د.أ.‏",
+          "locale" : "ar_JO"
+        }
+      ],
+      "code" : "JO"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "KZT",
+          "symbol" : "₸",
+          "locale" : "kk_KZ"
+        },
+        {
+          "symbol" : "₸",
+          "locale" : "ru_KZ",
+          "currency" : "KZT"
+        }
+      ],
+      "code" : "KZ",
+      "defaultLocale" : "kk_KZ",
+      "name" : "Kazakhstan"
+    },
+    {
+      "code" : "KE",
+      "defaultLocale" : "en_KE",
+      "locales" : [
+        {
+          "locale" : "mer_KE",
+          "currency" : "KES",
+          "symbol" : "Ksh"
+        },
+        {
+          "locale" : "saq_KE",
+          "currency" : "KES",
+          "symbol" : "Ksh"
+        },
+        {
+          "locale" : "luo_KE",
+          "currency" : "KES",
+          "symbol" : "Ksh"
+        },
+        {
+          "locale" : "ebu_KE",
+          "currency" : "KES",
+          "symbol" : "Ksh"
+        },
+        {
+          "locale" : "ki_KE",
+          "currency" : "KES",
+          "symbol" : "Ksh"
+        },
+        {
+          "currency" : "KES",
+          "locale" : "om_KE",
+          "symbol" : "Ksh"
+        },
+        {
+          "currency" : "KES",
+          "symbol" : "Ksh",
+          "locale" : "kln_KE"
+        },
+        {
+          "locale" : "guz_KE",
+          "currency" : "KES",
+          "symbol" : "Ksh"
+        },
+        {
+          "currency" : "KES",
+          "symbol" : "Ksh",
+          "locale" : "kam_KE"
+        },
+        {
+          "symbol" : "Ksh",
+          "currency" : "KES",
+          "locale" : "mas_KE"
+        },
+        {
+          "currency" : "KES",
+          "symbol" : "Ksh",
+          "locale" : "en_KE"
+        },
+        {
+          "currency" : "KES",
+          "locale" : "sw_KE",
+          "symbol" : "Ksh"
+        },
+        {
+          "currency" : "KES",
+          "symbol" : "Ksh",
+          "locale" : "teo_KE"
+        },
+        {
+          "symbol" : "Ksh",
+          "locale" : "dav_KE",
+          "currency" : "KES"
+        },
+        {
+          "currency" : "KES",
+          "locale" : "luy_KE",
+          "symbol" : "Ksh"
+        },
+        {
+          "symbol" : "Ksh",
+          "locale" : "so_KE",
+          "currency" : "KES"
+        }
+      ],
+      "name" : "Kenya"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_KI",
+          "currency" : "AUD",
+          "symbol" : "$"
+        }
+      ],
+      "defaultLocale" : "en_KI",
+      "code" : "KI",
+      "name" : "Kiribati"
+    },
+    {
+      "name" : "Kosovo",
+      "locales" : [
+        {
+          "locale" : "sq_XK",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "sr_Latn_XK"
+        },
+        {
+          "locale" : "sr_Cyrl_XK",
+          "symbol" : "€",
+          "currency" : "EUR"
+        }
+      ],
+      "code" : "XK",
+      "defaultLocale" : "sq_XK"
+    },
+    {
+      "code" : "KW",
+      "defaultLocale" : "ar_KW",
+      "name" : "Kuwait",
+      "locales" : [
+        {
+          "symbol" : "د.ك.‏",
+          "locale" : "ar_KW",
+          "currency" : "KWD"
+        }
+      ]
+    },
+    {
+      "name" : "Kyrgyzstan",
+      "defaultLocale" : "ru_KG",
+      "locales" : [
+        {
+          "symbol" : "сом",
+          "locale" : "ru_KG",
+          "currency" : "KGS"
+        },
+        {
+          "locale" : "ky_KG",
+          "currency" : "KGS",
+          "symbol" : "сом"
+        }
+      ],
+      "code" : "KG"
+    },
+    {
+      "name" : "Laos",
+      "locales" : [
+        {
+          "locale" : "lo_LA",
+          "currency" : "LAK",
+          "symbol" : "₭"
+        }
+      ],
+      "code" : "LA",
+      "defaultLocale" : "lo_LA"
+    },
+    {
+      "name" : "Latvia",
+      "code" : "LV",
+      "defaultLocale" : "en_LV",
+      "locales" : [
+        {
+          "locale" : "lv_LV",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "en_LV",
+          "currency" : "EUR"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "ar_LB",
+      "locales" : [
+        {
+          "currency" : "LBP",
+          "symbol" : "ل.ل.‏",
+          "locale" : "ar_LB"
+        }
+      ],
+      "name" : "Lebanon",
+      "code" : "LB"
+    },
+    {
+      "defaultLocale" : "en_LS",
+      "code" : "LS",
+      "name" : "Lesotho",
+      "locales" : [
+        {
+          "currency" : "ZAR",
+          "symbol" : "R",
+          "locale" : "en_LS"
+        },
+        {
+          "symbol" : "R",
+          "locale" : "st_LS",
+          "currency" : "ZAR"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_LR",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "currency" : "LRD",
+          "locale" : "vai_Latn_LR"
+        },
+        {
+          "currency" : "LRD",
+          "locale" : "en_LR",
+          "symbol" : "$"
+        },
+        {
+          "symbol" : "$",
+          "currency" : "LRD",
+          "locale" : "kpe_LR"
+        },
+        {
+          "currency" : "LRD",
+          "locale" : "ff_Latn_LR",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "vai_Vaii_LR",
+          "currency" : "LRD",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "ff_Adlm_LR",
+          "currency" : "LRD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Liberia",
+      "code" : "LR"
+    },
+    {
+      "defaultLocale" : "ar_LY",
+      "name" : "Libya",
+      "code" : "LY",
+      "locales" : [
+        {
+          "symbol" : "د.ل.‏",
+          "currency" : "LYD",
+          "locale" : "ar_LY"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "CHF",
+          "symbol" : "CHF",
+          "locale" : "gsw_LI"
+        },
+        {
+          "symbol" : "CHF",
+          "locale" : "de_LI",
+          "currency" : "CHF"
+        }
+      ],
+      "defaultLocale" : "gsw_LI",
+      "name" : "Liechtenstein",
+      "code" : "LI"
+    },
+    {
+      "name" : "Lithuania",
+      "code" : "LT",
+      "defaultLocale" : "en_LT",
+      "locales" : [
+        {
+          "locale" : "lt_LT",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "en_LT",
+          "currency" : "EUR"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "pt_LU",
+      "code" : "LU",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "currency" : "EUR",
+          "locale" : "pt_LU"
+        },
+        {
+          "locale" : "lb_LU",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "de_LU",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "fr_LU"
+        }
+      ],
+      "name" : "Luxembourg"
+    },
+    {
+      "defaultLocale" : "en_MO",
+      "name" : "Macao",
+      "code" : "MO",
+      "locales" : [
+        {
+          "currency" : "MOP",
+          "symbol" : "MOP$",
+          "locale" : "en_MO"
+        },
+        {
+          "locale" : "pt_MO",
+          "symbol" : "MOP$",
+          "currency" : "MOP"
+        },
+        {
+          "symbol" : "MOP$",
+          "locale" : "zh_Hans_MO",
+          "currency" : "MOP"
+        },
+        {
+          "currency" : "MOP",
+          "symbol" : "MOP$",
+          "locale" : "zh_Hant_MO"
+        }
+      ]
+    },
+    {
+      "name" : "Madagascar",
+      "locales" : [
+        {
+          "locale" : "mg_MG",
+          "currency" : "MGA",
+          "symbol" : "Ar"
+        },
+        {
+          "currency" : "MGA",
+          "locale" : "en_MG",
+          "symbol" : "Ar"
+        },
+        {
+          "locale" : "fr_MG",
+          "currency" : "MGA",
+          "symbol" : "Ar"
+        }
+      ],
+      "defaultLocale" : "en_MG",
+      "code" : "MG"
+    },
+    {
+      "defaultLocale" : "en_MW",
+      "code" : "MW",
+      "locales" : [
+        {
+          "symbol" : "MK",
+          "currency" : "MWK",
+          "locale" : "en_MW"
+        },
+        {
+          "currency" : "MWK",
+          "locale" : "ny_MW",
+          "symbol" : "MWK"
+        }
+      ],
+      "name" : "Malawi"
+    },
+    {
+      "name" : "Malaysia",
+      "locales" : [
+        {
+          "locale" : "ta_MY",
+          "symbol" : "RM",
+          "currency" : "MYR"
+        },
+        {
+          "locale" : "ms_Arab_MY",
+          "currency" : "MYR",
+          "symbol" : "RM"
+        },
+        {
+          "symbol" : "RM",
+          "locale" : "en_MY",
+          "currency" : "MYR"
+        },
+        {
+          "currency" : "MYR",
+          "symbol" : "RM",
+          "locale" : "ms_MY"
+        }
+      ],
+      "code" : "MY",
+      "defaultLocale" : "en_MY"
+    },
+    {
+      "defaultLocale" : "en_MV",
+      "locales" : [
+        {
+          "symbol" : "Rf",
+          "currency" : "MVR",
+          "locale" : "en_MV"
+        },
+        {
+          "currency" : "MVR",
+          "symbol" : "ރ.",
+          "locale" : "dv_MV"
+        }
+      ],
+      "name" : "Maldives",
+      "code" : "MV"
+    },
+    {
+      "defaultLocale" : "bm_ML",
+      "code" : "ML",
+      "locales" : [
+        {
+          "locale" : "bm_ML",
+          "symbol" : "F CFA",
+          "currency" : "XOF"
+        },
+        {
+          "locale" : "fr_ML",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        },
+        {
+          "currency" : "XOF",
+          "symbol" : "F CFA",
+          "locale" : "khq_ML"
+        },
+        {
+          "locale" : "ses_ML",
+          "symbol" : "F CFA",
+          "currency" : "XOF"
+        }
+      ],
+      "name" : "Mali"
+    },
+    {
+      "defaultLocale" : "en_MT",
+      "code" : "MT",
+      "name" : "Malta",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "locale" : "en_MT",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "mt_MT",
+          "symbol" : "€",
+          "currency" : "EUR"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_MH",
+      "code" : "MH",
+      "locales" : [
+        {
+          "currency" : "USD",
+          "symbol" : "$",
+          "locale" : "en_MH"
+        }
+      ],
+      "name" : "Marshall Islands"
+    },
+    {
+      "defaultLocale" : "fr_MQ",
+      "name" : "Martinique",
+      "code" : "MQ",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "fr_MQ"
+        }
+      ]
+    },
+    {
+      "code" : "MR",
+      "locales" : [
+        {
+          "locale" : "fr_MR",
+          "symbol" : "UM",
+          "currency" : "MRU"
+        },
+        {
+          "currency" : "MRU",
+          "locale" : "ff_Adlm_MR",
+          "symbol" : "UM"
+        },
+        {
+          "symbol" : "أ.م.",
+          "locale" : "ar_MR",
+          "currency" : "MRU"
+        },
+        {
+          "locale" : "ff_Latn_MR",
+          "symbol" : "UM",
+          "currency" : "MRU"
+        }
+      ],
+      "name" : "Mauritania",
+      "defaultLocale" : "fr_MR"
+    },
+    {
+      "name" : "Mauritius",
+      "code" : "MU",
+      "defaultLocale" : "en_MU",
+      "locales" : [
+        {
+          "symbol" : "Rs",
+          "currency" : "MUR",
+          "locale" : "fr_MU"
+        },
+        {
+          "currency" : "MUR",
+          "symbol" : "Rs",
+          "locale" : "en_MU"
+        },
+        {
+          "currency" : "MUR",
+          "locale" : "mfe_MU",
+          "symbol" : "Rs"
+        }
+      ]
+    },
+    {
+      "name" : "Mayotte",
+      "code" : "YT",
+      "defaultLocale" : "fr_YT",
+      "locales" : [
+        {
+          "locale" : "fr_YT",
+          "symbol" : "€",
+          "currency" : "EUR"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_MX",
+      "name" : "Mexico",
+      "code" : "MX",
+      "locales" : [
+        {
+          "currency" : "MXN",
+          "locale" : "es_MX",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "MXN",
+          "locale" : "en_MX",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_FM",
+      "name" : "Micronesia",
+      "code" : "FM",
+      "locales" : [
+        {
+          "symbol" : "US$",
+          "currency" : "USD",
+          "locale" : "en_FM"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "ro_MD",
+      "locales" : [
+        {
+          "locale" : "ro_MD",
+          "symbol" : "L",
+          "currency" : "MDL"
+        },
+        {
+          "locale" : "ru_MD",
+          "currency" : "MDL",
+          "symbol" : "L"
+        }
+      ],
+      "code" : "MD",
+      "name" : "Moldova"
+    },
+    {
+      "code" : "MC",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "locale" : "fr_MC",
+          "symbol" : "€"
+        }
+      ],
+      "defaultLocale" : "fr_MC",
+      "name" : "Monaco"
+    },
+    {
+      "defaultLocale" : "mn_MN",
+      "code" : "MN",
+      "locales" : [
+        {
+          "symbol" : "₮",
+          "currency" : "MNT",
+          "locale" : "mn_MN"
+        }
+      ],
+      "name" : "Mongolia"
+    },
+    {
+      "code" : "ME",
+      "defaultLocale" : "sr_Latn_ME",
+      "name" : "Montenegro",
+      "locales" : [
+        {
+          "locale" : "sr_Latn_ME",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "sr_Cyrl_ME"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_MS",
+      "code" : "MS",
+      "name" : "Montserrat",
+      "locales" : [
+        {
+          "currency" : "XCD",
+          "locale" : "en_MS",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "code" : "MA",
+      "locales" : [
+        {
+          "locale" : "ber_Latn_MA",
+          "symbol" : "MAD",
+          "currency" : "MAD"
+        },
+        {
+          "locale" : "fr_MA",
+          "symbol" : "MAD",
+          "currency" : "MAD"
+        },
+        {
+          "currency" : "MAD",
+          "locale" : "shi_Latn_MA",
+          "symbol" : "MAD"
+        },
+        {
+          "locale" : "ber_Tfng_MA",
+          "currency" : "MAD",
+          "symbol" : "MAD"
+        },
+        {
+          "symbol" : "MAD",
+          "locale" : "shi_Tfng_MA",
+          "currency" : "MAD"
+        },
+        {
+          "locale" : "tzm_MA",
+          "currency" : "MAD",
+          "symbol" : "MAD"
+        },
+        {
+          "symbol" : "د.م.‏",
+          "locale" : "ar_MA",
+          "currency" : "MAD"
+        },
+        {
+          "locale" : "zgh_MA",
+          "currency" : "MAD",
+          "symbol" : "MAD"
+        }
+      ],
+      "name" : "Morocco",
+      "defaultLocale" : "ber_Latn_MA"
+    },
+    {
+      "code" : "MZ",
+      "name" : "Mozambique",
+      "locales" : [
+        {
+          "symbol" : "MTn",
+          "locale" : "pt_MZ",
+          "currency" : "MZN"
+        },
+        {
+          "symbol" : "MTn",
+          "locale" : "mgh_MZ",
+          "currency" : "MZN"
+        },
+        {
+          "symbol" : "MTn",
+          "currency" : "MZN",
+          "locale" : "seh_MZ"
+        },
+        {
+          "locale" : "vmw_MZ",
+          "symbol" : "MZN",
+          "currency" : "MZN"
+        }
+      ],
+      "defaultLocale" : "pt_MZ"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_MM",
+          "symbol" : "MMK",
+          "currency" : "MMK"
+        },
+        {
+          "currency" : "MMK",
+          "symbol" : "MMK",
+          "locale" : "rhg_Rohg_MM"
+        },
+        {
+          "symbol" : "K",
+          "locale" : "my_MM",
+          "currency" : "MMK"
+        }
+      ],
+      "name" : "Myanmar (Burma)",
+      "defaultLocale" : "en_MM",
+      "code" : "MM"
+    },
+    {
+      "code" : "NA",
+      "defaultLocale" : "en_NA",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "af_NA",
+          "currency" : "NAD"
+        },
+        {
+          "currency" : "NAD",
+          "symbol" : "$",
+          "locale" : "en_NA"
+        },
+        {
+          "currency" : "NAD",
+          "locale" : "naq_NA",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Namibia"
+    },
+    {
+      "defaultLocale" : "en_NR",
+      "locales" : [
+        {
+          "currency" : "AUD",
+          "locale" : "en_NR",
+          "symbol" : "$"
+        }
+      ],
+      "code" : "NR",
+      "name" : "Nauru"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "ne_NP",
+          "symbol" : "नेरू",
+          "currency" : "NPR"
+        }
+      ],
+      "defaultLocale" : "ne_NP",
+      "name" : "Nepal",
+      "code" : "NP"
+    },
+    {
+      "defaultLocale" : "en_NL",
+      "code" : "NL",
+      "locales" : [
+        {
+          "locale" : "nl_NL",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "nds_NL"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "fy_NL",
+          "currency" : "EUR"
+        },
+        {
+          "locale" : "en_NL",
+          "symbol" : "€",
+          "currency" : "EUR"
+        }
+      ],
+      "name" : "Netherlands"
+    },
+    {
+      "name" : "New Caledonia",
+      "defaultLocale" : "fr_NC",
+      "code" : "NC",
+      "locales" : [
+        {
+          "currency" : "XPF",
+          "symbol" : "FCFP",
+          "locale" : "fr_NC"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "mi_NZ",
+          "currency" : "NZD",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "en_NZ",
+          "currency" : "NZD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "New Zealand",
+      "code" : "NZ",
+      "defaultLocale" : "en_NZ"
+    },
+    {
+      "defaultLocale" : "es_NI",
+      "locales" : [
+        {
+          "symbol" : "C$",
+          "locale" : "es_NI",
+          "currency" : "NIO"
+        }
+      ],
+      "code" : "NI",
+      "name" : "Nicaragua"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "XOF",
+          "symbol" : "𞤅𞤊𞤀",
+          "locale" : "ff_Adlm_NE"
+        },
+        {
+          "locale" : "fr_NE",
+          "symbol" : "F CFA",
+          "currency" : "XOF"
+        },
+        {
+          "currency" : "XOF",
+          "symbol" : "F CFA",
+          "locale" : "dje_NE"
+        },
+        {
+          "locale" : "ha_NE",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        },
+        {
+          "symbol" : "F CFA",
+          "currency" : "XOF",
+          "locale" : "ff_Latn_NE"
+        },
+        {
+          "locale" : "twq_NE",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        }
+      ],
+      "code" : "NE",
+      "name" : "Niger",
+      "defaultLocale" : "ff_Adlm_NE"
+    },
+    {
+      "name" : "Nigeria",
+      "locales" : [
+        {
+          "currency" : "NGN",
+          "locale" : "en_NG",
+          "symbol" : "₦"
+        },
+        {
+          "locale" : "yo_NG",
+          "symbol" : "₦",
+          "currency" : "NGN"
+        },
+        {
+          "symbol" : "₦",
+          "locale" : "kaj_NG",
+          "currency" : "NGN"
+        },
+        {
+          "symbol" : "₦",
+          "currency" : "NGN",
+          "locale" : "kcg_NG"
+        },
+        {
+          "currency" : "NGN",
+          "symbol" : "₦",
+          "locale" : "pcm_NG"
+        },
+        {
+          "currency" : "NGN",
+          "symbol" : "₦",
+          "locale" : "ff_Latn_NG"
+        },
+        {
+          "currency" : "NGN",
+          "symbol" : "₦",
+          "locale" : "ig_NG"
+        },
+        {
+          "locale" : "ha_NG",
+          "symbol" : "₦",
+          "currency" : "NGN"
+        },
+        {
+          "locale" : "ff_Adlm_NG",
+          "currency" : "NGN",
+          "symbol" : "₦"
+        }
+      ],
+      "defaultLocale" : "en_NG",
+      "code" : "NG"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_NU",
+          "currency" : "NZD",
+          "symbol" : "$"
+        }
+      ],
+      "defaultLocale" : "en_NU",
+      "name" : "Niue",
+      "code" : "NU"
+    },
+    {
+      "name" : "Norfolk Island",
+      "defaultLocale" : "en_NF",
+      "code" : "NF",
+      "locales" : [
+        {
+          "currency" : "AUD",
+          "symbol" : "$",
+          "locale" : "en_NF"
+        }
+      ]
+    },
+    {
+      "name" : "North Korea",
+      "defaultLocale" : "ko_KP",
+      "code" : "KP",
+      "locales" : [
+        {
+          "symbol" : "KPW",
+          "locale" : "ko_KP",
+          "currency" : "KPW"
+        }
+      ]
+    },
+    {
+      "code" : "MK",
+      "name" : "North Macedonia",
+      "defaultLocale" : "sq_MK",
+      "locales" : [
+        {
+          "symbol" : "den",
+          "locale" : "sq_MK",
+          "currency" : "MKD"
+        },
+        {
+          "symbol" : "ден.",
+          "locale" : "mk_MK",
+          "currency" : "MKD"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_MP",
+      "code" : "MP",
+      "locales" : [
+        {
+          "locale" : "en_MP",
+          "currency" : "USD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Northern Mariana Islands"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "NOK",
+          "locale" : "nb_NO",
+          "symbol" : "kr"
+        },
+        {
+          "locale" : "se_NO",
+          "symbol" : "kr",
+          "currency" : "NOK"
+        },
+        {
+          "locale" : "en_NO",
+          "symbol" : "NOK",
+          "currency" : "NOK"
+        },
+        {
+          "currency" : "NOK",
+          "locale" : "nn_NO",
+          "symbol" : "kr"
+        }
+      ],
+      "defaultLocale" : "en_NO",
+      "name" : "Norway",
+      "code" : "NO"
+    },
+    {
+      "code" : "OM",
+      "name" : "Oman",
+      "defaultLocale" : "ar_OM",
+      "locales" : [
+        {
+          "locale" : "ar_OM",
+          "symbol" : "ر.ع.‏",
+          "currency" : "OMR"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "PKR",
+          "symbol" : "Rs",
+          "locale" : "ps_PK"
+        },
+        {
+          "symbol" : "ر",
+          "currency" : "PKR",
+          "locale" : "pa_Aran_PK"
+        },
+        {
+          "symbol" : "Rs",
+          "currency" : "PKR",
+          "locale" : "ur_Arab_PK"
+        },
+        {
+          "symbol" : "Rs",
+          "locale" : "ur_Aran_PK",
+          "currency" : "PKR"
+        },
+        {
+          "symbol" : "ر",
+          "locale" : "pa_Arab_PK",
+          "currency" : "PKR"
+        },
+        {
+          "locale" : "en_PK",
+          "symbol" : "Rs",
+          "currency" : "PKR"
+        },
+        {
+          "locale" : "sd_Arab_PK",
+          "currency" : "PKR",
+          "symbol" : "Rs"
+        }
+      ],
+      "defaultLocale" : "en_PK",
+      "name" : "Pakistan",
+      "code" : "PK"
+    },
+    {
+      "code" : "PW",
+      "defaultLocale" : "en_PW",
+      "name" : "Palau",
+      "locales" : [
+        {
+          "locale" : "en_PW",
+          "currency" : "USD",
+          "symbol" : "US$"
+        }
+      ]
+    },
+    {
+      "name" : "Palestinian Territories",
+      "code" : "PS",
+      "defaultLocale" : "ar_PS",
+      "locales" : [
+        {
+          "locale" : "ar_PS",
+          "symbol" : "₪",
+          "currency" : "ILS"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "B\/.",
+          "currency" : "PAB",
+          "locale" : "es_PA"
+        }
+      ],
+      "name" : "Panama",
+      "code" : "PA",
+      "defaultLocale" : "es_PA"
+    },
+    {
+      "code" : "PG",
+      "locales" : [
+        {
+          "locale" : "en_PG",
+          "currency" : "PGK",
+          "symbol" : "K"
+        }
+      ],
+      "name" : "Papua New Guinea",
+      "defaultLocale" : "en_PG"
+    },
+    {
+      "name" : "Paraguay",
+      "locales" : [
+        {
+          "locale" : "gn_PY",
+          "currency" : "PYG",
+          "symbol" : "₲"
+        },
+        {
+          "locale" : "es_PY",
+          "currency" : "PYG",
+          "symbol" : "Gs."
+        }
+      ],
+      "defaultLocale" : "gn_PY",
+      "code" : "PY"
+    },
+    {
+      "defaultLocale" : "qu_PE",
+      "locales" : [
+        {
+          "symbol" : "S\/",
+          "locale" : "qu_PE",
+          "currency" : "PEN"
+        },
+        {
+          "symbol" : "S\/",
+          "locale" : "es_PE",
+          "currency" : "PEN"
+        }
+      ],
+      "code" : "PE",
+      "name" : "Peru"
+    },
+    {
+      "name" : "Philippines",
+      "code" : "PH",
+      "defaultLocale" : "en_PH",
+      "locales" : [
+        {
+          "locale" : "en_PH",
+          "symbol" : "₱",
+          "currency" : "PHP"
+        },
+        {
+          "currency" : "PHP",
+          "locale" : "ceb_PH",
+          "symbol" : "₱"
+        },
+        {
+          "currency" : "PHP",
+          "locale" : "es_PH",
+          "symbol" : "₱"
+        },
+        {
+          "locale" : "fil_PH",
+          "currency" : "PHP",
+          "symbol" : "₱"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_PN",
+          "currency" : "NZD",
+          "symbol" : "$"
+        }
+      ],
+      "defaultLocale" : "en_PN",
+      "name" : "Pitcairn Islands",
+      "code" : "PN"
+    },
+    {
+      "code" : "PL",
+      "name" : "Poland",
+      "locales" : [
+        {
+          "locale" : "en_PL",
+          "currency" : "PLN",
+          "symbol" : "PLN"
+        },
+        {
+          "locale" : "szl_PL",
+          "currency" : "PLN",
+          "symbol" : "zł"
+        },
+        {
+          "locale" : "prg_PL",
+          "currency" : "PLN",
+          "symbol" : "PLN"
+        },
+        {
+          "symbol" : "zł",
+          "locale" : "pl_PL",
+          "currency" : "PLN"
+        }
+      ],
+      "defaultLocale" : "en_PL"
+    },
+    {
+      "name" : "Portugal",
+      "code" : "PT",
+      "defaultLocale" : "en_PT",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "locale" : "en_PT",
+          "currency" : "EUR"
+        },
+        {
+          "currency" : "EUR",
+          "locale" : "pt_PT",
+          "symbol" : "€"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_PR",
+      "code" : "PR",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "es_PR",
+          "currency" : "USD"
+        },
+        {
+          "locale" : "en_PR",
+          "currency" : "USD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Puerto Rico"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "ar_QA",
+          "currency" : "QAR",
+          "symbol" : "ر.ق.‏"
+        }
+      ],
+      "code" : "QA",
+      "defaultLocale" : "ar_QA",
+      "name" : "Qatar"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "RON",
+          "locale" : "ro_RO",
+          "symbol" : "RON"
+        }
+      ],
+      "name" : "Romania",
+      "code" : "RO",
+      "defaultLocale" : "ro_RO"
+    },
+    {
+      "code" : "RU",
+      "locales" : [
+        {
+          "currency" : "RUB",
+          "symbol" : "RUB",
+          "locale" : "myv_RU"
+        },
+        {
+          "symbol" : "₽",
+          "locale" : "cv_RU",
+          "currency" : "RUB"
+        },
+        {
+          "symbol" : "RUB",
+          "locale" : "en_RU",
+          "currency" : "RUB"
+        },
+        {
+          "locale" : "os_RU",
+          "symbol" : "₽",
+          "currency" : "RUB"
+        },
+        {
+          "locale" : "ce_RU",
+          "symbol" : "₽",
+          "currency" : "RUB"
+        },
+        {
+          "locale" : "sah_RU",
+          "symbol" : "₽",
+          "currency" : "RUB"
+        },
+        {
+          "locale" : "tt_RU",
+          "currency" : "RUB",
+          "symbol" : "₽"
+        },
+        {
+          "currency" : "RUB",
+          "locale" : "ba_RU",
+          "symbol" : "RUB"
+        },
+        {
+          "currency" : "RUB",
+          "locale" : "ru_RU",
+          "symbol" : "₽"
+        }
+      ],
+      "defaultLocale" : "en_RU",
+      "name" : "Russia"
+    },
+    {
+      "code" : "RW",
+      "name" : "Rwanda",
+      "defaultLocale" : "en_RW",
+      "locales" : [
+        {
+          "locale" : "rw_RW",
+          "symbol" : "RF",
+          "currency" : "RWF"
+        },
+        {
+          "currency" : "RWF",
+          "locale" : "en_RW",
+          "symbol" : "RF"
+        },
+        {
+          "locale" : "fr_RW",
+          "symbol" : "RF",
+          "currency" : "RWF"
+        }
+      ]
+    },
+    {
+      "name" : "Réunion",
+      "locales" : [
+        {
+          "locale" : "fr_RE",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ],
+      "defaultLocale" : "fr_RE",
+      "code" : "RE"
+    },
+    {
+      "defaultLocale" : "en_WS",
+      "code" : "WS",
+      "locales" : [
+        {
+          "symbol" : "WS$",
+          "locale" : "en_WS",
+          "currency" : "WST"
+        },
+        {
+          "symbol" : "WST",
+          "currency" : "WST",
+          "locale" : "sm_WS"
+        }
+      ],
+      "name" : "Samoa"
+    },
+    {
+      "name" : "San Marino",
+      "defaultLocale" : "it_SM",
+      "code" : "SM",
+      "locales" : [
+        {
+          "locale" : "it_SM",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "SAR",
+          "locale" : "en_SA",
+          "currency" : "SAR"
+        },
+        {
+          "symbol" : "ر.س.‏",
+          "locale" : "ar_SA",
+          "currency" : "SAR"
+        }
+      ],
+      "code" : "SA",
+      "defaultLocale" : "en_SA",
+      "name" : "Saudi Arabia"
+    },
+    {
+      "defaultLocale" : "dyo_SN",
+      "locales" : [
+        {
+          "locale" : "dyo_SN",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        },
+        {
+          "symbol" : "F CFA",
+          "currency" : "XOF",
+          "locale" : "wo_SN"
+        },
+        {
+          "currency" : "XOF",
+          "symbol" : "F CFA",
+          "locale" : "fr_SN"
+        },
+        {
+          "locale" : "ff_Adlm_SN",
+          "currency" : "XOF",
+          "symbol" : "𞤅𞤊𞤀"
+        },
+        {
+          "currency" : "XOF",
+          "locale" : "ff_Latn_SN",
+          "symbol" : "F CFA"
+        }
+      ],
+      "name" : "Senegal",
+      "code" : "SN"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "RSD",
+          "symbol" : "RSD",
+          "locale" : "sr_Cyrl_RS"
+        },
+        {
+          "symbol" : "RSD",
+          "locale" : "sr_Latn_RS",
+          "currency" : "RSD"
+        }
+      ],
+      "code" : "RS",
+      "defaultLocale" : "sr_Cyrl_RS",
+      "name" : "Serbia"
+    },
+    {
+      "name" : "Seychelles",
+      "locales" : [
+        {
+          "currency" : "SCR",
+          "symbol" : "SR",
+          "locale" : "fr_SC"
+        },
+        {
+          "locale" : "en_SC",
+          "currency" : "SCR",
+          "symbol" : "SR"
+        }
+      ],
+      "defaultLocale" : "en_SC",
+      "code" : "SC"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "SLE",
+          "symbol" : "Le",
+          "locale" : "en_SL"
+        },
+        {
+          "currency" : "SLE",
+          "locale" : "ff_Adlm_SL",
+          "symbol" : "Le"
+        },
+        {
+          "locale" : "ff_Latn_SL",
+          "currency" : "SLE",
+          "symbol" : "Le"
+        }
+      ],
+      "code" : "SL",
+      "defaultLocale" : "en_SL",
+      "name" : "Sierra Leone"
+    },
+    {
+      "defaultLocale" : "en_SG",
+      "name" : "Singapore",
+      "locales" : [
+        {
+          "locale" : "en_SG",
+          "symbol" : "$",
+          "currency" : "SGD"
+        },
+        {
+          "symbol" : "$",
+          "currency" : "SGD",
+          "locale" : "zh_Hans_SG"
+        },
+        {
+          "symbol" : "$",
+          "locale" : "ta_SG",
+          "currency" : "SGD"
+        },
+        {
+          "currency" : "SGD",
+          "symbol" : "$",
+          "locale" : "ms_SG"
+        }
+      ],
+      "code" : "SG"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "NAf.",
+          "currency" : "ANG",
+          "locale" : "en_SX"
+        },
+        {
+          "locale" : "nl_SX",
+          "symbol" : "NAf.",
+          "currency" : "ANG"
+        }
+      ],
+      "name" : "Sint Maarten",
+      "defaultLocale" : "en_SX",
+      "code" : "SX"
+    },
+    {
+      "code" : "SK",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "sk_SK"
+        },
+        {
+          "symbol" : "€",
+          "locale" : "en_SK",
+          "currency" : "EUR"
+        }
+      ],
+      "name" : "Slovakia",
+      "defaultLocale" : "en_SK"
+    },
+    {
+      "name" : "Slovenia",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "sl_SI"
+        },
+        {
+          "locale" : "en_SI",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ],
+      "code" : "SI",
+      "defaultLocale" : "en_SI"
+    },
+    {
+      "name" : "Solomon Islands",
+      "defaultLocale" : "en_SB",
+      "code" : "SB",
+      "locales" : [
+        {
+          "locale" : "en_SB",
+          "currency" : "SBD",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "name" : "Somalia",
+      "defaultLocale" : "ar_SO",
+      "code" : "SO",
+      "locales" : [
+        {
+          "symbol" : "S",
+          "locale" : "ar_SO",
+          "currency" : "SOS"
+        },
+        {
+          "currency" : "SOS",
+          "locale" : "so_SO",
+          "symbol" : "S"
+        }
+      ]
+    },
+    {
+      "name" : "South Africa",
+      "code" : "ZA",
+      "locales" : [
+        {
+          "locale" : "nso_ZA",
+          "currency" : "ZAR",
+          "symbol" : "R"
+        },
+        {
+          "locale" : "zu_ZA",
+          "symbol" : "R",
+          "currency" : "ZAR"
+        },
+        {
+          "locale" : "af_ZA",
+          "symbol" : "R",
+          "currency" : "ZAR"
+        },
+        {
+          "locale" : "nr_ZA",
+          "currency" : "ZAR",
+          "symbol" : "R"
+        },
+        {
+          "currency" : "ZAR",
+          "locale" : "ts_ZA",
+          "symbol" : "R"
+        },
+        {
+          "symbol" : "R",
+          "currency" : "ZAR",
+          "locale" : "en_ZA"
+        },
+        {
+          "symbol" : "R",
+          "locale" : "ss_ZA",
+          "currency" : "ZAR"
+        },
+        {
+          "symbol" : "R",
+          "locale" : "ve_ZA",
+          "currency" : "ZAR"
+        },
+        {
+          "symbol" : "R",
+          "locale" : "st_ZA",
+          "currency" : "ZAR"
+        },
+        {
+          "currency" : "ZAR",
+          "symbol" : "R",
+          "locale" : "xh_ZA"
+        },
+        {
+          "symbol" : "R",
+          "locale" : "tn_ZA",
+          "currency" : "ZAR"
+        }
+      ],
+      "defaultLocale" : "en_ZA"
+    },
+    {
+      "code" : "KR",
+      "defaultLocale" : "en_KR",
+      "locales" : [
+        {
+          "locale" : "ko_KR",
+          "currency" : "KRW",
+          "symbol" : "₩"
+        },
+        {
+          "symbol" : "₩",
+          "locale" : "en_KR",
+          "currency" : "KRW"
+        }
+      ],
+      "name" : "South Korea"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "SSP",
+          "locale" : "nus_SS",
+          "symbol" : "£"
+        },
+        {
+          "currency" : "SSP",
+          "symbol" : "£",
+          "locale" : "en_SS"
+        },
+        {
+          "locale" : "ar_SS",
+          "currency" : "SSP",
+          "symbol" : "£"
+        }
+      ],
+      "code" : "SS",
+      "name" : "South Sudan",
+      "defaultLocale" : "en_SS"
+    },
+    {
+      "code" : "ES",
+      "name" : "Spain",
+      "defaultLocale" : "oc_ES",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "oc_ES"
+        },
+        {
+          "locale" : "ca_ES",
+          "symbol" : "€",
+          "currency" : "EUR"
+        },
+        {
+          "currency" : "EUR",
+          "locale" : "eu_ES",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "es_ES",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "gl_ES",
+          "currency" : "EUR",
+          "symbol" : "€"
+        },
+        {
+          "locale" : "ast_ES",
+          "currency" : "EUR",
+          "symbol" : "€"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "ta_LK",
+      "name" : "Sri Lanka",
+      "code" : "LK",
+      "locales" : [
+        {
+          "currency" : "LKR",
+          "symbol" : "Rs.",
+          "locale" : "ta_LK"
+        },
+        {
+          "symbol" : "රු.",
+          "locale" : "si_LK",
+          "currency" : "LKR"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "€",
+          "locale" : "fr_BL",
+          "currency" : "EUR"
+        }
+      ],
+      "name" : "St. Barthélemy",
+      "defaultLocale" : "fr_BL",
+      "code" : "BL"
+    },
+    {
+      "defaultLocale" : "en_SH",
+      "locales" : [
+        {
+          "locale" : "en_SH",
+          "currency" : "SHP",
+          "symbol" : "£"
+        }
+      ],
+      "name" : "St. Helena",
+      "code" : "SH"
+    },
+    {
+      "code" : "KN",
+      "defaultLocale" : "en_KN",
+      "name" : "St. Kitts & Nevis",
+      "locales" : [
+        {
+          "locale" : "en_KN",
+          "currency" : "XCD",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "XCD",
+          "symbol" : "XCD",
+          "locale" : "es_KN"
+        }
+      ]
+    },
+    {
+      "code" : "LC",
+      "name" : "St. Lucia",
+      "defaultLocale" : "en_LC",
+      "locales" : [
+        {
+          "locale" : "es_LC",
+          "symbol" : "XCD",
+          "currency" : "XCD"
+        },
+        {
+          "symbol" : "$",
+          "currency" : "XCD",
+          "locale" : "en_LC"
+        }
+      ]
+    },
+    {
+      "name" : "St. Martin",
+      "defaultLocale" : "fr_MF",
+      "locales" : [
+        {
+          "symbol" : "€",
+          "locale" : "fr_MF",
+          "currency" : "EUR"
+        }
+      ],
+      "code" : "MF"
+    },
+    {
+      "name" : "St. Pierre & Miquelon",
+      "code" : "PM",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "fr_PM"
+        }
+      ],
+      "defaultLocale" : "fr_PM"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "en_VC",
+          "currency" : "XCD"
+        },
+        {
+          "locale" : "es_VC",
+          "symbol" : "XCD",
+          "currency" : "XCD"
+        }
+      ],
+      "name" : "St. Vincent & Grenadines",
+      "code" : "VC",
+      "defaultLocale" : "en_VC"
+    },
+    {
+      "defaultLocale" : "en_SD",
+      "locales" : [
+        {
+          "symbol" : "SDG",
+          "locale" : "en_SD",
+          "currency" : "SDG"
+        },
+        {
+          "currency" : "SDG",
+          "symbol" : "ج.س.",
+          "locale" : "ar_SD"
+        }
+      ],
+      "name" : "Sudan",
+      "code" : "SD"
+    },
+    {
+      "name" : "Suriname",
+      "code" : "SR",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "nl_SR",
+          "currency" : "SRD"
+        }
+      ],
+      "defaultLocale" : "nl_SR"
+    },
+    {
+      "name" : "Svalbard & Jan Mayen",
+      "code" : "SJ",
+      "locales" : [
+        {
+          "symbol" : "kr",
+          "currency" : "NOK",
+          "locale" : "nb_SJ"
+        }
+      ],
+      "defaultLocale" : "nb_SJ"
+    },
+    {
+      "name" : "Sweden",
+      "locales" : [
+        {
+          "symbol" : "kr",
+          "currency" : "SEK",
+          "locale" : "en_SE"
+        },
+        {
+          "currency" : "SEK",
+          "locale" : "sv_SE",
+          "symbol" : "kr"
+        },
+        {
+          "symbol" : "kr",
+          "locale" : "se_SE",
+          "currency" : "SEK"
+        }
+      ],
+      "defaultLocale" : "en_SE",
+      "code" : "SE"
+    },
+    {
+      "defaultLocale" : "en_CH",
+      "code" : "CH",
+      "name" : "Switzerland",
+      "locales" : [
+        {
+          "symbol" : "CHF",
+          "locale" : "fr_CH",
+          "currency" : "CHF"
+        },
+        {
+          "locale" : "wae_CH",
+          "currency" : "CHF",
+          "symbol" : "CHF"
+        },
+        {
+          "symbol" : "CHF",
+          "currency" : "CHF",
+          "locale" : "de_CH"
+        },
+        {
+          "currency" : "CHF",
+          "locale" : "pt_CH",
+          "symbol" : "CHF"
+        },
+        {
+          "currency" : "CHF",
+          "locale" : "it_CH",
+          "symbol" : "CHF"
+        },
+        {
+          "locale" : "gsw_CH",
+          "currency" : "CHF",
+          "symbol" : "CHF"
+        },
+        {
+          "symbol" : "CHF",
+          "locale" : "en_CH",
+          "currency" : "CHF"
+        },
+        {
+          "currency" : "CHF",
+          "symbol" : "CHF",
+          "locale" : "rm_CH"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "ل.س.‏",
+          "currency" : "SYP",
+          "locale" : "syr_SY"
+        },
+        {
+          "currency" : "SYP",
+          "locale" : "ar_SY",
+          "symbol" : "ل.س.‏"
+        },
+        {
+          "locale" : "fr_SY",
+          "currency" : "SYP",
+          "symbol" : "LS"
+        }
+      ],
+      "name" : "Syria",
+      "defaultLocale" : "syr_SY",
+      "code" : "SY"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "pt_ST",
+          "currency" : "STN",
+          "symbol" : "Db"
+        }
+      ],
+      "code" : "ST",
+      "defaultLocale" : "pt_ST",
+      "name" : "São Tomé & Príncipe"
+    },
+    {
+      "name" : "Taiwan",
+      "code" : "TW",
+      "defaultLocale" : "en_TW",
+      "locales" : [
+        {
+          "locale" : "zh_Hant_TW",
+          "symbol" : "$",
+          "currency" : "TWD"
+        },
+        {
+          "locale" : "trv_TW",
+          "symbol" : "NT$",
+          "currency" : "TWD"
+        },
+        {
+          "currency" : "TWD",
+          "locale" : "en_TW",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "tg_TJ",
+      "locales" : [
+        {
+          "currency" : "TJS",
+          "symbol" : "сом.",
+          "locale" : "tg_TJ"
+        }
+      ],
+      "code" : "TJ",
+      "name" : "Tajikistan"
+    },
+    {
+      "defaultLocale" : "en_TZ",
+      "locales" : [
+        {
+          "locale" : "rwk_TZ",
+          "symbol" : "TSh",
+          "currency" : "TZS"
+        },
+        {
+          "locale" : "rof_TZ",
+          "currency" : "TZS",
+          "symbol" : "TSh"
+        },
+        {
+          "symbol" : "TSh",
+          "locale" : "sbp_TZ",
+          "currency" : "TZS"
+        },
+        {
+          "currency" : "TZS",
+          "symbol" : "TSh",
+          "locale" : "kde_TZ"
+        },
+        {
+          "currency" : "TZS",
+          "locale" : "lag_TZ",
+          "symbol" : "TSh"
+        },
+        {
+          "locale" : "en_TZ",
+          "currency" : "TZS",
+          "symbol" : "TSh"
+        },
+        {
+          "locale" : "mas_TZ",
+          "currency" : "TZS",
+          "symbol" : "TSh"
+        },
+        {
+          "symbol" : "TSh",
+          "locale" : "vun_TZ",
+          "currency" : "TZS"
+        },
+        {
+          "locale" : "asa_TZ",
+          "currency" : "TZS",
+          "symbol" : "TSh"
+        },
+        {
+          "currency" : "TZS",
+          "locale" : "bez_TZ",
+          "symbol" : "TSh"
+        },
+        {
+          "locale" : "jmc_TZ",
+          "symbol" : "TSh",
+          "currency" : "TZS"
+        },
+        {
+          "symbol" : "TSh",
+          "locale" : "ksb_TZ",
+          "currency" : "TZS"
+        },
+        {
+          "locale" : "sw_TZ",
+          "symbol" : "TSh",
+          "currency" : "TZS"
+        }
+      ],
+      "name" : "Tanzania",
+      "code" : "TZ"
+    },
+    {
+      "defaultLocale" : "en_TH",
+      "code" : "TH",
+      "name" : "Thailand",
+      "locales" : [
+        {
+          "locale" : "en_TH",
+          "symbol" : "THB",
+          "currency" : "THB"
+        },
+        {
+          "locale" : "th_TH",
+          "symbol" : "฿",
+          "currency" : "THB"
+        }
+      ]
+    },
+    {
+      "code" : "TL",
+      "defaultLocale" : "pt_TL",
+      "name" : "Timor-Leste",
+      "locales" : [
+        {
+          "symbol" : "US$",
+          "currency" : "USD",
+          "locale" : "pt_TL"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "F CFA",
+          "locale" : "ee_TG",
+          "currency" : "XOF"
+        },
+        {
+          "locale" : "fr_TG",
+          "currency" : "XOF",
+          "symbol" : "F CFA"
+        }
+      ],
+      "name" : "Togo",
+      "code" : "TG",
+      "defaultLocale" : "ee_TG"
+    },
+    {
+      "code" : "TK",
+      "name" : "Tokelau",
+      "defaultLocale" : "en_TK",
+      "locales" : [
+        {
+          "locale" : "en_TK",
+          "currency" : "NZD",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "to_TO",
+          "currency" : "TOP",
+          "symbol" : "T$"
+        },
+        {
+          "symbol" : "T$",
+          "locale" : "en_TO",
+          "currency" : "TOP"
+        }
+      ],
+      "defaultLocale" : "en_TO",
+      "name" : "Tonga",
+      "code" : "TO"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "TTD",
+          "locale" : "es_TT",
+          "currency" : "TTD"
+        },
+        {
+          "locale" : "en_TT",
+          "currency" : "TTD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Trinidad & Tobago",
+      "defaultLocale" : "en_TT",
+      "code" : "TT"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "DT",
+          "locale" : "fr_TN",
+          "currency" : "TND"
+        },
+        {
+          "locale" : "ar_TN",
+          "symbol" : "د.ت.‏",
+          "currency" : "TND"
+        }
+      ],
+      "defaultLocale" : "fr_TN",
+      "code" : "TN",
+      "name" : "Tunisia"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "TMT",
+          "currency" : "TMT",
+          "locale" : "tk_TM"
+        }
+      ],
+      "defaultLocale" : "tk_TM",
+      "code" : "TM",
+      "name" : "Turkmenistan"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "USD",
+          "locale" : "es_TC",
+          "currency" : "USD"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "en_TC",
+          "symbol" : "US$"
+        }
+      ],
+      "code" : "TC",
+      "defaultLocale" : "en_TC",
+      "name" : "Turks & Caicos Islands"
+    },
+    {
+      "defaultLocale" : "en_TV",
+      "code" : "TV",
+      "locales" : [
+        {
+          "locale" : "en_TV",
+          "currency" : "AUD",
+          "symbol" : "$"
+        }
+      ],
+      "name" : "Tuvalu"
+    },
+    {
+      "name" : "Türkiye",
+      "locales" : [
+        {
+          "locale" : "en_TR",
+          "currency" : "TRY",
+          "symbol" : "₺"
+        },
+        {
+          "locale" : "tr_TR",
+          "currency" : "TRY",
+          "symbol" : "₺"
+        },
+        {
+          "locale" : "ku_TR",
+          "symbol" : "₺",
+          "currency" : "TRY"
+        }
+      ],
+      "defaultLocale" : "en_TR",
+      "code" : "TR"
+    },
+    {
+      "defaultLocale" : "en_UM",
+      "code" : "UM",
+      "locales" : [
+        {
+          "locale" : "en_UM",
+          "symbol" : "$",
+          "currency" : "USD"
+        }
+      ],
+      "name" : "U.S. Outlying Islands"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "en_VI",
+          "symbol" : "$",
+          "currency" : "USD"
+        },
+        {
+          "locale" : "es_VI",
+          "symbol" : "USD",
+          "currency" : "USD"
+        }
+      ],
+      "name" : "U.S. Virgin Islands",
+      "code" : "VI",
+      "defaultLocale" : "en_VI"
+    },
+    {
+      "locales" : [
+        {
+          "locale" : "xog_UG",
+          "currency" : "UGX",
+          "symbol" : "USh"
+        },
+        {
+          "symbol" : "USh",
+          "locale" : "cgg_UG",
+          "currency" : "UGX"
+        },
+        {
+          "currency" : "UGX",
+          "locale" : "teo_UG",
+          "symbol" : "USh"
+        },
+        {
+          "locale" : "lg_UG",
+          "currency" : "UGX",
+          "symbol" : "USh"
+        },
+        {
+          "locale" : "nyn_UG",
+          "currency" : "UGX",
+          "symbol" : "USh"
+        },
+        {
+          "locale" : "en_UG",
+          "currency" : "UGX",
+          "symbol" : "USh"
+        },
+        {
+          "locale" : "sw_UG",
+          "currency" : "UGX",
+          "symbol" : "USh"
+        }
+      ],
+      "defaultLocale" : "en_UG",
+      "code" : "UG",
+      "name" : "Uganda"
+    },
+    {
+      "name" : "Ukraine",
+      "locales" : [
+        {
+          "locale" : "yi_UA",
+          "symbol" : "UAH",
+          "currency" : "UAH"
+        },
+        {
+          "symbol" : "₴",
+          "currency" : "UAH",
+          "locale" : "uk_UA"
+        },
+        {
+          "currency" : "UAH",
+          "symbol" : "₴",
+          "locale" : "ru_UA"
+        },
+        {
+          "locale" : "en_UA",
+          "currency" : "UAH",
+          "symbol" : "UAH"
+        }
+      ],
+      "defaultLocale" : "en_UA",
+      "code" : "UA"
+    },
+    {
+      "locales" : [
+        {
+          "symbol" : "AED",
+          "locale" : "en_AE",
+          "currency" : "AED"
+        },
+        {
+          "symbol" : "د.إ.‏",
+          "locale" : "ar_AE",
+          "currency" : "AED"
+        }
+      ],
+      "code" : "AE",
+      "defaultLocale" : "en_AE",
+      "name" : "United Arab Emirates"
+    },
+    {
+      "defaultLocale" : "en_GB",
+      "code" : "GB",
+      "name" : "United Kingdom",
+      "locales" : [
+        {
+          "currency" : "GBP",
+          "locale" : "en_GB",
+          "symbol" : "£"
+        },
+        {
+          "symbol" : "£",
+          "currency" : "GBP",
+          "locale" : "kw_GB"
+        },
+        {
+          "symbol" : "£",
+          "locale" : "cy_GB",
+          "currency" : "GBP"
+        },
+        {
+          "currency" : "GBP",
+          "symbol" : "£",
+          "locale" : "gd_GB"
+        },
+        {
+          "symbol" : "£",
+          "locale" : "ga_GB",
+          "currency" : "GBP"
+        }
+      ]
+    },
+    {
+      "defaultLocale" : "en_US",
+      "code" : "US",
+      "name" : "United States",
+      "locales" : [
+        {
+          "symbol" : "$",
+          "locale" : "chr_US",
+          "currency" : "USD"
+        },
+        {
+          "locale" : "cho_US",
+          "currency" : "USD",
+          "symbol" : "US$"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "haw_US",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "USD",
+          "symbol" : "$",
+          "locale" : "cic_US"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "en_US",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "osa_US",
+          "currency" : "USD",
+          "symbol" : "$"
+        },
+        {
+          "locale" : "en_US_POSIX",
+          "currency" : "USD",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "lkt_US",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "apw_US",
+          "symbol" : "$"
+        },
+        {
+          "currency" : "USD",
+          "symbol" : "US$",
+          "locale" : "nv_US"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "es_US",
+          "symbol" : "$"
+        }
+      ]
+    },
+    {
+      "code" : "UY",
+      "name" : "Uruguay",
+      "locales" : [
+        {
+          "locale" : "es_UY",
+          "currency" : "UYU",
+          "symbol" : "$"
+        }
+      ],
+      "defaultLocale" : "es_UY"
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "UZS",
+          "symbol" : "сўм",
+          "locale" : "uz_Cyrl_UZ"
+        },
+        {
+          "locale" : "uz_Latn_UZ",
+          "symbol" : "soʻm",
+          "currency" : "UZS"
+        }
+      ],
+      "defaultLocale" : "uz_Cyrl_UZ",
+      "name" : "Uzbekistan",
+      "code" : "UZ"
+    },
+    {
+      "defaultLocale" : "en_VU",
+      "name" : "Vanuatu",
+      "code" : "VU",
+      "locales" : [
+        {
+          "currency" : "VUV",
+          "locale" : "en_VU",
+          "symbol" : "VT"
+        },
+        {
+          "locale" : "fr_VU",
+          "symbol" : "VT",
+          "currency" : "VUV"
+        }
+      ]
+    },
+    {
+      "name" : "Vatican City",
+      "defaultLocale" : "it_VA",
+      "code" : "VA",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "symbol" : "€",
+          "locale" : "it_VA"
+        }
+      ]
+    },
+    {
+      "code" : "VE",
+      "name" : "Venezuela",
+      "locales" : [
+        {
+          "locale" : "es_VE",
+          "currency" : "VED",
+          "symbol" : "Bs.D"
+        },
+        {
+          "symbol" : "VED",
+          "locale" : "yrl_VE",
+          "currency" : "VED"
+        }
+      ],
+      "defaultLocale" : "es_VE"
+    },
+    {
+      "name" : "Vietnam",
+      "locales" : [
+        {
+          "symbol" : "₫",
+          "locale" : "vi_VN",
+          "currency" : "VND"
+        }
+      ],
+      "code" : "VN",
+      "defaultLocale" : "vi_VN"
+    },
+    {
+      "defaultLocale" : "fr_WF",
+      "name" : "Wallis & Futuna",
+      "code" : "WF",
+      "locales" : [
+        {
+          "locale" : "fr_WF",
+          "currency" : "XPF",
+          "symbol" : "FCFP"
+        }
+      ]
+    },
+    {
+      "locales" : [
+        {
+          "currency" : "MAD",
+          "symbol" : "د.م.‏",
+          "locale" : "ar_EH"
+        }
+      ],
+      "code" : "EH",
+      "defaultLocale" : "ar_EH",
+      "name" : "Western Sahara"
+    },
+    {
+      "defaultLocale" : "ar_YE",
+      "code" : "YE",
+      "name" : "Yemen",
+      "locales" : [
+        {
+          "locale" : "ar_YE",
+          "currency" : "YER",
+          "symbol" : "ر.ي.‏"
+        }
+      ]
+    },
+    {
+      "code" : "ZM",
+      "defaultLocale" : "en_ZM",
+      "locales" : [
+        {
+          "symbol" : "K",
+          "currency" : "ZMW",
+          "locale" : "en_ZM"
+        },
+        {
+          "currency" : "ZMW",
+          "symbol" : "K",
+          "locale" : "bem_ZM"
+        }
+      ],
+      "name" : "Zambia"
+    },
+    {
+      "code" : "ZW",
+      "locales" : [
+        {
+          "locale" : "nd_ZW",
+          "symbol" : "US$",
+          "currency" : "USD"
+        },
+        {
+          "symbol" : "US$",
+          "locale" : "sn_ZW",
+          "currency" : "USD"
+        },
+        {
+          "currency" : "USD",
+          "locale" : "en_ZW",
+          "symbol" : "US$"
+        }
+      ],
+      "name" : "Zimbabwe",
+      "defaultLocale" : "en_ZW"
+    },
+    {
+      "code" : "AX",
+      "locales" : [
+        {
+          "currency" : "EUR",
+          "locale" : "sv_AX",
+          "symbol" : "€"
+        }
+      ],
+      "name" : "Åland Islands",
+      "defaultLocale" : "sv_AX"
+    }
+  ]
