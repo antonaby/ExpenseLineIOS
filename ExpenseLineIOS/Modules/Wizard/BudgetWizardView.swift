@@ -82,32 +82,44 @@ struct BudgetWizardView: View {
     @ViewBuilder
     func EditModeControlView() -> some View {
         HStack {
-            WizzardNextButton("Save") {
+            WizzardNextButton {
                 vm.save()
                 dismiss()
+            } content: {
+                Text("Save")
+                    .modifier(WizardButtonContentViewModifier.modifier)
             }
             .disabled(!vm.isFormValid)
-            if currentPage != .outcomeFlexible {
-                WizzardNextButton("Next") {
-                    nextPage()
-                }
+            WizzardNextButton {
+                nextPage()
+            } content: {
+                Image(systemName: "chevron.right")
+                    .frame(width: 35, height: 35)
+                    .font(.headline)
             }
+            .disabled(currentPage == .outcomeFlexible)
         }
     }
     
     @ViewBuilder
     func CreateModeControlView() -> some View {
-        if currentPage != .outcomeFlexible {
-            WizzardNextButton("Next") {
+        WizzardNextButton {
+            if currentPage != .outcomeFlexible {
                 nextPage()
-            }
-        } else {
-            WizzardNextButton("Save") {
+            } else {
                 vm.save()
                 dismiss()
             }
-            .disabled(!vm.isFormValid)
+        } content: {
+            if currentPage != .outcomeFlexible {
+                Text("Next")
+                    .modifier(WizardButtonContentViewModifier.modifier)
+            } else {
+                Text("Save")
+                    .modifier(WizardButtonContentViewModifier.modifier)
+            }
         }
+        .disabled(!vm.isFormValid && currentPage == .outcomeFlexible)
     }
  
     @ViewBuilder

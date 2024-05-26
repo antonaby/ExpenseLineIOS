@@ -7,25 +7,35 @@
 
 import SwiftUI
 
-struct WizzardNextButton: View {
+struct WizardButtonContentViewModifier: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.title2)
+            .frame(maxWidth: .infinity, minHeight: 35)
+    }
+    
+    static let modifier = WizardButtonContentViewModifier()
+    
+}
+
+struct WizzardNextButton<Content: View>: View {
     
     @Environment(\.isEnabled) var isEnabled
     
-    private let label: String
     private let action: () -> Void
+    private let content: Content
     
-    init(_ label: String, action: @escaping () -> Void) {
-        self.label = label
+    init(action: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
         self.action = action
+        self.content = content()
     }
     
     var body: some View {
         Button {
             action()
         } label: {
-            Text(label)
-                .font(.title2)
-                .frame(maxWidth: .infinity)
+            content
         }
         .buttonStyle(.borderedProminent)
         .tint(buttonColor())
@@ -41,5 +51,10 @@ struct WizzardNextButton: View {
 }
 
 #Preview {
-    WizzardNextButton("Next", action: { print("Preview") })
+    WizzardNextButton() {
+        print("Preview")
+    } content: {
+        Text("Preview")
+            .modifier(WizardButtonContentViewModifier.modifier)
+    }
 }
