@@ -23,8 +23,6 @@ struct CountryCurrency: Codable {
 class DataService: ObservableObject {
     
     private let categories: [CategoryTemplateType]
-    private let currencies: [CurrencySymbol]
-    
     private let countryCurrencies: [CountryCurrency]
     
     init() {
@@ -56,25 +54,19 @@ class DataService: ObservableObject {
                     loadedCountryCurrencies = try decoder.decode([CountryCurrency].self, from: data)
                 }
             } catch {
-                // TODO: handle error
-                print("something went wrong")
+                print("Something went wrong \(error)")
             }
         }
         
         if let parsedCountryCurrencies = loadedCountryCurrencies {
             countryCurrencies = parsedCountryCurrencies
         } else {
-            countryCurrencies = []
+            countryCurrencies = [
+                CountryCurrency(code: "US", name: "United States", defaultLocale: "en_US", locales: [
+                    CurrencyLocale(locale: "en_US", currency: "USD", symbol: "$")
+                ])
+            ]
         }
-        
-        self.currencies = [
-            CurrencySymbol(id: "en_US", name: "United States"),
-            CurrencySymbol(id: "en_GB", name: "Great Britain"),
-            CurrencySymbol(id: "de_DE", name: "Germany"),
-            CurrencySymbol(id: "ru_RU", name: "Russia"),
-            CurrencySymbol(id: "hy_AM", name: "Armenia"),
-            CurrencySymbol(id: "ta_IN", name: "India")
-        ]
     }
     
     func getCategoryTemplates(of type: CategoryType) -> [CategoryTemplateType] {
@@ -90,12 +82,23 @@ class DataService: ObservableObject {
     }
     
     func getCurrencies() -> [CurrencySymbol] {
-        return currencies
+        countryCurrencies.map { CurrencySymbol(
+            id: $0.defaultLocale,
+            name: Locale.current.localizedString(forRegionCode: $0.code) ?? $0.name
+        ) }
     }
     
-    // TODO: check all possible locales
     func getCurrensySymbolById(_ id: String) -> CurrencySymbol? {
-        currencies.first(where: { $0.id == id })
+        if let countryCurrency = countryCurrencies.first(where: {
+            $0.locales.first(where: { $0.locale == id }) != nil
+        }) {
+            
+            return CurrencySymbol(
+                id: countryCurrency.defaultLocale,
+                name: Locale.current.localizedString(forRegionCode: countryCurrency.code) ?? countryCurrency.name)
+        }
+        
+        return nil
     }
     
     func getDefaultCurrencySymbol() -> CurrencySymbol {

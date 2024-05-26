@@ -69,7 +69,7 @@ struct CurrencySelectorSheet: View {
     @StateObject var vm: CurrencySelectorSheetViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             ContentSizeCardView {
                 TextField("Search", text: $vm.search)
             }
