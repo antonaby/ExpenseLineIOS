@@ -30,60 +30,56 @@ struct BudgetListView: View {
                 }
                 .tint(.green)
             }
-            VStack {
-                GeometryReader { geometry in
-                    ScrollView {
-                        VStack {
-                            if vm.budgets.isEmpty {
-                                NoBudgetView()
-                            } else {
-                                ForEach(vm.budgets) { budget in
-                                    ContentSizeCardView {
-                                        HStack {
-                                            Button {
-                                                appState.selectBudget(budget)
-                                            } label: {
-                                                Text(budget.name ?? "Unknown")
-                                                    .font(.title2)
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                            }
-                                            Menu {
-                                                Button {
-                                                    vm.selectedBudget = budget
-                                                } label: {
-                                                    Text("Edit")
-                                                }
-                                                Button(role: .destructive) {
-                                                    vm.deleteBudget(budget)
-                                                } label: {
-                                                    Text("Delete")
-                                                }
-                                            } label: {
-                                                Image(systemName: "ellipsis").font(.title2)
-                                                    .padding(.leading, 10)
-                                            }
+            IconView(name: "piggy-bank", color: .green, size: 100)
+            ScrollView {
+                VStack {
+                    if vm.budgets.isEmpty {
+                        NoBudgetView()
+                    } else {
+                        ForEach(vm.budgets) { budget in
+                            ContentSizeCardView {
+                                HStack {
+                                    Button {
+                                        appState.selectBudget(budget)
+                                    } label: {
+                                        Text(budget.name ?? "Unknown")
+                                            .font(.title2)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                    Menu {
+                                        Button {
+                                            vm.selectedBudget = budget
+                                        } label: {
+                                            Text("Edit")
                                         }
-                                        .tint(.black)
+                                        Button(role: .destructive) {
+                                            vm.deleteBudget(budget)
+                                        } label: {
+                                            Text("Delete")
+                                        }
+                                    } label: {
+                                        Image(systemName: "ellipsis").font(.title2)
+                                            .padding(.leading, 10)
                                     }
                                 }
+                                .tint(.black)
                             }
                         }
-                        .frame(width: geometry.size.width)
-                        .frame(minHeight: geometry.size.height)
                     }
                 }
-                Button {
-                    isWizzardOpen.toggle()
-                } label: {
-                    Text("Create")
-                        .font(.title2)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.green)
             }
-            .padding(.horizontal, 15)
+            .padding(.top, 20)
+            Button {
+                isWizzardOpen.toggle()
+            } label: {
+                Text("Create")
+                    .font(.title2)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.green)
         }
+        .padding(.horizontal, 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
             vm.loadBudgets()
@@ -111,9 +107,7 @@ struct BudgetListView: View {
     @ViewBuilder
     func NoBudgetView() -> some View {
         VStack {
-            Image(systemName: "case")
-                .font(.title)
-            Text("Let's create a new budget!")
+            Text("No budgets yet...")
                 .font(.title)
         }
     }
@@ -123,15 +117,11 @@ struct BudgetListView: View {
 #Preview("No budgets") {
     let bundle = ServiceBundle.preview
   
-    do {
-        let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
-        return BudgetListView(vm:
-                                BudgetListViewModel(budgetService: bundle.budgetService,
-                                                    dataService: bundle.dataService))
-            .environmentObject(appState)
-    } catch {
-        return Text("Something went wrong \(error)")
-    }
+    let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
+    return BudgetListView(vm:
+                            BudgetListViewModel(budgetService: bundle.budgetService,
+                                                dataService: bundle.dataService))
+        .environmentObject(appState)
 }
 
 #Preview("List") {
@@ -152,6 +142,7 @@ struct BudgetListView: View {
                                 BudgetListViewModel(budgetService: bundle.budgetService,
                                                     dataService: bundle.dataService))
             .environmentObject(appState)
+            .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
     }

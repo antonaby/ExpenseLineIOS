@@ -68,10 +68,10 @@ struct BudgetView: View {
                             .tabItem { Image(systemName: "house") }
                             .tag(BudgetViewPage.overview)
                         CategoryListView(vm: vm)
-                            .tabItem { Image(systemName: "menucard") }
+                            .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
                             .tag(BudgetViewPage.categories)
                         TransactionListView(vm: vm)
-                            .tabItem { Image(systemName: "list.clipboard") }
+                            .tabItem { Image(systemName: "list.bullet") }
                             .tag(BudgetViewPage.transactions)
                         BudgetStatsView(vm: vm)
                             .tabItem { Image(systemName: "chart.pie") }

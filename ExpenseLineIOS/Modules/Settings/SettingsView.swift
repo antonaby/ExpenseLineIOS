@@ -54,7 +54,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    var bundle = ServiceBundle.preview
+    let bundle = ServiceBundle.preview
     
     return SettingsView()
         .serviceBundle(bundle)

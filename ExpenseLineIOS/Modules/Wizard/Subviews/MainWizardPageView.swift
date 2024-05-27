@@ -20,7 +20,8 @@ struct MainWizardPageView: View {
                 FlexibleCardView {
                     VStack(spacing: 10) {
                         HStack {
-                            Image(systemName: "case")
+                            Image(systemName: "pencil")
+                                .frame(width: 30)
                             TextField("Name", text: $vm.name)
                         }
                         Divider()
@@ -29,6 +30,7 @@ struct MainWizardPageView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "banknote")
+                                    .frame(width: 30)
                                 Text("Currency")
                                 Spacer()
                                 Text(vm.currency.code)
@@ -44,6 +46,7 @@ struct MainWizardPageView: View {
                     VStack(spacing: 10) {
                         HStack {
                             Image(systemName: "clock")
+                                .frame(width: 25)
                             DatePicker("Daily Reminder",
                                        selection: $vm.dailyReminderAt,
                                        displayedComponents: [.hourAndMinute])

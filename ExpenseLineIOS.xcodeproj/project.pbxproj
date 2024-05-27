@@ -48,6 +48,7 @@
 		D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */; };
 		D25AF79A2BF9D787009FEDD1 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */; };
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
+		D26C11CE2C04A7D6004DB285 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C11CD2C04A7D6004DB285 /* IconView.swift */; };
 		D26DB1B92BEE487F00450617 /* FormTitleViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */; };
 		D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */; };
 		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
@@ -130,6 +131,7 @@
 		D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumericField.swift; sourceTree = "<group>"; };
 		D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
+		D26C11CD2C04A7D6004DB285 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTitleViewModifier.swift; sourceTree = "<group>"; };
 		D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardView.swift; sourceTree = "<group>"; };
 		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				D2AADC082BF7845B00360CD4 /* ProgressView.swift */,
 				D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */,
 				D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */,
+				D26C11CD2C04A7D6004DB285 /* IconView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				D244C0722BFB74530015EA61 /* Celendar+Extension.swift in Sources */,
 				D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */,
 				D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */,
+				D26C11CE2C04A7D6004DB285 /* IconView.swift in Sources */,
 				D2F7685B2BC952A6001CE98C /* TransactionSheetView.swift in Sources */,
 				D250D4CF2BB828EB0050638C /* Budget.swift in Sources */,
 				D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */,

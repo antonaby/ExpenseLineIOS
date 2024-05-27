@@ -154,13 +154,13 @@ struct BudgetWizardView: View {
     func getIconForPage(_ page: WizzardPage) -> String {
         switch page {
         case .base:
-            return "square.and.pencil"
+            return "pencil"
         case .income:
             return "case"
         case .outcomeFixed:
-            return "list.bullet"
+            return "house"
         case .outcomeFlexible:
-            return "dollarsign.arrow.circlepath"
+            return "takeoutbag.and.cup.and.straw"
         }
     }
     
