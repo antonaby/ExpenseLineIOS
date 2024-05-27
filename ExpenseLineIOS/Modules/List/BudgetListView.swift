@@ -25,7 +25,6 @@ struct BudgetListView: View {
                 } label: {
                     Image(systemName: "gear")
                         .font(.title2)
-                        .padding(.trailing, 10)
                         .padding(.top, 5)
                 }
                 .tint(.green)
@@ -79,7 +78,7 @@ struct BudgetListView: View {
             .buttonStyle(.borderedProminent)
             .tint(.green)
         }
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 10)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
             vm.loadBudgets()
