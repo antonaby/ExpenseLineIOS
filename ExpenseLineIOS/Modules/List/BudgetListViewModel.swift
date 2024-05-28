@@ -36,7 +36,25 @@ class BudgetListViewModel: ObservableObject {
             return BudgetWizardViewModel(budget, budgetService: budgetService, dataService: dataService)
         }
         
-        return BudgetWizardViewModel(budgetService.newBudgetEntity(), budgetService: budgetService, dataService: dataService)
+        let budget = budgetService.newBudgetEntity()
+        let categoryTemplates = dataService.getDefaultCategories()
+        
+        for type in categoryTemplates {
+            for template in type.templates {
+                let category = budgetService.newCategoryEntity(budget)
+                category.typeValue = type.type
+                category.amountDecimal = 0
+                category.percentDecimal = 0
+                category.name = template.name
+                category.iconName = template.iconName
+                category.templateId = template.id
+                category.colorValue = .black
+                
+                budget.addToCategories(category)
+            }
+        }
+        
+        return BudgetWizardViewModel(budget, budgetService: budgetService, dataService: dataService)
     }
     
     func deleteBudget(_ budget: BudgetEntity) {

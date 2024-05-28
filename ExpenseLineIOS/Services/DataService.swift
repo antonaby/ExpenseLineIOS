@@ -84,6 +84,30 @@ class DataService: ObservableObject {
         ) }
     }
     
+    func getDefaultCategories() -> [CategoryTemplateType] {
+        return [
+            CategoryTemplateType(id: "income", type: .income, templates: [
+                getTemplateById("ctg.income.salary")!,
+                getTemplateById("ctg.income.passive-income")!,
+                getTemplateById("ctg.income.other-income")!
+            ]),
+            CategoryTemplateType(id: "outcome.fixed", type: .outcomeFixed, templates: [
+                getTemplateById("ctg.outcome.fixed.house")!,
+                getTemplateById("ctg.outcome.fixed.mobile")!,
+                getTemplateById("ctg.outcome.fixed.internet")!,
+                getTemplateById("ctg.outcome.fixed.subscription")!,
+                getTemplateById("ctg.outcome.fixed.other")!
+            ]),
+            CategoryTemplateType(id: "outcome.flexible", type: .outcomePercent, templates: [
+                getTemplateById("ctg.outcome.flexible.groceries")!,
+                getTemplateById("ctg.outcome.flexible.pet")!,
+                getTemplateById("ctg.outcome.flexible.food-delivery")!,
+                getTemplateById("ctg.outcome.flexible.coffee")!,
+                getTemplateById("ctg.outcome.flexible.buyings")!,
+            ])
+        ]
+    }
+    
     func getCurrensySymbolById(_ id: String) -> CurrencySymbol? {
         if let countryCurrency = countryCurrencies.first(where: {
             $0.locales.first(where: { $0.locale == id }) != nil
