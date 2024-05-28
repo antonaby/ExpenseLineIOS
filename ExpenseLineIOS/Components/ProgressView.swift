@@ -14,7 +14,7 @@ struct ProgressView: View {
     var height: CGFloat
     
     init(progress: Double, color: Color = .green, fullColor: Color = .red, height: CGFloat = 10) {
-        if progress >= 1 {
+        if progress > 1 {
             self.progress = 1
             self.color = fullColor
         } else {
@@ -52,4 +52,8 @@ struct ProgressView: View {
 
 #Preview("Full") {
     ProgressView(progress: 1)
+}
+
+#Preview("Full 120%") {
+    ProgressView(progress: 1.2)
 }

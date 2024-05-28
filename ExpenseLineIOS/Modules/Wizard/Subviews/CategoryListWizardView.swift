@@ -28,7 +28,11 @@ struct CategoryListWizardView: View {
                         Text(category.nameValue)
                         Spacer()
                         if category.typeValue == .outcomePercent {
-                            Text(vm.percentFormatter.string(from: category.percentValue) ?? "0")
+                            HStack {
+                                Text(vm.percentFormatter.string(from: category.percentValue) ?? "0")
+                                Text("≈" + formatPercentAmount(category))
+                                    .font(.caption)
+                            }
                         } else {
                             Text(vm.currencyFormatter.string(from: category.amountValue) ?? "0")
                         }
@@ -60,6 +64,12 @@ struct CategoryListWizardView: View {
         }
         .listStyle(.plain)
     }
+    
+    func formatPercentAmount(_ category: PlanCategoryEntity) -> String {
+        let amount = (category.percentDecimal * vm.calculateTotalIncome()) as NSNumber
+        return vm.currencyFormatter.string(from: amount) ?? "0"
+    }
+    
 }
 
 #Preview("Amount USD") {
@@ -121,6 +131,10 @@ struct CategoryListWizardView: View {
     let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     budget.currency = "de_DE"
+    
+    let incomeCategory = bundle.budgetService.newCategoryEntity(budget)
+    incomeCategory.typeValue = .income
+    incomeCategory.amountDecimal = 5000
     
     let category1 = PlanCategoryEntity(context: dm.viewContext)
     category1.name = "Preview 1"

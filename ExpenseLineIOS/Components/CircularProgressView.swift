@@ -19,7 +19,7 @@ struct CircularProgressView<Content: View>: View {
          fullColor: Color = .red,
          lineWidth: CGFloat = 15,
          @ViewBuilder content: @escaping () -> Content) {
-        if progress >= 1 {
+        if progress > 1 {
             self.progress = 1
             self.color = fullColor
         } else {
@@ -68,5 +68,10 @@ struct CircularProgressView<Content: View>: View {
 
 #Preview("Full") {
     CircularProgressView(progress: 1, content: { Text("Preview") })
+        .frame(width: 100, height: 100)
+}
+
+#Preview("Full 120%") {
+    CircularProgressView(progress: 1.2, content: { Text("Preview") })
         .frame(width: 100, height: 100)
 }

@@ -79,7 +79,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func newCategory(_ type: CategoryType) {
-        var category = budgetService.newCategoryEntity(budget)
+        let category = budgetService.newCategoryEntity(budget)
         category.typeValue = type
         op = .create
         selectedCategory = category
@@ -104,6 +104,10 @@ class BudgetWizardViewModel: ObservableObject {
         }
         
         op = .none
+    }
+    
+    func calculateTotalIncome() -> Decimal {
+        budget.totalAmountForCategoryType(.income)
     }
     
     func getTotalIncome() -> String {
