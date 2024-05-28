@@ -22,9 +22,11 @@ struct CategoryView: View {
             ContentSizeCardView {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        Image(systemName: vm.category.iconNameValue)
-                            .foregroundColor(vm.category.colorValue)
-                            .font(.title)
+                        IconView(
+                            name: vm.category.iconNameValue,
+                            color: vm.category.colorValue,
+                            size: 45
+                        )
                         Text(vm.category.nameValue)
                             .font(.title2)
                         Spacer()
@@ -141,7 +143,7 @@ struct CategoryView: View {
     category.name = "Preview"
     category.typeValue = .outcomeFixed
     category.amountDecimal = 1000
-    category.iconName = "cup.and.saucer"
+    category.iconName = "007-electricity"
     category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)
@@ -192,7 +194,7 @@ struct CategoryView: View {
     category.name = "Preview"
     category.typeValue = .outcomePercent
     category.percentDecimal = 0.2
-    category.iconName = "cup.and.saucer"
+    category.iconName = "015-groceries"
     category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)

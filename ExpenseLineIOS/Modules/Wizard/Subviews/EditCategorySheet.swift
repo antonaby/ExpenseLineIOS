@@ -139,7 +139,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
     func getUpdatedCategory() -> PlanCategoryEntity {
         category.name = name
-        category.iconName = template?.iconName ?? "questionmark"
+        category.iconName = template?.iconName ?? "question"
         if type == .outcomePercent {
             category.percentDecimalFraction = convertToDecimalNumber(percent, symbol: EditPlanCategorySheetViewModel.dafaultPercentSymbol)
             category.amountDecimal = 0
@@ -271,14 +271,18 @@ struct EditCategorySheet: View {
                             showCategrotyTemplateSheet.toggle()
                         } label: {
                             FlexibleCardView {
-                                Image(systemName: vm.template?.iconName ?? "questionmark")
+                                IconView(
+                                    name: vm.template?.iconName ?? "question",
+                                    color: vm.template != nil ? vm.color : .black,
+                                    size: 45
+                                )
                             }
-                            .foregroundColor(vm.color)
-                            .frame(maxWidth: 50)
+                            .frame(maxWidth: 70)
                         }
                         FlexibleCardView {
                             HStack {
                                 TextField("Name", text: $vm.name)
+                                    .font(.title3)
                             }
                         }
                     }
@@ -358,7 +362,7 @@ struct EditCategorySheet: View {
     
     func onIconSelected() {
         if let template = vm.template {
-            vm.name = template.name
+            vm.name = template.id
         }
     }
     
@@ -393,9 +397,9 @@ struct EditCategorySheet: View {
     category.name = "Preview"
     category.amount = 1000
     category.colorValue = .orange
-    category.iconName = "case"
+    category.iconName = "018-income"
     category.typeValue = .income
-    category.templateId = UUID(uuidString: "4e794d37-e5fb-4574-b105-4ec0a2d46ce9")!
+    category.templateId = "Salary"
 
     return EditCategorySheet(title: "Save", 
                              vm: EditPlanCategorySheetViewModel(category,

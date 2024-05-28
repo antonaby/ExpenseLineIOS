@@ -20,12 +20,11 @@ struct CategorySelectorView: View {
                 dismiss()
             } label: {
                 HStack {
-                    Image(systemName: ctg.iconNameValue)
-                        .foregroundColor(ctg.colorValue)
-                        .frame(width: 25)
+                    IconView(name: ctg.iconNameValue, color: ctg.colorValue)
                     Text(ctg.nameValue)
                 }
             }
+            .listRowSeparator(.hidden)
             .tint(.black)
         }
         .navigationBarBackButtonHidden(true)
@@ -68,8 +67,11 @@ struct TransactionSheetView: View {
                                 CategorySelectorView(category: $vm.category, categories: $vm.categories)
                             } label: {
                                 HStack {
-                                    Image(systemName: vm.category?.iconNameValue ?? "questionmark")
-                                        .foregroundColor(vm.category?.colorValue ?? .black)
+                                    IconView(
+                                        name: vm.category?.iconNameValue ?? "question",
+                                        color: vm.category?.colorValue ?? .black,
+                                        size: 45
+                                    )
                                     if let category = vm.category {
                                         Text(category.nameValue)
                                     } else {
@@ -139,7 +141,7 @@ struct TransactionSheetView: View {
     category1.budget = budget
     category1.typeValue = .income
     category1.colorValue = .blue
-    category1.iconName = "bag"
+    category1.iconName = "018-income"
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
     category2.id = UUID()
@@ -147,7 +149,7 @@ struct TransactionSheetView: View {
     category2.budget = budget
     category2.typeValue = .outcomeFixed
     category2.colorValue = .cyan
-    category2.iconName = "car"
+    category2.iconName = "024-mortgage"
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
     category3.id = UUID()
@@ -155,7 +157,7 @@ struct TransactionSheetView: View {
     category3.budget = budget
     category3.typeValue = .outcomePercent
     category3.colorValue = .green
-    category3.iconName = "takeoutbag.and.cup.and.straw"
+    category3.iconName = "005-coffee"
     
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
@@ -177,7 +179,7 @@ struct TransactionSheetView: View {
     category1.budget = budget
     category1.typeValue = .income
     category1.colorValue = .blue
-    category1.iconName = "bag"
+    category1.iconName = "018-income"
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
     category2.id = UUID()
@@ -185,7 +187,7 @@ struct TransactionSheetView: View {
     category2.budget = budget
     category2.typeValue = .outcomeFixed
     category2.colorValue = .cyan
-    category2.iconName = "car"
+    category2.iconName = "024-mortgage"
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
     category3.id = UUID()
@@ -193,7 +195,7 @@ struct TransactionSheetView: View {
     category3.budget = budget
     category3.typeValue = .outcomePercent
     category3.colorValue = .green
-    category3.iconName = "takeoutbag.and.cup.and.straw"
+    category3.iconName = "005-coffee"
     
     let transaction = bundle.budgetService.newTransactionEntity(budget)
     transaction.name = "Preview"

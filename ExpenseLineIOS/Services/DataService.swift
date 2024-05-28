@@ -27,21 +27,21 @@ class DataService: ObservableObject {
     
     init() {
         self.categories = [
-            CategoryTemplateType(id: UUID(), name: "Income", type: .income, templates: [
-                CategoryTemplate(id: UUID(uuidString: "cb354891-2ade-4268-8419-58b50ce80b36")!, name: "Salary", iconName: "case"),
-                CategoryTemplate(id: UUID(uuidString: "62eb641f-2347-43a4-a73a-94592660bbbf")!, name: "Savings", iconName: "banknote"),
+            CategoryTemplateType(id: "Income", type: .income, templates: [
+                CategoryTemplate(id: "Salary", iconName: "018-income"),
+                CategoryTemplate(id: "Investments", iconName: "020-investment"),
             ]),
-            CategoryTemplateType(id: UUID(), name: "Outcome", type: .outcomeFixed, templates: [
-                CategoryTemplate(id: UUID(uuidString: "eb87fc74-d487-42d2-b6c3-2e734cd18502")!, name: "Rent", iconName: "house"),
-                CategoryTemplate(id: UUID(uuidString: "fc5738ef-cb39-4b2b-85a9-ce54666820d9")!, name: "Internet", iconName: "globe"),
+            CategoryTemplateType(id: "Outcome", type: .outcomeFixed, templates: [
+                CategoryTemplate(id: "Rent", iconName: "024-mortgage"),
+                CategoryTemplate(id: "Payments", iconName: "007-electricity")
             ]),
-            CategoryTemplateType(id: UUID(), name: "Daily", type: .outcomePercent, templates: [
-                CategoryTemplate(id: UUID(uuidString: "4e794d37-e5fb-4574-b105-4ec0a2d46ce9")!, name: "Groceries", iconName: "takeoutbag.and.cup.and.straw"),
-                CategoryTemplate(id: UUID(uuidString: "e23eec61-f589-43c5-893c-fb898d729127")!, name: "Coffee", iconName: "cup.and.saucer"),
-                CategoryTemplate(id: UUID(uuidString: "493f5b08-285f-443a-89f0-c473638aae83")!, name: "Transport", iconName: "car"),
-                CategoryTemplate(id: UUID(uuidString: "07227b9d-da14-4dc1-8fde-c49550d02031")!, name: "Dinner", iconName: "wineglass"),
-                CategoryTemplate(id: UUID(uuidString: "1271b562-d4ed-4efb-a9f1-eef83ae479f9")!, name: "Club", iconName: "party.popper"),
-                CategoryTemplate(id: UUID(uuidString: "49de8df4-564f-471b-bcc0-f77d7c500067")!, name: "Wine", iconName: "wineglass.fill"),
+            CategoryTemplateType(id: "Daily", type: .outcomePercent, templates: [
+                CategoryTemplate(id: "Groceries", iconName: "015-groceries"),
+                CategoryTemplate(id: "Coffee", iconName: "005-coffee"),
+                CategoryTemplate(id: "Transport", iconName: "013-gas"),
+                CategoryTemplate(id: "Dinner", iconName: "011-food"),
+                CategoryTemplate(id: "Intertament", iconName: "025-movie"),
+                CategoryTemplate(id: "Alcohol", iconName: "006-drink"),
             ]),
         ]
         
@@ -77,7 +77,7 @@ class DataService: ObservableObject {
         return categories.filter { $0.type != type }
     }
     
-    func getTemplateById(_ id: UUID) -> CategoryTemplate? {
+    func getTemplateById(_ id: String) -> CategoryTemplate? {
         categories.map { $0.templates }.joined().filter { $0.id == id }.first
     }
     

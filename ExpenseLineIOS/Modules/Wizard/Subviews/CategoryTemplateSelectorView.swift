@@ -68,7 +68,7 @@ struct CategoryTemplateSelectorView: View {
     @ViewBuilder
     func TemplatesSectionsView(_ templates: [CategoryTemplateType]) -> some View {
         ForEach(templates) { template in
-            TemplateSection(name: template.name, templates: template.templates)
+            TemplateSection(name: template.id, templates: template.templates)
         }
     }
     
@@ -83,14 +83,16 @@ struct CategoryTemplateSelectorView: View {
                 } label: {
                     FlexibleCardView(color: selectedTemplate?.id == template.id ? color : .white) {
                         VStack {
-                            Image(systemName: template.iconName)
-                                .font(.title2)
-                                .bold()
-                            Text(template.name)
+                            IconView(
+                                name: template.iconName,
+                                color: selectedTemplate?.id == template.id ? .white : .black,
+                                size: 40
+                            )
+                            Text(template.id)
                                 .lineLimit(1)
                                 .font(.caption2)
+                                .foregroundColor(selectedTemplate?.id == template.id ? .white : .black)
                         }
-                        .foregroundColor(selectedTemplate?.id == template.id ? .white : .black)
                     }
                 }
             }

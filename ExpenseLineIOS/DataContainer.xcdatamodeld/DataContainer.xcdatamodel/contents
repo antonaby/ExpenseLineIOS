@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="BudgetEntity" representedClassName="BudgetEntity" syncable="YES" codeGenerationType="class">
         <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="dailyRemainderAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -26,7 +26,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="percent" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="templateId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="templateId" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BudgetEntity" inverseName="categories" inverseEntity="BudgetEntity"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionEntity" inverseName="category" inverseEntity="TransactionEntity"/>

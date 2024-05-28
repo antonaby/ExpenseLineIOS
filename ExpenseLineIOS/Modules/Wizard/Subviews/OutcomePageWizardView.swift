@@ -36,7 +36,7 @@ struct OutcomePageWizardView: View {
     category1.name = "Preview 1"
     category1.typeValue = .outcomeFixed
     category1.colorValue = .green
-    category1.iconName = "case"
+    category1.iconName = "024-mortgage"
     category1.budget = budget
     category1.amountDecimal = 1000
     
@@ -45,7 +45,7 @@ struct OutcomePageWizardView: View {
     category2.name = "Preview 2"
     category2.typeValue = .outcomeFixed
     category2.colorValue = .green
-    category2.iconName = "globe"
+    category2.iconName = "007-electricity"
     category2.budget = budget
     category2.amountDecimal = 1000000
     
@@ -54,7 +54,7 @@ struct OutcomePageWizardView: View {
     category3.name = "Preview 3"
     category3.typeValue = .outcomePercent
     category3.colorValue = .green
-    category3.iconName = "cup.and.saucer"
+    category3.iconName = "015-groceries"
     category3.budget = budget
     category3.percentDecimalFraction = 15
     
@@ -63,7 +63,7 @@ struct OutcomePageWizardView: View {
     category4.name = "Preview 4"
     category4.typeValue = .outcomePercent
     category4.colorValue = .green
-    category4.iconName = "takeoutbag.and.cup.and.straw"
+    category4.iconName = "005-coffee"
     category4.budget = budget
     category4.percentDecimalFraction = 20
     
@@ -88,7 +88,7 @@ struct OutcomePageWizardView: View {
     category1.name = "Preview 1"
     category1.typeValue = .outcomeFixed
     category1.colorValue = .green
-    category1.iconName = "case"
+    category1.iconName = "024-mortgage"
     category1.budget = budget
     category1.amountDecimal = 1000
     
@@ -97,7 +97,7 @@ struct OutcomePageWizardView: View {
     category2.name = "Preview 2"
     category2.typeValue = .outcomeFixed
     category2.colorValue = .green
-    category2.iconName = "globe"
+    category2.iconName = "007-electricity"
     category2.budget = budget
     category2.amountDecimal = 1000000
     
@@ -106,7 +106,7 @@ struct OutcomePageWizardView: View {
     category3.name = "Preview 3"
     category3.typeValue = .outcomePercent
     category3.colorValue = .green
-    category3.iconName = "cup.and.saucer"
+    category3.iconName = "015-groceries"
     category3.budget = budget
     category3.percentDecimalFraction = 15
     
@@ -115,7 +115,7 @@ struct OutcomePageWizardView: View {
     category4.name = "Preview 4"
     category4.typeValue = .outcomePercent
     category4.colorValue = .green
-    category4.iconName = "takeoutbag.and.cup.and.straw"
+    category4.iconName = "005-coffee"
     category4.budget = budget
     category4.percentDecimalFraction = 20
     

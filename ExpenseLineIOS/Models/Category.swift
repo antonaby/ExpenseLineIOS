@@ -20,16 +20,14 @@ enum CategoryType: Int, CaseIterable, Identifiable {
 
 struct CategoryTemplate: Identifiable {
     
-    var id: UUID
-    var name: String
+    var id: String
     var iconName: String
     
 }
 
 struct CategoryTemplateType: Identifiable {
     
-    var id: UUID
-    var name: String
+    var id: String
     var type: CategoryType
     var templates: [CategoryTemplate]
     
@@ -62,7 +60,7 @@ extension PlanCategoryEntity {
     
     var iconNameValue: String {
         get {
-            iconName ?? "questionmark"
+            iconName ?? "question"
         }
     }
     
@@ -113,10 +111,10 @@ extension PlanCategoryEntity {
     var colorValue: Color {
         get {
             if let value = color {
-                return Color(hex: value) ?? .black
+                return Color(hex: value) ?? .green
             }
             
-            return .black
+            return .green
         }
         set {
             color = newValue.toHex() ?? "000000"

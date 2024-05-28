@@ -17,8 +17,11 @@ struct TransactionCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
-                Image(systemName: transaction.category?.iconNameValue ?? "questionmark")
-                    .foregroundColor(transaction.category?.colorValue ?? .black)
+                IconView(
+                    name: transaction.category?.iconNameValue ?? "question",
+                    color: transaction.category?.colorValue ?? .black,
+                    size: 45
+                )
                 VStack(alignment: .listRowSeparatorLeading) {
                     Text(transaction.category?.name ?? "?")
                         .font(.caption)
@@ -108,7 +111,7 @@ struct TransactionListView: View {
         category1.name = "Preview 1"
         category1.amount = 0
         category1.percent = 0.2
-        category1.iconName = "case"
+        category1.iconName = "011-food"
         category1.typeValue = .outcomePercent
         category1.colorValue = .orange
         category1.createdAt = Date()
@@ -119,7 +122,7 @@ struct TransactionListView: View {
         category2.name = "Preview 2"
         category2.amount = 2000
         category2.percent = 0
-        category2.iconName = "cup.and.saucer"
+        category2.iconName = "007-electricity"
         category2.typeValue = .outcomeFixed
         category2.colorValue = .green
         category2.createdAt = Date()
