@@ -109,6 +109,11 @@
                 "iconName": "fl-groceries"
             },
             {
+                "id": "ctg.outcome.flexible.pet",
+                "name": "Pets",
+                "iconName": "fl-pet"
+            },
+            {
                 "id": "ctg.outcome.flexible.books",
                 "name": "Books",
                 "iconName": "fl-book"

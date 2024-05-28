@@ -78,7 +78,7 @@ struct CategoryCard: View {
     func getPercentSpentDecimal() -> Decimal {
         if category.entity.typeValue == .outcomeFixed {
             if category.entity.amountDecimal <= 0 {
-                return 1
+                return 0
             }
             
             return category.spendings.totalAmount / category.entity.amountDecimal
@@ -86,7 +86,7 @@ struct CategoryCard: View {
         
         if category.entity.typeValue == .outcomePercent {
             if category.entity.percentDecimal <= 0 {
-                return 1
+                return 0
             }
             
             let expectedAmount = vm.totalPlannedIncome * category.entity.percentDecimal
