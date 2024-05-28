@@ -21,6 +21,7 @@ enum CategoryType: Int, CaseIterable, Identifiable, Codable {
 struct CategoryTemplate: Identifiable, Codable {
     
     var id: String
+    var name: String
     var iconName: String
     
 }

@@ -68,7 +68,7 @@ struct CategoryTemplateSelectorView: View {
     @ViewBuilder
     func TemplatesSectionsView(_ templates: [CategoryTemplateType]) -> some View {
         ForEach(templates) { template in
-            TemplateSection(name: template.id, templates: template.templates)
+            TemplateSection(name: "Categories", templates: template.templates)
         }
     }
     
@@ -88,7 +88,7 @@ struct CategoryTemplateSelectorView: View {
                                 color: selectedTemplate?.id == template.id ? .white : .black,
                                 size: 40
                             )
-                            Text(template.id)
+                            Text(template.name)
                                 .lineLimit(1)
                                 .font(.caption2)
                                 .foregroundColor(selectedTemplate?.id == template.id ? .white : .black)

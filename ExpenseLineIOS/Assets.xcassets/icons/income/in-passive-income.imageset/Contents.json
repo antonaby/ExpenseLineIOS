@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "piggy-bank.svg",
+      "filename" : "023-passive income.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "piggy-bank 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "piggy-bank 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

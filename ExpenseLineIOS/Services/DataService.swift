@@ -30,14 +30,14 @@ class DataService: ObservableObject {
             self.categories = parsedCategories
         } else {
             self.categories = [
-                CategoryTemplateType(id: "Income", type: .income, templates: [
-                    CategoryTemplate(id: "Income", iconName: "018-income")
+                CategoryTemplateType(id: "income", type: .income, templates: [
+                    CategoryTemplate(id: "ctg.income.unknown", name: "Income", iconName: "question")
                 ]),
-                CategoryTemplateType(id: "Outcome Fixed", type: .outcomeFixed, templates: [
-                    CategoryTemplate(id: "Fixed", iconName: "024-mortgage")
+                CategoryTemplateType(id: "outcome.fixed", type: .outcomeFixed, templates: [
+                    CategoryTemplate(id: "ctg.outcome.fixed.unknown", name: "Fixed", iconName: "question")
                 ]),
-                CategoryTemplateType(id: "Outcome Flexible", type: .outcomePercent, templates: [
-                    CategoryTemplate(id: "Flexible", iconName: "005-coffee")
+                CategoryTemplateType(id: "outcome.flexible", type: .outcomePercent, templates: [
+                    CategoryTemplate(id: "ctg.outcome.flexible.unknown", name: "Flexible", iconName: "question")
                 ])
             ]
         }

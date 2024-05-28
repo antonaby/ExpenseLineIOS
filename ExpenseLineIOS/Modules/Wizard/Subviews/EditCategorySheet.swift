@@ -362,7 +362,7 @@ struct EditCategorySheet: View {
     
     func onIconSelected() {
         if let template = vm.template {
-            vm.name = template.id
+            vm.name = template.name
         }
     }
     
@@ -392,14 +392,14 @@ struct EditCategorySheet: View {
 
 #Preview("Existing") {
     let bundle = ServiceBundle.preview
+    let template = bundle.dataService.getTemplateById("ctg.income.salary")
     let budget = bundle.budgetService.newBudgetEntity()
     let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview"
     category.amount = 1000
     category.colorValue = .orange
-    category.iconName = "018-income"
     category.typeValue = .income
-    category.templateId = "Salary"
+    category.templateId = template?.id
 
     return EditCategorySheet(title: "Save", 
                              vm: EditPlanCategorySheetViewModel(category,

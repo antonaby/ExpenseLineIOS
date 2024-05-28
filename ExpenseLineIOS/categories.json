@@ -1,11 +1,202 @@
 [
     {
-        "id": "Income",
+        "id": "income",
         "type": 1,
         "templates": [
             {
-                "id": "Salary",
-                "iconName": "018-income"
+                "id": "ctg.income.salary",
+                "name": "Salary",
+                "iconName": "in-income"
+            },
+            {
+                "id": "ctg.income.investment",
+                "name": "Investments",
+                "iconName": "in-investment"
+            },
+            {
+                "id": "ctg.income.passive-income",
+                "name": "Passive Income",
+                "iconName": "in-passive-income"
+            },
+            {
+                "id": "ctg.income.other-income",
+                "name": "Other Income",
+                "iconName": "in-wallet"
+            }
+        ]
+    },{
+        "id": "outcome.fixed",
+        "type": 2,
+        "templates": [
+            {
+                "id": "ctg.outcome.fixed.payments",
+                "name": "Payments",
+                "iconName": "fi-electricity"
+            },
+            {
+                "id": "ctg.outcome.fixed.gym",
+                "name": "Gym",
+                "iconName": "fi-gym"
+            },
+            {
+                "id": "ctg.outcome.fixed.insurance",
+                "name": "Insurance",
+                "iconName": "fi-insurance"
+            },
+            {
+                "id": "ctg.outcome.fixed.laundry",
+                "name": "Laundry",
+                "iconName": "fi-laundry"
+            },
+            {
+                "id": "ctg.outcome.fixed.medical",
+                "name": "Medical",
+                "iconName": "fi-medical"
+            },
+            {
+                "id": "ctg.outcome.fixed.house",
+                "name": "House",
+                "iconName": "fi-house"
+            },
+            {
+                "id": "ctg.outcome.fixed.rent",
+                "name": "Rent",
+                "iconName": "fi-rent"
+            },
+            {
+                "id": "ctg.outcome.fixed.mobile",
+                "name": "Mobile Phone",
+                "iconName": "fi-mobile"
+            },
+            {
+                "id": "ctg.outcome.fixed.internet",
+                "name": "Internet",
+                "iconName": "fi-internet"
+            },
+            {
+                "id": "ctg.outcome.fixed.loans",
+                "name": "Loans",
+                "iconName": "fi-loan"
+            },
+            {
+                "id": "ctg.outcome.fixed.subscription",
+                "name": "Subscriptions",
+                "iconName": "fi-subscription"
+            },
+            {
+                "id": "ctg.outcome.fixed.music",
+                "name": "Music",
+                "iconName": "fi-music"
+            },
+            {
+                "id": "ctg.outcome.fixed.parking",
+                "name": "Parking",
+                "iconName": "fi-parking"
+            },
+            {
+                "id": "ctg.outcome.fixed.other",
+                "name": "Other Expenses",
+                "iconName": "fi-other"
+            }
+        ]
+    },{
+        "id": "outcome.flexible",
+        "type": 3,
+        "templates": [
+            {
+                "id": "ctg.outcome.flexible.groceries",
+                "name": "Groceries",
+                "iconName": "fl-groceries"
+            },
+            {
+                "id": "ctg.outcome.flexible.books",
+                "name": "Books",
+                "iconName": "fl-book"
+            },
+            {
+                "id": "ctg.outcome.flexible.clothes",
+                "name": "Clothes",
+                "iconName": "fl-cloth"
+            },
+            {
+                "id": "ctg.outcome.flexible.coffee",
+                "name": "Coffee",
+                "iconName": "fl-coffee"
+            },
+            {
+                "id": "ctg.outcome.flexible.drink",
+                "name": "Drink",
+                "iconName": "fl-drink"
+            },
+            {
+                "id": "ctg.outcome.flexible.entertainment",
+                "name": "Entertainment",
+                "iconName": "fl-entertainment"
+            },
+            {
+                "id": "ctg.outcome.flexible.fast-food",
+                "name": "Fast Food",
+                "iconName": "fl-fast-food"
+            },
+            {
+                "id": "ctg.outcome.flexible.food-delivery",
+                "name": "Food Delivery",
+                "iconName": "fl-food-delivery"
+            },
+            {
+                "id": "ctg.outcome.flexible.restaurant",
+                "name": "Restaurant",
+                "iconName": "fl-restaurant"
+            },
+            {
+                "id": "ctg.outcome.flexible.healthy-food",
+                "name": "Healthy Food",
+                "iconName": "fl-healthy-food"
+            },
+            {
+                "id": "ctg.outcome.flexible.gift",
+                "name": "Gift",
+                "iconName": "fl-gift"
+            },
+            {
+                "id": "ctg.outcome.flexible.magazine",
+                "name": "Magazine",
+                "iconName": "fl-magazine"
+            },
+            {
+                "id": "ctg.outcome.flexible.public-transport",
+                "name": "Public Transport",
+                "iconName": "fl-public-transport"
+            },
+            {
+                "id": "ctg.outcome.flexible.salon",
+                "name": "Salon",
+                "iconName": "fl-salon"
+            },
+            {
+                "id": "ctg.outcome.flexible.buyings",
+                "name": "Buyings",
+                "iconName": "fl-shopping-cart"
+            },
+            {
+                "id": "ctg.outcome.flexible.snacks",
+                "name": "Snacks",
+                "iconName": "fl-snack"
+            },
+            {
+                "id": "ctg.outcome.flexible.spa",
+                "name": "Spa",
+                "iconName": "fl-spa"
+            },
+            {
+                "id": "ctg.outcome.flexible.toys",
+                "name": "Toys",
+                "iconName": "fl-toy"
+            },
+            {
+                "id": "ctg.outcome.flexible.travel",
+                "name": "Travel",
+                "iconName": "fl-travel"
             }
         ]
     }
