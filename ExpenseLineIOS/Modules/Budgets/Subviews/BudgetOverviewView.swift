@@ -64,7 +64,6 @@ struct BudgetOverviewView: View {
             }
             .padding(.top, 30)
         }
-        .padding(.horizontal, 15)
         .onAppear {
             vm.loadData(for: .overview)
         }
@@ -105,7 +104,7 @@ struct BudgetOverviewView: View {
     
     func getFixedSpent() -> Double {
         if vm.totalPlannedFixedOutcome <= 0 {
-            return 1
+            return 0
         }
         if vm.totalFixedOutcome <= 0 {
             return 0

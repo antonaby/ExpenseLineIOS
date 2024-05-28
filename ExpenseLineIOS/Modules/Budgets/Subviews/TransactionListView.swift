@@ -15,45 +15,44 @@ struct TransactionCard: View {
     @Binding var selectedTransaction: TransactionEntity?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            HStack {
-                IconView(
-                    name: transaction.category?.iconNameValue ?? "question",
-                    color: transaction.category?.colorValue ?? .black,
-                    size: 45
-                )
-                VStack(alignment: .listRowSeparatorLeading) {
-                    Text(transaction.category?.name ?? "?")
-                        .font(.caption)
-                    Text(transaction.name ?? "?")
-                        .bold()
-                }
-                Spacer()
-                Menu {
-                    Button {
-                        selectedTransaction = transaction
-                    } label: {
-                        Text("Edit")
+        FlexibleCardView {
+            VStack(alignment: .leading, spacing: 5) {
+                HStack {
+                    IconView(
+                        name: transaction.category?.iconNameValue ?? "question",
+                        color: transaction.category?.colorValue ?? .black,
+                        size: 45
+                    )
+                    VStack(alignment: .listRowSeparatorLeading) {
+                        Text(transaction.category?.name ?? "?")
+                            .font(.caption)
+                        Text(transaction.name ?? "?")
+                            .bold()
                     }
-                    Button(role: .destructive) {
-                        vm.deleteTransaction(transaction)
+                    Spacer()
+                    Menu {
+                        Button {
+                            selectedTransaction = transaction
+                        } label: {
+                            Text("Edit")
+                        }
+                        Button(role: .destructive) {
+                            vm.deleteTransaction(transaction)
+                        } label: {
+                            Text("Delete")
+                        }
                     } label: {
-                        Text("Delete")
+                        Image(systemName: "ellipsis")
                     }
-                } label: {
-                    Image(systemName: "ellipsis")
+                    
                 }
-                
+                Text(vm.formatAmount(transaction.amountDecimal))
+                    .font(.largeTitle)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(vm.formatDate(transaction.createdAt))
+                    .font(.caption)
             }
-            Text(vm.formatAmount(transaction.amountDecimal))
-                .font(.largeTitle)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Text(vm.formatDate(transaction.createdAt))
-                .font(.caption)
         }
-        .padding([.horizontal], 15)
-        .padding([.vertical], 5)
-        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
     }
 }
 

@@ -350,6 +350,10 @@ class BudgetService: ObservableObject {
         }
         
         let categories = try getCategoriesOfBudget(budget, types: types)
+        if categories.isEmpty {
+            return 0
+        }
+        
         let categoryIds = categories
             .filter { $0.id != nil }
             .map { $0.id! }
@@ -375,7 +379,7 @@ class BudgetService: ObservableObject {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch total outcome", reason: error)
         }
         
-        throw BudgetServiceError.FetchError(msg: "Failed to fetch total outcome, some data is not returned", reason: nil)
+        return 0
     }
     
     private func getLastNPeriods(for numberOfPeriods: Int, budget: BudgetEntity) throws -> [PeriodEntity] {
