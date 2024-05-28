@@ -1,0 +1,12 @@
+[
+    {
+        "id": "Income",
+        "type": 1,
+        "templates": [
+            {
+                "id": "Salary",
+                "iconName": "018-income"
+            }
+        ]
+    }
+]

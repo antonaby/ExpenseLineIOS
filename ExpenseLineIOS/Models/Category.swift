@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum CategoryType: Int, CaseIterable, Identifiable {
+enum CategoryType: Int, CaseIterable, Identifiable, Codable {
     
     case income = 1
     case outcomeFixed = 2
@@ -18,14 +18,14 @@ enum CategoryType: Int, CaseIterable, Identifiable {
     
 }
 
-struct CategoryTemplate: Identifiable {
+struct CategoryTemplate: Identifiable, Codable {
     
     var id: String
     var iconName: String
     
 }
 
-struct CategoryTemplateType: Identifiable {
+struct CategoryTemplateType: Identifiable, Codable {
     
     var id: String
     var type: CategoryType

@@ -29,6 +29,7 @@
 		D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0A2BED175000B54654 /* OutcomePageWizardView.swift */; };
 		D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */; };
 		D22AB4CF2C0318B500306F5B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = D22AB4CE2C0318B500306F5B /* countries.json */; };
+		D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = D22CED992C05C0A0000C9A08 /* categories.json */; };
 		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
 		D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23416CA2BE616E4000178FB /* Color+Extension.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
@@ -112,6 +113,7 @@
 		D226FB0A2BED175000B54654 /* OutcomePageWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomePageWizardView.swift; sourceTree = "<group>"; };
 		D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetShortSummaryView.swift; sourceTree = "<group>"; };
 		D22AB4CE2C0318B500306F5B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		D22CED992C05C0A0000C9A08 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
 		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		D23416CA2BE616E4000178FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */,
 				D20EF2B02BB18CFB006CF8CD /* Preview Content */,
 				D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */,
+				D22CED992C05C0A0000C9A08 /* categories.json */,
 			);
 			path = ExpenseLineIOS;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D22AB4CF2C0318B500306F5B /* countries.json in Resources */,
+				D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */,
 				D20EF2B22BB18CFB006CF8CD /* Preview Assets.xcassets in Resources */,
 				D20EF2AF2BB18CFB006CF8CD /* Assets.xcassets in Resources */,
 			);
