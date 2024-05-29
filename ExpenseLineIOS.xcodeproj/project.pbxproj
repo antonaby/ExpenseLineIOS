@@ -45,6 +45,8 @@
 		D24CA2992BD295F400896BC6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2982BD295F400896BC6 /* DataService.swift */; };
 		D250D4CF2BB828EB0050638C /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4CE2BB828EB0050638C /* Budget.swift */; };
 		D2563E502BD7D9A800D28F65 /* CategoryListWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */; };
+		D258A1992C0748F30009B3D2 /* DailyProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D258A1982C0748F30009B3D2 /* DailyProgressView.swift */; };
+		D258A19B2C074FD50009B3D2 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D258A19A2C074FD50009B3D2 /* Array+Extension.swift */; };
 		D25A5B3A2BE4F8F2009618E4 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25A5B392BE4F8F2009618E4 /* PromptView.swift */; };
 		D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */; };
 		D25AF79A2BF9D787009FEDD1 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */; };
@@ -129,6 +131,8 @@
 		D24CA2982BD295F400896BC6 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListWizardView.swift; sourceTree = "<group>"; };
+		D258A1982C0748F30009B3D2 /* DailyProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressView.swift; sourceTree = "<group>"; };
+		D258A19A2C074FD50009B3D2 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		D25A5B392BE4F8F2009618E4 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptView.swift; sourceTree = "<group>"; };
 		D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumericField.swift; sourceTree = "<group>"; };
 		D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
@@ -271,6 +275,7 @@
 				D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */,
 				D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */,
 				D26C11CD2C04A7D6004DB285 /* IconView.swift */,
+				D258A1982C0748F30009B3D2 /* DailyProgressView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -295,6 +300,7 @@
 				D23416CA2BE616E4000178FB /* Color+Extension.swift */,
 				D221C0852BE755000096DF89 /* Date+Extension.swift */,
 				D244C0712BFB74530015EA61 /* Celendar+Extension.swift */,
+				D258A19A2C074FD50009B3D2 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -584,6 +590,7 @@
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
 				D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */,
+				D258A19B2C074FD50009B3D2 /* Array+Extension.swift in Sources */,
 				D221C0882BE757200096DF89 /* CurrencySelectorSheet.swift in Sources */,
 				D26DB1B92BEE487F00450617 /* FormTitleViewModifier.swift in Sources */,
 				D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */,
@@ -596,6 +603,7 @@
 				D2C58AD62BE230CC00F1BB03 /* Category.swift in Sources */,
 				D2C124D62C01C07B00CD8C04 /* SettingsView.swift in Sources */,
 				D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */,
+				D258A1992C0748F30009B3D2 /* DailyProgressView.swift in Sources */,
 				D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */,
 				D25AF79A2BF9D787009FEDD1 /* CircularProgressView.swift in Sources */,
 				D2C58AD02BE22B5E00F1BB03 /* ContentSizeCardView.swift in Sources */,

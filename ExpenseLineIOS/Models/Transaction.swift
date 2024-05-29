@@ -7,6 +7,15 @@
 
 import Foundation
 
+struct DaySpendings: Identifiable {
+    
+    var id: Int
+    var date: Date
+    var value: Decimal
+    var limit: Decimal
+    
+}
+
 struct SpenginsStat: Identifiable {
     
     var id: Int
