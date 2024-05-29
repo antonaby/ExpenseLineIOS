@@ -13,56 +13,65 @@ struct BudgetOverviewView: View {
     @ObservedObject var vm: BudgetViewModel
     
     var body: some View {
-        VStack {
-            CirclularBudgetProgressView(
-                progress: [
-                    getTotalSpent(),
-                    getFixedSpent(),
-                    getPercentSpent()
-                ],
-                colors: [.green, .purple, .orange],
-                gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
-            ) {
-                VStack {
-                    Text(vm.formatPercent(getTotalSpentDecimal()))
-                        .font(.title)
-                        .bold()
-                    Text("Spent")
-                        .foregroundColor(.gray)
-                        .font(.caption)
+        ScrollView {
+            VStack {
+                CirclularBudgetProgressView(
+                    progress: [
+                        getTotalSpent(),
+                        getFixedSpent(),
+                        getPercentSpent()
+                    ],
+                    colors: [.green, .purple, .orange],
+                    gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
+                ) {
+                    VStack {
+                        Text(vm.formatPercent(getTotalSpentDecimal()))
+                            .font(.title)
+                            .bold()
+                        Text("Spent")
+                            .foregroundColor(.gray)
+                            .font(.caption)
+                    }
+                }
+                .frame(width: 250, height: 250)
+                .padding()
+                VStack(alignment: .leading) {
+                    SpendingsView(
+                        title: "Spendings",
+                        firstColor: .green,
+                        secondColor: .green.opacity(0.3),
+                        left: { AmountView(vm.totalOutcome) {
+                            vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                        }},
+                        right: { AmountView(vm.totalBudgetLeft) {
+                            $0 < 0
+                        }
+                    })
+                    SpendingsView(
+                        title: "Fixed",
+                        firstColor: .purple,
+                        secondColor: .purple.opacity(0.3),
+                        left: { AmountView(vm.totalFixedOutcome) {
+                            vm.totalPlannedFixedOutcome - $0 < 0
+                        }},
+                        right: { AmountView(vm.totalFixedBudgetLeft) {
+                            $0 < 0
+                        }
+                    })
+                    SpendingsView(
+                        title: "Flexible",
+                        firstColor: .orange,
+                        secondColor: .orange.opacity(0.3),
+                        left: { AmountView(vm.totalPercentOutcome) {
+                            vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                        }},
+                        right: { AmountView(vm.totalFlexibleBudgetLeft) {
+                            $0 < 0
+                        }
+                    })
                 }
             }
-            .frame(width: 250, height: 250)
-            Grid(alignment: .leading, horizontalSpacing: 50, verticalSpacing: 10) {
-                GridRow {
-                    SpendingTitleView("Spent", color: .green)
-                    SpendingTitleView("Left", color: .green.opacity(0.3))
-                }
-                GridRow {
-                    AmountView(vm.totalOutcome) {
-                        vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                    }
-                    AmountView(vm.totalBudgetLeft) {
-                        $0 < 0
-                    }
-                }
-                .font(.title2)
-                GridRow {
-                    SpendingTitleView("Fixed", color: .purple)
-                    SpendingTitleView("Flexible", color: .orange)
-                }
-                
-                GridRow {
-                    AmountView(vm.totalFixedOutcome) {
-                        vm.totalPlannedFixedOutcome - $0 < 0
-                    }
-                    AmountView(vm.totalPercentOutcome) {
-                        vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                    }
-                }
-                .font(.title2)
-            }
-            .padding(.top, 30)
+            .frame(maxWidth: .infinity)
         }
         .onAppear {
             vm.loadData(for: .overview)
@@ -73,18 +82,35 @@ struct BudgetOverviewView: View {
     func AmountView(_ amount: Decimal, isSpent: (Decimal) -> Bool) -> some View {
         Text(vm.formatAmount(amount))
             .foregroundColor(isSpent(amount) ? .red : .black)
+            .font(.title2)
     }
     
     @ViewBuilder
-    func SpendingTitleView(_ text: String, color: Color) -> some View {
-        HStack {
-            RoundedRectangle(cornerRadius: 3, style: .circular)
-                .foregroundColor(color)
-                .frame(width: 15, height: 15)
-            Text(text)
+    func SpendingsView(
+        title: String,
+        firstColor: Color,
+        secondColor: Color,
+        @ViewBuilder left: () -> some View,
+        @ViewBuilder right: () -> some View
+    ) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                RoundedRectangle(cornerRadius: 3, style: .circular)
+                    .foregroundColor(firstColor)
+                    .frame(width: 15, height: 15)
+                RoundedRectangle(cornerRadius: 3, style: .circular)
+                    .foregroundColor(secondColor)
+                    .frame(width: 15, height: 15)
+                Text(title)
+            }
+            .frame(alignment: .leading)
+            HStack {
+                left()
+                Divider()
+                right()
+            }
+            .frame(alignment: .leading)
         }
-        .font(.caption)
-        .frame(width: 80, alignment: .leading)
     }
     
     func getTotalSpentDecimal() -> Decimal {
@@ -146,6 +172,8 @@ struct BudgetOverviewView: View {
     vm.totalBudgetLeft = 1500
     vm.totalFixedOutcome = 450
     vm.totalPercentOutcome = 1000
+    vm.totalFixedBudgetLeft = 1000
+    vm.totalFlexibleBudgetLeft = 500
 
     bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
     
@@ -172,6 +200,8 @@ struct BudgetOverviewView: View {
     vm.totalBudgetLeft = 1500
     vm.totalFixedOutcome = 450
     vm.totalPercentOutcome = 1550
+    vm.totalFixedBudgetLeft = 1000
+    vm.totalFlexibleBudgetLeft = 500
 
     bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
     
@@ -198,6 +228,8 @@ struct BudgetOverviewView: View {
     vm.totalBudgetLeft = -500
     vm.totalFixedOutcome = 650
     vm.totalPercentOutcome = 1550
+    vm.totalFixedBudgetLeft = 1000
+    vm.totalFlexibleBudgetLeft = 500
 
     bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
     

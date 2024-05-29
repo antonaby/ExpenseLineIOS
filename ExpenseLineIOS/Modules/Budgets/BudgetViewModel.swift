@@ -35,6 +35,8 @@ class BudgetViewModel: ObservableObject {
     var totalFixedOutcome: Decimal = 0
     var totalPercentOutcome: Decimal = 0
     var totalBudgetLeft: Decimal = 0
+    var totalFixedBudgetLeft: Decimal = 0
+    var totalFlexibleBudgetLeft: Decimal = 0
     
     private var currencyFormatter: NumberFormatter = NumberFormatter()
     private var percentFormatter: NumberFormatter = NumberFormatter()
@@ -177,6 +179,8 @@ class BudgetViewModel: ObservableObject {
             totalPercentOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomePercent])
             totalOutcome = totalFixedOutcome + totalPercentOutcome
             totalBudgetLeft = totalPlannedIncome - totalOutcome
+            totalFixedBudgetLeft = totalPlannedFixedOutcome - totalFixedOutcome
+            totalFlexibleBudgetLeft = totalPlannedPercentOutcomeAmount - totalPercentOutcome
         } catch {
             // TODO: show error
             print("Something went wrong \(error)")
