@@ -36,6 +36,7 @@ class BudgetService: ObservableObject {
         entity.id = UUID()
         entity.createdAt = Date()
         entity.budget = budget
+        entity.order = Int32.max
         
         return entity
     }

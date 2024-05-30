@@ -46,16 +46,23 @@ extension BudgetEntity {
     }
     
     func categoriesForType(_ types: [CategoryType], skipUnnamed: Bool = false) -> [PlanCategoryEntity] {
-        let categories = categories?.allObjects as? [PlanCategoryEntity] ?? []
-        if skipUnnamed {
-            return categories
-                .filter { !$0.nameValue.isEmpty && types.contains($0.typeValue) }
-                .sorted(by: { $0.nameValue < $1.nameValue })
+        let allCategories = categories?.allObjects as? [PlanCategoryEntity] ?? []
+        let categories = allCategories.filter {
+            if $0.nameValue.isEmpty && skipUnnamed {
+                return false
+            }
+            
+            return types.contains($0.typeValue)
         }
         
         return categories
-            .filter { types.contains($0.typeValue) }
-            .sorted(by: { $0.nameValue < $1.nameValue })
+            .sorted(by: {
+                if $0.order != $1.order {
+                    return $0.order < $1.order
+                }
+                
+                return $0.nameValue < $1.nameValue
+            })
     }
     
 }

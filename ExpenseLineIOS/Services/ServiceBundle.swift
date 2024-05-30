@@ -24,7 +24,7 @@ struct ServiceBundle {
         databaseManager = DatabaseManager()
         databaseManager.initializeStore(inMemory: inMemory)
         budgetService = BudgetService(dm: databaseManager)
-        dataService = DataService()
+        dataService = DataService(budgetService: budgetService)
         settingsService = SettingsService()
         notificationService = NotificationService()
     }

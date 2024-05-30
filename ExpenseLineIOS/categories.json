@@ -19,6 +19,11 @@
                 "iconName": "in-passive-income"
             },
             {
+                "id": "ctg.income.bussiness",
+                "name": "Bussiness",
+                "iconName": "in-briefcase"
+            },
+            {
                 "id": "ctg.income.other-income",
                 "name": "Other Income",
                 "iconName": "in-wallet"
@@ -92,11 +97,6 @@
                 "id": "ctg.outcome.fixed.parking",
                 "name": "Parking",
                 "iconName": "fi-parking"
-            },
-            {
-                "id": "ctg.outcome.fixed.other",
-                "name": "Other Expenses",
-                "iconName": "fi-other"
             }
         ]
     },{
@@ -145,7 +145,7 @@
             },
             {
                 "id": "ctg.outcome.flexible.food-delivery",
-                "name": "Food Delivery",
+                "name": "Delivery & Take Away",
                 "iconName": "fl-food-delivery"
             },
             {
@@ -179,9 +179,14 @@
                 "iconName": "fl-salon"
             },
             {
-                "id": "ctg.outcome.flexible.buyings",
-                "name": "Buyings",
+                "id": "ctg.outcome.flexible.big-buyings",
+                "name": "Big Buyings",
                 "iconName": "fl-shopping-cart"
+            },
+            {
+                "id": "ctg.outcome.flexible.shopping",
+                "name": "Shopping",
+                "iconName": "fl-shopping"
             },
             {
                 "id": "ctg.outcome.flexible.snacks",
@@ -202,6 +207,11 @@
                 "id": "ctg.outcome.flexible.travel",
                 "name": "Travel",
                 "iconName": "fl-travel"
+            },
+            {
+                "id": "ctg.outcome.flexible.other",
+                "name": "Other Expenses",
+                "iconName": "fl-other"
             }
         ]
     }

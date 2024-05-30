@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 class DataService: ObservableObject {
     
+    private let budgetService: BudgetService
     private let categories: [CategoryTemplateType]
     private let countryCurrencies: [CountryCurrency]
     
-    init() {
+    init(budgetService: BudgetService) {
+        self.budgetService = budgetService
+        
         let decoder = JSONDecoder()
         
         var loadedCategories: [CategoryTemplateType]? = nil
@@ -84,28 +88,46 @@ class DataService: ObservableObject {
         ) }
     }
     
-    func getDefaultCategories() -> [CategoryTemplateType] {
+    func getDefaultCategories(budget: BudgetEntity) -> [PlanCategoryEntity] {
         return [
-            CategoryTemplateType(id: "income", type: .income, templates: [
-                getTemplateById("ctg.income.salary")!,
-                getTemplateById("ctg.income.passive-income")!,
-                getTemplateById("ctg.income.other-income")!
-            ]),
-            CategoryTemplateType(id: "outcome.fixed", type: .outcomeFixed, templates: [
-                getTemplateById("ctg.outcome.fixed.house")!,
-                getTemplateById("ctg.outcome.fixed.mobile")!,
-                getTemplateById("ctg.outcome.fixed.internet")!,
-                getTemplateById("ctg.outcome.fixed.subscription")!,
-                getTemplateById("ctg.outcome.fixed.other")!
-            ]),
-            CategoryTemplateType(id: "outcome.flexible", type: .outcomePercent, templates: [
-                getTemplateById("ctg.outcome.flexible.groceries")!,
-                getTemplateById("ctg.outcome.flexible.pet")!,
-                getTemplateById("ctg.outcome.flexible.food-delivery")!,
-                getTemplateById("ctg.outcome.flexible.coffee")!,
-                getTemplateById("ctg.outcome.flexible.buyings")!,
-            ])
+            createCategoryFromTemplate(templateId: "ctg.income.salary", amount: 0, type: .income, color: "013220", order: 0, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.income.investment", amount: 0, type: .income, color: "00008B", order: 1, budget: budget),
+            
+            createCategoryFromTemplate(templateId: "ctg.outcome.fixed.house", amount: 0, type: .outcomeFixed, color: "FF5733", order: 0, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.fixed.mobile", amount: 0, type: .outcomeFixed, color: "808080", order: 1, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.fixed.internet", amount: 0, type: .outcomeFixed, color: "088F8F", order: 2, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.fixed.subscription", amount: 0, type: .outcomeFixed, color: "280137", order: 3, budget: budget),
+            
+            createCategoryFromTemplate(templateId: "ctg.outcome.flexible.groceries", amount: 0.05, type: .outcomePercent, color: "b5651d", order: 0, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.flexible.food-delivery", amount: 0.1, type: .outcomePercent, color: "8B8000", order: 1, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.flexible.coffee", amount: 0.01, type: .outcomePercent, color: "964B00", order: 2, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.flexible.shopping", amount: 0.15, type: .outcomePercent, color: "1F51FF", order: 3, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.flexible.pet", amount: 0.05, type: .outcomePercent, color: "FF5F1F", order: 4, budget: budget),
+            createCategoryFromTemplate(templateId: "ctg.outcome.flexible.other", amount: 0.15, type: .outcomePercent, color: "000000", order: 5, budget: budget)
         ]
+    }
+    
+    private func createCategoryFromTemplate(
+        templateId: String,
+        amount: Decimal,
+        type: CategoryType,
+        color: String,
+        order: Int32,
+        budget: BudgetEntity
+    ) -> PlanCategoryEntity {
+        let template = getTemplateById(templateId)!
+        
+        let category = budgetService.newCategoryEntity(budget)
+        category.typeValue = type
+        category.amountDecimal = type != .outcomePercent ? amount : 0
+        category.percentDecimal = type == .outcomePercent ? amount : 0
+        category.name = template.name
+        category.iconName = template.iconName
+        category.templateId = template.id
+        category.colorValue = Color.init(hex: color) ?? .black
+        category.order = order
+        
+        return category
     }
     
     func getCurrensySymbolById(_ id: String) -> CurrencySymbol? {

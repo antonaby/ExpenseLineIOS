@@ -209,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				D22AB4CE2C0318B500306F5B /* countries.json */,
+				D22CED992C05C0A0000C9A08 /* categories.json */,
 				D22218722BDFD72600E552E4 /* Extensions */,
 				D20EF2E22BB19427006CF8CD /* Models */,
 				D239608D2BB2E95C0071547D /* Services */,
@@ -218,7 +219,6 @@
 				D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */,
 				D20EF2B02BB18CFB006CF8CD /* Preview Content */,
 				D2DEFC102BB4348600AC7CA0 /* DataContainer.xcdatamodeld */,
-				D22CED992C05C0A0000C9A08 /* categories.json */,
 			);
 			path = ExpenseLineIOS;
 			sourceTree = "<group>";
