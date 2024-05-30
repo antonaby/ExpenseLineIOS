@@ -117,7 +117,8 @@ struct CategoryListWizardView: View {
     let vm = BudgetWizardViewModel(
         budget,
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return CategoryListWizardView(
@@ -174,7 +175,8 @@ struct CategoryListWizardView: View {
     let vm = BudgetWizardViewModel(
         budget,
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return CategoryListWizardView(

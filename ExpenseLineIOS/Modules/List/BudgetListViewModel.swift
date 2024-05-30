@@ -15,10 +15,12 @@ class BudgetListViewModel: ObservableObject {
     
     private let budgetService: BudgetService
     private let dataService: DataService
+    private let notificationService: NotificationService
     
-    init(budgetService: BudgetService, dataService: DataService) {
+    init(budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
         self.budgetService = budgetService
         self.dataService = dataService
+        self.notificationService = notificationService
         self.budgets = []
     }
     
@@ -33,10 +35,14 @@ class BudgetListViewModel: ObservableObject {
     
     func budgetWizzardViewModel() -> BudgetWizardViewModel {
         if let budget = selectedBudget {
-            return BudgetWizardViewModel(budget, budgetService: budgetService, dataService: dataService)
+            return BudgetWizardViewModel(budget, 
+                                         budgetService: budgetService,
+                                         dataService: dataService,
+                                         notificationService: notificationService)
         }
         
         let budget = budgetService.newBudgetEntity()
+        budget.dailyRemainderAt = Date().currentDateAt(at: 20)
         let categoryTemplates = dataService.getDefaultCategories()
         
         for type in categoryTemplates {
@@ -54,7 +60,10 @@ class BudgetListViewModel: ObservableObject {
             }
         }
         
-        return BudgetWizardViewModel(budget, budgetService: budgetService, dataService: dataService)
+        return BudgetWizardViewModel(budget, 
+                                     budgetService: budgetService,
+                                     dataService: dataService,
+                                     notificationService: notificationService)
     }
     
     func deleteBudget(_ budget: BudgetEntity) {

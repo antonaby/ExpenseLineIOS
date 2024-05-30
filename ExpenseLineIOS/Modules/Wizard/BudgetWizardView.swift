@@ -198,7 +198,8 @@ struct BudgetWizardView: View {
     let vm = BudgetWizardViewModel(
         bundle.budgetService.newBudgetEntity(),
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return BudgetWizardView(vm: vm, editMode: false)
@@ -270,7 +271,8 @@ struct BudgetWizardView: View {
     let vm = BudgetWizardViewModel(
         budget,
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return BudgetWizardView(vm: vm, editMode: true)

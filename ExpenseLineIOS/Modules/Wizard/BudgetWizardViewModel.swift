@@ -19,6 +19,7 @@ class BudgetWizardViewModel: ObservableObject {
     
     @Published var name: String
     @Published var currency: CurrencySymbol
+    @Published var dailyReminderEnabled: Bool
     @Published var dailyReminderAt: Date
     
     @Published var isFormValid: Bool = false
@@ -31,16 +32,19 @@ class BudgetWizardViewModel: ObservableObject {
     private var budget: BudgetEntity
     private var budgetService: BudgetService
     private var dataService: DataService
+    private var notificationService: NotificationService
     private var cancellables = Set<AnyCancellable>()
     
-    init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) {
+    init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
         self.budget = budget
         self.budgetService = budgetService
         self.dataService = dataService
+        self.notificationService = notificationService
         
         self.name = budget.name ?? ""
         let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.currency = currency
+        self.dailyReminderEnabled = budget.dailyRemainderAt != nil
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date().currentDateAt(at: 20)
         
         let currencyFormatter = NumberFormatter()
@@ -125,7 +129,11 @@ class BudgetWizardViewModel: ObservableObject {
     func save() {
         budget.name = name
         budget.currency = currency.id
-        budget.dailyRemainderAt = dailyReminderAt
+        if dailyReminderEnabled {
+            budget.dailyRemainderAt = dailyReminderAt
+        } else {
+            budget.dailyRemainderAt = nil
+        }
         
         do {
             try budgetService.save()
@@ -133,6 +141,7 @@ class BudgetWizardViewModel: ObservableObject {
             // TODO: show error
             print("Something went wrong \(error)")
         }
+        sheduleNotification()
     }
     
     func rollback() {
@@ -141,6 +150,17 @@ class BudgetWizardViewModel: ObservableObject {
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
+    }
+    
+    private func sheduleNotification() {
+        guard let budgetId = budget.id else { return }
+        
+        if let dayliReminder = budget.dailyRemainderAt {
+            notificationService.requestAuthorization()
+            notificationService.scheduleDailyReminder(budgetId: budgetId, date: dayliReminder)
+        } else {
+            notificationService.cancelDailyReminder(budgetId: budgetId)
+        }
     }
     
 }

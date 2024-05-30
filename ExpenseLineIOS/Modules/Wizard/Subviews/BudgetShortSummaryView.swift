@@ -42,7 +42,8 @@ struct BudgetShortSummaryView: View {
     let vm = BudgetWizardViewModel(
         bundle.budgetService.newBudgetEntity(),
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return BudgetShortSummaryView(vm: vm)

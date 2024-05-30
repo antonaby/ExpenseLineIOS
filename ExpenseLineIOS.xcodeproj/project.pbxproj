@@ -30,6 +30,7 @@
 		D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */; };
 		D22AB4CF2C0318B500306F5B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = D22AB4CE2C0318B500306F5B /* countries.json */; };
 		D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = D22CED992C05C0A0000C9A08 /* categories.json */; };
+		D22E5F082C0893B100DE7DE3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22E5F072C0893B100DE7DE3 /* NotificationService.swift */; };
 		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
 		D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23416CA2BE616E4000178FB /* Color+Extension.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
@@ -116,6 +117,7 @@
 		D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetShortSummaryView.swift; sourceTree = "<group>"; };
 		D22AB4CE2C0318B500306F5B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		D22CED992C05C0A0000C9A08 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
+		D22E5F072C0893B100DE7DE3 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		D23416CA2BE616E4000178FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				D23EE3322BC66B7C0088B246 /* BudgetService.swift */,
 				D24CA2982BD295F400896BC6 /* DataService.swift */,
 				D2C124D92C01CAF500CD8C04 /* SettingsService.swift */,
+				D22E5F072C0893B100DE7DE3 /* NotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				D25A5B3A2BE4F8F2009618E4 /* PromptView.swift in Sources */,
 				D2AADC092BF7845B00360CD4 /* ProgressView.swift in Sources */,
 				D2AF81362BE11A0B00E02DDF /* Locale+Extension.swift in Sources */,
+				D22E5F082C0893B100DE7DE3 /* NotificationService.swift in Sources */,
 				D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */,
 				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
 				D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */,

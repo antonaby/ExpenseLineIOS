@@ -11,6 +11,7 @@ struct MainView: View {
     
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var dataServise: DataService
+    @EnvironmentObject var notificationService: NotificationService
     @StateObject var appState: AppState
     
     var body: some View {
@@ -22,7 +23,11 @@ struct MainView: View {
                     dataService: dataServise)
                 )
             } else {
-                BudgetListView(vm: BudgetListViewModel(budgetService: budgetService, dataService: dataServise))
+                BudgetListView(vm: BudgetListViewModel(
+                    budgetService: budgetService,
+                    dataService: dataServise,
+                    notificationService: notificationService)
+                )
             }
         }
         .environmentObject(appState)

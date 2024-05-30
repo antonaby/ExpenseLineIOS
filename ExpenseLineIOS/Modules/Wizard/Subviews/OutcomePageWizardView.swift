@@ -70,7 +70,8 @@ struct OutcomePageWizardView: View {
     let vm = BudgetWizardViewModel(
         budget,
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return OutcomePageWizardView(vm: vm, type: .outcomeFixed)
@@ -122,7 +123,8 @@ struct OutcomePageWizardView: View {
     let vm = BudgetWizardViewModel(
         budget,
         budgetService: bundle.budgetService,
-        dataService: bundle.dataService
+        dataService: bundle.dataService,
+        notificationService: bundle.notificationService
     )
     
     return OutcomePageWizardView(vm: vm, type: .outcomePercent)

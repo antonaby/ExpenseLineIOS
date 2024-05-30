@@ -15,6 +15,7 @@ struct BudgetView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var dataService: DataService
+    @EnvironmentObject var notificationService: NotificationService
     
     @State var transactionSheet: Bool = false
     @State var editBudgetSheetOpen: Bool = false
@@ -99,7 +100,10 @@ struct BudgetView: View {
             }
             .fullScreenCover(isPresented: $editBudgetSheetOpen, onDismiss: onBudgetUpdated) {
                 BudgetWizardView(
-                    vm: BudgetWizardViewModel(vm.budget, budgetService: budgetService, dataService: dataService),
+                    vm: BudgetWizardViewModel(vm.budget, 
+                                              budgetService: budgetService,
+                                              dataService: dataService,
+                                              notificationService: notificationService),
                     editMode: true
                 )
             }

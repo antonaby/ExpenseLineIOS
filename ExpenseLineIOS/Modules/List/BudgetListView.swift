@@ -119,7 +119,8 @@ struct BudgetListView: View {
     let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
     return BudgetListView(vm:
                             BudgetListViewModel(budgetService: bundle.budgetService,
-                                                dataService: bundle.dataService))
+                                                dataService: bundle.dataService,
+                                                notificationService: bundle.notificationService))
         .environmentObject(appState)
 }
 
@@ -139,7 +140,8 @@ struct BudgetListView: View {
         let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
         return BudgetListView(vm:
                                 BudgetListViewModel(budgetService: bundle.budgetService,
-                                                    dataService: bundle.dataService))
+                                                    dataService: bundle.dataService,
+                                                    notificationService: bundle.notificationService))
             .environmentObject(appState)
             .serviceBundle(bundle)
     } catch {
