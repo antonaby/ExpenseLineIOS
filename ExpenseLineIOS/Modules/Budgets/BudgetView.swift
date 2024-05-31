@@ -71,7 +71,7 @@ struct BudgetView: View {
                         CategoryListView(vm: vm)
                             .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
                             .tag(BudgetViewPage.categories)
-                        TransactionListView(vm: vm)
+                        TransactionListView(trVm: TransactionListViewModel(budgetService: budgetService), vm: vm)
                             .tabItem { Image(systemName: "list.bullet") }
                             .tag(BudgetViewPage.transactions)
                         BudgetStatsView(vm: vm)
@@ -111,37 +111,28 @@ struct BudgetView: View {
                 SettingsView()
             }
             .navigationDestination(for: PlanCategoryEntity.self) { category in
-                if let period = vm.period {
-                    CategoryView(vm: CategoryViewModel(
-                        category: category,
-                        period: period,
-                        budget: vm.budget,
-                        currency: vm.currency,
-                        budgetService: budgetService)
-                    )
-                    .navigationTitle("Category")
-                }
-            }
-            .onAppear {
-                vm.loadCurrentBudgetPeriod()
+                CategoryView(vm: CategoryViewModel(
+                    category: category,
+                    period: vm.period,
+                    budget: vm.budget,
+                    currency: vm.currency,
+                    budgetService: budgetService)
+                )
+                .navigationTitle("Category")
             }
         }
     }
     
     @ViewBuilder
     func PeriodView() -> some View {
-        if let period = vm.period {
-            Button {
-                changePeriodSheetOpen.toggle()
-            } label: {
-                Text(period.currentMonth)
-            }
-            .buttonStyle(.borderless)
-            .tint(.green)
-            .padding(.bottom, 5)
-        } else {
-            Text("Loading...")
+        Button {
+            changePeriodSheetOpen.toggle()
+        } label: {
+            Text(vm.period.currentMonth)
         }
+        .buttonStyle(.borderless)
+        .tint(.green)
+        .padding(.bottom, 5)
     }
     
     func onBudgetUpdated() {
@@ -192,13 +183,14 @@ struct BudgetView: View {
     let plannedCategory = budgetService.newCategoryEntity(budget)
     plannedCategory.typeValue = .income
     plannedCategory.amountDecimal = 2000
+    plannedCategory.iconName = "in-salary"
     
     let category1 = PlanCategoryEntity(context: dm.viewContext)
     category1.id = UUID()
     category1.name = "Preview 1"
     category1.amount = 0
     category1.percent = 0.2
-    category1.iconName = "preview"
+    category1.iconName = "fl-groceries"
     category1.typeValue = .outcomePercent
     category1.createdAt = Date()
     category1.budget = budget
@@ -208,7 +200,7 @@ struct BudgetView: View {
     category2.name = "Preview 2"
     category2.amount = 2000
     category2.percent = 0
-    category2.iconName = "preview"
+    category2.iconName = "fi-rent"
     category2.typeValue = .outcomeFixed
     category2.createdAt = Date()
     category2.budget = budget
@@ -241,14 +233,15 @@ struct BudgetView: View {
     appState.selectBudget(budget)
     
     do {
+        var period = try budgetService.getOrCreateLastPeriod(budget)
         try dm.sync()
+        return BudgetView(vm: BudgetViewModel(
+            budget: budget, period: period, budgetService: bundle.budgetService, dataService: bundle.dataService
+        ))
+            .environmentObject(appState)
+            .serviceBundle(bundle)
     } catch {
         print("Something went wrong \(error)")
+        return Text("Something went wrong \(error)")
     }
-    
-    return BudgetView(vm: BudgetViewModel(
-        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
-    ))
-        .environmentObject(appState)
-        .serviceBundle(bundle)
 }

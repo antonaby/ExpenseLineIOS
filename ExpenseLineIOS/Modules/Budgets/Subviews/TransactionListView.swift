@@ -6,6 +6,45 @@
 //
 
 import SwiftUI
+import Combine
+
+class TransactionListViewModel: ObservableObject {
+    
+    @Published var serachFilter: String = ""
+    @Published var transactions: [TransactionEntity] = []
+    
+    private let budgetService: BudgetService
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(budgetService: BudgetService) {
+        self.budgetService = budgetService
+        
+        $serachFilter
+            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .sink { [weak self] value in
+                
+            }
+            .store(in: &cancellables)
+    }
+    
+    func loadTransactions(period: PeriodEntity, budget: BudgetEntity) {
+        do {
+            if serachFilter.isEmpty {
+                transactions = try budgetService.getAllTransactions(period, budget: budget)
+            } else {
+                
+            }
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    func cancelAll() {
+        cancellables.forEach { $0.cancel() }
+    }
+    
+}
 
 struct TransactionCard: View {
     
@@ -60,22 +99,29 @@ struct TransactionListView: View {
     
     @EnvironmentObject var budgetService: BudgetService
     
+    @StateObject var trVm: TransactionListViewModel
     @ObservedObject var vm: BudgetViewModel
     @State var selectedTransaction: TransactionEntity?
     
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(vm.transactions) { transaction in
-                    TransactionCard(vm: vm, transaction: transaction, selectedTransaction: $selectedTransaction)
-                }
+        VStack {
+            ContentSizeCardView {
+                TextField("Search", text: $trVm.serachFilter)
             }
-            Spacer()
+            .padding(.bottom, 5)
+            ScrollView {
+                LazyVStack {
+                    ForEach(trVm.transactions) { transaction in
+                        TransactionCard(vm: vm, transaction: transaction, selectedTransaction: $selectedTransaction)
+                    }
+                }
+                Spacer()
+            }
         }
         .padding(.horizontal, 15)
         .padding(.top, 15)
         .background(Color(uiColor: .secondarySystemBackground))
-        .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
+        .sheet(item: $selectedTransaction, onDismiss: loadTransactions) { transaction in
             TransactionSheetView(
                 vm: TransactionSheetViewModel(transaction: transaction,
                                               budget: vm.budget,
@@ -84,12 +130,12 @@ struct TransactionListView: View {
                 .presentationDetents([.medium])
         }
         .onAppear {
-            vm.loadData(for: .transactions)
+            loadTransactions()
         }
     }
     
-    func onTransactionUpdated() {
-        vm.loadData(for: .transactions)
+    func loadTransactions() {
+        trVm.loadTransactions(period: vm.period, budget: vm.budget)
     }
     
 }
@@ -110,7 +156,7 @@ struct TransactionListView: View {
         category1.name = "Preview 1"
         category1.amount = 0
         category1.percent = 0.2
-        category1.iconName = "011-food"
+        category1.iconName = "fl-groceries"
         category1.typeValue = .outcomePercent
         category1.colorValue = .orange
         category1.createdAt = Date()
@@ -121,7 +167,7 @@ struct TransactionListView: View {
         category2.name = "Preview 2"
         category2.amount = 2000
         category2.percent = 0
-        category2.iconName = "007-electricity"
+        category2.iconName = "fi-rent"
         category2.typeValue = .outcomeFixed
         category2.colorValue = .green
         category2.createdAt = Date()
@@ -153,12 +199,15 @@ struct TransactionListView: View {
         
         let vm = BudgetViewModel(
             budget: budget,
+            period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: bundle.budgetService,
             dataService: bundle.dataService
         )
-        vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
         
-        return TransactionListView(vm: vm)
+        return TransactionListView(
+            trVm: TransactionListViewModel(budgetService: budgetService),
+            vm: vm
+        )
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")

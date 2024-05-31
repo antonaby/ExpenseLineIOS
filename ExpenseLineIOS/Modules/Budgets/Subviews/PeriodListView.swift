@@ -33,7 +33,7 @@ class PeriodListViewModel: ObservableObject {
 struct PeriodListView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding var selected: PeriodEntity?
+    @Binding var selected: PeriodEntity
     @StateObject var vm: PeriodListViewModel
     
     var body: some View {

@@ -34,6 +34,20 @@ class AppState: ObservableObject {
     func loadBudget() {
         budget = getBudget()
     }
+    
+    func getBudgetViewModel(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) -> BudgetViewModel? {
+        do {
+            return BudgetViewModel(
+                budget: budget,
+                period: try budgetService.getOrCreateLastPeriod(budget),
+                budgetService: budgetService,
+                dataService: dataService)
+        } catch {
+            // TODO: hadnle error
+            print("Somethiong went wrong \(error)")
+            return nil
+        }
+    }
 
     private func getBudget() -> BudgetEntity? {
         if let budgetId = settingsService.getBudgetId() {

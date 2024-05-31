@@ -187,10 +187,10 @@ struct CategoryListView: View {
         
         let vm = BudgetViewModel(
             budget: budget,
+            period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: budgetService,
             dataService: bundle.dataService
         )
-        vm.period = try bundle.budgetService.getOrCreateLastPeriod(budget)
         vm.totalPlannedIncome = 1000
         
         return CategoryListView(vm: vm)

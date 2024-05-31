@@ -161,24 +161,30 @@ struct BudgetOverviewView: View {
     budget.name = "Preview"
     budget.currency = "en_US"
    
-    let vm = BudgetViewModel(
-        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
-    )
-    
-    vm.totalPlannedIncome = 3500
-    vm.totalPlannedFixedOutcome = 600
-    vm.totalPlannedPercentOutcomeAmount = 1500
-    vm.totalOutcome = 2000
-    vm.totalBudgetLeft = 1500
-    vm.totalFixedOutcome = 450
-    vm.totalPercentOutcome = 1000
-    vm.totalFixedBudgetLeft = 1000
-    vm.totalFlexibleBudgetLeft = 500
-
-    bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
-    
-    return BudgetOverviewView(vm: vm)
-        .serviceBundle(bundle)
+    do {
+        let vm = BudgetViewModel(
+            budget: budget,
+            period: try bundle.budgetService.getOrCreateLastPeriod(budget),
+            budgetService: bundle.budgetService, dataService: bundle.dataService
+        )
+        
+        vm.totalPlannedIncome = 3500
+        vm.totalPlannedFixedOutcome = 600
+        vm.totalPlannedPercentOutcomeAmount = 1500
+        vm.totalOutcome = 2000
+        vm.totalBudgetLeft = 1500
+        vm.totalFixedOutcome = 450
+        vm.totalPercentOutcome = 1000
+        vm.totalFixedBudgetLeft = 1000
+        vm.totalFlexibleBudgetLeft = 500
+        
+        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
+        
+        return BudgetOverviewView(vm: vm)
+            .serviceBundle(bundle)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
 }
 
 #Preview("Almost") {
@@ -189,24 +195,30 @@ struct BudgetOverviewView: View {
     budget.name = "Preview"
     budget.currency = "en_US"
    
-    let vm = BudgetViewModel(
-        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
-    )
-    
-    vm.totalPlannedIncome = 3500
-    vm.totalPlannedFixedOutcome = 600
-    vm.totalPlannedPercentOutcomeAmount = 1500
-    vm.totalOutcome = 2000
-    vm.totalBudgetLeft = 1500
-    vm.totalFixedOutcome = 450
-    vm.totalPercentOutcome = 1550
-    vm.totalFixedBudgetLeft = 1000
-    vm.totalFlexibleBudgetLeft = 500
-
-    bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
-    
-    return BudgetOverviewView(vm: vm)
-        .serviceBundle(bundle)
+    do {
+        let vm = BudgetViewModel(
+            budget: budget,
+            period: try bundle.budgetService.getOrCreateLastPeriod(budget),
+            budgetService: bundle.budgetService, dataService: bundle.dataService
+        )
+        
+        vm.totalPlannedIncome = 3500
+        vm.totalPlannedFixedOutcome = 600
+        vm.totalPlannedPercentOutcomeAmount = 1500
+        vm.totalOutcome = 2000
+        vm.totalBudgetLeft = 1500
+        vm.totalFixedOutcome = 450
+        vm.totalPercentOutcome = 1550
+        vm.totalFixedBudgetLeft = 1000
+        vm.totalFlexibleBudgetLeft = 500
+        
+        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
+        
+        return BudgetOverviewView(vm: vm)
+            .serviceBundle(bundle)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
 }
 
 #Preview("Spent") {
@@ -217,22 +229,28 @@ struct BudgetOverviewView: View {
     budget.name = "Preview"
     budget.currency = "en_US"
    
-    let vm = BudgetViewModel(
-        budget: budget, budgetService: bundle.budgetService, dataService: bundle.dataService
-    )
-    
-    vm.totalPlannedIncome = 3500
-    vm.totalPlannedFixedOutcome = 600
-    vm.totalPlannedPercentOutcomeAmount = 1500
-    vm.totalOutcome = 4000
-    vm.totalBudgetLeft = -500
-    vm.totalFixedOutcome = 650
-    vm.totalPercentOutcome = 1550
-    vm.totalFixedBudgetLeft = 1000
-    vm.totalFlexibleBudgetLeft = 500
-
-    bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
-    
-    return BudgetOverviewView(vm: vm)
-        .serviceBundle(bundle)
+    do {
+        let vm = BudgetViewModel(
+            budget: budget,
+            period: try bundle.budgetService.getOrCreateLastPeriod(budget),
+            budgetService: bundle.budgetService, dataService: bundle.dataService
+        )
+        
+        vm.totalPlannedIncome = 3500
+        vm.totalPlannedFixedOutcome = 600
+        vm.totalPlannedPercentOutcomeAmount = 1500
+        vm.totalOutcome = 4000
+        vm.totalBudgetLeft = -500
+        vm.totalFixedOutcome = 650
+        vm.totalPercentOutcome = 1550
+        vm.totalFixedBudgetLeft = 1000
+        vm.totalFlexibleBudgetLeft = 500
+        
+        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
+        
+        return BudgetOverviewView(vm: vm)
+            .serviceBundle(bundle)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
 }
