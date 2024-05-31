@@ -120,16 +120,6 @@ class BudgetViewModel: ObservableObject {
         return "?"
     }
     
-    func deleteTransaction(_ transaction: TransactionEntity) {
-        do {
-            budgetService.deleteTransaction(transaction, budget: budget)
-            try budgetService.save()
-        } catch {
-            // TODO: handle error
-            print("Somwthing went wrong \(error)")
-        }
-    }
-    
     private func createFormatters(locale: Locale) {
         let currencyFormatter = NumberFormatter()
         currencyFormatter.numberStyle = .currency

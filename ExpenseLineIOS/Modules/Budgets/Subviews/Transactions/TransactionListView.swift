@@ -6,113 +6,31 @@
 //
 
 import SwiftUI
-import Combine
-
-class TransactionListViewModel: ObservableObject {
-    
-    @Published var serachFilter: String = ""
-    @Published var transactions: [TransactionEntity] = []
-    
-    private let budgetService: BudgetService
-    private var cancellables = Set<AnyCancellable>()
-    
-    init(budgetService: BudgetService) {
-        self.budgetService = budgetService
-        
-        $serachFilter
-            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-            .sink { [weak self] value in
-                
-            }
-            .store(in: &cancellables)
-    }
-    
-    func loadTransactions(period: PeriodEntity, budget: BudgetEntity) {
-        do {
-            if serachFilter.isEmpty {
-                transactions = try budgetService.getAllTransactions(period, budget: budget)
-            } else {
-                
-            }
-        } catch {
-            // TODO: show error
-            print("Something went wrong \(error)")
-        }
-    }
-    
-    func cancelAll() {
-        cancellables.forEach { $0.cancel() }
-    }
-    
-}
-
-struct TransactionCard: View {
-    
-    @ObservedObject var vm: BudgetViewModel
-    let transaction: TransactionEntity
-    
-    @Binding var selectedTransaction: TransactionEntity?
-    
-    var body: some View {
-        FlexibleCardView {
-            VStack(alignment: .leading, spacing: 5) {
-                HStack {
-                    IconView(
-                        name: transaction.category?.iconNameValue ?? "question",
-                        color: transaction.category?.colorValue ?? .black,
-                        size: 45
-                    )
-                    VStack(alignment: .listRowSeparatorLeading) {
-                        Text(transaction.category?.name ?? "?")
-                            .font(.caption)
-                        Text(transaction.name ?? "?")
-                            .bold()
-                    }
-                    Spacer()
-                    Menu {
-                        Button {
-                            selectedTransaction = transaction
-                        } label: {
-                            Text("Edit")
-                        }
-                        Button(role: .destructive) {
-                            vm.deleteTransaction(transaction)
-                        } label: {
-                            Text("Delete")
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis")
-                    }
-                    
-                }
-                Text(vm.formatAmount(transaction.amountDecimal))
-                    .font(.largeTitle)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(vm.formatDate(transaction.createdAt))
-                    .font(.caption)
-            }
-        }
-    }
-}
 
 struct TransactionListView: View {
     
     @EnvironmentObject var budgetService: BudgetService
     
-    @StateObject var trVm: TransactionListViewModel
-    @ObservedObject var vm: BudgetViewModel
+    @StateObject var vm: TransactionListViewModel
     @State var selectedTransaction: TransactionEntity?
     
     var body: some View {
         VStack {
             ContentSizeCardView {
-                TextField("Search", text: $trVm.serachFilter)
+                TextField("Search", text: $vm.serachFilter)
             }
             .padding(.bottom, 5)
             ScrollView {
                 LazyVStack {
-                    ForEach(trVm.transactions) { transaction in
-                        TransactionCard(vm: vm, transaction: transaction, selectedTransaction: $selectedTransaction)
+                    ForEach(vm.transactions) { transaction in
+                        TransactionCard(
+                            vm: vm.parent,
+                            transaction: transaction,
+                            selectedTransaction: $selectedTransaction
+                        ) { transaction in
+                            vm.deleteTransaction(transaction)
+                            vm.loadTransactions(filter: vm.serachFilter)
+                        }
                     }
                 }
                 Spacer()
@@ -124,18 +42,22 @@ struct TransactionListView: View {
         .sheet(item: $selectedTransaction, onDismiss: loadTransactions) { transaction in
             TransactionSheetView(
                 vm: TransactionSheetViewModel(transaction: transaction,
-                                              budget: vm.budget,
-                                              currency: vm.currency,
+                                              budget: vm.parent.budget,
+                                              currency: vm.parent.currency,
                                               budgetService: budgetService))
                 .presentationDetents([.medium])
         }
         .onAppear {
+            vm.subscribe()
             loadTransactions()
+        }
+        .onDisappear {
+            vm.cancelAll()
         }
     }
     
     func loadTransactions() {
-        trVm.loadTransactions(period: vm.period, budget: vm.budget)
+        vm.loadTransactions(filter: vm.serachFilter)
     }
     
 }
@@ -205,8 +127,7 @@ struct TransactionListView: View {
         )
         
         return TransactionListView(
-            trVm: TransactionListViewModel(budgetService: budgetService),
-            vm: vm
+            vm: TransactionListViewModel(parent: vm, budgetService: budgetService)
         )
             .serviceBundle(bundle)
     } catch {
