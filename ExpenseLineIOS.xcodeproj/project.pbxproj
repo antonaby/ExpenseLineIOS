@@ -30,6 +30,7 @@
 		D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */; };
 		D22AB4CF2C0318B500306F5B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = D22AB4CE2C0318B500306F5B /* countries.json */; };
 		D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = D22CED992C05C0A0000C9A08 /* categories.json */; };
+		D22E47522C0B1DF9006C4C3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */; };
 		D22E5F082C0893B100DE7DE3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22E5F072C0893B100DE7DE3 /* NotificationService.swift */; };
 		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
 		D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23416CA2BE616E4000178FB /* Color+Extension.swift */; };
@@ -119,6 +120,7 @@
 		D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetShortSummaryView.swift; sourceTree = "<group>"; };
 		D22AB4CE2C0318B500306F5B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		D22CED992C05C0A0000C9A08 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
+		D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D22E5F072C0893B100DE7DE3 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		D23416CA2BE616E4000178FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardView.swift; sourceTree = "<group>"; };
 		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
 		D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclularBudgetProgressView.swift; sourceTree = "<group>"; };
+		D28942922C0B2077001277F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverviewView.swift; sourceTree = "<group>"; };
 		D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStatsView.swift; sourceTree = "<group>"; };
 		D2AADC082BF7845B00360CD4 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 		D20EF2A92BB18CFA006CF8CD /* ExpenseLineIOS */ = {
 			isa = PBXGroup;
 			children = (
+				D28942922C0B2077001277F5 /* Info.plist */,
 				D22AB4CE2C0318B500306F5B /* countries.json */,
 				D22CED992C05C0A0000C9A08 /* categories.json */,
 				D22218722BDFD72600E552E4 /* Extensions */,
@@ -263,6 +267,7 @@
 				D2705E592BC01D45003426A8 /* Wizard */,
 				D2F7685C2BC952F7001CE98C /* Transactions */,
 				D2246B3B2BBAD67B00556936 /* AppState.swift */,
+				D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -543,6 +548,7 @@
 				D22AB4CF2C0318B500306F5B /* countries.json in Resources */,
 				D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */,
 				D20EF2B22BB18CFB006CF8CD /* Preview Assets.xcassets in Resources */,
+				D22E47522C0B1DF9006C4C3B /* LaunchScreen.storyboard in Resources */,
 				D20EF2AF2BB18CFB006CF8CD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -793,9 +799,13 @@
 				DEVELOPMENT_TEAM = N27LL4XQG6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExpenseLineIOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Easy Budget";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -822,9 +832,13 @@
 				DEVELOPMENT_TEAM = N27LL4XQG6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExpenseLineIOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Easy Budget";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
