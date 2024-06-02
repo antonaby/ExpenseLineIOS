@@ -68,7 +68,7 @@ struct BudgetView: View {
                         BudgetOverviewView(vm: vm)
                             .tabItem { Image(systemName: "house") }
                             .tag(BudgetViewPage.overview)
-                        CategoryListView(vm: vm)
+                        CategoryListView(vm: CategoryListViewModel(parent: vm, budgetService: budgetService))
                             .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
                             .tag(BudgetViewPage.categories)
                         TransactionListView(vm: TransactionListViewModel(parent: vm, budgetService: budgetService))

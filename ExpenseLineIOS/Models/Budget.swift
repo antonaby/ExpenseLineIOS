@@ -45,6 +45,12 @@ extension BudgetEntity {
         return incomeCategories.reduce(0) { $0 + ($1.percentDecimal) }
     }
     
+    var allCategories: [PlanCategoryEntity] {
+        get {
+            categories?.allObjects as? [PlanCategoryEntity] ?? []
+        }
+    }
+    
     func categoriesForType(_ types: [CategoryType], skipUnnamed: Bool = false) -> [PlanCategoryEntity] {
         let allCategories = categories?.allObjects as? [PlanCategoryEntity] ?? []
         let categories = allCategories.filter {

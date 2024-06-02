@@ -108,13 +108,13 @@ struct CategoryCard: View {
 
 struct CategoryListView: View {
     
-    @ObservedObject var vm: BudgetViewModel
+    @StateObject var vm: CategoryListViewModel
     
     var body: some View {
         ScrollView {
             LazyVStack {
                 ForEach(vm.categories) { category in
-                    CategoryCard(category: category, vm: vm)
+                    CategoryCard(category: category, vm: vm.parent)
                 }
             }
             Spacer()
@@ -123,7 +123,11 @@ struct CategoryListView: View {
         .padding(.top, 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
-            vm.loadData(for: .categories)
+            vm.subscribe()
+            vm.loadCategories()
+        }
+        .onDisappear {
+            vm.cancelAll()
         }
     }
 }
@@ -185,14 +189,15 @@ struct CategoryListView: View {
         transaction4.createdAt = Date()
         transaction4.category = category2
         
-        let vm = BudgetViewModel(
+        let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: budgetService,
             dataService: bundle.dataService
         )
-        vm.totalPlannedIncome = 1000
+        parent.totalPlannedIncome = 1000
         
+        let vm = CategoryListViewModel(parent: parent, budgetService: budgetService)
         return CategoryListView(vm: vm)
     } catch {
         return Text("Something went wrong \(error)")

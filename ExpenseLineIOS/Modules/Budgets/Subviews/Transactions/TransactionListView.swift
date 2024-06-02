@@ -49,7 +49,6 @@ struct TransactionListView: View {
         }
         .onAppear {
             vm.subscribe()
-            loadTransactions()
         }
         .onDisappear {
             vm.cancelAll()

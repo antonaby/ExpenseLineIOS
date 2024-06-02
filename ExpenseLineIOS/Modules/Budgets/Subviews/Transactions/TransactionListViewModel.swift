@@ -26,14 +26,15 @@ class TransactionListViewModel: ObservableObject {
     func subscribe() {
         parent.dataUpdateSubject.sink { [weak self] value in
             self?.serachFilter = ""
-            self?.loadTransactions(filter: "")
         }
         .store(in: &cancellables)
         
         $serachFilter
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .sink { [weak self] value in
-                self?.loadTransactions(filter: value)
+                DispatchQueue.main.async {
+                    self?.loadTransactions(filter: value)
+                }
             }
             .store(in: &cancellables)
     }

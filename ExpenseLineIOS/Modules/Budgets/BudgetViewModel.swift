@@ -27,7 +27,6 @@ class BudgetViewModel: ObservableObject {
     
     @Published var budget: BudgetEntity
     @Published var period: PeriodEntity
-    @Published var categories: [CategoryData] = []
     @Published var daySpendings: [SpenginsStat] = []
     @Published var monthSpendings: [SpenginsStat] = []
     
@@ -53,12 +52,6 @@ class BudgetViewModel: ObservableObject {
     
     private let budgetService: BudgetService
     private let dataService: DataService
-    
-    var budgetCategories: [PlanCategoryEntity] {
-        get {
-            budget.categories?.allObjects as? [PlanCategoryEntity] ?? []
-        }
-    }
     
     init(budget: BudgetEntity, period: PeriodEntity, page: BudgetViewPage = .overview, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
@@ -106,7 +99,6 @@ class BudgetViewModel: ObservableObject {
             loadAmounts()
             break
         case .categories:
-            loadCategories()
             break
         case .transactions:
             break
@@ -187,35 +179,6 @@ class BudgetViewModel: ObservableObject {
         }
         
         objectWillChange.send()
-    }
-    
-    private func loadCategories() {
-        do {
-            let byCategory = try budgetService
-                .getSpendingsForCategories(period, budget: budget, types: [.outcomeFixed, .outcomePercent])
-                .reduce(into: [UUID:CategorySpendings]()) { result, spendings in
-                result[spendings.id] = spendings
-            }
-            
-            let onlySpendingCategories = budgetCategories.filter { $0.typeValue == .outcomeFixed || $0.typeValue == .outcomePercent }
-            
-            categories = onlySpendingCategories.map { category in
-                if let categoryId = category.id, let spendings = byCategory[categoryId] {
-                    return CategoryData(id: categoryId, entity: category, spendings: spendings)
-                }
-                
-                return CategoryData(id: category.id!, entity: category,
-                                    spendings: CategorySpendings(
-                                        id: category.id ?? UUID(),
-                                        totalAmount: 0,
-                                        expectedAmount: 0,
-                                        expectedPercent: 0)
-                )
-            }.sorted(by: { $0.entity.nameValue < $1.entity.nameValue })
-        } catch {
-            // TODO: shopw error
-            print("Error \(error)")
-        }
     }
     
     private func loadDaySpendings() {
