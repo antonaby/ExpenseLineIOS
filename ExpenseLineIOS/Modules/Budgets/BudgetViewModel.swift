@@ -6,12 +6,19 @@
 //
 
 import Foundation
+import Combine
 
 enum BudgetViewPage: Hashable {
     case overview
     case categories
     case transactions
     case stats
+}
+
+enum DataUpdateType: Hashable {
+    case budget
+    case period
+    case transaction
 }
 
 class BudgetViewModel: ObservableObject {
@@ -23,6 +30,9 @@ class BudgetViewModel: ObservableObject {
     @Published var categories: [CategoryData] = []
     @Published var daySpendings: [SpenginsStat] = []
     @Published var monthSpendings: [SpenginsStat] = []
+    
+    var dataUpdateSubject = PassthroughSubject<DataUpdateType, Never>()
+    private var cancellables = Set<AnyCancellable>()
     
     var currency: CurrencySymbol
     
@@ -58,6 +68,15 @@ class BudgetViewModel: ObservableObject {
         self.dataService = dataService
         self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         createFormatters(locale: currency.locale)
+        
+        $budget.sink { [weak self] budget in
+            self?.dataUpdateSubject.send(.budget)
+        }
+        .store(in: &cancellables)
+        $period.sink { [weak self] period in
+            self?.dataUpdateSubject.send(.period)
+        }
+        .store(in: &cancellables)
     }
     
     func reloadBudget() {
@@ -71,6 +90,10 @@ class BudgetViewModel: ObservableObject {
             // TODO: handle exception
             print("Something went wrong \(error)")
         }
+    }
+    
+    func sendTransactionUpdated() {
+        dataUpdateSubject.send(.transaction)
     }
     
     func reloadPage() {
@@ -118,6 +141,10 @@ class BudgetViewModel: ObservableObject {
         }
         
         return "?"
+    }
+    
+    func cancelAll() {
+        cancellables.forEach { $0.cancel() }
     }
     
     private func createFormatters(locale: Locale) {

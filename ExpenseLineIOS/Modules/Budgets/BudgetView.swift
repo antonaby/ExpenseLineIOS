@@ -121,6 +121,9 @@ struct BudgetView: View {
                 .navigationTitle("Category")
             }
         }
+        .onDisappear {
+            vm.cancelAll()
+        }
     }
     
     @ViewBuilder
@@ -144,7 +147,7 @@ struct BudgetView: View {
     }
     
     func onTransactionUpdated() {
-        vm.reloadPage()
+        vm.sendTransactionUpdated()
     }
     
 }

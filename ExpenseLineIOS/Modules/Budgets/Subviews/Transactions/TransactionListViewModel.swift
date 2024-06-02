@@ -24,7 +24,7 @@ class TransactionListViewModel: ObservableObject {
     }
     
     func subscribe() {
-        parent.$period.sink { [weak self] value in
+        parent.dataUpdateSubject.sink { [weak self] value in
             self?.serachFilter = ""
             self?.loadTransactions(filter: "")
         }
