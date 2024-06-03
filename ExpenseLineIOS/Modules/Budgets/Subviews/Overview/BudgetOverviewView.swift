@@ -7,74 +7,90 @@
 
 import SwiftUI
 
+enum SpengingsType: CaseIterable, Identifiable {
+    
+    case overall
+    case fixed
+    case flexible
+    
+    var id: Self { self }
+    
+}
+
 struct BudgetOverviewView: View {
     
     @EnvironmentObject var setting: SettingsService
     @StateObject var vm: BudgetOverviewViewModel
     
+    @State var spendings: SpengingsType = .overall
+    
     var loadStats: Bool = true
     
     var body: some View {
-        ScrollView {
-            VStack {
-                CirclularBudgetProgressView(
-                    progress: [
-                        getTotalSpent(),
-                        getFixedSpent(),
-                        getPercentSpent()
-                    ],
-                    colors: [.green, .purple, .orange],
-                    gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
-                ) {
-                    VStack {
-                        Text(vm.parent.formatPercent(getTotalSpentDecimal()))
-                            .font(.title)
-                            .bold()
-                        Text("Spent")
-                            .foregroundColor(.gray)
-                            .font(.caption)
-                    }
-                }
-                .frame(width: 250, height: 250)
-                .padding()
-                VStack(alignment: .leading) {
-                    SpendingsView(
-                        title: "Spendings",
-                        firstColor: .green,
-                        secondColor: .green.opacity(0.3),
-                        left: { AmountView(vm.totalOutcome) {
-                            vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                        }},
-                        right: { AmountView(vm.totalBudgetLeft) {
-                            $0 < 0
-                        }
-                    })
-                    SpendingsView(
-                        title: "Fixed",
-                        firstColor: .purple,
-                        secondColor: .purple.opacity(0.3),
-                        left: { AmountView(vm.totalFixedOutcome) {
-                            vm.totalPlannedFixedOutcome - $0 < 0
-                        }},
-                        right: { AmountView(vm.totalFixedBudgetLeft) {
-                            $0 < 0
-                        }
-                    })
-                    SpendingsView(
-                        title: "Flexible",
-                        firstColor: .orange,
-                        secondColor: .orange.opacity(0.3),
-                        left: { AmountView(vm.totalPercentOutcome) {
-                            vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                        }},
-                        right: { AmountView(vm.totalFlexibleBudgetLeft) {
-                            $0 < 0
-                        }
-                    })
+        VStack {
+            CirclularBudgetProgressView(
+                progress: [
+                    getTotalSpent(),
+                    getFixedSpent(),
+                    getPercentSpent()
+                ],
+                colors: [.green, .purple, .orange],
+                gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
+            ) {
+                VStack {
+                    Text(vm.parent.formatPercent(getTotalSpentDecimal()))
+                        .font(.title)
+                        .bold()
+                    Text("Spent")
+                        .foregroundColor(.gray)
+                        .font(.caption)
                 }
             }
-            .frame(maxWidth: .infinity)
+            .frame(width: 250, height: 250)
+            .padding()
+            TabView(selection: $spendings) {
+                SpendingsView(
+                    title: "Spendings",
+                    firstColor: .green,
+                    secondColor: .green.opacity(0.3),
+                    left: { AmountView(vm.totalOutcome) {
+                        vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                    }},
+                    right: { AmountView(vm.totalBudgetLeft) {
+                        $0 < 0
+                    }
+                    })
+                .tag(SpengingsType.overall)
+                SpendingsView(
+                    title: "Fixed",
+                    firstColor: .purple,
+                    secondColor: .purple.opacity(0.3),
+                    left: { AmountView(vm.totalFixedOutcome) {
+                        vm.totalPlannedFixedOutcome - $0 < 0
+                    }},
+                    right: { AmountView(vm.totalFixedBudgetLeft) {
+                        $0 < 0
+                    }
+                    })
+                .tag(SpengingsType.fixed)
+                SpendingsView(
+                    title: "Flexible",
+                    firstColor: .orange,
+                    secondColor: .orange.opacity(0.3),
+                    left: { AmountView(vm.totalPercentOutcome) {
+                        vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                    }},
+                    right: { AmountView(vm.totalFlexibleBudgetLeft) {
+                        $0 < 0
+                    }
+                    })
+                .tag(SpengingsType.flexible)
+            }
+            .frame(height: 100)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            SpenginsView()
         }
+        .padding([.horizontal, .top], 15)
         .onAppear {
             vm.subscribe()
             if loadStats {
@@ -102,29 +118,54 @@ struct BudgetOverviewView: View {
         @ViewBuilder left: () -> some View,
         @ViewBuilder right: () -> some View
     ) -> some View {
-        VStack(alignment: .leading) {
+        VStack {
+            Text(title)
             HStack {
                 RoundedRectangle(cornerRadius: 3, style: .circular)
                     .foregroundColor(firstColor)
                     .frame(width: 15, height: 15)
+                left()
                 RoundedRectangle(cornerRadius: 3, style: .circular)
                     .foregroundColor(secondColor)
                     .frame(width: 15, height: 15)
-                Text(title)
-            }
-            .frame(alignment: .leading)
-            HStack {
-                left()
-                Divider()
                 right()
             }
-            .frame(alignment: .leading)
+        }
+    }
+    
+    @ViewBuilder
+    func SpenginsView() -> some View {
+        HStack {
+            ForEach(SpengingsType.allCases) { type in
+                Button {
+                    spendings = type
+                } label: {
+                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? .green : .white) {
+                        Image(systemName: getIconForPage(type))
+                            .foregroundColor(spendings == type ? .white : .black)
+                            .font(.caption)
+                            .bold()
+                    }
+                    .frame(width: 30, height: 30)
+                }
+            }
+        }
+    }
+    
+    func getIconForPage(_ type: SpengingsType) -> String {
+        switch type {
+        case .overall:
+            return "arrow.down"
+        case .fixed:
+            return "house"
+        case .flexible:
+            return "takeoutbag.and.cup.and.straw"
         }
     }
     
     func getTotalSpentDecimal() -> Decimal {
         if vm.parent.totalPlannedIncome <= 0 {
-            return 1
+            return 0
         }
         if vm.totalOutcome <= 0 {
             return 0
@@ -151,7 +192,7 @@ struct BudgetOverviewView: View {
     
     func getPercentSpent() -> Double {
         if vm.totalPlannedPercentOutcomeAmount <= 0 {
-            return 1
+            return 0
         }
         if vm.totalPercentOutcome <= 0 {
             return 0
