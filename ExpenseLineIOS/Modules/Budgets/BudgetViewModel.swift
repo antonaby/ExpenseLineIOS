@@ -27,8 +27,6 @@ class BudgetViewModel: ObservableObject {
     
     @Published var budget: BudgetEntity
     @Published var period: PeriodEntity
-    @Published var daySpendings: [SpenginsStat] = []
-    @Published var monthSpendings: [SpenginsStat] = []
     
     var dataUpdateSubject = PassthroughSubject<DataUpdateType, Never>()
     private var cancellables = Set<AnyCancellable>()
@@ -103,8 +101,6 @@ class BudgetViewModel: ObservableObject {
         case .transactions:
             break
         case .stats:
-            loadDaySpendings()
-            loadMonthSpendings()
             break
         }
     }
@@ -179,24 +175,6 @@ class BudgetViewModel: ObservableObject {
         }
         
         objectWillChange.send()
-    }
-    
-    private func loadDaySpendings() {
-        do {
-            daySpendings = try budgetService.getSpendingsForPeriodByDay(period, budget: budget, types: [.outcomeFixed, .outcomePercent])
-        } catch {
-            // TODO: handle error
-            print("Something went wrong \(error)")
-        }
-    }
-    
-    private func loadMonthSpendings() {
-        do {
-            monthSpendings = try budgetService.getSpendingsForLastNPeriods(for: 12, budget: budget, types: [.outcomeFixed, .outcomePercent])
-        } catch {
-            // TODO: handle error
-            print("Something went wrong \(error)")
-        }
     }
     
 }

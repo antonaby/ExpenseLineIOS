@@ -60,6 +60,7 @@
 		D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */; };
 		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
 		D27483B72BFCD68A0099EA9E /* CirclularBudgetProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */; };
+		D296AE5E2C0DDC2300FFA422 /* BudgetStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D296AE5D2C0DDC2300FFA422 /* BudgetStatsViewModel.swift */; };
 		D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */; };
 		D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */; };
 		D29CA3F62C0C67450033F832 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CA3F52C0C67450033F832 /* CategoryListViewModel.swift */; };
@@ -152,6 +153,7 @@
 		D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardViewModel.swift; sourceTree = "<group>"; };
 		D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclularBudgetProgressView.swift; sourceTree = "<group>"; };
 		D28942922C0B2077001277F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D296AE5D2C0DDC2300FFA422 /* BudgetStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStatsViewModel.swift; sourceTree = "<group>"; };
 		D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverviewView.swift; sourceTree = "<group>"; };
 		D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStatsView.swift; sourceTree = "<group>"; };
 		D29CA3F52C0C67450033F832 /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
@@ -350,10 +352,10 @@
 		D23B85182BF2358300A62196 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				D296AE5C2C0DDC0800FFA422 /* Stats */,
 				D29CA3F42C0C66ED0033F832 /* Categories */,
 				D24BB7E32C0A10C900C4761E /* Transactions */,
 				D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */,
-				D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */,
 				D23B85192BF235D600A62196 /* PeriodListView.swift */,
 			);
 			path = Subviews;
@@ -420,6 +422,15 @@
 				D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */,
 			);
 			path = Wizard;
+			sourceTree = "<group>";
+		};
+		D296AE5C2C0DDC0800FFA422 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */,
+				D296AE5D2C0DDC2300FFA422 /* BudgetStatsViewModel.swift */,
+			);
+			path = Stats;
 			sourceTree = "<group>";
 		};
 		D29CA3F42C0C66ED0033F832 /* Categories */ = {
@@ -645,6 +656,7 @@
 				D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */,
 				D25AF79A2BF9D787009FEDD1 /* CircularProgressView.swift in Sources */,
 				D2C58AD02BE22B5E00F1BB03 /* ContentSizeCardView.swift in Sources */,
+				D296AE5E2C0DDC2300FFA422 /* BudgetStatsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

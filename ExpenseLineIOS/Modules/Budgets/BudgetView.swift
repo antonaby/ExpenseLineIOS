@@ -74,7 +74,7 @@ struct BudgetView: View {
                         TransactionListView(vm: TransactionListViewModel(parent: vm, budgetService: budgetService))
                             .tabItem { Image(systemName: "list.bullet") }
                             .tag(BudgetViewPage.transactions)
-                        BudgetStatsView(vm: vm)
+                        BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, budgetService: budgetService))
                             .tabItem { Image(systemName: "chart.pie") }
                             .tag(BudgetViewPage.stats)
                     }

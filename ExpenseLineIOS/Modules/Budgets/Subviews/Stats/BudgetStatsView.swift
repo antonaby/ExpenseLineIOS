@@ -11,7 +11,7 @@ import Charts
 
 struct BudgetStatsView: View {
     
-    @ObservedObject var vm: BudgetViewModel
+    @StateObject var vm: BudgetStatsViewModel
     
     var loadStats: Bool = true
     
@@ -62,9 +62,13 @@ struct BudgetStatsView: View {
         .padding([.horizontal, .top], 15)
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {
+            vm.subscribe()
             if loadStats {
-                vm.loadData(for: .stats)
+                vm.loadSpendings()
             }
+        }
+        .onDisappear {
+            vm.cancelAll()
         }
     }
 }
@@ -78,11 +82,13 @@ struct BudgetStatsView: View {
     budget.currency = "en_US"
     
     do {
-        let vm = BudgetViewModel(
+        let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
+        
+        let vm = BudgetStatsViewModel(parent: parent, budgetService: bundle.budgetService)
         
         vm.daySpendings = [
             SpenginsStat(id: 0, date: Date(), value: 10),
