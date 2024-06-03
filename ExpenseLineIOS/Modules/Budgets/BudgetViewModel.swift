@@ -42,9 +42,11 @@ class BudgetViewModel: ObservableObject {
     
     var totalPlannedIncome: Decimal {
         get {
-            budget.totalAmountForCategoryType(.income)
+            totalPlannedIncomeCalculated
         }
     }
+    
+    private var totalPlannedIncomeCalculated: Decimal
     
     init(budget: BudgetEntity, period: PeriodEntity, page: BudgetViewPage = .overview, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
@@ -53,6 +55,7 @@ class BudgetViewModel: ObservableObject {
         self.budgetService = budgetService
         self.dataService = dataService
         self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
+        self.totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
         createFormatters(locale: currency.locale)
         
         $budget.sink { [weak self] budget in
@@ -70,6 +73,7 @@ class BudgetViewModel: ObservableObject {
             if let budgetId = budget.id, let loadedBudget = try budgetService.getBudgetById(budgetId) {
                 budget = loadedBudget
                 currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
+                totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
                 createFormatters(locale: currency.locale)
             }
         } catch {
