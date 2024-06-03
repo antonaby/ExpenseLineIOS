@@ -34,7 +34,7 @@ struct BudgetOverviewView: View {
                     getFixedSpent(),
                     getPercentSpent()
                 ],
-                colors: [.green, .purple, .orange],
+                colors: [.indigo, .purple, .orange],
                 selected: spendings.rawValue,
                 gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
             ) {
@@ -52,8 +52,8 @@ struct BudgetOverviewView: View {
             TabView(selection: $spendings) {
                 SpendingsView(
                     title: "Spendings",
-                    firstColor: .green,
-                    secondColor: .green.opacity(0.3),
+                    firstColor: .indigo,
+                    secondColor: .indigo.opacity(0.3),
                     left: { AmountView(vm.totalOutcome) {
                         vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
                     }},
@@ -144,10 +144,9 @@ struct BudgetOverviewView: View {
                     FlexibleCardView(cornerRadius: 7, color: spendings == type ? .green : .white) {
                         Image(systemName: getIconForPage(type))
                             .foregroundColor(spendings == type ? .white : .black)
-                            .font(.caption)
                             .bold()
                     }
-                    .frame(width: 30, height: 30)
+                    .frame(width: 45, height: 45)
                 }
             }
         }
