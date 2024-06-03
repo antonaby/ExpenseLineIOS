@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-enum SpengingsType: CaseIterable, Identifiable {
+enum SpengingsType: Int, CaseIterable, Identifiable {
     
-    case overall
-    case fixed
-    case flexible
+    case overall = 0
+    case fixed = 1
+    case flexible = 2
     
     var id: Self { self }
     
@@ -35,6 +35,7 @@ struct BudgetOverviewView: View {
                     getPercentSpent()
                 ],
                 colors: [.green, .purple, .orange],
+                selected: spendings.rawValue,
                 gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
             ) {
                 VStack {
