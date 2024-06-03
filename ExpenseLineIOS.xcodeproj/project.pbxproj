@@ -61,6 +61,7 @@
 		D2705E5E2BC01D77003426A8 /* BudgetWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5D2BC01D77003426A8 /* BudgetWizardViewModel.swift */; };
 		D27483B72BFCD68A0099EA9E /* CirclularBudgetProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */; };
 		D296AE5E2C0DDC2300FFA422 /* BudgetStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D296AE5D2C0DDC2300FFA422 /* BudgetStatsViewModel.swift */; };
+		D296AE612C0DE0FC00FFA422 /* BudgetOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D296AE602C0DE0FC00FFA422 /* BudgetOverviewViewModel.swift */; };
 		D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */; };
 		D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */; };
 		D29CA3F62C0C67450033F832 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CA3F52C0C67450033F832 /* CategoryListViewModel.swift */; };
@@ -154,6 +155,7 @@
 		D27483B62BFCD68A0099EA9E /* CirclularBudgetProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclularBudgetProgressView.swift; sourceTree = "<group>"; };
 		D28942922C0B2077001277F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D296AE5D2C0DDC2300FFA422 /* BudgetStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStatsViewModel.swift; sourceTree = "<group>"; };
+		D296AE602C0DE0FC00FFA422 /* BudgetOverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverviewViewModel.swift; sourceTree = "<group>"; };
 		D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverviewView.swift; sourceTree = "<group>"; };
 		D29C0B602BC8164700ED92F2 /* BudgetStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetStatsView.swift; sourceTree = "<group>"; };
 		D29CA3F52C0C67450033F832 /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
@@ -352,10 +354,10 @@
 		D23B85182BF2358300A62196 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				D296AE5C2C0DDC0800FFA422 /* Stats */,
+				D296AE5F2C0DE0BB00FFA422 /* Overview */,
 				D29CA3F42C0C66ED0033F832 /* Categories */,
 				D24BB7E32C0A10C900C4761E /* Transactions */,
-				D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */,
+				D296AE5C2C0DDC0800FFA422 /* Stats */,
 				D23B85192BF235D600A62196 /* PeriodListView.swift */,
 			);
 			path = Subviews;
@@ -431,6 +433,15 @@
 				D296AE5D2C0DDC2300FFA422 /* BudgetStatsViewModel.swift */,
 			);
 			path = Stats;
+			sourceTree = "<group>";
+		};
+		D296AE5F2C0DE0BB00FFA422 /* Overview */ = {
+			isa = PBXGroup;
+			children = (
+				D29C0B5E2BC815CB00ED92F2 /* BudgetOverviewView.swift */,
+				D296AE602C0DE0FC00FFA422 /* BudgetOverviewViewModel.swift */,
+			);
+			path = Overview;
 			sourceTree = "<group>";
 		};
 		D29CA3F42C0C66ED0033F832 /* Categories */ = {
@@ -612,6 +623,7 @@
 				D29C0B612BC8164700ED92F2 /* BudgetStatsView.swift in Sources */,
 				D26C11CE2C04A7D6004DB285 /* IconView.swift in Sources */,
 				D2F7685B2BC952A6001CE98C /* TransactionSheetView.swift in Sources */,
+				D296AE612C0DE0FC00FFA422 /* BudgetOverviewViewModel.swift in Sources */,
 				D250D4CF2BB828EB0050638C /* Budget.swift in Sources */,
 				D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */,
 				D221C0862BE755000096DF89 /* Date+Extension.swift in Sources */,

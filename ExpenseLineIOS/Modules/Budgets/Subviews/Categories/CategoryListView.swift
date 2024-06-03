@@ -143,6 +143,10 @@ struct CategoryListView: View {
     budget.name = "Preview"
     
     do {
+        let plannedCategory = budgetService.newCategoryEntity(budget)
+        plannedCategory.typeValue = .income
+        plannedCategory.amountDecimal = 1000
+        
         let category1 = PlanCategoryEntity(context: dm.viewContext)
         category1.id = UUID()
         category1.name = "Preview 1"
@@ -195,7 +199,6 @@ struct CategoryListView: View {
             budgetService: budgetService,
             dataService: bundle.dataService
         )
-        parent.totalPlannedIncome = 1000
         
         let vm = CategoryListViewModel(parent: parent, budgetService: budgetService)
         return CategoryListView(vm: vm)

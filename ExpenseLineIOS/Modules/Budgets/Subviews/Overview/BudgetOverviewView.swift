@@ -10,7 +10,9 @@ import SwiftUI
 struct BudgetOverviewView: View {
     
     @EnvironmentObject var setting: SettingsService
-    @ObservedObject var vm: BudgetViewModel
+    @StateObject var vm: BudgetOverviewViewModel
+    
+    var loadStats: Bool = true
     
     var body: some View {
         ScrollView {
@@ -25,7 +27,7 @@ struct BudgetOverviewView: View {
                     gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
                 ) {
                     VStack {
-                        Text(vm.formatPercent(getTotalSpentDecimal()))
+                        Text(vm.parent.formatPercent(getTotalSpentDecimal()))
                             .font(.title)
                             .bold()
                         Text("Spent")
@@ -74,13 +76,20 @@ struct BudgetOverviewView: View {
             .frame(maxWidth: .infinity)
         }
         .onAppear {
-            vm.loadData(for: .overview)
+            vm.subscribe()
+            if loadStats {
+                vm.loadAmounts()
+            }
         }
+        .onDisappear {
+            vm.cancelAll()
+        }
+        
     }
     
     @ViewBuilder
     func AmountView(_ amount: Decimal, isSpent: (Decimal) -> Bool) -> some View {
-        Text(vm.formatAmount(amount))
+        Text(vm.parent.formatAmount(amount))
             .foregroundColor(isSpent(amount) ? .red : .black)
             .font(.title2)
     }
@@ -114,14 +123,14 @@ struct BudgetOverviewView: View {
     }
     
     func getTotalSpentDecimal() -> Decimal {
-        if vm.totalPlannedIncome <= 0 {
+        if vm.parent.totalPlannedIncome <= 0 {
             return 1
         }
         if vm.totalOutcome <= 0 {
             return 0
         }
         
-        return vm.totalOutcome / vm.totalPlannedIncome
+        return vm.totalOutcome / vm.parent.totalPlannedIncome
     }
     
     func getTotalSpent() -> Double {
@@ -162,13 +171,18 @@ struct BudgetOverviewView: View {
     budget.currency = "en_US"
    
     do {
-        let vm = BudgetViewModel(
+        let plannedCategory = bundle.budgetService.newCategoryEntity(budget)
+        plannedCategory.typeValue = .income
+        plannedCategory.amountDecimal = 3500
+        
+        let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
         
-        vm.totalPlannedIncome = 3500
+        let vm = BudgetOverviewViewModel(parent: parent, budgetService: bundle.budgetService)
+        
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
         vm.totalOutcome = 2000
@@ -180,7 +194,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
         
-        return BudgetOverviewView(vm: vm)
+        return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
@@ -196,13 +210,18 @@ struct BudgetOverviewView: View {
     budget.currency = "en_US"
    
     do {
-        let vm = BudgetViewModel(
+        let plannedCategory = bundle.budgetService.newCategoryEntity(budget)
+        plannedCategory.typeValue = .income
+        plannedCategory.amountDecimal = 3500
+        
+        let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
         
-        vm.totalPlannedIncome = 3500
+        let vm = BudgetOverviewViewModel(parent: parent, budgetService: bundle.budgetService)
+        
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
         vm.totalOutcome = 2000
@@ -214,7 +233,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
         
-        return BudgetOverviewView(vm: vm)
+        return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
@@ -230,13 +249,18 @@ struct BudgetOverviewView: View {
     budget.currency = "en_US"
    
     do {
-        let vm = BudgetViewModel(
+        let plannedCategory = bundle.budgetService.newCategoryEntity(budget)
+        plannedCategory.typeValue = .income
+        plannedCategory.amountDecimal = 3500
+        
+        let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
         
-        vm.totalPlannedIncome = 3500
+        let vm = BudgetOverviewViewModel(parent: parent, budgetService: bundle.budgetService)
+        
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
         vm.totalOutcome = 4000
@@ -248,7 +272,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
         
-        return BudgetOverviewView(vm: vm)
+        return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")

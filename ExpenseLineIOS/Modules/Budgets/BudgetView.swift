@@ -65,7 +65,7 @@ struct BudgetView: View {
                 }
                 ZStack(alignment: .bottomTrailing) {
                     TabView(selection: $vm.currenPage) {
-                        BudgetOverviewView(vm: vm)
+                        BudgetOverviewView(vm: BudgetOverviewViewModel(parent: vm, budgetService: budgetService))
                             .tabItem { Image(systemName: "house") }
                             .tag(BudgetViewPage.overview)
                         CategoryListView(vm: CategoryListViewModel(parent: vm, budgetService: budgetService))
@@ -92,7 +92,7 @@ struct BudgetView: View {
                                                   budgetService: budgetService))
                     .presentationDetents([.medium])
             }
-            .sheet(isPresented: $changePeriodSheetOpen, onDismiss: onPeriodUpdated) {
+            .sheet(isPresented: $changePeriodSheetOpen) {
                 PeriodListView(selected: $vm.period,
                                vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
                     .presentationDetents([.large, .medium])
@@ -140,10 +140,6 @@ struct BudgetView: View {
     
     func onBudgetUpdated() {
         vm.reloadBudget()
-    }
-    
-    func onPeriodUpdated() {
-        vm.reloadPage()
     }
     
     func onTransactionUpdated() {

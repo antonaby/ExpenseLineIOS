@@ -33,23 +33,18 @@ class BudgetViewModel: ObservableObject {
     
     var currency: CurrencySymbol
     
-    var totalPlannedIncome: Decimal = 0
-    var totalPlannedFixedOutcome: Decimal = 0
-    var totalPlannedPercentOutcome: Decimal = 0
-    var totalPlannedPercentOutcomeAmount: Decimal = 0
-    var totalOutcome: Decimal = 0
-    var totalFixedOutcome: Decimal = 0
-    var totalPercentOutcome: Decimal = 0
-    var totalBudgetLeft: Decimal = 0
-    var totalFixedBudgetLeft: Decimal = 0
-    var totalFlexibleBudgetLeft: Decimal = 0
-    
     private var currencyFormatter: NumberFormatter = NumberFormatter()
     private var percentFormatter: NumberFormatter = NumberFormatter()
     private var dateFormatter: DateFormatter = DateFormatter()
     
     private let budgetService: BudgetService
     private let dataService: DataService
+    
+    var totalPlannedIncome: Decimal {
+        get {
+            budget.totalAmountForCategoryType(.income)
+        }
+    }
     
     init(budget: BudgetEntity, period: PeriodEntity, page: BudgetViewPage = .overview, budgetService: BudgetService, dataService: DataService) {
         self.budget = budget
@@ -85,24 +80,6 @@ class BudgetViewModel: ObservableObject {
     
     func sendTransactionUpdated() {
         dataUpdateSubject.send(.transaction)
-    }
-    
-    func reloadPage() {
-        loadData(for: currenPage)
-    }
-    
-    func loadData(for page: BudgetViewPage) {
-        switch page {
-        case .overview:
-            loadAmounts()
-            break
-        case .categories:
-            break
-        case .transactions:
-            break
-        case .stats:
-            break
-        }
     }
     
     func formatAmount(_ amount: Decimal) -> String {
@@ -154,27 +131,6 @@ class BudgetViewModel: ObservableObject {
         dateFormatter.locale = Locale.current
         dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
         self.dateFormatter = dateFormatter
-    }
-    
-    private func loadAmounts() {
-        totalPlannedIncome = budget.totalAmountForCategoryType(.income)
-        totalPlannedFixedOutcome = budget.totalAmountForCategoryType(.outcomeFixed)
-        totalPlannedPercentOutcome = budget.totalPercentForCategoryType(.outcomePercent)
-        totalPlannedPercentOutcomeAmount = totalPlannedIncome * totalPlannedPercentOutcome
-        
-        do {
-            totalFixedOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomeFixed])
-            totalPercentOutcome = try budgetService.getTotalOutcomeForPeriod(period, budget: budget, types: [.outcomePercent])
-            totalOutcome = totalFixedOutcome + totalPercentOutcome
-            totalBudgetLeft = totalPlannedIncome - totalOutcome
-            totalFixedBudgetLeft = totalPlannedFixedOutcome - totalFixedOutcome
-            totalFlexibleBudgetLeft = totalPlannedPercentOutcomeAmount - totalPercentOutcome
-        } catch {
-            // TODO: show error
-            print("Something went wrong \(error)")
-        }
-        
-        objectWillChange.send()
     }
     
 }
