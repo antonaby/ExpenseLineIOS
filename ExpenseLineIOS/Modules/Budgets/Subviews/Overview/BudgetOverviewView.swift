@@ -27,71 +27,74 @@ struct BudgetOverviewView: View {
     var loadStats: Bool = true
     
     var body: some View {
-        VStack {
-            CirclularBudgetProgressView(
-                progress: [
-                    getTotalSpent(),
-                    getFixedSpent(),
-                    getPercentSpent()
-                ],
-                colors: [.indigo, .purple, .orange],
-                selected: spendings.rawValue,
-                gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
-            ) {
-                VStack {
-                    Text(vm.parent.formatPercent(getTotalSpentDecimal()))
-                        .font(.title)
-                        .bold()
-                    Text("Spent")
-                        .foregroundColor(.gray)
-                        .font(.caption)
+        Group {
+            VStack {
+                CirclularBudgetProgressView(
+                    progress: [
+                        getTotalSpent(),
+                        getFixedSpent(),
+                        getPercentSpent()
+                    ],
+                    colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
+                    selected: spendings.rawValue,
+                    gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
+                ) {
+                    VStack {
+                        Text(vm.parent.formatPercent(getTotalSpentDecimal()))
+                            .font(.title)
+                            .bold()
+                        Text("Spent")
+                            .foregroundColor(.gray)
+                            .font(.caption)
+                    }
                 }
+                .frame(width: 250, height: 250)
+                .padding()
+                TabView(selection: $spendings) {
+                    SpendingsView(
+                        title: "Spendings",
+                        firstColor: Color("Accent1"),
+                        secondColor: Color("Accent1").opacity(0.3),
+                        left: { AmountView(vm.totalOutcome) {
+                            vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                        }},
+                        right: { AmountView(vm.totalBudgetLeft) {
+                            $0 < 0
+                        }
+                        })
+                    .tag(SpengingsType.overall)
+                    SpendingsView(
+                        title: "Fixed",
+                        firstColor: Color("Accent2"),
+                        secondColor: Color("Accent2").opacity(0.3),
+                        left: { AmountView(vm.totalFixedOutcome) {
+                            vm.totalPlannedFixedOutcome - $0 < 0
+                        }},
+                        right: { AmountView(vm.totalFixedBudgetLeft) {
+                            $0 < 0
+                        }
+                        })
+                    .tag(SpengingsType.fixed)
+                    SpendingsView(
+                        title: "Flexible",
+                        firstColor: Color("Accent3"),
+                        secondColor: Color("Accent3").opacity(0.3),
+                        left: { AmountView(vm.totalPercentOutcome) {
+                            vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                        }},
+                        right: { AmountView(vm.totalFlexibleBudgetLeft) {
+                            $0 < 0
+                        }
+                        })
+                    .tag(SpengingsType.flexible)
+                }
+                .frame(height: 100)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                SpenginsView()
             }
-            .frame(width: 250, height: 250)
-            .padding()
-            TabView(selection: $spendings) {
-                SpendingsView(
-                    title: "Spendings",
-                    firstColor: .indigo,
-                    secondColor: .indigo.opacity(0.3),
-                    left: { AmountView(vm.totalOutcome) {
-                        vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                    }},
-                    right: { AmountView(vm.totalBudgetLeft) {
-                        $0 < 0
-                    }
-                    })
-                .tag(SpengingsType.overall)
-                SpendingsView(
-                    title: "Fixed",
-                    firstColor: .purple,
-                    secondColor: .purple.opacity(0.3),
-                    left: { AmountView(vm.totalFixedOutcome) {
-                        vm.totalPlannedFixedOutcome - $0 < 0
-                    }},
-                    right: { AmountView(vm.totalFixedBudgetLeft) {
-                        $0 < 0
-                    }
-                    })
-                .tag(SpengingsType.fixed)
-                SpendingsView(
-                    title: "Flexible",
-                    firstColor: .orange,
-                    secondColor: .orange.opacity(0.3),
-                    left: { AmountView(vm.totalPercentOutcome) {
-                        vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                    }},
-                    right: { AmountView(vm.totalFlexibleBudgetLeft) {
-                        $0 < 0
-                    }
-                    })
-                .tag(SpengingsType.flexible)
-            }
-            .frame(height: 100)
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            SpenginsView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .padding([.horizontal, .top], 15)
+        .background(Color("BgDefault"))
         .onAppear {
             vm.subscribe()
             if loadStats {
@@ -141,7 +144,7 @@ struct BudgetOverviewView: View {
                 Button {
                     spendings = type
                 } label: {
-                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? .green : .white) {
+                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? Color("FrDefault") : Color("BgDefault")) {
                         Image(systemName: getIconForPage(type))
                             .foregroundColor(spendings == type ? .white : .black)
                             .bold()

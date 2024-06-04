@@ -91,13 +91,15 @@ struct CurrencySelectorSheet: View {
                         .foregroundColor(.black)
                     }
                 }
+                .background(Color("BgDefault"))
+                .scrollContentBackground(.hidden)
             } else {
                 Text("no results")
                     .bold()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .onAppear {
             vm.loadCurrencies()
         }

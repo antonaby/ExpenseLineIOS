@@ -13,7 +13,7 @@ struct FormTitleViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.title)
-            .foregroundColor(.gray)
+            .foregroundColor(Color("Accent3"))
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     

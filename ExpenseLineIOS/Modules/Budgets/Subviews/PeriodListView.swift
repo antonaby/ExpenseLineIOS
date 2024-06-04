@@ -47,6 +47,8 @@ struct PeriodListView: View {
                         .tint(.black)
                 }
             }
+            .background(Color("BgDefault"))
+            .scrollContentBackground(.hidden)
         }
         .onAppear {
             vm.loadPeriods()

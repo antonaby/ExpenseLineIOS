@@ -249,14 +249,14 @@ struct EditCategorySheet: View {
     var body: some View {
         VStack {
             HStack {
-                ToolButton(icon: "x.circle", color: .red) {
+                ToolButton(icon: "x.circle", color: Color("Accent1")) {
                     dismiss?(vm.category)
                 }
                 Spacer()
                 Text("Category")
                     .font(.headline)
                 Spacer()
-                ToolButton(color: .green) {
+                ToolButton(color: Color("FrDefault")) {
                     update?(vm.getUpdatedCategory())
                 }
                 .disabled(!vm.isValid)
@@ -299,7 +299,7 @@ struct EditCategorySheet: View {
                                     } label: {
                                         CategoryLabel(categoryType)
                                             .frame(maxWidth: .infinity)
-                                            .foregroundColor(categoryType == vm.type ? .green : .black)
+                                            .foregroundColor(categoryType == vm.type ? Color("FrDefault") : .black)
                                     }
                                 }
                             }
@@ -341,10 +341,11 @@ struct EditCategorySheet: View {
                     } label: {
                         Text("More actions")
                     }
+                    .tint(Color("FrDefault"))
                 }
             }
             .padding([.top, .horizontal], 10)
-            .background(Color(uiColor: .secondarySystemBackground))
+            .background(Color("BgDefault"))
         }
         .sheet(isPresented: $showCategrotyTemplateSheet, onDismiss: onIconSelected) {
             CategoryTemplateSelectorView(color: $vm.color, selectedTemplate: $vm.template, type: vm.type)

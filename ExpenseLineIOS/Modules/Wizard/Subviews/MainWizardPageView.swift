@@ -24,6 +24,7 @@ struct MainWizardPageView: View {
                         HStack {
                             Image(systemName: "pencil")
                                 .frame(width: 30)
+                                .foregroundColor(Color("Accent3"))
                             TextField("Name", text: $vm.name)
                         }
                         Divider()
@@ -33,6 +34,7 @@ struct MainWizardPageView: View {
                             HStack {
                                 Image(systemName: "banknote")
                                     .frame(width: 30)
+                                    .foregroundColor(Color("Accent3"))
                                 Text("Currency")
                                 Spacer()
                                 Text(vm.currency.code)
@@ -50,9 +52,11 @@ struct MainWizardPageView: View {
                             HStack {
                                 Image(systemName: "bell")
                                     .frame(width: 25)
+                                    .foregroundColor(Color("Accent3"))
                                 Text("Daily Reminder")
                             }
                         }
+                        .tint(Color("FrDefault"))
                         .onChange(of: vm.dailyReminderEnabled) { value in
                             withAnimation {
                                 showDatePicker = value
@@ -74,7 +78,7 @@ struct MainWizardPageView: View {
         .onAppear {
             showDatePicker = vm.dailyReminderEnabled
         }
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency, vm: CurrencySelectorSheetViewModel(dataService: dataService))
                 .presentationDetents([.large, .medium])

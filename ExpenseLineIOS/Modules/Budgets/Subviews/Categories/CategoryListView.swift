@@ -35,7 +35,11 @@ struct CategoryCard: View {
                             PlannedViewFixed()
                         }
                     }
-                    CircularProgressView(progress: getPercentSpent(), lineWidth: 10) {
+                    CircularProgressView(
+                        progress: getPercentSpent(),
+                        color: Color("FrDefault"),
+                        fullColor: Color("Accent1"),
+                        lineWidth: 10) {
                         VStack {
                             Text(vm.formatPercent(getPercentSpentDecimal()))
                             Text("Spent")
@@ -59,6 +63,7 @@ struct CategoryCard: View {
                 .bold()
             Text("≈" + vm.formatAmount(getExpectedAmount()))
                 .font(.caption)
+                .foregroundColor(Color("Accent3"))
         }
     }
     
@@ -121,7 +126,7 @@ struct CategoryListView: View {
         }
         .padding(.horizontal, 15)
         .padding(.top, 15)
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .onAppear {
             vm.subscribe()
             vm.loadCategories()
@@ -189,7 +194,7 @@ struct CategoryListView: View {
         
         let transaction4 = budgetService.newTransactionEntity(budget)
         transaction4.name = "Test 4"
-        transaction4.amountDecimal = 800
+        transaction4.amountDecimal = 1800
         transaction4.createdAt = Date()
         transaction4.category = category2
         

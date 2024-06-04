@@ -38,12 +38,12 @@ struct BudgetWizardView: View {
                         previousPage()
                     } label: {
                         Label("Back", systemImage: "chevron.backward")
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("FrDefault"))
                     }
                 }
             }
             .overlay(alignment: .trailing) {
-                ToolButton(icon: "x.circle", color: .gray) {
+                ToolButton(icon: "x.circle", color: Color("Accent1")) {
                     vm.rollback()
                     dismiss()
                 }
@@ -59,7 +59,7 @@ struct BudgetWizardView: View {
             }
         }
         .padding(.horizontal, 15)
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .sheet(item: $vm.selectedCategory) { category in
             EditCategorySheet(title: "Save",
                               vm: EditPlanCategorySheetViewModel(category, currencySymbol: vm.currency))
@@ -141,7 +141,7 @@ struct BudgetWizardView: View {
         Button {
             currentPage = page
         } label: {
-            FlexibleCardView(cornerRadius: 7, color: currentPage == page ? .green : .white) {
+            FlexibleCardView(cornerRadius: 7, color: currentPage == page ? Color("FrDefault") : Color("BgDefault")) {
                 Image(systemName: getIconForPage(page))
                     .foregroundColor(currentPage == page ? .white : .black)
                     .font(.caption)

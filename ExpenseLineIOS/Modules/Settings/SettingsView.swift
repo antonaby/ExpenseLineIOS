@@ -20,7 +20,7 @@ struct SettingsView: View {
         VStack {
             HStack {
                 Spacer()
-                ToolButton(icon: "x.circle", color: .gray) {
+                ToolButton(icon: "x.circle", color: Color("Accent1")) {
                     dismiss()
                 }
                 .font(.title2)
@@ -33,11 +33,14 @@ struct SettingsView: View {
                             .onChange(of: preference.value) { value in
                                 settings.setBoolPreference(for: preference.id, value: value)
                             }
+                            .tint(Color("FrDefault"))
                     }
                 } header: {
                     Text("Appearance")
                 }
             }
+            .background(Color("BgDefault"))
+            .scrollContentBackground(.hidden)
         }
         .background(Color(uiColor: .secondarySystemBackground))
         .onAppear {

@@ -27,9 +27,9 @@ struct BudgetListView: View {
                         .font(.title2)
                         .padding(.top, 5)
                 }
-                .tint(.green)
+                .tint(Color("FrDefault"))
             }
-            IconView(name: "piggy-bank", color: .green, size: 100)
+            IconView(name: "piggy-bank", color: Color("FrDefault"), size: 100)
             ScrollView {
                 VStack {
                     if vm.budgets.isEmpty {
@@ -76,10 +76,10 @@ struct BudgetListView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.green)
+            .tint(Color("FrDefault"))
         }
         .padding(.horizontal, 10)
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .onAppear {
             vm.loadBudgets()
         }

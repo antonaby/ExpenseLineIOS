@@ -26,7 +26,7 @@ struct CategoryTemplateSelectorView: View {
         VStack {
             HStack {
                 Spacer()
-                ToolButton {
+                ToolButton(color: Color("FrDefault")) {
                     dismiss()
                 }
             }
@@ -57,7 +57,7 @@ struct CategoryTemplateSelectorView: View {
             }
             .padding([.top], 10)
             .padding([.horizontal], 10)
-            .background(Color(uiColor: .secondarySystemBackground))
+            .background(Color("BgDefault"))
             .onAppear {
                 mainTemplates = dataService.getCategoryTemplates(of: type)
                 otherTemplates = Array(dataService.getCategoryTemplates(not: type).map { $0.templates }.joined())

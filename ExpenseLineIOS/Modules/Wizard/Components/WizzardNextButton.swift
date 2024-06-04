@@ -43,7 +43,7 @@ struct WizzardNextButton<Content: View>: View {
     
     private func buttonColor() -> Color {
         if isEnabled {
-            return .green
+            return Color("FrDefault")
         }
         
         return Color.gray

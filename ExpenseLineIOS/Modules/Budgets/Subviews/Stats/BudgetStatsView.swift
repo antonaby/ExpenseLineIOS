@@ -29,13 +29,13 @@ struct BudgetStatsView: View {
                             )
                             .symbol(.circle)
                             .interpolationMethod(.catmullRom)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(Color("FrDefault"))
                             AreaMark(
                                 x: .value("Day", spendings.date, unit: .day),
                                 y: .value("Amount", spendings.value)
                             )
                             .interpolationMethod(.catmullRom)
-                            .foregroundStyle(Gradient(colors: [Color.green, Color.green.opacity(0.1)]))
+                            .foregroundStyle(Gradient(colors: [Color("FrDefault"), Color("FrDefault").opacity(0.1)]))
                         }
                         .frame(height: 150)
                     }
@@ -51,7 +51,7 @@ struct BudgetStatsView: View {
                                     y: .value("Amount", spendings.value)
                                 )
                                 .cornerRadius(10)
-                                .foregroundStyle(.green)
+                                .foregroundStyle(Color("FrDefault"))
                             }
                         }
                         .frame(height: 150)
@@ -60,7 +60,7 @@ struct BudgetStatsView: View {
             }
         }
         .padding([.horizontal, .top], 15)
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .onAppear {
             vm.subscribe()
             if loadStats {

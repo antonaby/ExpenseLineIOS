@@ -22,7 +22,7 @@ struct AddExpenseButton: View {
             Image(systemName: "plus")
                 .font(.title.weight(.semibold))
                 .padding(15)
-                .background(.green)
+                .background(Color("FrDefault"))
                 .foregroundColor(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
         }

@@ -64,9 +64,6 @@ class CategoryViewModel: ObservableObject {
                 return 1
             }
             let percent = totalAmount / category.amountDecimal
-            if percent > 1 {
-                return 1
-            }
             return Double(truncating: percent as NSNumber)
         } else if category.typeValue == .outcomePercent {
             if category.percentDecimal <= 0 {
@@ -74,9 +71,6 @@ class CategoryViewModel: ObservableObject {
             }
                         
             let percent = totalAmount / getPlannedAmountFromPercent()
-            if percent > 1 {
-                return 1
-            }
             return Double(truncating: percent as NSNumber)
         }
         

@@ -42,7 +42,7 @@ struct TransactionSheetView: View {
     var body: some View {
         VStack {
             HStack {
-                ToolButton(icon: "x.circle", color: .red) {
+                ToolButton(icon: "x.circle", color: Color("Accent1")) {
                     vm.rollback()
                     dismiss()
                 }
@@ -50,7 +50,7 @@ struct TransactionSheetView: View {
                 Text("Transaction")
                     .font(.headline)
                 Spacer()
-                ToolButton(color: .green) {
+                ToolButton(color: Color("FrDefault")) {
                     vm.save()
                     dismiss()
                 }
@@ -114,7 +114,7 @@ struct TransactionSheetView: View {
                     }
                     .padding([.top, .horizontal], 10)
                 }
-                .background(Color(uiColor: .secondarySystemBackground))
+                .background(Color("BgDefault"))
             }
         }
         .interactiveDismissDisabled(true)

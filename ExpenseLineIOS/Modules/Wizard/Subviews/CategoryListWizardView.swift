@@ -32,6 +32,7 @@ struct CategoryListWizardView: View {
                                 Text(vm.percentFormatter.string(from: category.percentValue) ?? "0")
                                 Text("≈" + formatPercentAmount(category))
                                     .font(.caption)
+                                    .foregroundColor(Color("Accent3"))
                             }
                         } else {
                             Text(vm.currencyFormatter.string(from: category.amountValue) ?? "0")
@@ -57,7 +58,8 @@ struct CategoryListWizardView: View {
                             .frame(width: 20)
                         Text("Add")
                     }
-                    .foregroundColor(.black)
+                    .foregroundColor(Color("FrDefault"))
+                    .frame(maxWidth: .infinity)
                 }
             }
             .listRowSeparator(.hidden)

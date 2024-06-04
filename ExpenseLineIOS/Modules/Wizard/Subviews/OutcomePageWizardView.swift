@@ -20,7 +20,7 @@ struct OutcomePageWizardView: View {
             }
             BudgetShortSummaryView(vm: vm)
         }
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
     }
 }
 

@@ -24,7 +24,7 @@ struct BudgetView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack {
+            VStack(spacing: 0) {
                 VStack {
                     HStack {
                         Button {
@@ -40,7 +40,7 @@ struct BudgetView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 20)
-                .background(Color.white)
+                .background(Color("BgDefault"))
                 .overlay(alignment: .topLeading) {
                     Button {
                         appState.unselectBudget()
@@ -50,7 +50,7 @@ struct BudgetView: View {
                             .padding(.leading, 10)
                             .padding(.top, 5)
                     }
-                    .tint(.green)
+                    .tint(Color("FrDefault"))
                 }
                 .overlay(alignment: .topTrailing) {
                     Button {
@@ -61,7 +61,7 @@ struct BudgetView: View {
                             .padding(.trailing, 10)
                             .padding(.top, 5)
                     }
-                    .tint(.green)
+                    .tint(Color("FrDefault"))
                 }
                 ZStack(alignment: .bottomTrailing) {
                     TabView(selection: $vm.currenPage) {
@@ -78,6 +78,7 @@ struct BudgetView: View {
                             .tabItem { Image(systemName: "chart.pie") }
                             .tag(BudgetViewPage.stats)
                     }
+                    .accentColor(Color("FrDefault"))
                     AddExpenseButton {
                         transactionSheet.toggle()
                     }
@@ -134,7 +135,7 @@ struct BudgetView: View {
             Text(vm.period.currentMonth)
         }
         .buttonStyle(.borderless)
-        .tint(.green)
+        .tint(Color("FrDefault"))
         .padding(.bottom, 5)
     }
     

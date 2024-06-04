@@ -34,7 +34,7 @@ struct CategoryView: View {
                             selectedCategory = vm.category
                         } label: {
                             Image(systemName: "ellipsis")
-                                .foregroundColor(.green)
+                                .foregroundColor(Color("FrDefault"))
                         }
                     }
                     HStack {
@@ -42,7 +42,7 @@ struct CategoryView: View {
                     }
                     .font(.largeTitle)
                     .bold()
-                    ProgressView(progress: vm.percentSpent())
+                    ProgressView(progress: vm.percentSpent(), color: Color("FrDefault"), fullColor: Color("Accent1"))
                     if vm.category.typeValue == .outcomePercent {
                         PlannedViewPercent()
                     } else {
@@ -73,11 +73,12 @@ struct CategoryView: View {
                     } label: {
                         Label("delete", systemImage: "trash.fill")
                     }
+                    .tint(Color("Accent1"))
                 }
             }
             .listStyle(.plain)
         }
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
             TransactionSheetView(
                 vm: TransactionSheetViewModel(transaction: transaction,
@@ -161,6 +162,52 @@ struct CategoryView: View {
     let transaction3 = budgetService.newTransactionEntity(budget)
     transaction3.name = "Transaction 3"
     transaction3.amountDecimal = 300
+    transaction3.createdAt = Date()
+    transaction3.category = category
+    
+    do {
+        let period = try budgetService.getOrCreateLastPeriod(budget)
+        let vm = CategoryViewModel(
+            category: category,
+            period: period,
+            budget: budget,
+            currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
+            budgetService: budgetService
+        )
+        return CategoryView(vm: vm)
+            .serviceBundle(bundle)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
+}
+
+#Preview("Fixed Full") {
+    let bundle = ServiceBundle.preview
+    let budgetService = bundle.budgetService
+    
+    let budget = budgetService.newBudgetEntity()
+    let category = budgetService.newCategoryEntity(budget)
+    category.name = "Preview"
+    category.typeValue = .outcomeFixed
+    category.amountDecimal = 1000
+    category.iconName = "007-electricity"
+    category.colorValue = .orange
+    
+    let transaction1 = budgetService.newTransactionEntity(budget)
+    transaction1.name = "Transaction 1"
+    transaction1.amountDecimal = 12
+    transaction1.createdAt = Date()
+    transaction1.category = category
+    
+    let transaction2 = budgetService.newTransactionEntity(budget)
+    transaction2.name = "Transaction 2"
+    transaction2.amountDecimal = 40
+    transaction2.createdAt = Date()
+    transaction2.category = category
+    
+    let transaction3 = budgetService.newTransactionEntity(budget)
+    transaction3.name = "Transaction 3"
+    transaction3.amountDecimal = 2300
     transaction3.createdAt = Date()
     transaction3.category = category
     

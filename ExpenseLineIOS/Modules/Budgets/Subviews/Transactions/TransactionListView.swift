@@ -38,7 +38,7 @@ struct TransactionListView: View {
         }
         .padding(.horizontal, 15)
         .padding(.top, 15)
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(Color("BgDefault"))
         .sheet(item: $selectedTransaction, onDismiss: loadTransactions) { transaction in
             TransactionSheetView(
                 vm: TransactionSheetViewModel(transaction: transaction,
