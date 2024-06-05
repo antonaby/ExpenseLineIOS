@@ -17,6 +17,30 @@ enum SpengingsType: Int, CaseIterable, Identifiable {
     
 }
 
+struct SliderView: View {
+    
+    @Environment(\.isEnabled) var isEnabled
+    
+    let icon: String
+    let action: () -> Void
+    
+    init(icon: String, action: @escaping () -> Void) {
+        self.icon = icon
+        self.action = action
+    }
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: icon)
+                .font(.largeTitle)
+                .foregroundColor(isEnabled ? Color("FrDefault") : .gray)
+        }
+    }
+
+}
+
 struct BudgetOverviewView: View {
     
     @EnvironmentObject var setting: SettingsService
@@ -50,46 +74,58 @@ struct BudgetOverviewView: View {
                 }
                 .frame(width: 250, height: 250)
                 .padding()
-                TabView(selection: $spendings) {
-                    SpendingsView(
-                        title: "Spendings",
-                        firstColor: Color("Accent1"),
-                        secondColor: Color("Accent1").opacity(0.3),
-                        left: { AmountView(vm.totalOutcome) {
-                            vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                        }},
-                        right: { AmountView(vm.totalBudgetLeft) {
-                            $0 < 0
-                        }
-                        })
-                    .tag(SpengingsType.overall)
-                    SpendingsView(
-                        title: "Fixed",
-                        firstColor: Color("Accent2"),
-                        secondColor: Color("Accent2").opacity(0.3),
-                        left: { AmountView(vm.totalFixedOutcome) {
-                            vm.totalPlannedFixedOutcome - $0 < 0
-                        }},
-                        right: { AmountView(vm.totalFixedBudgetLeft) {
-                            $0 < 0
-                        }
-                        })
-                    .tag(SpengingsType.fixed)
-                    SpendingsView(
-                        title: "Flexible",
-                        firstColor: Color("Accent3"),
-                        secondColor: Color("Accent3").opacity(0.3),
-                        left: { AmountView(vm.totalPercentOutcome) {
-                            vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                        }},
-                        right: { AmountView(vm.totalFlexibleBudgetLeft) {
-                            $0 < 0
-                        }
-                        })
-                    .tag(SpengingsType.flexible)
+                HStack {
+                    SliderView(icon: "chevron.left") {
+                        nextTab()
+                    }
+                    .disabled(spendings == .overall)
+                    .padding(.leading, 10)
+                    TabView(selection: $spendings) {
+                        SpendingsView(
+                            title: "Spendings",
+                            firstColor: Color("Accent1"),
+                            secondColor: Color("Accent1").opacity(0.3),
+                            left: { AmountView(vm.totalOutcome) {
+                                vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                            }},
+                            right: { AmountView(vm.totalBudgetLeft) {
+                                $0 < 0
+                            }
+                            })
+                        .tag(SpengingsType.overall)
+                        SpendingsView(
+                            title: "Fixed",
+                            firstColor: Color("Accent2"),
+                            secondColor: Color("Accent2").opacity(0.3),
+                            left: { AmountView(vm.totalFixedOutcome) {
+                                vm.totalPlannedFixedOutcome - $0 < 0
+                            }},
+                            right: { AmountView(vm.totalFixedBudgetLeft) {
+                                $0 < 0
+                            }
+                            })
+                        .tag(SpengingsType.fixed)
+                        SpendingsView(
+                            title: "Flexible",
+                            firstColor: Color("Accent3"),
+                            secondColor: Color("Accent3").opacity(0.3),
+                            left: { AmountView(vm.totalPercentOutcome) {
+                                vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                            }},
+                            right: { AmountView(vm.totalFlexibleBudgetLeft) {
+                                $0 < 0
+                            }
+                            })
+                        .tag(SpengingsType.flexible)
+                    }
+                    .frame(height: 100)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    SliderView(icon: "chevron.right") {
+                        previousTab()
+                    }
+                    .disabled(spendings == .flexible)
+                    .padding(.trailing, 10)
                 }
-                .frame(height: 100)
-                .tabViewStyle(.page(indexDisplayMode: .never))
                 SpenginsView()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -152,6 +188,18 @@ struct BudgetOverviewView: View {
                     .frame(width: 45, height: 45)
                 }
             }
+        }
+    }
+    
+    func nextTab() {
+        if let previous = SpengingsType(rawValue: spendings.rawValue - 1) {
+            spendings = previous
+        }
+    }
+    
+    func previousTab() {
+        if let next = SpengingsType(rawValue: spendings.rawValue + 1) {
+            spendings = next
         }
     }
     
