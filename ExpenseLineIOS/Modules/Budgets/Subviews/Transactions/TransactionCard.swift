@@ -56,6 +56,8 @@ struct TransactionCard: View {
                     } label: {
                         Image(systemName: "ellipsis")
                             .tint(Color("FrDefault"))
+                            .frame(width: 50, height: 50, alignment: .topTrailing)
+                            .padding([.top, .trailing], 10)
                     }
                 }
                 Text(vm.formatAmount(transaction.amountDecimal))

@@ -111,6 +111,17 @@ struct TransactionSheetView: View {
                             }
                             .focused($showKeyboard)
                         }
+                        Menu {
+                            Button(role: .destructive) {
+                                vm.deleteTransaction()
+                                dismiss()
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                             }
+                        } label: {
+                            Text("More actions")
+                        }
+                        .tint(Color("FrDefault"))
                     }
                     .padding([.top, .horizontal], 10)
                 }

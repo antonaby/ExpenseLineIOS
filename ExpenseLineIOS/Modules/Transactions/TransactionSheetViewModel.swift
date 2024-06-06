@@ -98,6 +98,16 @@ class TransactionSheetViewModel: ObservableObject {
         }
     }
     
+    func deleteTransaction() {
+        do {
+            budgetService.deleteTransaction(transaction, budget: budget)
+            try budgetService.save()
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+        }
+    }
+    
     func rollback() {
         budgetService.rollback()
     }

@@ -35,6 +35,8 @@ struct CategoryView: View {
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(Color("FrDefault"))
+                                .frame(width: 50, height: 50, alignment: .topTrailing)
+                                .padding([.top, .trailing], 10)
                         }
                     }
                     HStack {
@@ -52,31 +54,37 @@ struct CategoryView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal, 15)
-            Text("Transactions")
-                .bold()
-            List(vm.transactions) { transaction in
-                VStack(alignment: .leading) {
-                    Button {
-                        selectedTransaction = transaction
-                    } label: {
-                        Text(transaction.nameValue)
+            if !vm.transactions.isEmpty {
+                Text("Transactions")
+                    .bold()
+                List(vm.transactions) { transaction in
+                    VStack(alignment: .leading) {
+                        Button {
+                            selectedTransaction = transaction
+                        } label: {
+                            Text(transaction.nameValue)
+                        }
+                        Text(vm.formatAmount(transaction.amountDecimal))
+                            .font(.title2)
+                            .bold()
+                        Text(vm.formatDate(transaction.createdAt))
+                            .font(.caption)
                     }
-                    Text(vm.formatAmount(transaction.amountDecimal))
-                        .font(.title2)
-                        .bold()
-                    Text(vm.formatDate(transaction.createdAt))
-                        .font(.caption)
-                }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    Button(role: .destructive) {
-                        vm.deleteTransaction(transaction)
-                    } label: {
-                        Label("delete", systemImage: "trash.fill")
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button(role: .destructive) {
+                            vm.deleteTransaction(transaction)
+                        } label: {
+                            Label("delete", systemImage: "trash.fill")
+                        }
+                        .tint(Color("Accent1"))
                     }
-                    .tint(Color("Accent1"))
                 }
+                .listStyle(.plain)
+            } else {
+                Text("No transactions")
+                    .bold()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .listStyle(.plain)
         }
         .background(Color("BgDefault"))
         .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
@@ -164,6 +172,34 @@ struct CategoryView: View {
     transaction3.amountDecimal = 300
     transaction3.createdAt = Date()
     transaction3.category = category
+    
+    do {
+        let period = try budgetService.getOrCreateLastPeriod(budget)
+        let vm = CategoryViewModel(
+            category: category,
+            period: period,
+            budget: budget,
+            currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
+            budgetService: budgetService
+        )
+        return CategoryView(vm: vm)
+            .serviceBundle(bundle)
+    } catch {
+        return Text("Something went wrong \(error)")
+    }
+}
+
+#Preview("No transactions") {
+    let bundle = ServiceBundle.preview
+    let budgetService = bundle.budgetService
+    
+    let budget = budgetService.newBudgetEntity()
+    let category = budgetService.newCategoryEntity(budget)
+    category.name = "Preview"
+    category.typeValue = .outcomeFixed
+    category.amountDecimal = 1000
+    category.iconName = "007-electricity"
+    category.colorValue = .orange
     
     do {
         let period = try budgetService.getOrCreateLastPeriod(budget)

@@ -54,12 +54,12 @@ struct CategoryListWizardView: View {
                     vm.newCategory(type)
                 } label: {
                     HStack {
-                        Image(systemName: "plus.circle")
-                            .frame(width: 20)
+                        Image(systemName: "plus")
                         Text("Add")
                     }
                     .foregroundColor(Color("FrDefault"))
                     .frame(maxWidth: .infinity)
+                    .font(.title3)
                 }
             }
             .listRowSeparator(.hidden)

@@ -122,6 +122,7 @@ struct BudgetView: View {
                 .navigationTitle("Category")
             }
         }
+        .tint(Color("FrDefault"))
         .onDisappear {
             vm.cancelAll()
         }
