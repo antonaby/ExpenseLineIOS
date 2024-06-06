@@ -73,7 +73,7 @@ struct BudgetOverviewView: View {
                                 .font(.caption)
                         }
                     }
-                    .frame(width: 250, height: 250)
+                    .frame(width: getMaxSize(geometry.size.width), height: getMaxSize(geometry.size.width))
                     .padding()
                     HStack {
                         SliderView(icon: "chevron.left") {
@@ -191,6 +191,11 @@ struct BudgetOverviewView: View {
                 }
             }
         }
+    }
+    
+    func getMaxSize(_ width: CGFloat) -> CGFloat {
+        let value = width * 0.75
+        return value <= 400 ? value : 400
     }
     
     func nextTab() {
