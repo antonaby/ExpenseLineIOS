@@ -46,6 +46,7 @@ struct CategoryListWizardView: View {
                     } label: {
                         Label("delete", systemImage: "trash.fill")
                     }
+                    .tint(Color("Accent1"))
                 }
                 .listRowSeparator(.hidden)
             }
