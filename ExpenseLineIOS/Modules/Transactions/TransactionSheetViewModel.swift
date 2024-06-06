@@ -73,12 +73,7 @@ class TransactionSheetViewModel: ObservableObject {
     }
     
     func loadCetegories() {
-        do {
-            categories = try budgetService.getCategoriesOfBudget(budget, types: [.outcomeFixed, .outcomePercent])
-        } catch {
-            // TODO: show error
-            print("Something went wrong \(error)")
-        }
+        categories = budget.categoriesForType([.outcomeFixed, .outcomePercent], skipUnnamed: true)
     }
     
     func save() {

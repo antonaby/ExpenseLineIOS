@@ -28,6 +28,8 @@ struct CategorySelectorView: View {
             .tint(.black)
         }
         .navigationBarBackButtonHidden(true)
+        .background(Color("BgDefault"))
+        .scrollContentBackground(.hidden)
     }
     
 }

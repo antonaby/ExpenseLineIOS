@@ -51,96 +51,98 @@ struct BudgetOverviewView: View {
     var loadStats: Bool = true
     
     var body: some View {
-        Group {
-            VStack {
-                CirclularBudgetProgressView(
-                    progress: [
-                        getTotalSpent(),
-                        getFixedSpent(),
-                        getPercentSpent()
-                    ],
-                    colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
-                    selected: spendings.rawValue,
-                    gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
-                ) {
-                    VStack {
-                        Text(vm.parent.formatPercent(getTotalSpentDecimal()))
-                            .font(.title)
-                            .bold()
-                        Text("Spent")
-                            .foregroundColor(.gray)
-                            .font(.caption)
+        GeometryReader { geometry in
+            ScrollView {
+                VStack {
+                    CirclularBudgetProgressView(
+                        progress: [
+                            getTotalSpent(),
+                            getFixedSpent(),
+                            getPercentSpent()
+                        ],
+                        colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
+                        selected: spendings.rawValue,
+                        gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
+                    ) {
+                        VStack {
+                            Text(vm.parent.formatPercent(getTotalSpentDecimal()))
+                                .font(.title)
+                                .bold()
+                            Text("Spent")
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                        }
                     }
+                    .frame(width: 250, height: 250)
+                    .padding()
+                    HStack {
+                        SliderView(icon: "chevron.left") {
+                            nextTab()
+                        }
+                        .disabled(spendings == .overall)
+                        .padding(.leading, 10)
+                        TabView(selection: $spendings) {
+                            SpendingsView(
+                                title: "Spendings",
+                                firstColor: Color("Accent1"),
+                                secondColor: Color("Accent1").opacity(0.3),
+                                left: { AmountView(vm.totalOutcome) {
+                                    vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                                }},
+                                right: { AmountView(vm.totalBudgetLeft) {
+                                    $0 < 0
+                                }
+                                })
+                            .tag(SpengingsType.overall)
+                            SpendingsView(
+                                title: "Fixed",
+                                firstColor: Color("Accent2"),
+                                secondColor: Color("Accent2").opacity(0.3),
+                                left: { AmountView(vm.totalFixedOutcome) {
+                                    vm.totalPlannedFixedOutcome - $0 < 0
+                                }},
+                                right: { AmountView(vm.totalFixedBudgetLeft) {
+                                    $0 < 0
+                                }
+                                })
+                            .tag(SpengingsType.fixed)
+                            SpendingsView(
+                                title: "Flexible",
+                                firstColor: Color("Accent3"),
+                                secondColor: Color("Accent3").opacity(0.3),
+                                left: { AmountView(vm.totalPercentOutcome) {
+                                    vm.totalPlannedPercentOutcomeAmount - $0 < 0
+                                }},
+                                right: { AmountView(vm.totalFlexibleBudgetLeft) {
+                                    $0 < 0
+                                }
+                                })
+                            .tag(SpengingsType.flexible)
+                        }
+                        .frame(height: 100)
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        SliderView(icon: "chevron.right") {
+                            previousTab()
+                        }
+                        .disabled(spendings == .flexible)
+                        .padding(.trailing, 10)
+                    }
+                    SpenginsView()
                 }
-                .frame(width: 250, height: 250)
-                .padding()
-                HStack {
-                    SliderView(icon: "chevron.left") {
-                        nextTab()
-                    }
-                    .disabled(spendings == .overall)
-                    .padding(.leading, 10)
-                    TabView(selection: $spendings) {
-                        SpendingsView(
-                            title: "Spendings",
-                            firstColor: Color("Accent1"),
-                            secondColor: Color("Accent1").opacity(0.3),
-                            left: { AmountView(vm.totalOutcome) {
-                                vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                            }},
-                            right: { AmountView(vm.totalBudgetLeft) {
-                                $0 < 0
-                            }
-                            })
-                        .tag(SpengingsType.overall)
-                        SpendingsView(
-                            title: "Fixed",
-                            firstColor: Color("Accent2"),
-                            secondColor: Color("Accent2").opacity(0.3),
-                            left: { AmountView(vm.totalFixedOutcome) {
-                                vm.totalPlannedFixedOutcome - $0 < 0
-                            }},
-                            right: { AmountView(vm.totalFixedBudgetLeft) {
-                                $0 < 0
-                            }
-                            })
-                        .tag(SpengingsType.fixed)
-                        SpendingsView(
-                            title: "Flexible",
-                            firstColor: Color("Accent3"),
-                            secondColor: Color("Accent3").opacity(0.3),
-                            left: { AmountView(vm.totalPercentOutcome) {
-                                vm.totalPlannedPercentOutcomeAmount - $0 < 0
-                            }},
-                            right: { AmountView(vm.totalFlexibleBudgetLeft) {
-                                $0 < 0
-                            }
-                            })
-                        .tag(SpengingsType.flexible)
-                    }
-                    .frame(height: 100)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    SliderView(icon: "chevron.right") {
-                        previousTab()
-                    }
-                    .disabled(spendings == .flexible)
-                    .padding(.trailing, 10)
+                .frame(width: geometry.size.width)
+                .frame(minHeight: geometry.size.height)
+            }
+            .background(Color("BgDefault"))
+            .onAppear {
+                vm.subscribe()
+                if loadStats {
+                    vm.loadAmounts()
                 }
-                SpenginsView()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .background(Color("BgDefault"))
-        .onAppear {
-            vm.subscribe()
-            if loadStats {
-                vm.loadAmounts()
+            .onDisappear {
+                vm.cancelAll()
             }
         }
-        .onDisappear {
-            vm.cancelAll()
-        }
-        
     }
     
     @ViewBuilder
