@@ -185,6 +185,22 @@ class BudgetService: ObservableObject {
         }
     }
         
+    func getTransaction(_ id: UUID) throws -> TransactionEntity {
+        let request = TransactionEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+        
+        do {
+            if let transaction = try dm.viewContext.fetch(request).first {
+                return transaction
+            }
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions by id", reason: error)
+        }
+        
+        throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions by id", reason: nil)
+    }
+    
     func getAllTransactions(_ period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
         guard
             let starsAt = period.startsAt,

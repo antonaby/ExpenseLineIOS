@@ -7,6 +7,73 @@
 
 import SwiftUI
 
+struct TransactionCard: View {
+    
+    var vm: BudgetViewModel
+    let transaction: TransactionEntity
+    
+    @Binding var selectedTransaction: TransactionEntity?
+    
+    let onDelete: (TransactionEntity) -> Void
+    
+    init(vm: BudgetViewModel,
+         transaction: TransactionEntity,
+         selectedTransaction: Binding<TransactionEntity?>,
+         onDelete: @escaping (TransactionEntity) -> Void) {
+        self.vm = vm
+        self.transaction = transaction
+        self._selectedTransaction = selectedTransaction
+        self.onDelete = onDelete
+    }
+    
+    var body: some View {
+        FlexibleCardView {
+            NavigationLink(value: transaction) {
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack {
+                        IconView(
+                            name: transaction.category?.iconNameValue ?? "question",
+                            color: transaction.category?.colorValue ?? .black,
+                            size: 45
+                        )
+                        VStack(alignment: .listRowSeparatorLeading) {
+                            Text(transaction.category?.name ?? "?")
+                                .font(.caption)
+                            Text(transaction.name ?? "?")
+                                .bold()
+                        }
+                    }
+                    Text(vm.formatAmount(transaction.amountDecimal))
+                        .font(.largeTitle)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(vm.formatDate(transaction.createdAt))
+                        .font(.caption)
+                }
+                .tint(.black)
+            }
+            .overlay(alignment: .topTrailing) {
+                Menu {
+                    Button {
+                        selectedTransaction = transaction
+                    } label: {
+                        Text("Edit")
+                    }
+                    Button(role: .destructive) {
+                        onDelete(transaction)
+                    } label: {
+                        Text("Delete")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .tint(Color("FrDefault"))
+                        .frame(width: 50, height: 50, alignment: .topTrailing)
+                        .padding([.top, .trailing], 10)
+                }
+            }
+        }
+    }
+}
+
 struct TransactionListView: View {
     
     @EnvironmentObject var budgetService: BudgetService

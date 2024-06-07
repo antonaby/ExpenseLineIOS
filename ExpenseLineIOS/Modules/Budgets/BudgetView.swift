@@ -121,6 +121,15 @@ struct BudgetView: View {
                 )
                 .navigationTitle("Category")
             }
+            .navigationDestination(for: TransactionEntity.self) { transaction in
+                TransactionView(vm: TransactionViewModel(
+                    transaction: transaction,
+                    budget: vm.budget,
+                    currency: vm.currency,
+                    budgetService: budgetService)
+                )
+                .navigationTitle("Transaction")
+            }
         }
         .tint(Color("FrDefault"))
         .onDisappear {

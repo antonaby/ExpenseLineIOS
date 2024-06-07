@@ -44,9 +44,10 @@
 		D247B4E82BF61A08004E72A4 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */; };
 		D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */; };
 		D24BB7E52C0A113200C4761E /* TransactionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24BB7E42C0A113200C4761E /* TransactionListViewModel.swift */; };
-		D24BB7E72C0A115A00C4761E /* TransactionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24BB7E62C0A115A00C4761E /* TransactionCard.swift */; };
 		D24CA2972BD2944C00896BC6 /* MainWizardPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */; };
 		D24CA2992BD295F400896BC6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24CA2982BD295F400896BC6 /* DataService.swift */; };
+		D24D36872C131EE700AAC507 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D36862C131EE700AAC507 /* TransactionView.swift */; };
+		D24D36892C131F0800AAC507 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D36882C131F0800AAC507 /* TransactionViewModel.swift */; };
 		D250D4CF2BB828EB0050638C /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250D4CE2BB828EB0050638C /* Budget.swift */; };
 		D2563E502BD7D9A800D28F65 /* CategoryListWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */; };
 		D258A1992C0748F30009B3D2 /* DailyProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D258A1982C0748F30009B3D2 /* DailyProgressView.swift */; };
@@ -137,9 +138,10 @@
 		D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		D249E2A02BD13EEF00F104F6 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		D24BB7E42C0A113200C4761E /* TransactionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListViewModel.swift; sourceTree = "<group>"; };
-		D24BB7E62C0A115A00C4761E /* TransactionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCard.swift; sourceTree = "<group>"; };
 		D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWizardPageView.swift; sourceTree = "<group>"; };
 		D24CA2982BD295F400896BC6 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		D24D36862C131EE700AAC507 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
+		D24D36882C131F0800AAC507 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListWizardView.swift; sourceTree = "<group>"; };
 		D258A1982C0748F30009B3D2 /* DailyProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressView.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		D247B4E42BF619E8004E72A4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */,
 				D247B4E52BF619F7004E72A4 /* CategoryView.swift */,
 				D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */,
 			);
@@ -377,7 +380,6 @@
 			children = (
 				D2B7F1982BCFE06E0003C283 /* TransactionListView.swift */,
 				D24BB7E42C0A113200C4761E /* TransactionListViewModel.swift */,
-				D24BB7E62C0A115A00C4761E /* TransactionCard.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -387,7 +389,6 @@
 			children = (
 				D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */,
 				D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */,
-				D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */,
 				D2C58AD32BE22F5800F1BB03 /* CategoryTemplateSelectorView.swift */,
 				D221C0872BE757200096DF89 /* CurrencySelectorSheet.swift */,
 				D226FB0A2BED175000B54654 /* OutcomePageWizardView.swift */,
@@ -466,6 +467,8 @@
 			children = (
 				D2F7685A2BC952A6001CE98C /* TransactionSheetView.swift */,
 				D2F7685D2BC95326001CE98C /* TransactionSheetViewModel.swift */,
+				D24D36862C131EE700AAC507 /* TransactionView.swift */,
+				D24D36882C131F0800AAC507 /* TransactionViewModel.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -614,6 +617,7 @@
 				D25A5B3A2BE4F8F2009618E4 /* PromptView.swift in Sources */,
 				D2AADC092BF7845B00360CD4 /* ProgressView.swift in Sources */,
 				D2AF81362BE11A0B00E02DDF /* Locale+Extension.swift in Sources */,
+				D24D36892C131F0800AAC507 /* TransactionViewModel.swift in Sources */,
 				D22E5F082C0893B100DE7DE3 /* NotificationService.swift in Sources */,
 				D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */,
 				D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */,
@@ -633,6 +637,7 @@
 				D221C08A2BE758170096DF89 /* Currency.swift in Sources */,
 				D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */,
 				D24CA2992BD295F400896BC6 /* DataService.swift in Sources */,
+				D24D36872C131EE700AAC507 /* TransactionView.swift in Sources */,
 				D2DEFC122BB4348600AC7CA0 /* DataContainer.xcdatamodeld in Sources */,
 				D2B7F1992BCFE06E0003C283 /* TransactionListView.swift in Sources */,
 				D29C0B5F2BC815CB00ED92F2 /* BudgetOverviewView.swift in Sources */,
@@ -649,7 +654,6 @@
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
 				D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */,
-				D24BB7E72C0A115A00C4761E /* TransactionCard.swift in Sources */,
 				D258A19B2C074FD50009B3D2 /* Array+Extension.swift in Sources */,
 				D221C0882BE757200096DF89 /* CurrencySelectorSheet.swift in Sources */,
 				D29CA3F62C0C67450033F832 /* CategoryListViewModel.swift in Sources */,

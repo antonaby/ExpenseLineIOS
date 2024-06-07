@@ -33,7 +33,7 @@ struct CategoryView: View {
                         Button {
                             selectedCategory = vm.category
                         } label: {
-                            Image(systemName: "ellipsis")
+                            Image(systemName: "pencil")
                                 .foregroundColor(Color("FrDefault"))
                                 .frame(width: 50, height: 50, alignment: .topTrailing)
                                 .padding([.top, .trailing], 10)
