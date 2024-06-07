@@ -18,7 +18,7 @@ struct TransactionView: View {
     var body: some View {
         VStack {
             ContentSizeCardView {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     HStack {
                         IconView(
                             name: vm.transaction.category?.iconNameValue ?? "question",
