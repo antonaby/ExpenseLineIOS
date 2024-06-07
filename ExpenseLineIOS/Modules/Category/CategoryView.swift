@@ -58,25 +58,31 @@ struct CategoryView: View {
                 Text("Transactions")
                     .bold()
                 List(vm.transactions) { transaction in
-                    VStack(alignment: .leading) {
-                        Button {
-                            selectedTransaction = transaction
-                        } label: {
+                    NavigationLink(value: transaction) {
+                        VStack(alignment: .leading) {
                             Text(transaction.nameValue)
+                            Text(vm.formatAmount(transaction.amountDecimal))
+                                .font(.title2)
+                                .bold()
+                            Text(vm.formatDate(transaction.createdAt))
+                                .font(.caption)
                         }
-                        Text(vm.formatAmount(transaction.amountDecimal))
-                            .font(.title2)
-                            .bold()
-                        Text(vm.formatDate(transaction.createdAt))
-                            .font(.caption)
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button(role: .destructive) {
-                            vm.deleteTransaction(transaction)
-                        } label: {
-                            Label("delete", systemImage: "trash.fill")
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                vm.deleteTransaction(transaction)
+                            } label: {
+                                Label("delete", systemImage: "trash.fill")
+                            }
+                            .tint(Color("Accent1"))
                         }
-                        .tint(Color("Accent1"))
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button {
+                                selectedTransaction = transaction
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            .tint(Color("FrDefault"))
+                        }
                     }
                 }
                 .listStyle(.plain)
