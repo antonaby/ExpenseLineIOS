@@ -11,6 +11,8 @@ import Combine
 
 class BudgetOverviewViewModel: ObservableObject {
     
+    @Published var notifications: [NotificationEntity] = []
+    
     var totalPlannedFixedOutcome: Decimal = 0
     var totalPlannedPercentOutcome: Decimal = 0
     var totalPlannedPercentOutcomeAmount: Decimal = 0
@@ -35,11 +37,11 @@ class BudgetOverviewViewModel: ObservableObject {
         parent.dataUpdateSubject.sink { [weak self] value in
             DispatchQueue.main.async {
                 self?.loadAmounts()
+                self?.loadNotifications()
             }
         }
         .store(in: &cancellables)
     }
-    
     
     func loadAmounts() {
         totalPlannedFixedOutcome = parent.budget.totalAmountForCategoryType(.outcomeFixed)
@@ -59,6 +61,15 @@ class BudgetOverviewViewModel: ObservableObject {
         }
         
         objectWillChange.send()
+    }
+    
+    func loadNotifications() {
+        do {
+            notifications = try budgetService.getNotificationsForToday()
+        } catch {
+            // TODO: show error
+            print("Something went wrong \(error)")
+        }
     }
     
     func cancelAll() {

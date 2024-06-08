@@ -49,6 +49,14 @@ class BudgetService: ObservableObject {
         return entity
     }
     
+    func newNotificationEntity(_ budget: BudgetEntity) -> NotificationEntity {
+        let entity = NotificationEntity(context: dm.viewContext)
+        entity.id = UUID()
+        entity.budget = budget
+        
+        return entity
+    }
+    
     func deleteCategory(_ category: PlanCategoryEntity, budget: BudgetEntity) {
         budget.removeFromCategories(category)
         dm.viewContext.delete(category)
@@ -264,6 +272,17 @@ class BudgetService: ObservableObject {
             return try dm.viewContext.fetch(request)
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions for category", reason: error)
+        }
+    }
+    
+    // TODO: Add arguments
+    func getNotificationsForToday() throws -> [NotificationEntity] {
+        let request = NotificationEntity.fetchRequest()
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
         }
     }
     

@@ -34,7 +34,7 @@ struct SliderView: View {
             action()
         } label: {
             Image(systemName: icon)
-                .font(.largeTitle)
+                .font(.title2)
                 .foregroundColor(isEnabled ? Color("FrDefault") : .gray)
         }
     }
@@ -46,6 +46,7 @@ struct BudgetOverviewView: View {
     @EnvironmentObject var setting: SettingsService
     @StateObject var vm: BudgetOverviewViewModel
     
+    @Binding var showNotificationsView: Bool
     @State var spendings: SpengingsType = .overall
     
     var loadStats: Bool = true
@@ -54,33 +55,36 @@ struct BudgetOverviewView: View {
         GeometryReader { geometry in
             ScrollView {
                 VStack {
-                    CirclularBudgetProgressView(
-                        progress: [
-                            getTotalSpent(),
-                            getFixedSpent(),
-                            getPercentSpent()
-                        ],
-                        colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
-                        selected: spendings.rawValue,
-                        gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
-                    ) {
-                        VStack {
-                            Text(vm.parent.formatPercent(getTotalSpentDecimal()))
-                                .font(.title)
-                                .bold()
-                            Text("Spent")
-                                .foregroundColor(.gray)
-                                .font(.caption)
+                    HStack(spacing: 30) {
+                        CirclularBudgetProgressView(
+                            progress: [
+                                getTotalSpent(),
+                                getFixedSpent(),
+                                getPercentSpent()
+                            ],
+                            colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
+                            selected: spendings.rawValue,
+                            gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
+                        ) {
+                            VStack {
+                                Text(vm.parent.formatPercent(getTotalSpentDecimal()))
+                                    .font(.title3)
+                                    .bold()
+                                Text("Spent")
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
                         }
+                        .frame(width: getMaxSize(geometry.size.width), height: getMaxSize(geometry.size.width))
+                        SpenginsView()
                     }
-                    .frame(width: getMaxSize(geometry.size.width), height: getMaxSize(geometry.size.width))
-                    .padding()
+                    .padding(.top, 30)
                     HStack {
                         SliderView(icon: "chevron.left") {
                             nextTab()
                         }
                         .disabled(spendings == .overall)
-                        .padding(.leading, 10)
+                        .padding(.leading, 15)
                         TabView(selection: $spendings) {
                             SpendingsView(
                                 title: "Spendings",
@@ -125,12 +129,31 @@ struct BudgetOverviewView: View {
                             previousTab()
                         }
                         .disabled(spendings == .flexible)
-                        .padding(.trailing, 10)
+                        .padding(.trailing, 15)
                     }
-                    SpenginsView()
+                    FlexibleCardView {
+                        VStack {
+                            if !vm.notifications.isEmpty {
+                                ForEach(vm.notifications) { notification in
+                                    HStack {
+                                        Text(notification.nameValue)
+                                        Spacer()
+                                    }
+                                }
+                            } else {
+                                Text("No notifications")
+                            }
+                            Button {
+                                showNotificationsView.toggle()
+                            } label: {
+                                Text("Show all")
+                                    .font(.caption)
+                                    .tint(Color("FrDefault"))
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 15)
                 }
-                .frame(width: geometry.size.width)
-                .frame(minHeight: geometry.size.height)
             }
             .background(Color("BgDefault"))
             .onAppear {
@@ -138,6 +161,7 @@ struct BudgetOverviewView: View {
                 if loadStats {
                     vm.loadAmounts()
                 }
+                vm.loadNotifications()
             }
             .onDisappear {
                 vm.cancelAll()
@@ -149,7 +173,6 @@ struct BudgetOverviewView: View {
     func AmountView(_ amount: Decimal, isSpent: (Decimal) -> Bool) -> some View {
         Text(vm.parent.formatAmount(amount))
             .foregroundColor(isSpent(amount) ? .red : .black)
-            .font(.title2)
     }
     
     @ViewBuilder
@@ -162,6 +185,7 @@ struct BudgetOverviewView: View {
     ) -> some View {
         VStack {
             Text(title)
+                .font(.caption)
             HStack {
                 RoundedRectangle(cornerRadius: 3, style: .circular)
                     .foregroundColor(firstColor)
@@ -177,12 +201,12 @@ struct BudgetOverviewView: View {
     
     @ViewBuilder
     func SpenginsView() -> some View {
-        HStack {
+        VStack {
             ForEach(SpengingsType.allCases) { type in
                 Button {
                     spendings = type
                 } label: {
-                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? Color("FrDefault") : Color("BgDefault")) {
+                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? getTypeColor(type) : Color("BgDefault")) {
                         Image(systemName: getIconForPage(type))
                             .foregroundColor(spendings == type ? .white : .black)
                             .bold()
@@ -193,8 +217,19 @@ struct BudgetOverviewView: View {
         }
     }
     
+    func getTypeColor(_ type: SpengingsType) -> Color {
+        switch type {
+        case .overall:
+            Color("Accent1")
+        case .fixed:
+            Color("Accent2")
+        case .flexible:
+            Color("Accent3")
+        }
+    }
+    
     func getMaxSize(_ width: CGFloat) -> CGFloat {
-        let value = width * 0.75
+        let value = width * 0.6
         return value <= 400 ? value : 400
     }
     
@@ -265,6 +300,7 @@ struct BudgetOverviewView: View {
     let bundle = ServiceBundle.preview
     let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
+    let budgetService = bundle.budgetService
     budget.id = UUID()
     budget.name = "Preview"
     budget.currency = "en_US"
@@ -291,9 +327,15 @@ struct BudgetOverviewView: View {
         vm.totalFixedBudgetLeft = 1000
         vm.totalFlexibleBudgetLeft = 500
         
-        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
+        let notification1 = budgetService.newNotificationEntity(budget)
+        notification1.name = "Preview1"
         
-        return BudgetOverviewView(vm: vm, loadStats: false)
+        let notification2 = budgetService.newNotificationEntity(budget)
+        notification2.name = "Preview2"
+        
+        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
+        
+        return BudgetOverviewView(vm: vm, showNotificationsView: .constant(false), loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
@@ -332,7 +374,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
         
-        return BudgetOverviewView(vm: vm, loadStats: false)
+        return BudgetOverviewView(vm: vm, showNotificationsView: .constant(false), loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
@@ -371,7 +413,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
         
-        return BudgetOverviewView(vm: vm, loadStats: false)
+        return BudgetOverviewView(vm: vm, showNotificationsView: .constant(false), loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")

@@ -21,6 +21,7 @@ struct BudgetView: View {
     @State var editBudgetSheetOpen: Bool = false
     @State var changePeriodSheetOpen: Bool = false
     @State var settingsSheetOpen: Bool = false
+    @State var showNotificationsView: Bool = false
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -65,7 +66,9 @@ struct BudgetView: View {
                 }
                 ZStack(alignment: .bottomTrailing) {
                     TabView(selection: $vm.currenPage) {
-                        BudgetOverviewView(vm: BudgetOverviewViewModel(parent: vm, budgetService: budgetService))
+                        BudgetOverviewView(
+                            vm: BudgetOverviewViewModel(parent: vm, budgetService: budgetService),
+                            showNotificationsView: $showNotificationsView)
                             .tabItem { Image(systemName: "house") }
                             .tag(BudgetViewPage.overview)
                         CategoryListView(vm: CategoryListViewModel(parent: vm, budgetService: budgetService))
@@ -129,6 +132,10 @@ struct BudgetView: View {
                     budgetService: budgetService)
                 )
                 .navigationTitle("Transaction")
+            }
+            .navigationDestination(isPresented: $showNotificationsView) {
+                NotificationsView(vm: NotificationsViewModel())
+                    .navigationTitle("Notifications")
             }
         }
         .tint(Color("FrDefault"))
