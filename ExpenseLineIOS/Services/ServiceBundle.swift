@@ -26,7 +26,7 @@ struct ServiceBundle {
         budgetService = BudgetService(dm: databaseManager)
         dataService = DataService(budgetService: budgetService)
         settingsService = SettingsService()
-        notificationService = NotificationService()
+        notificationService = NotificationService(dm: databaseManager)
     }
     
 }

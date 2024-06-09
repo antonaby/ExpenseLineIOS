@@ -20,7 +20,7 @@ struct NotificationsView: View {
 
 
 #Preview {
+    let bundle = ServiceBundle.preview
     
-    
-    return NotificationsView(vm: NotificationsViewModel())
+    return NotificationsView(vm: NotificationsViewModel(notificationService: bundle.notificationService))
 }

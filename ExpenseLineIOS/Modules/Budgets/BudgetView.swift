@@ -134,7 +134,7 @@ struct BudgetView: View {
                 .navigationTitle("Transaction")
             }
             .navigationDestination(isPresented: $showNotificationsView) {
-                NotificationsView(vm: NotificationsViewModel())
+                NotificationsView(vm: NotificationsViewModel(notificationService: notificationService))
                     .navigationTitle("Notifications")
             }
         }
