@@ -125,7 +125,8 @@ struct TransactionSheetView: View {
                         }
                         .tint(Color("FrDefault"))
                     }
-                    .padding([.top, .horizontal], 10)
+                    .padding(.top, 10)
+                    .padding(.horizontal, 15)
                 }
                 .background(Color("BgDefault"))
             }

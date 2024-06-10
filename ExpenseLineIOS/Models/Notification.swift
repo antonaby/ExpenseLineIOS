@@ -23,7 +23,7 @@ extension NotificationEntity {
     
     var nameValue: String {
         get {
-            name ?? "?"
+            name ?? ""
         }
     }
     

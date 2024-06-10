@@ -10,10 +10,27 @@ import Foundation
 
 class NotificationsViewModel: ObservableObject {
     
+    @Published var notifications: [NotificationEntity] = []
+    
+    private let budget: BudgetEntity
     private let notificationService: NotificationService
     
-    init(notificationService: NotificationService) {
+    init(budget: BudgetEntity, notificationService: NotificationService) {
+        self.budget = budget
         self.notificationService = notificationService
+    }
+    
+    func loadNotifications() {
+        do {
+            notifications = try notificationService.getNotifications(budget: budget)
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    func newNotification() -> NotificationEntity {
+        notificationService.newNotificationEntity(budget)
     }
     
 }

@@ -10,7 +10,9 @@ import UserNotifications
 
 enum NotificationServiceError: Error {
     
+    case FetchError(msg: String, reason: Error?)
     case SaveError(msg: String, reason: Error?)
+    case MissingDataError(msg: String, reason: Error?)
     
 }
 
@@ -31,6 +33,37 @@ class NotificationService: ObservableObject {
                 } else if let error = error {
                     print(error.localizedDescription)
                 }
+        }
+    }
+    
+    func newNotificationEntity(_ budget: BudgetEntity) -> NotificationEntity {
+        let entity = NotificationEntity(context: dm.viewContext)
+        entity.id = UUID()
+        entity.budget = budget
+        entity.createdAt = Date()
+        
+        return entity
+    }
+    
+    func save() throws {
+        try dm.sync()
+    }
+    
+    func rollback() {
+        dm.rollback()
+    }
+    
+    func getNotifications(budget: BudgetEntity) throws -> [NotificationEntity] {
+        let budgetId = try getBudgetId(budget)
+        
+        let request = NotificationEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw NotificationServiceError.FetchError(msg: "Failed to get notifications", reason: error)
         }
     }
     
@@ -208,6 +241,14 @@ class NotificationService: ObservableObject {
         for entry in entires {
             dm.viewContext.delete(entry)
         }
+    }
+    
+    private func getBudgetId(_ budget: BudgetEntity) throws -> UUID {
+        if let id = budget.id {
+            return id
+        }
+        
+        throw NotificationServiceError.MissingDataError(msg: "Missing budget id", reason: nil)
     }
     
 }
