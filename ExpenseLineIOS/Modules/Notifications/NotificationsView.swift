@@ -56,7 +56,7 @@ struct NotificationsView: View {
 }
 
 
-#Preview {
+#Preview("Notifications") {
     let bundle = ServiceBundle.preview
     let budget = bundle.budgetService.newBudgetEntity()
     
@@ -66,6 +66,16 @@ struct NotificationsView: View {
     
     let notification2 = bundle.notificationService.newNotificationEntity(budget)
     notification2.name = "Preview 2"
+    
+    let vm = NotificationsViewModel(budget: budget, notificationService: bundle.notificationService)
+    
+    return NotificationsView(vm: vm)
+        .serviceBundle(bundle)
+}
+
+#Preview("No notifications") {
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
     
     let vm = NotificationsViewModel(budget: budget, notificationService: bundle.notificationService)
     

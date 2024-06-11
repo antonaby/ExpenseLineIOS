@@ -12,6 +12,7 @@ import Combine
 class EditNotificationSheetViewModel: ObservableObject {
     
     @Published var name: String
+    @Published var type: NotificationType
     @Published var isValid: Bool = false
     
     private var notification: NotificationEntity
@@ -24,6 +25,7 @@ class EditNotificationSheetViewModel: ObservableObject {
         self.notificationService = notificationService
         
         self.name = notification.nameValue
+        self.type = notification.typeValue
         
         isFormValid
             .receive(on: DispatchQueue.main)
@@ -36,6 +38,7 @@ class EditNotificationSheetViewModel: ObservableObject {
     
     func save() {
         notification.name = name
+        notification.typeValue = type
         
         do {
             try notificationService.save()

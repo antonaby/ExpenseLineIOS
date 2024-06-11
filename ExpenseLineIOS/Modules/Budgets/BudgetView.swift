@@ -135,7 +135,7 @@ struct BudgetView: View {
             }
             .navigationDestination(isPresented: $showNotificationsView) {
                 NotificationsView(vm: NotificationsViewModel(budget: vm.budget, notificationService: notificationService))
-                    .navigationTitle("Notifications")
+                    .navigationTitle("Reminders")
             }
         }
         .tint(Color("FrDefault"))

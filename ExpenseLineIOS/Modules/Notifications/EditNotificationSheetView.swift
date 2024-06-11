@@ -42,6 +42,7 @@ struct EditNotificationSheetView: View {
                             TextField("Name", text: $vm.name)
                         }
                     }
+                    NotificationTypeCardView()
                 }
                 .padding(.top, 10)
                 .padding(.horizontal, 15)
@@ -51,6 +52,54 @@ struct EditNotificationSheetView: View {
         .interactiveDismissDisabled(true)
         .onDisappear {
             vm.cancelAll()
+        }
+    }
+    
+    @ViewBuilder
+    func NotificationTypeCardView() -> some View {
+        FlexibleCardView {
+            HStack {
+                ForEach(NotificationType.allCases) { type in
+                    Button {
+                        vm.type = type
+                    } label: {
+                        VStack {
+                            Image(systemName: getTypeImage(type))
+                                .font(.title3)
+                            Text(getTypeName(type))
+                                .font(.caption)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(vm.type == type ? Color("FrDefault") : .black)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func getTypeImage(_ type: NotificationType) -> String {
+        switch type {
+        case .exact:
+            "checkmark"
+        case .everyday:
+            "bell"
+        case .weekdays:
+            "rectangle.and.pencil.and.ellipsis"
+        case .days:
+            "calendar"
+        }
+    }
+    
+    private func getTypeName(_ type: NotificationType) -> String {
+        switch type {
+        case .exact:
+            "Exact"
+        case .everyday:
+            "Everyday"
+        case .weekdays:
+            "Weekdays"
+        case .days:
+            "Calendar"
         }
     }
     
