@@ -10,6 +10,7 @@ import SwiftUI
 struct EditNotificationSheetView: View {
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var notificationService: NotificationService
     
     @StateObject var vm: EditNotificationSheetViewModel
     
@@ -37,12 +38,22 @@ struct EditNotificationSheetView: View {
                 VStack {
                     FlexibleCardView {
                         HStack {
-                            Image(systemName: "bell")
+                            Image(systemName: "pencil")
                                 .frame(width: 30)
                             TextField("Name", text: $vm.name)
                         }
                     }
                     NotificationTypeCardView()
+                    switch vm.type {
+                    case .exact:
+                        ExactNotificationView()
+                    case .daily:
+                        DailyNotificationView()
+                    case .weekly:
+                        WeeklyNotificationView()
+                    case .monthly:
+                        MonthlyNotificationView()
+                    }
                 }
                 .padding(.top, 10)
                 .padding(.horizontal, 15)
@@ -61,7 +72,9 @@ struct EditNotificationSheetView: View {
             HStack {
                 ForEach(NotificationType.allCases) { type in
                     Button {
-                        vm.type = type
+                        withAnimation {
+                            vm.type = type
+                        }
                     } label: {
                         VStack {
                             Image(systemName: getTypeImage(type))
@@ -77,29 +90,103 @@ struct EditNotificationSheetView: View {
         }
     }
     
+    @ViewBuilder
+    func ExactNotificationView() -> some View {
+        FlexibleCardView {
+            VStack {
+                DatePicker(selection: $vm.date, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
+                    HStack {
+                        Image(systemName: "clock")
+                            .frame(width: 30)
+                        Text("Reminder")
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func DailyNotificationView() -> some View {
+        FlexibleCardView {
+            VStack {
+                DatePicker(selection: $vm.date, in: Date()..., displayedComponents: [.hourAndMinute]) {
+                    HStack {
+                        Image(systemName: "clock")
+                            .frame(width: 30)
+                        Text("Reminder")
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func WeeklyNotificationView() -> some View {
+        FlexibleCardView {
+            VStack {
+                HStack {
+                    ForEach(notificationService.getWeekDays()) { day in
+                        Button {
+                            if vm.weekDays.contains(day.id) {
+                                vm.weekDays.remove(day.id)
+                            } else {
+                                vm.weekDays.insert(day.id)
+                            }
+                        } label: {
+                            Text(day.shortName)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 40)
+                                .foregroundStyle(vm.weekDays.contains(day.id) ? .white : .black)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .foregroundStyle(vm.weekDays.contains(day.id) ? Color("FrDefault") : .white)
+                                }
+                        }
+                    }
+                }
+                DatePicker(selection: $vm.date, in: Date()..., displayedComponents: [.hourAndMinute]) {
+                    HStack {
+                        Image(systemName: "clock")
+                            .frame(width: 30)
+                        Text("Time")
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func MonthlyNotificationView() -> some View {
+        FlexibleCardView {
+            VStack {
+                Text("Monthly")
+            }
+        }
+    }
+    
     private func getTypeImage(_ type: NotificationType) -> String {
         switch type {
         case .exact:
-            "checkmark"
-        case .everyday:
             "bell"
-        case .weekdays:
-            "rectangle.and.pencil.and.ellipsis"
-        case .days:
-            "calendar"
+        case .daily:
+            "bell"
+        case .weekly:
+            "bell"
+        case .monthly:
+            "bell"
         }
     }
     
     private func getTypeName(_ type: NotificationType) -> String {
         switch type {
         case .exact:
-            "Exact"
-        case .everyday:
-            "Everyday"
-        case .weekdays:
-            "Weekdays"
-        case .days:
-            "Calendar"
+            "One Time"
+        case .daily:
+            "Daily"
+        case .weekly:
+            "Weekly"
+        case .monthly:
+            "Monthly"
         }
     }
     

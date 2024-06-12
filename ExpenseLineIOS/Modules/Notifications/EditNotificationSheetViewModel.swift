@@ -13,6 +13,8 @@ class EditNotificationSheetViewModel: ObservableObject {
     
     @Published var name: String
     @Published var type: NotificationType
+    @Published var date: Date
+    @Published var weekDays: Set<Int>
     @Published var isValid: Bool = false
     
     private var notification: NotificationEntity
@@ -26,6 +28,8 @@ class EditNotificationSheetViewModel: ObservableObject {
         
         self.name = notification.nameValue
         self.type = notification.typeValue
+        self.date = notification.date ?? Date().plusHour(1)
+        self.weekDays = Set(notification.weekDaysArr)
         
         isFormValid
             .receive(on: DispatchQueue.main)
@@ -34,11 +38,35 @@ class EditNotificationSheetViewModel: ObservableObject {
                 self.isValid = isFormValid
             }
             .store(in: &cancellables)
+        
+        $type
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
+                if type == .weekly {
+                    self?.isValid = !(self?.weekDays.isEmpty ?? true)
+                } else {
+                    self?.isValid = true
+                }
+            }
+            .store(in: &cancellables)
+        
+        $weekDays
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] days in
+                if self?.type == .weekly {
+                    self?.isValid = !days.isEmpty
+                } else {
+                    self?.isValid = true
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func save() {
         notification.name = name
         notification.typeValue = type
+        notification.date = date
+        notification.weekDaysArr = Array(weekDays)
         
         do {
             try notificationService.save()

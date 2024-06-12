@@ -8,12 +8,19 @@
 import Foundation
 
 
+struct NotificationWeekDay: Identifiable {
+    
+    var id: Int
+    var shortName: String
+    
+}
+
 enum NotificationType: Int, CaseIterable, Identifiable, Codable {
     
     case exact = 1
-    case everyday = 2
-    case weekdays = 3
-    case days = 4
+    case daily = 2
+    case weekly = 3
+    case monthly = 4
     
     var id: Self { self }
     

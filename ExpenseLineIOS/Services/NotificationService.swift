@@ -36,6 +36,14 @@ class NotificationService: ObservableObject {
         }
     }
     
+    func getWeekDays() -> [NotificationWeekDay] {
+        return Calendar
+            .current
+            .shortWeekdaySymbols
+            .enumerated()
+            .map { NotificationWeekDay(id: $0.offset, shortName: $0.element) }
+    }
+    
     func newNotificationEntity(_ budget: BudgetEntity) -> NotificationEntity {
         let entity = NotificationEntity(context: dm.viewContext)
         entity.id = UUID()
@@ -94,12 +102,12 @@ class NotificationService: ObservableObject {
             switch notification.typeValue {
             case .exact:
                 requests = sheduleExactNotification(notification)
-            case .everyday:
-                requests = sheduleEverydayNotification(notification)
-            case .weekdays:
-                requests = sheduleWeekdayNotification(notification)
-            case .days:
-                requests = sheduleDaysNotification(notification)
+            case .daily:
+                requests = sheduleDailyNotification(notification)
+            case .weekly:
+                requests = sheduleWeeklyNotification(notification)
+            case .monthly:
+                requests = sheduleMonthlyNotification(notification)
             }
             
             try dm.sync()
@@ -173,7 +181,7 @@ class NotificationService: ObservableObject {
         return [request]
     }
     
-    private func sheduleEverydayNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
+    private func sheduleDailyNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
         guard let date = notification.date else { return [] }
         
         let content = prepareContent(notification)
@@ -187,7 +195,7 @@ class NotificationService: ObservableObject {
         return [request]
     }
     
-    private func sheduleWeekdayNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
+    private func sheduleWeeklyNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
         guard let date = notification.date else { return [] }
         
         let weekDays = notification.weekDaysArr
@@ -211,7 +219,7 @@ class NotificationService: ObservableObject {
         return requests
     }
     
-    private func sheduleDaysNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
+    private func sheduleMonthlyNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
         guard let date = notification.date else { return [] }
         
         let days = notification.daysArr

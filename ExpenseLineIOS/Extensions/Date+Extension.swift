@@ -39,6 +39,10 @@ extension Date {
         return Calendar.current.date(byAdding: .day, value: days, to: self)!
     }
     
+    func plusHour(_ hours: Int) -> Date {
+        return Calendar.current.date(byAdding: .hour, value: hours, to: self)!
+    }
+    
     func plusMonth(_ months: Int) -> Date {
         return Calendar.current.date(byAdding: .month, value: months, to: self)!
     }
