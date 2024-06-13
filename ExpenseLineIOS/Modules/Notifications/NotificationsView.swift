@@ -44,7 +44,7 @@ struct NotificationsView: View {
             EditNotificationSheetView(
                 vm: EditNotificationSheetViewModel(notification: vm.newNotification(),
                                                    notificationService: notificationService))
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.large])
             .presentationDragIndicator(.hidden)
         }
     }

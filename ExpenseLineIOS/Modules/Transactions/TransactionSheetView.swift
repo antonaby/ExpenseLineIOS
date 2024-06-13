@@ -7,33 +7,6 @@
 
 import SwiftUI
 
-struct CategorySelectorView: View {
-    
-    @Environment(\.dismiss) var dismiss
-    @Binding var category: PlanCategoryEntity?
-    @Binding var categories: [PlanCategoryEntity]
-    
-    var body: some View {
-        List(categories) { ctg in
-            Button {
-                category = ctg
-                dismiss()
-            } label: {
-                HStack {
-                    IconView(name: ctg.iconNameValue, color: ctg.colorValue)
-                    Text(ctg.nameValue)
-                }
-            }
-            .listRowSeparator(.hidden)
-            .tint(.black)
-        }
-        .navigationBarBackButtonHidden(true)
-        .background(Color("BgDefault"))
-        .scrollContentBackground(.hidden)
-    }
-    
-}
-
 struct TransactionSheetView: View {
     
     @Environment(\.dismiss) var dismiss

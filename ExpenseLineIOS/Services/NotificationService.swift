@@ -94,20 +94,24 @@ class NotificationService: ObservableObject {
     }
     
     func sheduleNotification(_ notification: NotificationEntity) throws {
+        if !notification.enabled {
+            try cancelNotification(notification)
+        }
+        
         var requests: [UNNotificationRequest] = []
         
         do {
             removeOldEntries(notification)
             
             switch notification.typeValue {
+            case .nonotification:
+                try cancelNotification(notification)
             case .exact:
                 requests = sheduleExactNotification(notification)
             case .daily:
                 requests = sheduleDailyNotification(notification)
             case .weekly:
                 requests = sheduleWeeklyNotification(notification)
-            case .monthly:
-                requests = sheduleMonthlyNotification(notification)
             }
             
             try dm.sync()
@@ -212,30 +216,6 @@ class NotificationService: ObservableObject {
         
             var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
             dateComponents.weekday = day
-            let request = createRequest(id: entryId, matching: dateComponents, content: content)
-            requests.append(request)
-        }
-        
-        return requests
-    }
-    
-    private func sheduleMonthlyNotification(_ notification: NotificationEntity) -> [UNNotificationRequest] {
-        guard let date = notification.date else { return [] }
-        
-        let days = notification.daysArr
-        if days.isEmpty {
-            return []
-        }
-        
-        var requests: [UNNotificationRequest] = []
-        let content = prepareContent(notification)
-        
-        for day in days {
-            let entryId = UUID()
-            _ = createEntry(id: entryId, notification: notification)
-        
-            var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
-            dateComponents.day = day
             let request = createRequest(id: entryId, matching: dateComponents, content: content)
             requests.append(request)
         }

@@ -17,10 +17,10 @@ struct NotificationWeekDay: Identifiable {
 
 enum NotificationType: Int, CaseIterable, Identifiable, Codable {
     
+    case nonotification = 0
     case exact = 1
     case daily = 2
     case weekly = 3
-    case monthly = 4
     
     var id: Self { self }
     
@@ -49,15 +49,6 @@ extension NotificationEntity {
         }
         set {
             self.weekDays = newValue.map { String($0) }.joined(separator: ",")
-        }
-    }
-    
-    var daysArr: [Int] {
-        get {
-            days?.split(separator: ",").map { Int($0)! } ?? []
-        }
-        set {
-            self.days = newValue.map { String($0) }.joined(separator: ",")
         }
     }
     

@@ -12,8 +12,12 @@ import Combine
 class EditNotificationSheetViewModel: ObservableObject {
     
     @Published var name: String
+    @Published var extra: String
+    @Published var category: PlanCategoryEntity?
+    @Published var categories: [PlanCategoryEntity] = []
     @Published var type: NotificationType
     @Published var date: Date
+    @Published var enabled: Bool
     @Published var weekDays: Set<Int>
     @Published var isValid: Bool = false
     
@@ -27,49 +31,56 @@ class EditNotificationSheetViewModel: ObservableObject {
         self.notificationService = notificationService
         
         self.name = notification.nameValue
+        self.extra = notification.extraInfo ?? ""
         self.type = notification.typeValue
         self.date = notification.date ?? Date().plusHour(1)
+        self.enabled = notification.enabled
         self.weekDays = Set(notification.weekDaysArr)
+        self.category = notification.category
         
-        isFormValid
+        $name
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isFormValid in
-                guard let self = self else { return }
-                self.isValid = isFormValid
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.checkValidation()
+                }
             }
             .store(in: &cancellables)
         
         $type
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] type in
-                if type == .weekly {
-                    self?.isValid = !(self?.weekDays.isEmpty ?? true)
-                } else {
-                    self?.isValid = true
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.checkValidation()
                 }
             }
             .store(in: &cancellables)
         
         $weekDays
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] days in
-                if self?.type == .weekly {
-                    self?.isValid = !days.isEmpty
-                } else {
-                    self?.isValid = true
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.checkValidation()
                 }
             }
             .store(in: &cancellables)
     }
     
+    func loadCategories() {
+        categories = notification.budget?.categoriesForType([.outcomeFixed, .outcomePercent]) ?? []
+    }
+    
     func save() {
         notification.name = name
+        notification.extraInfo = extra
         notification.typeValue = type
         notification.date = date
         notification.weekDaysArr = Array(weekDays)
+        notification.enabled = enabled
+        notification.category = category
         
         do {
-            try notificationService.save()
+            try notificationService.sheduleNotification(notification)
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")
@@ -84,24 +95,18 @@ class EditNotificationSheetViewModel: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
+    private func checkValidation() {
+        if name.isEmpty {
+            isValid = false
+            return
+        }
+        
+        if type == .weekly {
+            isValid = !weekDays.isEmpty
+        } else {
+            isValid = true
+        }
+    }
+    
 }
 
-private extension EditNotificationSheetViewModel {
-    
-    var isNameValid: AnyPublisher<Bool, Never> {
-        $name
-            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-            .map { name in
-                name.count > 0
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    var isFormValid: AnyPublisher<Bool, Never> {
-        isNameValid.map {
-            $0
-        }
-        .eraseToAnyPublisher()
-    }
-    
-}

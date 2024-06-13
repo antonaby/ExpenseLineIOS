@@ -30,7 +30,12 @@ class NotificationsViewModel: ObservableObject {
     }
     
     func newNotification() -> NotificationEntity {
-        notificationService.newNotificationEntity(budget)
+        let entiry = notificationService.newNotificationEntity(budget)
+        entiry.typeValue = .exact
+        entiry.enabled = true
+        entiry.date = Date().plusHour(1)
+        
+        return entiry
     }
     
 }

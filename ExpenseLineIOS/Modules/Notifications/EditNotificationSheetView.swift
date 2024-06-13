@@ -34,33 +34,86 @@ struct EditNotificationSheetView: View {
             .padding([.horizontal, .top], 10)
             .padding([.bottom], 5)
             .font(.title2)
-            ScrollView {
-                VStack {
-                    FlexibleCardView {
-                        HStack {
-                            Image(systemName: "pencil")
-                                .frame(width: 30)
-                            TextField("Name", text: $vm.name)
+            NavigationStack {
+                ScrollView {
+                    VStack {
+                        FlexibleCardView {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Image(systemName: "pencil")
+                                        .frame(width: 30)
+                                    TextField("Name", text: $vm.name)
+                                }
+                                Divider()
+                                Text("Details:")
+                                    .font(.caption)
+                                TextEditor(text: $vm.extra)
+                                    .frame(minHeight: 40)
+                            }
+                        }
+                        FlexibleCardView {
+                            HStack {
+                                Toggle("Enabled", isOn: $vm.enabled)
+                                    .tint(Color("FrDefault"))
+                            }
+                        }
+                        if !vm.categories.isEmpty {
+                            FlexibleCardView {
+                                VStack {
+                                    NavigationLink {
+                                        CategorySelectorView(category: $vm.category, categories: $vm.categories)
+                                    } label: {
+                                        if let category = vm.category {
+                                            HStack {
+                                                IconView(name: category.iconNameValue, color: category.colorValue)
+                                                Text(category.nameValue)
+                                                    .frame(height: 45)
+                                                    .font(.title2)
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                            .overlay(alignment: .trailing) {
+                                                Button {
+                                                    vm.category = nil
+                                                } label: {
+                                                    Text("remove")
+                                                        .font(.caption)
+                                                        .foregroundStyle(Color("FrDefault"))
+                                                }
+                                            }
+                                        } else {
+                                            HStack {
+                                                Text("No Category")
+                                                    .frame(height: 45)
+                                                    .font(.title2)
+                                            }
+                                        }
+                                    }
+                                    .foregroundStyle(.black)
+                                }
+                            }
+                        }
+                        NotificationTypeCardView()
+                        switch vm.type {
+                        case .exact:
+                            ExactNotificationView()
+                        case .daily:
+                            DailyNotificationView()
+                        case .weekly:
+                            WeeklyNotificationView()
+                        case .nonotification:
+                            NoNotificationView()
                         }
                     }
-                    NotificationTypeCardView()
-                    switch vm.type {
-                    case .exact:
-                        ExactNotificationView()
-                    case .daily:
-                        DailyNotificationView()
-                    case .weekly:
-                        WeeklyNotificationView()
-                    case .monthly:
-                        MonthlyNotificationView()
-                    }
+                    .padding(.top, 10)
+                    .padding(.horizontal, 15)
                 }
-                .padding(.top, 10)
-                .padding(.horizontal, 15)
+                .background(Color("BgDefault"))
             }
-            .background(Color("BgDefault"))
         }
         .interactiveDismissDisabled(true)
+        .onAppear {
+            vm.loadCategories()
+        }
         .onDisappear {
             vm.cancelAll()
         }
@@ -124,7 +177,7 @@ struct EditNotificationSheetView: View {
     func WeeklyNotificationView() -> some View {
         FlexibleCardView {
             VStack {
-                HStack {
+                HStack(spacing: 5) {
                     ForEach(notificationService.getWeekDays()) { day in
                         Button {
                             if vm.weekDays.contains(day.id) {
@@ -156,37 +209,33 @@ struct EditNotificationSheetView: View {
     }
     
     @ViewBuilder
-    func MonthlyNotificationView() -> some View {
-        FlexibleCardView {
-            VStack {
-                Text("Monthly")
-            }
-        }
+    func NoNotificationView() -> some View {
+        EmptyView()
     }
     
     private func getTypeImage(_ type: NotificationType) -> String {
         switch type {
+        case .nonotification:
+            "bell.slash"
         case .exact:
             "bell"
         case .daily:
             "bell"
         case .weekly:
-            "bell"
-        case .monthly:
             "bell"
         }
     }
     
     private func getTypeName(_ type: NotificationType) -> String {
         switch type {
+        case .nonotification:
+            "No signal"
         case .exact:
             "One Time"
         case .daily:
             "Daily"
         case .weekly:
             "Weekly"
-        case .monthly:
-            "Monthly"
         }
     }
     
@@ -195,7 +244,30 @@ struct EditNotificationSheetView: View {
 #Preview("New") {
     let bundle = ServiceBundle.preview
     let budget = bundle.budgetService.newBudgetEntity()
+    
+    let category1 = bundle.budgetService.newCategoryEntity(budget)
+    category1.id = UUID()
+    category1.name = "Preview 1"
+    category1.amount = 0
+    category1.percent = 0.2
+    category1.iconName = "fi-house"
+    category1.colorValue = .orange
+    category1.typeValue = .outcomePercent
+    category1.createdAt = Date()
+    
+    let category2 = bundle.budgetService.newCategoryEntity(budget)
+    category2.id = UUID()
+    category2.name = "Preview 2"
+    category2.amount = 2000
+    category2.percent = 0
+    category2.iconName = "fi-insurance"
+    category2.colorValue = .green
+    category2.typeValue = .outcomeFixed
+    category2.createdAt = Date()
+    
     let notification = bundle.notificationService.newNotificationEntity(budget)
+    notification.typeValue = .exact
+    notification.enabled = true
     
     let vm = EditNotificationSheetViewModel(
         notification: notification,
