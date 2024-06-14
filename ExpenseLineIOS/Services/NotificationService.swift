@@ -147,6 +147,17 @@ class NotificationService: ObservableObject {
         }
     }
     
+    func deleteNotification(_ notification: NotificationEntity) throws {
+        try cancelNotification(notification)
+        
+        do {
+            dm.viewContext.delete(notification)
+            try dm.sync()
+        } catch {
+            throw NotificationServiceError.SaveError(msg: "Failed to delete notifications", reason: error)
+        }
+    }
+    
     private func prepareContent(_ notification: NotificationEntity) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = "ExpenseLine"

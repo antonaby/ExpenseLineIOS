@@ -44,11 +44,6 @@ struct EditNotificationSheetView: View {
                                         .frame(width: 30)
                                     TextField("Name", text: $vm.name)
                                 }
-                                Divider()
-                                Text("Details:")
-                                    .font(.caption)
-                                TextEditor(text: $vm.extra)
-                                    .frame(minHeight: 40)
                             }
                         }
                         FlexibleCardView {

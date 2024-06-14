@@ -12,7 +12,6 @@ import Combine
 class EditNotificationSheetViewModel: ObservableObject {
     
     @Published var name: String
-    @Published var extra: String
     @Published var category: PlanCategoryEntity?
     @Published var categories: [PlanCategoryEntity] = []
     @Published var type: NotificationType
@@ -31,7 +30,6 @@ class EditNotificationSheetViewModel: ObservableObject {
         self.notificationService = notificationService
         
         self.name = notification.nameValue
-        self.extra = notification.extraInfo ?? ""
         self.type = notification.typeValue
         self.date = notification.date ?? Date().plusHour(1)
         self.enabled = notification.enabled
@@ -72,7 +70,6 @@ class EditNotificationSheetViewModel: ObservableObject {
     
     func save() {
         notification.name = name
-        notification.extraInfo = extra
         notification.typeValue = type
         notification.date = date
         notification.weekDaysArr = Array(weekDays)

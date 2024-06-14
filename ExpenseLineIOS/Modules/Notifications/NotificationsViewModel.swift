@@ -38,4 +38,22 @@ class NotificationsViewModel: ObservableObject {
         return entiry
     }
     
+    func deleteNotification(_ notification: NotificationEntity) {
+        do {
+            try notificationService.deleteNotification(notification)
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    func resheduleNotification(_ notification: NotificationEntity) {
+        do {
+            try notificationService.sheduleNotification(notification)
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
+    }
+    
 }
