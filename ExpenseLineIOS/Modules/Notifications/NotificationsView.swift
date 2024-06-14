@@ -79,6 +79,9 @@ struct NotificationCard: View {
                 }
             }
         }
+        .onChange(of: notification.enabled) { value in
+            isEnabled = value
+        }
     }
     
     @ViewBuilder

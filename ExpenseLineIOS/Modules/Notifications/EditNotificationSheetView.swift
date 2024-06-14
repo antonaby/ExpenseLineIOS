@@ -46,12 +46,6 @@ struct EditNotificationSheetView: View {
                                 }
                             }
                         }
-                        FlexibleCardView {
-                            HStack {
-                                Toggle("Enabled", isOn: $vm.enabled)
-                                    .tint(Color("FrDefault"))
-                            }
-                        }
                         if !vm.categories.isEmpty {
                             FlexibleCardView {
                                 VStack {
@@ -88,6 +82,14 @@ struct EditNotificationSheetView: View {
                             }
                         }
                         NotificationTypeCardView()
+                        if vm.type != .nonotification {
+                            FlexibleCardView {
+                                HStack {
+                                    Toggle("Enabled", isOn: $vm.enabled)
+                                        .tint(Color("FrDefault"))
+                                }
+                            }
+                        }
                         switch vm.type {
                         case .exact:
                             ExactNotificationView()
