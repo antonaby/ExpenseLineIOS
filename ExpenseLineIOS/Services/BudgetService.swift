@@ -275,17 +275,6 @@ class BudgetService: ObservableObject {
         }
     }
     
-    // TODO: Add arguments
-    func getNotificationsForToday() throws -> [NotificationEntity] {
-        let request = NotificationEntity.fetchRequest()
-        
-        do {
-            return try dm.viewContext.fetch(request)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
-        }
-    }
-    
     func getSpendingsForCategories(_ period: PeriodEntity, budget: BudgetEntity, types: [CategoryType]) throws -> [CategorySpendings] {
         do {
             let categories = try getCategoriesOfBudget(budget, types: types)

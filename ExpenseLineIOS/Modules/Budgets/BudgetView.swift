@@ -67,7 +67,11 @@ struct BudgetView: View {
                 ZStack(alignment: .bottomTrailing) {
                     TabView(selection: $vm.currenPage) {
                         BudgetOverviewView(
-                            vm: BudgetOverviewViewModel(parent: vm, budgetService: budgetService),
+                            vm: BudgetOverviewViewModel(
+                                parent: vm,
+                                budgetService: budgetService,
+                                notificationService: notificationService
+                            ),
                             showNotificationsView: $showNotificationsView)
                             .tabItem { Image(systemName: "house") }
                             .tag(BudgetViewPage.overview)

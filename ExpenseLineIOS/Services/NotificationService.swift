@@ -41,7 +41,7 @@ class NotificationService: ObservableObject {
             .current
             .shortWeekdaySymbols
             .enumerated()
-            .map { NotificationWeekDay(id: $0.offset, shortName: $0.element) }
+            .map { NotificationWeekDay(id: $0.offset + 1, shortName: $0.element) }
     }
     
     func newNotificationEntity(_ budget: BudgetEntity) -> NotificationEntity {
@@ -59,6 +59,25 @@ class NotificationService: ObservableObject {
     
     func rollback() {
         dm.rollback()
+    }
+    
+    func getNotificationsForToday(_ budget: BudgetEntity) throws -> [NotificationEntity] {
+        let budgetId = try getBudgetId(budget)
+        
+        let request = NotificationEntity.fetchRequest()
+        let startDate = Date().startOfDay()
+        let endDate = Date().endOfDay()
+        let currentDay = String(Date().currentWeekDay())
+        
+        request.predicate = NSPredicate(
+            format: "budget.id == %@ AND enabled == true AND ((type == 1 AND date BETWEEN {%@, %@}) OR type == 2 OR (type == 3 AND weekDays CONTAINS[cd] %@))",
+            budgetId as CVarArg, startDate as NSDate, endDate as NSDate, currentDay as CVarArg)
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
+        }
     }
     
     func getNotifications(budget: BudgetEntity) throws -> [NotificationEntity] {

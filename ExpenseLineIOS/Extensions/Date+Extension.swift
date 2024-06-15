@@ -9,6 +9,19 @@ import Foundation
 
 extension Date {
     
+    func startOfDay() -> Date {
+        return Calendar.current.startOfDay(for: self)
+    }
+    
+    func endOfDay() -> Date {
+        return Calendar.current.startOfDay(for: self.plusDay(1))
+    }
+    
+    func currentWeekDay() -> Int {
+        let components = Calendar.current.dateComponents([.weekday], from: self)
+        return components.weekday!
+    }
+    
     func firstDayOfMonth() -> Date {
         let components = Calendar.current.dateComponents([.year, .month], from: self)
         return Calendar.current.date(from: components)!

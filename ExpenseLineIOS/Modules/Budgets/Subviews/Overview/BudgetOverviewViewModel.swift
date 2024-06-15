@@ -26,11 +26,13 @@ class BudgetOverviewViewModel: ObservableObject {
     let parent: BudgetViewModel
     
     private let budgetService: BudgetService
+    private let notificationService: NotificationService
     private var cancellables = Set<AnyCancellable>()
  
-    init(parent: BudgetViewModel, budgetService: BudgetService) {
+    init(parent: BudgetViewModel, budgetService: BudgetService, notificationService: NotificationService) {
         self.parent = parent
         self.budgetService = budgetService
+        self.notificationService = notificationService
     }
     
     func subscribe() {
@@ -65,7 +67,8 @@ class BudgetOverviewViewModel: ObservableObject {
     
     func loadNotifications() {
         do {
-            notifications = try budgetService.getNotificationsForToday()
+            notifications = try notificationService
+                .getNotificationsForToday(parent.budget)
         } catch {
             // TODO: show error
             print("Something went wrong \(error)")

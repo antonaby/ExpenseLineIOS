@@ -132,12 +132,18 @@ struct BudgetOverviewView: View {
                         .padding(.trailing, 15)
                     }
                     FlexibleCardView {
-                        VStack {
+                        VStack(spacing: 10) {
                             if !vm.notifications.isEmpty {
                                 ForEach(vm.notifications) { notification in
-                                    HStack {
-                                        Text(notification.nameValue)
-                                        Spacer()
+                                    switch notification.typeValue {
+                                    case .daily:
+                                        DailyNotificationShortView(notification)
+                                    case .exact:
+                                        ExactNotificationShortView(notification)
+                                    case .weekly:
+                                        WeeklyNotificationShortView(notification)
+                                    default:
+                                        EmptyView()
                                     }
                                 }
                             } else {
@@ -146,9 +152,12 @@ struct BudgetOverviewView: View {
                             Button {
                                 showNotificationsView.toggle()
                             } label: {
-                                Text("Show all")
-                                    .font(.caption)
-                                    .tint(Color("FrDefault"))
+                                HStack {
+                                    Text("Notifications")
+                                    Image(systemName: "chevron.right")
+                                }
+                                .font(.caption)
+                                .tint(Color("FrDefault"))
                             }
                         }
                     }
@@ -215,6 +224,80 @@ struct BudgetOverviewView: View {
                 }
             }
         }
+    }
+    
+    @ViewBuilder
+    func DailyNotificationShortView(_ notification: NotificationEntity) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            Image(systemName: "bell")
+            VStack {
+                Text(notification.nameValue)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let date = notification.date {
+                    HStack(spacing: 5) {
+                        Text("Daily")
+                        Text(formatTime(date))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.caption)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func ExactNotificationShortView(_ notification: NotificationEntity) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            Image(systemName: "bell")
+            VStack {
+                Text(notification.nameValue)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let date = notification.date {
+                    Text(formatDate(date))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.caption)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func WeeklyNotificationShortView(_ notification: NotificationEntity) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            Image(systemName: "bell")
+            VStack {
+                Text(notification.nameValue)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let date = notification.date {
+                    HStack(spacing: 5) {
+                        Text(weekDaySymbol())
+                        Text(formatTime(date))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.caption)
+                }
+            }
+        }
+    }
+    
+    func weekDaySymbol() -> String {
+        Calendar.current.shortWeekdaySymbols[Date().currentWeekDay() - 1]
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
+        
+        return dateFormatter.string(from: date)
+    }
+    
+    func formatTime(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
+        
+        return dateFormatter.string(from: date)
     }
     
     func getTypeColor(_ type: SpengingsType) -> Color {
@@ -301,6 +384,7 @@ struct BudgetOverviewView: View {
     let dm = bundle.databaseManager
     let budget = BudgetEntity(context: dm.viewContext)
     let budgetService = bundle.budgetService
+    let notificationService = bundle.notificationService
     budget.id = UUID()
     budget.name = "Preview"
     budget.currency = "en_US"
@@ -316,7 +400,12 @@ struct BudgetOverviewView: View {
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
         
-        let vm = BudgetOverviewViewModel(parent: parent, budgetService: bundle.budgetService)
+        let vm = BudgetOverviewViewModel(
+            parent: parent, 
+            budgetService: bundle.budgetService,
+            notificationService: bundle.notificationService
+        )
+        
         
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
@@ -328,10 +417,23 @@ struct BudgetOverviewView: View {
         vm.totalFlexibleBudgetLeft = 500
         
         let notification1 = budgetService.newNotificationEntity(budget)
-        notification1.name = "Preview1"
+        notification1.name = "Preview 1"
+        notification1.typeValue = .exact
+        notification1.date = Date()
+        notification1.enabled = true
         
         let notification2 = budgetService.newNotificationEntity(budget)
-        notification2.name = "Preview2"
+        notification2.name = "Preview 2"
+        notification2.typeValue = .daily
+        notification2.date = Date()
+        notification2.enabled = true
+        
+        let notification3 = budgetService.newNotificationEntity(budget)
+        notification3.name = "Preview 3"
+        notification3.typeValue = .weekly
+        notification3.date = Date()
+        notification3.weekDaysArr = [1, 2, 3, 4, 5, 6, 7]
+        notification3.enabled = true
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
         
@@ -361,7 +463,11 @@ struct BudgetOverviewView: View {
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
         
-        let vm = BudgetOverviewViewModel(parent: parent, budgetService: bundle.budgetService)
+        let vm = BudgetOverviewViewModel(
+            parent: parent, 
+            budgetService: bundle.budgetService,
+            notificationService: bundle.notificationService
+        )
         
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
@@ -400,7 +506,11 @@ struct BudgetOverviewView: View {
             budgetService: bundle.budgetService, dataService: bundle.dataService
         )
         
-        let vm = BudgetOverviewViewModel(parent: parent, budgetService: bundle.budgetService)
+        let vm = BudgetOverviewViewModel(
+            parent: parent,
+            budgetService: bundle.budgetService,
+            notificationService: bundle.notificationService
+        )
         
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
