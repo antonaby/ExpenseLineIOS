@@ -143,7 +143,7 @@ class BudgetService: ObservableObject {
         if let period = try getLastPeriod(budget) {
             return period
         }
-    
+        
         return try createPeriod(for: Date(), budget: budget)
     }
     
@@ -176,6 +176,21 @@ class BudgetService: ObservableObject {
             return try dm.viewContext.fetch(request)
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch budget periods", reason: error)
+        }
+    }
+    
+    func getNotificationsForCategory(_ category: PlanCategoryEntity) throws -> [NotificationEntity] {
+        guard let categoryId = category.id else {
+            throw BudgetServiceError.MissingDataError(msg: "No category id", reason: nil)
+        }
+        
+        let request = NotificationEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch notifications for category", reason: error)
         }
     }
     

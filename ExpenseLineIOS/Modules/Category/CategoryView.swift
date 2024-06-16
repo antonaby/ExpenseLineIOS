@@ -49,6 +49,18 @@ struct CategoryView: View {
                     } else {
                         PlannedViewFixed()
                     }
+                    if !vm.notifications.isEmpty {
+                        Divider()
+                    }
+                    ForEach($vm.notifications) { $notification in
+                        Toggle(isOn: $notification.enabled) {
+                            HStack {
+                                Image(systemName: "bell")
+                                Text(notification.nameValue)
+                            }
+                        }
+                        .tint(Color("FrDefault"))
+                    }
                 }
             }
             .defaultListCard()
@@ -125,6 +137,7 @@ struct CategoryView: View {
         .onAppear {
             UICollectionView.appearance().contentInset.top = -20
             vm.loadTransactions()
+            vm.loadNotifications()
         }
     }
      
@@ -183,6 +196,28 @@ struct CategoryView: View {
     transaction3.amountDecimal = 300
     transaction3.createdAt = Date()
     transaction3.category = category
+    
+    let notification1 = budgetService.newNotificationEntity(budget)
+    notification1.name = "Preview 1"
+    notification1.typeValue = .exact
+    notification1.date = Date()
+    notification1.enabled = true
+    notification1.category = category
+    
+    let notification2 = budgetService.newNotificationEntity(budget)
+    notification2.name = "Preview 2"
+    notification2.typeValue = .daily
+    notification2.date = Date()
+    notification2.enabled = false
+    notification2.category = category
+    
+    let notification3 = budgetService.newNotificationEntity(budget)
+    notification3.name = "Preview 3"
+    notification3.typeValue = .weekly
+    notification3.date = Date()
+    notification3.weekDaysArr = [1, 2, 3, 4, 5, 6, 7]
+    notification3.enabled = true
+    notification3.category = category
     
     do {
         let period = try budgetService.getOrCreateLastPeriod(budget)

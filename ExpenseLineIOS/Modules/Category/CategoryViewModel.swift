@@ -13,6 +13,7 @@ class CategoryViewModel: ObservableObject {
     @Published var transactions: [TransactionEntity] = []
     @Published var totalAmount: Decimal = 0
     @Published var category: PlanCategoryEntity
+    @Published var notifications: [NotificationEntity] = []
     
     var budget: BudgetEntity
     var currency: CurrencySymbol
@@ -86,6 +87,15 @@ class CategoryViewModel: ObservableObject {
         do {
             transactions = try budgetService.getAllTransactionsForCategory(category, period: period)
             totalAmount = transactions.reduce(0) { $0 + $1.amountDecimal }
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    func loadNotifications() {
+        do {
+            notifications = try budgetService.getNotificationsForCategory(category)
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")
