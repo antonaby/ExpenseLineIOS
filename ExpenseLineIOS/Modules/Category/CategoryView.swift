@@ -18,79 +18,88 @@ struct CategoryView: View {
     @StateObject var vm: CategoryViewModel
     
     var body: some View {
-        VStack {
-            ContentSizeCardView {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        IconView(
-                            name: vm.category.iconNameValue,
-                            color: vm.category.colorValue,
-                            size: 45
-                        )
-                        Text(vm.category.nameValue)
-                            .font(.title2)
-                        Spacer()
-                        Button {
-                            selectedCategory = vm.category
-                        } label: {
-                            Image(systemName: "pencil")
-                                .foregroundColor(Color("FrDefault"))
-                                .frame(width: 50, height: 50, alignment: .topTrailing)
-                                .padding([.top, .trailing], 10)
+        ScrollView {
+            VStack {
+                ContentSizeCardView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            IconView(
+                                name: vm.category.iconNameValue,
+                                color: vm.category.colorValue,
+                                size: 45
+                            )
+                            Text(vm.category.nameValue)
+                                .font(.title2)
+                            Spacer()
+                            Button {
+                                selectedCategory = vm.category
+                            } label: {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(Color("FrDefault"))
+                                    .frame(width: 50, height: 50, alignment: .topTrailing)
+                                    .padding([.top, .trailing], 10)
+                            }
+                        }
+                        HStack {
+                            Text(vm.formatAmount(vm.totalAmount))
+                        }
+                        .font(.largeTitle)
+                        .bold()
+                        ProgressView(progress: vm.percentSpent(), color: Color("FrDefault"), fullColor: Color("Accent1"))
+                        if vm.category.typeValue == .outcomePercent {
+                            PlannedViewPercent()
+                        } else {
+                            PlannedViewFixed()
                         }
                     }
-                    HStack {
-                        Text(vm.formatAmount(vm.totalAmount))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                if !vm.transactions.isEmpty {
+                    ForEach(vm.transactions) { transaction in
+                        FlexibleCardView {
+                            NavigationLink(value: transaction) {
+                                VStack(alignment: .leading) {
+                                    Text(transaction.nameValue)
+                                    Text(vm.formatAmount(transaction.amountDecimal))
+                                        .font(.title2)
+                                        .bold()
+                                    Text(vm.formatDate(transaction.createdAt))
+                                        .font(.caption)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .tint(.black)
+                            }
+                            .overlay(alignment: .topTrailing) {
+                                Menu {
+                                    Button {
+                                        selectedTransaction = transaction
+                                    } label: {
+                                        Text("Edit")
+                                    }
+                                    Button(role: .destructive) {
+                                        vm.deleteTransaction(transaction)
+                                    } label: {
+                                        Text("Delete")
+                                    }
+                                } label: {
+                                    Image(systemName: "ellipsis")
+                                        .tint(Color("FrDefault"))
+                                        .frame(width: 50, height: 50, alignment: .topTrailing)
+                                        .padding([.top, .trailing], 10)
+                                }
+                            }
+                        }
                     }
-                    .font(.largeTitle)
-                    .bold()
-                    ProgressView(progress: vm.percentSpent(), color: Color("FrDefault"), fullColor: Color("Accent1"))
-                    if vm.category.typeValue == .outcomePercent {
-                        PlannedViewPercent()
-                    } else {
-                        PlannedViewFixed()
+                    .listStyle(.plain)
+                } else {
+                    FlexibleCardView {
+                        Text("No transactions")
+                            .bold()
+                            .frame(maxWidth: .infinity)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal, 15)
-            if !vm.transactions.isEmpty {
-                Text("Transactions")
-                    .bold()
-                List(vm.transactions) { transaction in
-                    NavigationLink(value: transaction) {
-                        VStack(alignment: .leading) {
-                            Text(transaction.nameValue)
-                            Text(vm.formatAmount(transaction.amountDecimal))
-                                .font(.title2)
-                                .bold()
-                            Text(vm.formatDate(transaction.createdAt))
-                                .font(.caption)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                vm.deleteTransaction(transaction)
-                            } label: {
-                                Label("delete", systemImage: "trash.fill")
-                            }
-                            .tint(Color("Accent1"))
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button {
-                                selectedTransaction = transaction
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
-                            }
-                            .tint(Color("FrDefault"))
-                        }
-                    }
-                }
-                .listStyle(.plain)
-            } else {
-                Text("No transactions")
-                    .bold()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
         }
         .background(Color("BgDefault"))
         .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
@@ -158,7 +167,7 @@ struct CategoryView: View {
     category.name = "Preview"
     category.typeValue = .outcomeFixed
     category.amountDecimal = 1000
-    category.iconName = "007-electricity"
+    category.iconName = "fi-electricity"
     category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)

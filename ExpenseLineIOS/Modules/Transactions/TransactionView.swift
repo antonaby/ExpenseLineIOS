@@ -41,18 +41,15 @@ struct TransactionView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
                     Text(vm.formatAmount(vm.transaction.amountDecimal))
                         .font(.largeTitle)
                     Text(vm.formatDate(vm.transaction.createdAt))
                         .font(.caption)
                 }
             }
-            .padding(.horizontal, 15)
-            Text("No notes")
-                .bold()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            Spacer()
         }
+        .padding(.horizontal, 15)
         .background(Color("BgDefault"))
         .sheet(isPresented: $editSheetOpen, onDismiss: onEditSheetClosed) {
             TransactionSheetView(
