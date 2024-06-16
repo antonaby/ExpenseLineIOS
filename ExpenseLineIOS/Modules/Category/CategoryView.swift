@@ -30,14 +30,13 @@ struct CategoryView: View {
                         Text(vm.category.nameValue)
                             .font(.title2)
                         Spacer()
-                        Button {
-                            selectedCategory = vm.category
-                        } label: {
-                            Image(systemName: "pencil")
-                                .foregroundColor(Color("FrDefault"))
-                                .frame(width: 50, height: 50, alignment: .topTrailing)
-                                .padding([.top, .trailing], 10)
-                        }
+                        Image(systemName: "pencil")
+                            .foregroundColor(Color("FrDefault"))
+                            .frame(width: 50, height: 50, alignment: .topTrailing)
+                            .padding([.top, .trailing], 10)
+                            .onTapGesture {
+                                selectedCategory = vm.category
+                            }
                     }
                     HStack {
                         Text(vm.formatAmount(vm.totalAmount))
