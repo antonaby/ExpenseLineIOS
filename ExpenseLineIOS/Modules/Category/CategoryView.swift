@@ -52,9 +52,9 @@ struct CategoryView: View {
                 }
             }
             .defaultListCard()
-            if !vm.notifications.isEmpty {
-                FlexibleCardView {
-                    NavigationLink(value: CategoryNotificationsRef(category: vm.category)) {
+            FlexibleCardView {
+                NavigationLink(value: CategoryNotificationsRef(category: vm.category)) {
+                    if !vm.notifications.isEmpty {
                         VStack(alignment: .leading) {
                             ForEach($vm.notifications) { $notification in
                                 HStack {
@@ -64,10 +64,12 @@ struct CategoryView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text("Reminders")
                     }
                 }
-                .defaultListCard()
             }
+            .defaultListCard()
             if !vm.transactions.isEmpty {
                 ForEach(vm.transactions) { transaction in
                     FlexibleCardView {
