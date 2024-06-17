@@ -117,23 +117,36 @@ struct NotificationCard: View {
     
     @ViewBuilder
     func OneTimeNotificationHeaderView() -> some View {
-        Toggle(isOn: $isEnabled) {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "bell")
-                    Text("One Time")
+        if let date = notification.date {
+            if date > Date() {
+                Toggle(isOn: $isEnabled) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "bell")
+                            Text("One Time")
+                        }
+                        Text(formatDate(date))
+                    }
+                    .font(.caption)
                 }
-                if let date = notification.date {
+                .onChange(of: isEnabled) { value in
+                    notification.enabled = value
+                    updateNotification(.enable, notification)
+                }
+                .tint(Color("FrDefault"))
+            } else {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "bell.slash")
+                        Text("One Time")
+                        Spacer()
+                    }
                     Text(formatDate(date))
+                        .foregroundStyle(Color("Accent1"))
                 }
+                .font(.caption)
             }
-            .font(.caption)
         }
-        .onChange(of: isEnabled) { value in
-            notification.enabled = value
-            updateNotification(.enable, notification)
-        }
-        .tint(Color("FrDefault"))
     }
     
     @ViewBuilder
@@ -212,6 +225,8 @@ struct NotificationsView: View {
                             }
                         }
                     }
+                    Color.clear
+                        .frame(height: 70)
                 }
                 .padding(.horizontal, 15)
                 .frame(maxWidth: .infinity)
@@ -271,13 +286,18 @@ struct NotificationsView: View {
     let notification3 = bundle.notificationService.newNotificationEntity(budget)
     notification3.name = "Preview 3"
     notification3.typeValue = .exact
-    notification3.date = Date()
+    notification3.date = Date().plusHour(1)
     
     let notification4 = bundle.notificationService.newNotificationEntity(budget)
     notification4.name = "Preview 4"
     notification4.typeValue = .weekly
     notification4.weekDaysArr = [1, 3, 6]
     notification4.category = category
+    
+    let notification5 = bundle.notificationService.newNotificationEntity(budget)
+    notification5.name = "Preview 5"
+    notification5.typeValue = .exact
+    notification5.date = Date().plusHour(-1)
     
     let vm = NotificationsViewModel(
         categoryRef: CategoryNotificationsRef(category: nil),

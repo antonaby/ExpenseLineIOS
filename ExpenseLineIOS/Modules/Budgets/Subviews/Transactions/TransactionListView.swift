@@ -99,6 +99,8 @@ struct TransactionListView: View {
                             vm.loadTransactions(filter: vm.serachFilter)
                         }
                     }
+                    Color.clear
+                        .frame(height: 70)
                 }
                 Spacer()
             }

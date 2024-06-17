@@ -58,7 +58,7 @@ struct CategoryView: View {
                         VStack(alignment: .leading) {
                             ForEach($vm.notifications) { $notification in
                                 HStack {
-                                    Image(systemName: "bell")
+                                    Image(systemName: notification.typeValue == .nonotification ? "pencil" : "bell")
                                     Text(notification.nameValue)
                                 }
                             }
@@ -222,6 +222,12 @@ struct CategoryView: View {
     notification3.weekDaysArr = [1, 2, 3, 4, 5, 6, 7]
     notification3.enabled = true
     notification3.category = category
+
+    let notification4 = budgetService.newNotificationEntity(budget)
+    notification4.name = "Preview 4"
+    notification4.typeValue = .nonotification
+    notification4.enabled = false
+    notification4.category = category
     
     do {
         let period = try budgetService.getOrCreateLastPeriod(budget)

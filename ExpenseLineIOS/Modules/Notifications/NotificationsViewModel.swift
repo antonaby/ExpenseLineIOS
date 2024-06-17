@@ -26,7 +26,12 @@ class NotificationsViewModel: ObservableObject {
     
     func loadNotifications() {
         if let category = categoryRef.category {
-            notifications = category.allNotifications
+            do {
+                notifications = try notificationService.getNotifications(category: category)
+            } catch {
+                // TODO: handle error
+                print("Something went wrong \(error)")
+            }
         } else {
             do {
                 notifications = try notificationService.getNotifications(budget: budget)
@@ -39,7 +44,7 @@ class NotificationsViewModel: ObservableObject {
     
     func newNotification() -> NotificationEntity {
         let entity = notificationService.newNotificationEntity(budget)
-        entity.typeValue = .exact
+        entity.typeValue = .nonotification
         entity.enabled = true
         entity.date = Date().plusHour(1)
         

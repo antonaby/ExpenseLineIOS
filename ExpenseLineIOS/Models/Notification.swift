@@ -36,7 +36,7 @@ extension NotificationEntity {
     
     var typeValue: NotificationType {
         get {
-            NotificationType(rawValue: Int(self.type)) ?? .exact
+            NotificationType(rawValue: Int(self.type)) ?? .nonotification
         }
         set {
             self.type = Int32(newValue.rawValue)

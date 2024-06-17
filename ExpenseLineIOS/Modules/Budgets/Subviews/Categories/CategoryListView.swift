@@ -121,6 +121,8 @@ struct CategoryListView: View {
                 ForEach(vm.categories) { category in
                     CategoryCard(category: category, vm: vm.parent)
                 }
+                Color.clear
+                    .frame(height: 70)
             }
             Spacer()
         }

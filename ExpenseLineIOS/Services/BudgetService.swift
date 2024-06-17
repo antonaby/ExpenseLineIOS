@@ -185,7 +185,8 @@ class BudgetService: ObservableObject {
         }
         
         let request = NotificationEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
+        request.predicate = NSPredicate(format: "category.id == %@ AND (enabled == true OR type == 0)", categoryId as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
         
         do {
             return try dm.viewContext.fetch(request)

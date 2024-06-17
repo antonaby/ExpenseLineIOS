@@ -72,6 +72,7 @@ class NotificationService: ObservableObject {
         request.predicate = NSPredicate(
             format: "budget.id == %@ AND enabled == true AND ((type == 1 AND date BETWEEN {%@, %@}) OR type == 2 OR (type == 3 AND weekDays CONTAINS[cd] %@))",
             budgetId as CVarArg, startDate as NSDate, endDate as NSDate, currentDay as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
         
         do {
             return try dm.viewContext.fetch(request)
@@ -85,6 +86,20 @@ class NotificationService: ObservableObject {
         
         let request = NotificationEntity.fetchRequest()
         request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw NotificationServiceError.FetchError(msg: "Failed to get notifications", reason: error)
+        }
+    }
+    
+    func getNotifications(category: PlanCategoryEntity) throws -> [NotificationEntity] {
+        let categoryId = try getCategoryId(category)
+        
+        let request = NotificationEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
         
         do {
@@ -267,6 +282,14 @@ class NotificationService: ObservableObject {
         }
         
         throw NotificationServiceError.MissingDataError(msg: "Missing budget id", reason: nil)
+    }
+    
+    private func getCategoryId(_ category: PlanCategoryEntity) throws -> UUID {
+        if let id = category.id {
+            return id
+        }
+        
+        throw NotificationServiceError.MissingDataError(msg: "Missing category id", reason: nil)
     }
     
 }
