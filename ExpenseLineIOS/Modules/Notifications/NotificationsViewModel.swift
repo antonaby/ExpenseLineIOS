@@ -10,32 +10,44 @@ import Foundation
 
 class NotificationsViewModel: ObservableObject {
     
+    var categoryRef: CategoryNotificationsRef
     @Published var notifications: [NotificationEntity] = []
     
     private let budget: BudgetEntity
+    private let budgetService: BudgetService
     private let notificationService: NotificationService
     
-    init(budget: BudgetEntity, notificationService: NotificationService) {
+    init(categoryRef: CategoryNotificationsRef, budget: BudgetEntity, budgetService: BudgetService, notificationService: NotificationService) {
+        self.categoryRef = categoryRef
         self.budget = budget
+        self.budgetService = budgetService
         self.notificationService = notificationService
     }
     
     func loadNotifications() {
-        do {
-            notifications = try notificationService.getNotifications(budget: budget)
-        } catch {
-            // TODO: handle error
-            print("Something went wrong \(error)")
+        if let category = categoryRef.category {
+            notifications = category.allNotifications
+        } else {
+            do {
+                notifications = try notificationService.getNotifications(budget: budget)
+            } catch {
+                // TODO: handle error
+                print("Something went wrong \(error)")
+            }
         }
     }
     
     func newNotification() -> NotificationEntity {
-        let entiry = notificationService.newNotificationEntity(budget)
-        entiry.typeValue = .exact
-        entiry.enabled = true
-        entiry.date = Date().plusHour(1)
+        let entity = notificationService.newNotificationEntity(budget)
+        entity.typeValue = .exact
+        entity.enabled = true
+        entity.date = Date().plusHour(1)
         
-        return entiry
+        if let category = categoryRef.category {
+            entity.category = category
+        }
+        
+        return entity
     }
     
     func deleteNotification(_ notification: NotificationEntity) {

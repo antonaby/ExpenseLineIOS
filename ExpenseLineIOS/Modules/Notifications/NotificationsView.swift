@@ -279,7 +279,12 @@ struct NotificationsView: View {
     notification4.weekDaysArr = [1, 3, 6]
     notification4.category = category
     
-    let vm = NotificationsViewModel(budget: budget, notificationService: bundle.notificationService)
+    let vm = NotificationsViewModel(
+        categoryRef: CategoryNotificationsRef(category: nil),
+        budget: budget,
+        budgetService: bundle.budgetService,
+        notificationService: bundle.notificationService
+    )
     try! bundle.notificationService.save()
     
     return NotificationsView(vm: vm)
@@ -290,7 +295,12 @@ struct NotificationsView: View {
     let bundle = ServiceBundle.preview
     let budget = bundle.budgetService.newBudgetEntity()
     
-    let vm = NotificationsViewModel(budget: budget, notificationService: bundle.notificationService)
+    let vm = NotificationsViewModel(
+        categoryRef: CategoryNotificationsRef(category: nil),
+        budget: budget,
+        budgetService: bundle.budgetService,
+        notificationService: bundle.notificationService
+    )
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)

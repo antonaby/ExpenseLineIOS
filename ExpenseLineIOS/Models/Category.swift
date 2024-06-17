@@ -8,6 +8,12 @@
 import Foundation
 import SwiftUI
 
+struct CategoryNotificationsRef: Hashable {
+    
+    var category: PlanCategoryEntity?
+    
+}
+
 enum CategoryType: Int, CaseIterable, Identifiable, Codable {
     
     case income = 1
@@ -119,6 +125,12 @@ extension PlanCategoryEntity {
         }
         set {
             color = newValue.toHex() ?? "000000"
+        }
+    }
+    
+    var allNotifications: [NotificationEntity] {
+        get {
+            notifications?.allObjects as? [NotificationEntity] ?? []
         }
     }
     

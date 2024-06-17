@@ -46,7 +46,6 @@ struct BudgetOverviewView: View {
     @EnvironmentObject var setting: SettingsService
     @StateObject var vm: BudgetOverviewViewModel
     
-    @Binding var showNotificationsView: Bool
     @State var spendings: SpengingsType = .overall
     
     var loadStats: Bool = true
@@ -149,9 +148,7 @@ struct BudgetOverviewView: View {
                             } else {
                                 Text("No notifications")
                             }
-                            Button {
-                                showNotificationsView.toggle()
-                            } label: {
+                            NavigationLink(value: CategoryNotificationsRef(category: nil)) {
                                 HStack {
                                     Text("Notifications")
                                     Image(systemName: "chevron.right")
@@ -437,7 +434,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
         
-        return BudgetOverviewView(vm: vm, showNotificationsView: .constant(false), loadStats: false)
+        return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
@@ -480,7 +477,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
         
-        return BudgetOverviewView(vm: vm, showNotificationsView: .constant(false), loadStats: false)
+        return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
@@ -523,7 +520,7 @@ struct BudgetOverviewView: View {
         
         bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
         
-        return BudgetOverviewView(vm: vm, showNotificationsView: .constant(false), loadStats: false)
+        return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")

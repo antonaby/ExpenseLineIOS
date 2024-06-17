@@ -49,21 +49,25 @@ struct CategoryView: View {
                     } else {
                         PlannedViewFixed()
                     }
-                    if !vm.notifications.isEmpty {
-                        Divider()
-                    }
-                    ForEach($vm.notifications) { $notification in
-                        Toggle(isOn: $notification.enabled) {
-                            HStack {
-                                Image(systemName: "bell")
-                                Text(notification.nameValue)
-                            }
-                        }
-                        .tint(Color("FrDefault"))
-                    }
                 }
             }
             .defaultListCard()
+            if !vm.notifications.isEmpty {
+                FlexibleCardView {
+                    NavigationLink(value: CategoryNotificationsRef(category: vm.category)) {
+                        VStack(alignment: .leading) {
+                            ForEach($vm.notifications) { $notification in
+                                HStack {
+                                    Image(systemName: "bell")
+                                    Text(notification.nameValue)
+                                }
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .defaultListCard()
+            }
             if !vm.transactions.isEmpty {
                 ForEach(vm.transactions) { transaction in
                     FlexibleCardView {
