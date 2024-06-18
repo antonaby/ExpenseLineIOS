@@ -81,12 +81,17 @@ class NotificationService: ObservableObject {
         }
     }
     
-    func getNotifications(budget: BudgetEntity) throws -> [NotificationEntity] {
+    func getNotifications(budget: BudgetEntity, onlyCurrent: Bool = true) throws -> [NotificationEntity] {
         let budgetId = try getBudgetId(budget)
         
         let request = NotificationEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        if onlyCurrent {
+            request.predicate = NSPredicate(
+                format: "budget.id == %@ AND (type != 1 OR (type == 1 AND date >= %@))", budgetId as CVarArg, Date() as NSDate)
+        } else {
+            request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        }
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
             return try dm.viewContext.fetch(request)
@@ -95,12 +100,17 @@ class NotificationService: ObservableObject {
         }
     }
     
-    func getNotifications(category: PlanCategoryEntity) throws -> [NotificationEntity] {
+    func getNotifications(category: PlanCategoryEntity, onlyCurrent: Bool = true) throws -> [NotificationEntity] {
         let categoryId = try getCategoryId(category)
         
         let request = NotificationEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        if onlyCurrent {
+            request.predicate = NSPredicate(
+                format: "category.id == %@ AND (type != 1 OR (type == 1 AND date >= %@))", categoryId as CVarArg, Date() as NSDate)
+        } else {
+            request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
+        }
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
             return try dm.viewContext.fetch(request)

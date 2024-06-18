@@ -122,7 +122,8 @@ struct BudgetView: View {
                     period: vm.period,
                     budget: vm.budget,
                     currency: vm.currency,
-                    budgetService: budgetService)
+                    budgetService: budgetService,
+                    notificationService: notificationService)
                 )
                 .navigationTitle("Category")
             }

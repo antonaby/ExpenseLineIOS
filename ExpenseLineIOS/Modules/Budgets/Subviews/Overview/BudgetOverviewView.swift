@@ -145,12 +145,10 @@ struct BudgetOverviewView: View {
                                         EmptyView()
                                     }
                                 }
-                            } else {
-                                Text("No reminders")
-                            }
+                            } 
                             NavigationLink(value: CategoryNotificationsRef(category: nil)) {
                                 HStack {
-                                    Text("All Reminders")
+                                    Text("Reminders")
                                     Image(systemName: "chevron.right")
                                 }
                                 .font(.caption)

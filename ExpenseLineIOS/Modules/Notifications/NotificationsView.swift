@@ -209,6 +209,8 @@ struct NotificationsView: View {
         ZStack(alignment: .bottomTrailing) {
             ScrollView {
                 VStack {
+                    Color.clear
+                        .frame(height: 45)
                     ForEach($vm.notifications) { $notification in
                         NotificationCard(
                             notification: $notification,
@@ -231,6 +233,39 @@ struct NotificationsView: View {
                 .padding(.horizontal, 15)
                 .frame(maxWidth: .infinity)
             }
+            VStack {
+                HStack {
+                    Button {
+                        vm.onlyCurrent = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "bell")
+                            Text("Current")
+                        }
+                        .frame(width: 70)
+                        .font(.caption)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundStyle(.white)
+                    .tint(vm.onlyCurrent ? Color("FrDefault") : .gray)
+                    Button {
+                        vm.onlyCurrent = false
+                    } label: {
+                        HStack {
+                            Image(systemName: "checklist")
+                            Text("All")
+                        }
+                        .frame(width: 70)
+                        .font(.caption)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundStyle(.white)
+                    .tint(!vm.onlyCurrent ? Color("FrDefault") : .gray)
+                }
+                .padding(.top, 5)
+                .frame(maxWidth: .infinity, alignment: .center)
+                Spacer()
+            }
             AddExpenseButton {
                 showEditNotificationSheet.toggle()
             }
@@ -239,6 +274,9 @@ struct NotificationsView: View {
         .background(Color("BgDefault"))
         .onAppear {
             vm.loadNotifications()
+        }
+        .onDisappear {
+            vm.cancelAll()
         }
         .sheet(isPresented: $showEditNotificationSheet, onDismiss: onNotificationUpdated) {
             EditNotificationSheetView(

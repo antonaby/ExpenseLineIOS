@@ -238,7 +238,8 @@ struct CategoryView: View {
             period: period,
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
-            budgetService: budgetService
+            budgetService: budgetService,
+            notificationService: bundle.notificationService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
@@ -266,7 +267,8 @@ struct CategoryView: View {
             period: period,
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
-            budgetService: budgetService
+            budgetService: budgetService,
+            notificationService: bundle.notificationService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
@@ -312,7 +314,8 @@ struct CategoryView: View {
             period: period,
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
-            budgetService: budgetService
+            budgetService: budgetService,
+            notificationService: bundle.notificationService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
@@ -363,7 +366,8 @@ struct CategoryView: View {
             period: period,
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
-            budgetService: budgetService
+            budgetService: budgetService,
+            notificationService: bundle.notificationService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)

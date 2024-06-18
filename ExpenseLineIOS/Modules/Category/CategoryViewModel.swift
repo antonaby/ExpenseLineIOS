@@ -20,6 +20,7 @@ class CategoryViewModel: ObservableObject {
     var period: PeriodEntity
     
     private var budgetService: BudgetService
+    private var notificationService: NotificationService
     private var currencyFormatter: NumberFormatter
     private var dateFormatter: DateFormatter
     private var percentFormatter: NumberFormatter
@@ -28,12 +29,13 @@ class CategoryViewModel: ObservableObject {
         category.nameValue
     }
     
-    init(category: PlanCategoryEntity, period: PeriodEntity, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
+    init(category: PlanCategoryEntity, period: PeriodEntity, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService, notificationService: NotificationService) {
         self.category = category
         self.period = period
         self.budget = budget
         self.currency = currency
         self.budgetService = budgetService
+        self.notificationService = notificationService
         
         let currencyFormatter = NumberFormatter()
         currencyFormatter.numberStyle = .currency
@@ -95,7 +97,7 @@ class CategoryViewModel: ObservableObject {
     
     func loadNotifications() {
         do {
-            notifications = try budgetService.getNotificationsForCategory(category)
+            notifications = try notificationService.getNotifications(category: category)
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")

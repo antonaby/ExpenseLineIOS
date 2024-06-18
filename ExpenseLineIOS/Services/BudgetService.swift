@@ -179,22 +179,6 @@ class BudgetService: ObservableObject {
         }
     }
     
-    func getNotificationsForCategory(_ category: PlanCategoryEntity) throws -> [NotificationEntity] {
-        guard let categoryId = category.id else {
-            throw BudgetServiceError.MissingDataError(msg: "No category id", reason: nil)
-        }
-        
-        let request = NotificationEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "category.id == %@ AND (enabled == true OR type == 0)", categoryId as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
-        
-        do {
-            return try dm.viewContext.fetch(request)
-        } catch {
-            throw BudgetServiceError.FetchError(msg: "Failed to fetch notifications for category", reason: error)
-        }
-    }
-    
     func getCategoriesOfBudget(_ budget: BudgetEntity, types: [CategoryType]) throws -> [PlanCategoryEntity] {
         let budgetId = try getBudgetId(budget)
         
