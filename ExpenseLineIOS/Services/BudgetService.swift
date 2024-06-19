@@ -209,19 +209,13 @@ class BudgetService: ObservableObject {
         throw BudgetServiceError.FetchError(msg: "Failed to fetch transactions by id", reason: nil)
     }
     
-    func getAllTransactions(_ period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
-        guard
-            let starsAt = period.startsAt,
-            let endsAt = period.endsAt,
-            let budgetId = budget.id
-        else {
-            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
-        }
+    func getAllTransactions(startsAt: Date, endsAt: Date, budget: BudgetEntity) throws -> [TransactionEntity] {
+        let budgetId = try getBudgetId(budget)
         
         let request = TransactionEntity.fetchRequest()
         request.predicate = NSPredicate(
             format: "createdAt BETWEEN {%@, %@} AND budget.id == %@",
-            starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
+            startsAt as NSDate, endsAt as NSDate, budgetId as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
@@ -231,19 +225,13 @@ class BudgetService: ObservableObject {
         }
     }
     
-    func searchTransactions(_ search: String, period: PeriodEntity, budget: BudgetEntity) throws -> [TransactionEntity] {
-        guard
-            let starsAt = period.startsAt,
-            let endsAt = period.endsAt,
-            let budgetId = budget.id
-        else {
-            throw BudgetServiceError.MissingDataError(msg: "Some data is not ptovided", reason: nil)
-        }
+    func searchTransactions(_ search: String, startsAt: Date, endsAt: Date, budget: BudgetEntity) throws -> [TransactionEntity] {
+        let budgetId = try getBudgetId(budget)
         
         let request = TransactionEntity.fetchRequest()
         request.predicate = NSPredicate(
             format: "createdAt BETWEEN {%@, %@} AND budget.id == %@ AND name CONTAINS[cd] %@",
-            starsAt as NSDate, endsAt as NSDate, budgetId as CVarArg, search as CVarArg)
+            startsAt as NSDate, endsAt as NSDate, budgetId as CVarArg, search as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {

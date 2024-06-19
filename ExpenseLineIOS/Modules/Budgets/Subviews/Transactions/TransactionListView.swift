@@ -80,11 +80,47 @@ struct TransactionListView: View {
     
     @StateObject var vm: TransactionListViewModel
     @State var selectedTransaction: TransactionEntity?
+    @State var showPeriod: Bool = false
+    @State var chevronRotate: Double = 0
     
     var body: some View {
         VStack {
             ContentSizeCardView {
-                TextField("Search", text: $vm.serachFilter)
+                VStack(spacing: 10) {
+                    HStack {
+                        TextField("Search", text: $vm.serachFilter)
+                            .overlay(alignment: .trailing) {
+                                if !vm.serachFilter.isEmpty {
+                                    Button {
+                                        vm.clearSearchFilter()
+                                    } label: {
+                                        Text("Clear")
+                                            .font(.caption)
+                                            .foregroundStyle(Color("FrDefault"))
+                                    }
+                                }
+                            }
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showPeriod.toggle()
+                                chevronRotate += 180
+                            }
+                        } label: {
+                            Image(systemName: "chevron.down")
+                                .foregroundStyle(Color("FrDefault"))
+                                .rotationEffect(Angle(degrees: chevronRotate))
+                        }
+                    }
+                    if showPeriod {
+                        Divider()
+                        DatePicker("From", selection: $vm.startsAt)
+                            .datePickerStyle(.compact)
+                            .environment(\.locale, Locale.current)
+                        DatePicker("To", selection: $vm.endsAt)
+                            .datePickerStyle(.compact)
+                            .environment(\.locale, Locale.current)
+                    }
+                }
             }
             .padding(.bottom, 5)
             ScrollView {
@@ -96,7 +132,7 @@ struct TransactionListView: View {
                             selectedTransaction: $selectedTransaction
                         ) { transaction in
                             vm.deleteTransaction(transaction)
-                            vm.loadTransactions(filter: vm.serachFilter)
+                            vm.loadTransactions()
                         }
                     }
                     Color.clear
@@ -125,7 +161,7 @@ struct TransactionListView: View {
     }
     
     func loadTransactions() {
-        vm.loadTransactions(filter: vm.serachFilter)
+        vm.loadTransactions()
     }
     
 }

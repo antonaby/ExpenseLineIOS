@@ -12,6 +12,8 @@ class TransactionListViewModel: ObservableObject {
     
     @Published var serachFilter: String = ""
     @Published var transactions: [TransactionEntity] = []
+    @Published var startsAt: Date
+    @Published var endsAt: Date
     
     let parent: BudgetViewModel
     
@@ -21,6 +23,14 @@ class TransactionListViewModel: ObservableObject {
     init(parent: BudgetViewModel, budgetService: BudgetService) {
         self.parent = parent
         self.budgetService = budgetService
+        self.startsAt = parent.period.startsAt ?? Date().firstDayOfMonth()
+        self.endsAt = parent.period.endsAt ?? Date().lastDayOfMonth()
+    }
+    
+    func clearSearchFilter() {
+        serachFilter = ""
+        startsAt = parent.period.startsAt ?? Date().firstDayOfMonth()
+        endsAt = parent.period.endsAt ?? Date().lastDayOfMonth()
     }
     
     func subscribe() {
@@ -31,20 +41,29 @@ class TransactionListViewModel: ObservableObject {
         
         $serachFilter
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-            .sink { [weak self] value in
+            .sink { [weak self] _ in
                 DispatchQueue.main.async {
-                    self?.loadTransactions(filter: value)
+                    self?.loadTransactions()
+                }
+            }
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest($startsAt, $endsAt)
+            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.loadTransactions()
                 }
             }
             .store(in: &cancellables)
     }
     
-    func loadTransactions(filter: String) {
+    func loadTransactions() {
         do {
-            if filter.isEmpty {
-                transactions = try budgetService.getAllTransactions(parent.period, budget: parent.budget)
+            if serachFilter.isEmpty {
+                transactions = try budgetService.getAllTransactions(startsAt: startsAt, endsAt: endsAt, budget: parent.budget)
             } else {
-                transactions = try budgetService.searchTransactions(filter, period: parent.period, budget: parent.budget)
+                transactions = try budgetService.searchTransactions(serachFilter, startsAt: startsAt, endsAt: endsAt, budget: parent.budget)
             }
         } catch {
             // TODO: show error
