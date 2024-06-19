@@ -68,7 +68,7 @@ class BudgetOverviewViewModel: ObservableObject {
     func loadNotifications() {
         do {
             notifications = try notificationService
-                .getNotificationsForToday(parent.budget)
+                .getNotificationsForToday(budget: parent.budget)
         } catch {
             // TODO: show error
             print("Something went wrong \(error)")

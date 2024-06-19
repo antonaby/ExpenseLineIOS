@@ -97,7 +97,7 @@ class CategoryViewModel: ObservableObject {
     
     func loadNotifications() {
         do {
-            notifications = try notificationService.getNotifications(category: category)
+            notifications = try notificationService.getNotificationsForToday(category: category, showNoNotifications: true)
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")

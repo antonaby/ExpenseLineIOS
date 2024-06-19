@@ -236,31 +236,31 @@ struct NotificationsView: View {
             VStack {
                 HStack {
                     Button {
-                        vm.onlyCurrent = true
+                        vm.todayNotifications = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "calendar")
+                            Text("Today")
+                        }
+                        .frame(width: 100)
+                        .font(.caption)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundStyle(.white)
+                    .tint(vm.todayNotifications ? Color("FrDefault") : .gray)
+                    Button {
+                        vm.todayNotifications = false
                     } label: {
                         HStack {
                             Image(systemName: "bell")
-                            Text("Current")
+                            Text("Reminders")
                         }
-                        .frame(width: 70)
+                        .frame(width: 100)
                         .font(.caption)
                     }
                     .buttonStyle(.borderedProminent)
                     .foregroundStyle(.white)
-                    .tint(vm.onlyCurrent ? Color("FrDefault") : .gray)
-                    Button {
-                        vm.onlyCurrent = false
-                    } label: {
-                        HStack {
-                            Image(systemName: "checklist")
-                            Text("All")
-                        }
-                        .frame(width: 70)
-                        .font(.caption)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.white)
-                    .tint(!vm.onlyCurrent ? Color("FrDefault") : .gray)
+                    .tint(!vm.todayNotifications ? Color("FrDefault") : .gray)
                 }
                 .padding(.top, 5)
                 .frame(maxWidth: .infinity, alignment: .center)

@@ -12,7 +12,7 @@ class NotificationsViewModel: ObservableObject {
     
     var categoryRef: CategoryNotificationsRef
     @Published var notifications: [NotificationEntity] = []
-    @Published var onlyCurrent: Bool = true
+    @Published var todayNotifications: Bool = true
     
     private let budget: BudgetEntity
     private let budgetService: BudgetService
@@ -26,7 +26,7 @@ class NotificationsViewModel: ObservableObject {
         self.budgetService = budgetService
         self.notificationService = notificationService
         
-        $onlyCurrent
+        $todayNotifications
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in 
                 DispatchQueue.main.async {
@@ -39,14 +39,18 @@ class NotificationsViewModel: ObservableObject {
     func loadNotifications() {
         if let category = categoryRef.category {
             do {
-                notifications = try notificationService.getNotifications(category: category, onlyCurrent: onlyCurrent)
+                notifications = todayNotifications 
+                ? try notificationService.getNotificationsForToday(category: category, showNoNotifications: true)
+                : try notificationService.getNotifications(category: category, onlyCurrent: false)
             } catch {
                 // TODO: handle error
                 print("Something went wrong \(error)")
             }
         } else {
             do {
-                notifications = try notificationService.getNotifications(budget: budget, onlyCurrent: onlyCurrent)
+                notifications = todayNotifications
+                ? try notificationService.getNotificationsForToday(budget: budget, showNoNotifications: true)
+                : try notificationService.getNotifications(budget: budget, onlyCurrent: false)
             } catch {
                 // TODO: handle error
                 print("Something went wrong \(error)")

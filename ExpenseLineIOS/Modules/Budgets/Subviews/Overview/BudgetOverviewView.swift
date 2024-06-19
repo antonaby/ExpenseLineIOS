@@ -157,6 +157,8 @@ struct BudgetOverviewView: View {
                         }
                     }
                     .padding(.horizontal, 15)
+                    Color.clear
+                        .frame(height: 70)
                 }
             }
             .background(Color("BgDefault"))
@@ -226,8 +228,7 @@ struct BudgetOverviewView: View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell")
             VStack {
-                Text(notification.nameValue)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                NotificationName(notification)
                 if let date = notification.date {
                     HStack(spacing: 5) {
                         Text("Daily")
@@ -237,6 +238,7 @@ struct BudgetOverviewView: View {
                     .font(.caption)
                 }
             }
+            NotificationCategoryView(notification)
         }
     }
     
@@ -245,14 +247,14 @@ struct BudgetOverviewView: View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell")
             VStack {
-                Text(notification.nameValue)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                NotificationName(notification)
                 if let date = notification.date {
                     Text(formatDate(date))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                 }
             }
+            NotificationCategoryView(notification)
         }
     }
     
@@ -261,8 +263,7 @@ struct BudgetOverviewView: View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell")
             VStack {
-                Text(notification.nameValue)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                NotificationName(notification)
                 if let date = notification.date {
                     HStack(spacing: 5) {
                         Text(weekDaySymbol())
@@ -272,6 +273,26 @@ struct BudgetOverviewView: View {
                     .font(.caption)
                 }
             }
+            NotificationCategoryView(notification)
+        }
+    }
+    
+    @ViewBuilder
+    func NotificationName(_ notification: NotificationEntity) -> some View {
+        Text(notification.nameValue)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .truncationMode(.tail)
+            .lineLimit(2)
+    }
+    
+    @ViewBuilder
+    func NotificationCategoryView(_ notification: NotificationEntity) -> some View {
+        if let category = notification.category {
+            HStack {
+                Text(category.nameValue)
+                IconView(name: category.iconNameValue, color: category.colorValue, size: 25)
+            }
+            .font(.caption)
         }
     }
     
@@ -411,11 +432,17 @@ struct BudgetOverviewView: View {
         vm.totalFixedBudgetLeft = 1000
         vm.totalFlexibleBudgetLeft = 500
         
+        let category = budgetService.newCategoryEntity(budget)
+        category.typeValue = .outcomeFixed
+        category.name = "Rreview"
+        category.iconName = "fi-loan"
+        
         let notification1 = budgetService.newNotificationEntity(budget)
         notification1.name = "Preview 1"
         notification1.typeValue = .exact
         notification1.date = Date()
         notification1.enabled = true
+        notification1.category = category
         
         let notification2 = budgetService.newNotificationEntity(budget)
         notification2.name = "Preview 2"

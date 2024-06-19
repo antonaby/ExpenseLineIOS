@@ -61,7 +61,7 @@ class NotificationService: ObservableObject {
         dm.rollback()
     }
     
-    func getNotificationsForToday(_ budget: BudgetEntity) throws -> [NotificationEntity] {
+    func getNotificationsForToday(budget: BudgetEntity, showNoNotifications: Bool = false) throws -> [NotificationEntity] {
         let budgetId = try getBudgetId(budget)
         
         let request = NotificationEntity.fetchRequest()
@@ -70,15 +70,41 @@ class NotificationService: ObservableObject {
         let currentDay = String(Date().currentWeekDay())
         
         request.predicate = NSPredicate(
-            format: "budget.id == %@ AND enabled == true AND ((type == 1 AND date BETWEEN {%@, %@}) OR type == 2 OR (type == 3 AND weekDays CONTAINS[cd] %@))",
+            format: getQueryForTodayNotifications(showNoNotifications, ownerPredicate: "budget.id == %@"),
             budgetId as CVarArg, startDate as NSDate, endDate as NSDate, currentDay as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
             return try dm.viewContext.fetch(request)
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
         }
+    }
+    
+    func getNotificationsForToday(category: PlanCategoryEntity, showNoNotifications: Bool = false) throws -> [NotificationEntity] {
+        let categoryId = try getCategoryId(category)
+        
+        let request = NotificationEntity.fetchRequest()
+        let startDate = Date().startOfDay()
+        let endDate = Date().endOfDay()
+        let currentDay = String(Date().currentWeekDay())
+        
+        request.predicate = NSPredicate(
+            format: getQueryForTodayNotifications(showNoNotifications, ownerPredicate: "category.id == %@"),
+            categoryId as CVarArg, startDate as NSDate, endDate as NSDate, currentDay as CVarArg)
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        
+        do {
+            return try dm.viewContext.fetch(request)
+        } catch {
+            throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
+        }
+    }
+    
+    private func getQueryForTodayNotifications(_ showNoNotifications: Bool, ownerPredicate: String) -> String {
+        return showNoNotifications
+        ? ownerPredicate + " AND (enabled == true OR type == 0) AND (type == 0 OR (type == 1 AND date BETWEEN {%@, %@}) OR type == 2 OR (type == 3 AND weekDays CONTAINS[cd] %@))"
+        : ownerPredicate + " AND enabled == true AND ((type == 1 AND date BETWEEN {%@, %@}) OR type == 2 OR (type == 3 AND weekDays CONTAINS[cd] %@))"
     }
     
     func getNotifications(budget: BudgetEntity, onlyCurrent: Bool = true) throws -> [NotificationEntity] {
