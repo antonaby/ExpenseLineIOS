@@ -12,6 +12,7 @@ struct CategoryView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var budgetService: BudgetService
+    @EnvironmentObject var formatters: FormattersHolder
     
     @State var selectedTransaction: TransactionEntity? = nil
     @State var selectedCategory: PlanCategoryEntity? = nil
@@ -39,7 +40,7 @@ struct CategoryView: View {
                             }
                     }
                     HStack {
-                        Text(vm.formatAmount(vm.totalAmount))
+                        Text(formatters.formatAmount(vm.totalAmount))
                     }
                     .font(.largeTitle)
                     .bold()
@@ -76,10 +77,10 @@ struct CategoryView: View {
                         NavigationLink(value: transaction) {
                             VStack(alignment: .leading) {
                                 Text(transaction.nameValue)
-                                Text(vm.formatAmount(transaction.amountDecimal))
+                                Text(formatters.formatAmount(transaction.amountDecimal))
                                     .font(.title2)
                                     .bold()
-                                Text(vm.formatDate(transaction.createdAt))
+                                Text(formatters.formatDate(transaction.createdAt))
                                     .font(.caption)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -151,9 +152,9 @@ struct CategoryView: View {
     func PlannedViewPercent() -> some View {
         HStack {
             Image(systemName: "dollarsign.arrow.circlepath")
-            Text(vm.formatPercent(vm.category.percentDecimal))
+            Text(formatters.formatPercent(vm.category.percentDecimal))
                 .bold()
-            Text("≈" + vm.formatAmount(vm.getPlannedAmountFromPercent()))
+            Text("≈" + formatters.formatAmount(vm.getPlannedAmountFromPercent()))
                 .font(.caption)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -163,7 +164,7 @@ struct CategoryView: View {
     func PlannedViewFixed() -> some View {
         HStack{
             Image(systemName: "dollarsign.arrow.circlepath")
-            Text(vm.formatAmount(vm.category.amountDecimal))
+            Text(formatters.formatAmount(vm.category.amountDecimal))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -243,6 +244,7 @@ struct CategoryView: View {
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -272,6 +274,7 @@ struct CategoryView: View {
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -319,6 +322,7 @@ struct CategoryView: View {
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -371,6 +375,7 @@ struct CategoryView: View {
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }

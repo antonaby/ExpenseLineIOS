@@ -84,7 +84,6 @@ struct BudgetView: View {
                             .tag(BudgetViewPage.stats)
                     }
                     .accentColor(Color("FrDefault"))
-                    .environmentObject(FormattersHolder(locale: vm.currency.locale))
                     AddExpenseButton {
                         transactionSheet.toggle()
                     }
@@ -147,6 +146,7 @@ struct BudgetView: View {
                     .navigationTitle("Reminders")
             }
         }
+        .environmentObject(vm.formatters)
         .tint(Color("FrDefault"))
         .onDisappear {
             vm.cancelAll()
@@ -158,7 +158,7 @@ struct BudgetView: View {
         Button {
             changePeriodSheetOpen.toggle()
         } label: {
-            Text(vm.period.currentMonth)
+            Text(vm.formatters.formatMonth(vm.period.startsAt))
         }
         .buttonStyle(.borderless)
         .tint(Color("FrDefault"))

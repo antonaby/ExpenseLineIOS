@@ -233,7 +233,7 @@ struct BudgetOverviewView: View {
                 if let date = notification.date {
                     HStack(spacing: 5) {
                         Text("Daily")
-                        Text(formatTime(date))
+                        Text(formatters.formatHour(date))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.caption)
@@ -250,7 +250,7 @@ struct BudgetOverviewView: View {
             VStack {
                 NotificationName(notification)
                 if let date = notification.date {
-                    Text(formatDate(date))
+                    Text(formatters.formatDate(date))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.caption)
                 }
@@ -268,7 +268,7 @@ struct BudgetOverviewView: View {
                 if let date = notification.date {
                     HStack(spacing: 5) {
                         Text(weekDaySymbol())
-                        Text(formatTime(date))
+                        Text(formatters.formatHour(date))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.caption)
@@ -299,22 +299,6 @@ struct BudgetOverviewView: View {
     
     func weekDaySymbol() -> String {
         Calendar.current.shortWeekdaySymbols[Date().currentWeekDay() - 1]
-    }
-    
-    func formatDate(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
-        
-        return dateFormatter.string(from: date)
-    }
-    
-    func formatTime(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
-        
-        return dateFormatter.string(from: date)
     }
     
     func getTypeColor(_ type: SpengingsType) -> Color {

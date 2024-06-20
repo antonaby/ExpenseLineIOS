@@ -12,7 +12,9 @@ class FormattersHolder: ObservableObject {
     
     private var currencyFormatter: NumberFormatter
     private var percentFormatter: NumberFormatter
+    private var monthFormatter: DateFormatter
     private var dateFormatter: DateFormatter
+    private var hourFormatter: DateFormatter
 
     init(locale: Locale) {
         let currencyFormatter = NumberFormatter()
@@ -29,10 +31,20 @@ class FormattersHolder: ObservableObject {
         percentFormatter.maximumFractionDigits = 0
         self.percentFormatter = percentFormatter
         
+        let monthFormatter = DateFormatter()
+        monthFormatter.locale = Locale.current
+        monthFormatter.setLocalizedDateFormatFromTemplate("MMMM yyyy")
+        self.monthFormatter = monthFormatter
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
         self.dateFormatter = dateFormatter
+        
+        let hourFormatter = DateFormatter()
+        hourFormatter.locale = Locale.current
+        hourFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
+        self.hourFormatter = hourFormatter
     }
     
     func formatAmount(_ amount: Decimal) -> String {
@@ -53,9 +65,25 @@ class FormattersHolder: ObservableObject {
         return "?"
     }
     
+    func formatMonth(_ date: Date?) -> String {
+        if let currentDate = date {
+            return monthFormatter.string(from: currentDate)
+        }
+        
+        return "?"
+    }
+    
     func formatDate(_ date: Date?) -> String {
         if let currentDate = date {
             return dateFormatter.string(from: currentDate)
+        }
+        
+        return "?"
+    }
+    
+    func formatHour(_ date: Date?) -> String {
+        if let currentDate = date {
+            return hourFormatter.string(from: currentDate)
         }
         
         return "?"

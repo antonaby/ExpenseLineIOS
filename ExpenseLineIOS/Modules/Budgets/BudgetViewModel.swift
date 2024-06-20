@@ -32,6 +32,7 @@ class BudgetViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     var currency: CurrencySymbol
+    var formatters: FormattersHolder
     
     private let budgetService: BudgetService
     private let dataService: DataService
@@ -52,6 +53,7 @@ class BudgetViewModel: ObservableObject {
         self.dataService = dataService
         self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
+        self.formatters = FormattersHolder(locale: currency.locale)
         
         $budget.sink { [weak self] budget in
             self?.dataUpdateSubject.send(.budget)
@@ -69,6 +71,7 @@ class BudgetViewModel: ObservableObject {
                 budget = loadedBudget
                 currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
                 totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
+                formatters = FormattersHolder(locale: currency.locale)
             }
         } catch {
             // TODO: handle exception

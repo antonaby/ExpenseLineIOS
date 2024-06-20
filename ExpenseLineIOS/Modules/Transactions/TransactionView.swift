@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TransactionView: View {
     
+    @EnvironmentObject var formatters: FormattersHolder
+    
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var budgetService: BudgetService
     
@@ -41,9 +43,9 @@ struct TransactionView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(vm.formatAmount(vm.transaction.amountDecimal))
+                    Text(formatters.formatAmount(vm.transaction.amountDecimal))
                         .font(.largeTitle)
-                    Text(vm.formatDate(vm.transaction.createdAt))
+                    Text(formatters.formatDate(vm.transaction.createdAt))
                         .font(.caption)
                 }
             }
@@ -97,4 +99,5 @@ struct TransactionView: View {
     
     return TransactionView(vm: vm)
         .serviceBundle(bundle)
+        .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }

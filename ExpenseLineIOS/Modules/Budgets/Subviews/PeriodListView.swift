@@ -32,6 +32,8 @@ class PeriodListViewModel: ObservableObject {
 
 struct PeriodListView: View {
     
+    @EnvironmentObject var formatters: FormattersHolder
+    
     @Environment(\.dismiss) var dismiss
     @Binding var selected: PeriodEntity
     @StateObject var vm: PeriodListViewModel
@@ -43,7 +45,7 @@ struct PeriodListView: View {
                     selected = period
                     dismiss()
                 } label: {
-                    Text(period.currentMonth)
+                    Text(formatters.formatMonth(period.startsAt))
                         .tint(.black)
                 }
             }
@@ -88,4 +90,5 @@ struct PeriodListView: View {
     
     return PeriodListView(selected: .constant(period1),
                           vm: PeriodListViewModel(budget: budget, budgetService: bundle.budgetService))
+    .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }

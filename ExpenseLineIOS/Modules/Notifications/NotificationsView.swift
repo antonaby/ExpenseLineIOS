@@ -16,6 +16,7 @@ enum NotificationAction {
 
 struct NotificationCard: View {
     
+    @EnvironmentObject var formatters: FormattersHolder
     @EnvironmentObject var notificationService: NotificationService
     @Binding var notification: NotificationEntity
     @Binding var selectedNotification: NotificationEntity?
@@ -103,7 +104,7 @@ struct NotificationCard: View {
                     Text("Daily")
                 }
                 if let date = notification.date {
-                    Text(formatTime(date))
+                    Text(formatters.formatHour(date))
                 }
             }
             .font(.caption)
@@ -125,7 +126,7 @@ struct NotificationCard: View {
                             Image(systemName: "bell")
                             Text("One Time")
                         }
-                        Text(formatDate(date))
+                        Text(formatters.formatDate(date))
                     }
                     .font(.caption)
                 }
@@ -141,7 +142,7 @@ struct NotificationCard: View {
                         Text("One Time")
                         Spacer()
                     }
-                    Text(formatDate(date))
+                    Text(formatters.formatDate(date))
                         .foregroundStyle(Color("Accent1"))
                 }
                 .font(.caption)
@@ -176,22 +177,6 @@ struct NotificationCard: View {
             updateNotification(.enable, notification)
         }
         .tint(Color("FrDefault"))
-    }
-    
-    func formatDate(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
-        
-        return dateFormatter.string(from: date)
-    }
-    
-    func formatTime(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
-        
-        return dateFormatter.string(from: date)
     }
     
 }
@@ -347,6 +332,7 @@ struct NotificationsView: View {
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
+        .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }
 
 #Preview("No notifications") {
@@ -362,4 +348,5 @@ struct NotificationsView: View {
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
+        .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }
