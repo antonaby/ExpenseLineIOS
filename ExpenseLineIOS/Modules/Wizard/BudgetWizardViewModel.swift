@@ -25,15 +25,14 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var isFormValid: Bool = false
     @Published var selectedCategory: PlanCategoryEntity?
     
-    var currencyFormatter: NumberFormatter
-    var percentFormatter: NumberFormatter
-    
     private var op: CategoryActionOperation = .none
     private var budget: BudgetEntity
     private var budgetService: BudgetService
     private var dataService: DataService
     private var notificationService: NotificationService
     private var cancellables = Set<AnyCancellable>()
+    
+    var formatters: FormattersHolder
     
     init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
         self.budget = budget
@@ -44,22 +43,9 @@ class BudgetWizardViewModel: ObservableObject {
         self.name = budget.name ?? ""
         let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.currency = currency
+        self.formatters = FormattersHolder(locale: currency.locale)
         self.dailyReminderEnabled = budget.dailyRemainderAt != nil
         self.dailyReminderAt = budget.dailyRemainderAt ?? Date().currentDateAt(at: 20)
-        
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.numberStyle = .currency
-        currencyFormatter.locale = Locale(identifier: currency.id)
-        currencyFormatter.minimumFractionDigits = 0
-        currencyFormatter.maximumFractionDigits = 2
-        self.currencyFormatter = currencyFormatter
-        
-        let percentFormatter = NumberFormatter()
-        percentFormatter.numberStyle = .percent
-        percentFormatter.locale = Locale(identifier: currency.id)
-        percentFormatter.minimumFractionDigits = 0
-        percentFormatter.maximumFractionDigits = 2
-        self.percentFormatter = percentFormatter
         
         isValid.sink { [weak self]  isValid in
             guard let self = self else { return }
@@ -68,7 +54,7 @@ class BudgetWizardViewModel: ObservableObject {
         .store(in: &cancellables)
         
         $currency.sink { [weak self] currency in
-            self?.currencyFormatter.locale = Locale(identifier: currency.id)
+            self?.formatters = FormattersHolder(locale: currency.locale)
         }
         .store(in: &cancellables)
     }
@@ -115,7 +101,7 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func getTotalIncome() -> String {
-        return currencyFormatter.string(from: budget.totalAmountForCategoryType(.income) as NSDecimalNumber) ?? "0"
+        return formatters.formatAmount(budget.totalAmountForCategoryType(.income))
     }
     
     func getTotalOutcome() -> String {
@@ -123,7 +109,7 @@ class BudgetWizardViewModel: ObservableObject {
         let totalPercentOutcome = budget.totalAmountForCategoryType(.income) * budget.totalPercentForCategoryType(.outcomePercent)
         let totalOutcome = totalFixedOutcome + totalPercentOutcome
         
-        return currencyFormatter.string(from: totalOutcome as NSDecimalNumber) ?? "0"
+        return formatters.formatAmount(totalOutcome)
     }
     
     func save() {

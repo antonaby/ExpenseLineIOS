@@ -29,13 +29,13 @@ struct CategoryListWizardView: View {
                         Spacer()
                         if category.typeValue == .outcomePercent {
                             HStack {
-                                Text(vm.percentFormatter.string(from: category.percentValue) ?? "0")
+                                Text(vm.formatters.formatPercent(category.percentDecimal))
                                 Text("≈" + formatPercentAmount(category))
                                     .font(.caption)
                                     .foregroundColor(Color("Accent3"))
                             }
                         } else {
-                            Text(vm.currencyFormatter.string(from: category.amountValue) ?? "0")
+                            Text(vm.formatters.formatAmount(category.amountDecimal))
                         }
                     }
                     .foregroundColor(.black)
@@ -69,8 +69,8 @@ struct CategoryListWizardView: View {
     }
     
     func formatPercentAmount(_ category: PlanCategoryEntity) -> String {
-        let amount = (category.percentDecimal * vm.calculateTotalIncome()) as NSNumber
-        return vm.currencyFormatter.string(from: amount) ?? "0"
+        let amount = category.percentDecimal * vm.calculateTotalIncome()
+        return vm.formatters.formatAmount(amount)
     }
     
 }
