@@ -230,7 +230,7 @@ struct NotificationsView: View {
                     Color.clear
                         .frame(height: 70)
                 }
-                .padding(.horizontal, 15)
+                .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity)
             }
             VStack {

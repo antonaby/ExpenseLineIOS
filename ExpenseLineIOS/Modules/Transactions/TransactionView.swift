@@ -49,7 +49,7 @@ struct TransactionView: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 20)
         .background(Color("BgDefault"))
         .sheet(isPresented: $editSheetOpen, onDismiss: onEditSheetClosed) {
             TransactionSheetView(

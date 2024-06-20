@@ -35,7 +35,13 @@ class TransactionListViewModel: ObservableObject {
     
     func subscribe() {
         parent.dataUpdateSubject.sink { [weak self] value in
-            self?.serachFilter = ""
+            DispatchQueue.main.async {
+                if let self = self {
+                    self.serachFilter = ""
+                    self.startsAt = self.parent.period.startsAt ?? Date().firstDayOfMonth()
+                    self.endsAt = self.parent.period.endsAt ?? Date().lastDayOfMonth()
+                }
+            }
         }
         .store(in: &cancellables)
         
