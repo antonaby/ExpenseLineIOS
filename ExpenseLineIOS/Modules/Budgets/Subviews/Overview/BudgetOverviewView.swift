@@ -43,6 +43,7 @@ struct SliderView: View {
 
 struct BudgetOverviewView: View {
     
+    @EnvironmentObject var formatters: FormattersHolder
     @EnvironmentObject var setting: SettingsService
     @StateObject var vm: BudgetOverviewViewModel
     
@@ -66,7 +67,7 @@ struct BudgetOverviewView: View {
                             gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
                         ) {
                             VStack {
-                                Text(vm.parent.formatPercent(getTotalSpentDecimal()))
+                                Text(formatters.formatPercent(getTotalSpentDecimal()))
                                     .font(.title3)
                                     .bold()
                                 Text("Spent")
@@ -177,7 +178,7 @@ struct BudgetOverviewView: View {
     
     @ViewBuilder
     func AmountView(_ amount: Decimal, isSpent: (Decimal) -> Bool) -> some View {
-        Text(vm.parent.formatAmount(amount))
+        Text(formatters.formatAmount(amount))
             .foregroundColor(isSpent(amount) ? .red : .black)
     }
     
@@ -461,6 +462,7 @@ struct BudgetOverviewView: View {
         
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -504,6 +506,7 @@ struct BudgetOverviewView: View {
         
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -547,6 +550,7 @@ struct BudgetOverviewView: View {
         
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }

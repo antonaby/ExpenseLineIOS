@@ -33,10 +33,6 @@ class BudgetViewModel: ObservableObject {
     
     var currency: CurrencySymbol
     
-    private var currencyFormatter: NumberFormatter = NumberFormatter()
-    private var percentFormatter: NumberFormatter = NumberFormatter()
-    private var dateFormatter: DateFormatter = DateFormatter()
-    
     private let budgetService: BudgetService
     private let dataService: DataService
     
@@ -56,7 +52,6 @@ class BudgetViewModel: ObservableObject {
         self.dataService = dataService
         self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
-        createFormatters(locale: currency.locale)
         
         $budget.sink { [weak self] budget in
             self?.dataUpdateSubject.send(.budget)
@@ -74,7 +69,6 @@ class BudgetViewModel: ObservableObject {
                 budget = loadedBudget
                 currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
                 totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
-                createFormatters(locale: currency.locale)
             }
         } catch {
             // TODO: handle exception
@@ -86,55 +80,8 @@ class BudgetViewModel: ObservableObject {
         dataUpdateSubject.send(.transaction)
     }
     
-    func formatAmount(_ amount: Decimal) -> String {
-        if let fomatted = currencyFormatter.string(from: amount as NSDecimalNumber) {
-            return fomatted
-        }
-        
-        print("Error, amount: \(amount) can't be formatted") // TODO: send error event
-        return "?"
-    }
-    
-    func formatPercent(_ percent: Decimal) -> String {
-        if let fomatted = percentFormatter.string(from: percent as NSDecimalNumber) {
-            return fomatted
-        }
-        
-        print("Error, amount: \(percent) can't be formatted") // TODO: send error event
-        return "?"
-    }
-    
-    func formatDate(_ date: Date?) -> String {
-        if let currentDate = date {
-            return dateFormatter.string(from: currentDate)
-        }
-        
-        return "?"
-    }
-    
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
-    }
-    
-    private func createFormatters(locale: Locale) {
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.numberStyle = .currency
-        currencyFormatter.locale = locale
-        currencyFormatter.minimumFractionDigits = 0
-        currencyFormatter.maximumFractionDigits = 2
-        self.currencyFormatter = currencyFormatter
-        
-        let percentFormatter = NumberFormatter()
-        percentFormatter.numberStyle = .percent
-        percentFormatter.locale = locale
-        percentFormatter.minimumFractionDigits = 0
-        percentFormatter.maximumFractionDigits = 0
-        self.percentFormatter = percentFormatter
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
-        self.dateFormatter = dateFormatter
     }
     
 }

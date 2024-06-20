@@ -9,13 +9,9 @@ import SwiftUI
 
 struct TransactionCard: View {
     
-    var vm: BudgetViewModel
+    @EnvironmentObject var formatters: FormattersHolder
+
     let transaction: TransactionEntity
-    
-    init(vm: BudgetViewModel, transaction: TransactionEntity) {
-        self.vm = vm
-        self.transaction = transaction
-    }
     
     var body: some View {
         FlexibleCardView {
@@ -32,7 +28,7 @@ struct TransactionCard: View {
                                 .font(.caption)
                             Text(transaction.name ?? "?")
                                 .bold()
-                            Text(vm.formatAmount(transaction.amountDecimal))
+                            Text(formatters.formatAmount(transaction.amountDecimal))
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
@@ -41,7 +37,7 @@ struct TransactionCard: View {
                 .tint(.black)
             }
             .overlay(alignment: .topTrailing) {
-                Text(vm.formatDate(transaction.createdAt))
+                Text(formatters.formatDate(transaction.createdAt))
                     .font(.caption)
             }
         }
@@ -99,7 +95,7 @@ struct TransactionListView: View {
             .padding(.horizontal, 20)
             List {
                 ForEach(vm.transactions) { transaction in
-                    TransactionCard(vm: vm.parent, transaction: transaction)
+                    TransactionCard(transaction: transaction)
                         .defaultListCard()
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
@@ -218,6 +214,7 @@ struct TransactionListView: View {
             vm: TransactionListViewModel(parent: vm, budgetService: budgetService)
         )
             .serviceBundle(bundle)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }

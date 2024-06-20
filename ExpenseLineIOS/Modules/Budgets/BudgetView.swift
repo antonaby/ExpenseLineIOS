@@ -84,6 +84,7 @@ struct BudgetView: View {
                             .tag(BudgetViewPage.stats)
                     }
                     .accentColor(Color("FrDefault"))
+                    .environmentObject(FormattersHolder(locale: vm.currency.locale))
                     AddExpenseButton {
                         transactionSheet.toggle()
                     }

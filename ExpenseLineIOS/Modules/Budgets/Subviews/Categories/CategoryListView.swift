@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CategoryCard: View {
     
+    @EnvironmentObject var formatters: FormattersHolder
+    
     let category: CategoryData
     @ObservedObject var vm: BudgetViewModel
     
@@ -26,7 +28,7 @@ struct CategoryCard: View {
                             Text(category.entity.nameValue)
                                 .bold()
                         }
-                        Text(vm.formatAmount(category.spendings.totalAmount))
+                        Text(formatters.formatAmount(category.spendings.totalAmount))
                             .font(.largeTitle)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if category.entity.typeValue == .outcomePercent {
@@ -41,7 +43,7 @@ struct CategoryCard: View {
                         fullColor: Color("Accent1"),
                         lineWidth: 10) {
                         VStack {
-                            Text(vm.formatPercent(getPercentSpentDecimal()))
+                            Text(formatters.formatPercent(getPercentSpentDecimal()))
                             Text("Spent")
                                 .foregroundColor(.gray)
                                 .font(.caption)
@@ -59,9 +61,9 @@ struct CategoryCard: View {
     func PlannedViewPercent() -> some View {
         HStack {
             Image(systemName: "dollarsign.arrow.circlepath")
-            Text(vm.formatPercent(category.entity.percentDecimal))
+            Text(formatters.formatPercent(category.entity.percentDecimal))
                 .bold()
-            Text("≈" + vm.formatAmount(getExpectedAmount()))
+            Text("≈" + formatters.formatAmount(getExpectedAmount()))
                 .font(.caption)
                 .foregroundColor(Color("Accent3"))
         }
@@ -71,7 +73,7 @@ struct CategoryCard: View {
     func PlannedViewFixed() -> some View {
         HStack {
             Image(systemName: "dollarsign.arrow.circlepath")
-            Text(vm.formatAmount(category.entity.amountDecimal))
+            Text(formatters.formatAmount(category.entity.amountDecimal))
                 .bold()
         }
     }
@@ -209,6 +211,7 @@ struct CategoryListView: View {
         
         let vm = CategoryListViewModel(parent: parent, budgetService: budgetService)
         return CategoryListView(vm: vm)
+            .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {
         return Text("Something went wrong \(error)")
     }
