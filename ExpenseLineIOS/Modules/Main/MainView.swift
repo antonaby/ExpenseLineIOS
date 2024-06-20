@@ -27,6 +27,9 @@ struct MainView: View {
                 )
             }
         }
+        .fullScreenCover(isPresented: $appState.paywall) {
+            PaywallView()
+        }
         .environmentObject(appState)
         .onAppear {
             appState.loadBudget()

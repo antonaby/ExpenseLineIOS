@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BudgetListView: View {
     
+    @EnvironmentObject var subscriptionService: SubscriptionService
     @EnvironmentObject var appState: AppState
     
     @StateObject var vm: BudgetListViewModel
@@ -69,7 +70,11 @@ struct BudgetListView: View {
             }
             .padding(.top, 20)
             Button {
-                isWizzardOpen.toggle()
+                if subscriptionService.checkMaxBudgetCount() {
+                    isWizzardOpen.toggle()
+                } else {
+                    appState.showPaywall()
+                }
             } label: {
                 Text("Create")
                     .font(.title2)
@@ -122,6 +127,7 @@ struct BudgetListView: View {
                                                 dataService: bundle.dataService,
                                                 notificationService: bundle.notificationService))
         .environmentObject(appState)
+        .serviceBundle(bundle)
 }
 
 #Preview("List") {
