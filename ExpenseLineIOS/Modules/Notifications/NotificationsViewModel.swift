@@ -49,7 +49,7 @@ class NotificationsViewModel: ObservableObject {
         } else {
             do {
                 notifications = todayNotifications
-                ? try notificationService.getNotificationsForToday(budget: budget, showNoNotifications: true)
+                ? try notificationService.getNotificationsForToday(budget: budget, showNoNotifications: false)
                 : try notificationService.getNotifications(budget: budget, onlyCurrent: false)
             } catch {
                 // TODO: handle error

@@ -12,18 +12,9 @@ struct TransactionCard: View {
     var vm: BudgetViewModel
     let transaction: TransactionEntity
     
-    @Binding var selectedTransaction: TransactionEntity?
-    
-    let onDelete: (TransactionEntity) -> Void
-    
-    init(vm: BudgetViewModel,
-         transaction: TransactionEntity,
-         selectedTransaction: Binding<TransactionEntity?>,
-         onDelete: @escaping (TransactionEntity) -> Void) {
+    init(vm: BudgetViewModel, transaction: TransactionEntity) {
         self.vm = vm
         self.transaction = transaction
-        self._selectedTransaction = selectedTransaction
-        self.onDelete = onDelete
     }
     
     var body: some View {
@@ -41,34 +32,17 @@ struct TransactionCard: View {
                                 .font(.caption)
                             Text(transaction.name ?? "?")
                                 .bold()
+                            Text(vm.formatAmount(transaction.amountDecimal))
+                                .font(.title3)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
-                    Text(vm.formatAmount(transaction.amountDecimal))
-                        .font(.largeTitle)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(vm.formatDate(transaction.createdAt))
-                        .font(.caption)
                 }
                 .tint(.black)
             }
             .overlay(alignment: .topTrailing) {
-                Menu {
-                    Button {
-                        selectedTransaction = transaction
-                    } label: {
-                        Text("Edit")
-                    }
-                    Button(role: .destructive) {
-                        onDelete(transaction)
-                    } label: {
-                        Text("Delete")
-                    }
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .tint(Color("FrDefault"))
-                        .frame(width: 50, height: 50, alignment: .topTrailing)
-                        .padding([.top, .trailing], 10)
-                }
+                Text(vm.formatDate(transaction.createdAt))
+                    .font(.caption)
             }
         }
     }
@@ -122,26 +96,35 @@ struct TransactionListView: View {
                     }
                 }
             }
-            .padding(.bottom, 5)
-            ScrollView {
-                LazyVStack {
-                    ForEach(vm.transactions) { transaction in
-                        TransactionCard(
-                            vm: vm.parent,
-                            transaction: transaction,
-                            selectedTransaction: $selectedTransaction
-                        ) { transaction in
-                            vm.deleteTransaction(transaction)
-                            vm.loadTransactions()
+            .padding(.horizontal, 20)
+            List {
+                ForEach(vm.transactions) { transaction in
+                    TransactionCard(vm: vm.parent, transaction: transaction)
+                        .defaultListCard()
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                vm.deleteTransaction(transaction)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                            .tint(Color("Accent1"))
+                            Button {
+                                selectedTransaction = transaction
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            .tint(Color("FrDefault"))
                         }
-                    }
-                    Color.clear
-                        .frame(height: 70)
                 }
-                Spacer()
+                Color.clear
+                    .frame(height: 70)
+                    .defaultListCard()
             }
+            .scrollContentBackground(.hidden)
+            .background(Color("BgDefault"))
+            .listStyle(.insetGrouped)
+            .listRowSpacing(10)
         }
-        .padding(.horizontal, 15)
         .padding(.top, 15)
         .background(Color("BgDefault"))
         .sheet(item: $selectedTransaction, onDismiss: loadTransactions) { transaction in
@@ -154,6 +137,7 @@ struct TransactionListView: View {
         }
         .onAppear {
             vm.subscribe()
+            UICollectionView.appearance().contentInset.top = -20
         }
         .onDisappear {
             vm.cancelAll()

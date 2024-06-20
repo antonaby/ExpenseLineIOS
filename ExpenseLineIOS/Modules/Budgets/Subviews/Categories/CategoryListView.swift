@@ -126,7 +126,7 @@ struct CategoryListView: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 20)
         .padding(.top, 15)
         .background(Color("BgDefault"))
         .onAppear {

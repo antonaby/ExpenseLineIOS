@@ -59,7 +59,8 @@ struct BudgetStatsView: View {
                 }
             }
         }
-        .padding([.horizontal, .top], 15)
+        .padding(.top, 15)
+        .padding(.horizontal, 20)
         .background(Color("BgDefault"))
         .onAppear {
             vm.subscribe()
