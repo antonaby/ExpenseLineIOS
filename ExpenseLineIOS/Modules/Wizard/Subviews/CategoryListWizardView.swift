@@ -22,27 +22,30 @@ struct CategoryListWizardView: View {
                 Button {
                     vm.selectCategory(category)
                 } label: {
-                    HStack {
-                        IconView(
-                            name: category.iconNameValue,
-                            color: category.colorValue,
-                            size: 45
-                        )
-                        Text(category.nameValue)
-                        Spacer()
-                        if category.typeValue == .outcomePercent {
-                            HStack {
-                                Text(vm.formatters.formatPercent(category.percentDecimal))
-                                Text("≈" + formatPercentAmount(category))
-                                    .font(.caption)
-                                    .foregroundColor(Color("Accent3"))
+                    FlexibleCardView {
+                        HStack {
+                            IconView(
+                                name: category.iconNameValue,
+                                color: category.colorValue,
+                                size: 45
+                            )
+                            Text(category.nameValue)
+                            Spacer()
+                            if category.typeValue == .outcomePercent {
+                                HStack {
+                                    Text(vm.formatters.formatPercent(category.percentDecimal))
+                                    Text("≈" + formatPercentAmount(category))
+                                        .font(.caption)
+                                        .foregroundColor(Color("Accent3"))
+                                }
+                            } else {
+                                Text(vm.formatters.formatAmount(category.amountDecimal))
                             }
-                        } else {
-                            Text(vm.formatters.formatAmount(category.amountDecimal))
                         }
+                        .foregroundStyle(.black)
                     }
-                    .foregroundColor(.black)
                 }
+                .defaultListCard()
                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                     Button(role: .destructive) {
                         vm.deleteCategory(category)
@@ -51,7 +54,6 @@ struct CategoryListWizardView: View {
                     }
                     .tint(Color("Accent1"))
                 }
-                .listRowSeparator(.hidden)
             }
             HStack {
                 Button {
@@ -72,7 +74,13 @@ struct CategoryListWizardView: View {
             }
             .listRowSeparator(.hidden)
         }
-        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color("BgDefault"))
+        .listStyle(.insetGrouped)
+        .listRowSpacing(10)
+        .onAppear {
+            UICollectionView.appearance().contentInset.top = -20
+        }
     }
     
     func formatPercentAmount(_ category: PlanCategoryEntity) -> String {

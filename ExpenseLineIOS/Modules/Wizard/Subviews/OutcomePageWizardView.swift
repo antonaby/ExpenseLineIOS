@@ -13,12 +13,10 @@ struct OutcomePageWizardView: View {
     var type: CategoryType
     
     var body: some View {
-        VStack(spacing: 15) {
-            ContentSizeCardView(padding: 0) {
-                CategoryListWizardView(vm: vm, type: type)
-                    .padding(.top, 10)
-            }
+        VStack {
+            CategoryListWizardView(vm: vm, type: type)
             BudgetShortSummaryView(vm: vm)
+                .padding(.horizontal, 20)
         }
         .background(Color("BgDefault"))
     }
@@ -75,6 +73,7 @@ struct OutcomePageWizardView: View {
     )
     
     return OutcomePageWizardView(vm: vm, type: .outcomeFixed)
+        .serviceBundle(bundle)
 }
 
 #Preview("Flexible") {
@@ -128,4 +127,5 @@ struct OutcomePageWizardView: View {
     )
     
     return OutcomePageWizardView(vm: vm, type: .outcomePercent)
+        .serviceBundle(bundle)
 }

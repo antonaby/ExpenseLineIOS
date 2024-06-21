@@ -75,6 +75,7 @@ struct MainWizardPageView: View {
                 }
             }
         }
+        .padding(.horizontal, 20)
         .onAppear {
             showDatePicker = vm.dailyReminderEnabled
         }

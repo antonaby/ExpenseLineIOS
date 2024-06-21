@@ -26,7 +26,7 @@ struct BudgetWizardView: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            HStack(spacing: 15) {
+            HStack(spacing: 10) {
                 ForEach(WizzardPage.allCases) { page in
                     PageIconView(page)
                 }
@@ -43,6 +43,7 @@ struct BudgetWizardView: View {
                 } label: {
                     Label("Back", systemImage: "chevron.backward")
                         .foregroundColor(Color("FrDefault"))
+                        .padding(.leading, 10)
                 }
             }
             .overlay(alignment: .trailing) {
@@ -51,17 +52,21 @@ struct BudgetWizardView: View {
                     dismiss()
                 }
                 .font(.title2)
+                .padding(.trailing, 10)
             }
             Text(getPageTitle())
                 .modifier(FormTitleViewModifier.modifier)
+                .padding(.horizontal, 20)
             WizardPageView()
-            if editMode {
-                EditModeControlView()
-            } else {
-                CreateModeControlView()
+            Group {
+                if editMode {
+                    EditModeControlView()
+                } else {
+                    CreateModeControlView()
+                }
             }
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 15)
         .background(Color("BgDefault"))
         .sheet(item: $vm.selectedCategory) { category in
             EditCategorySheet(title: "Save",
