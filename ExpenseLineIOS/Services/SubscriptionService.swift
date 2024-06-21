@@ -11,6 +11,7 @@ import Foundation
 class SubscriptionService: ObservableObject {
     
     private static let MAX_NUMBER_OF_BUDGETS = 1
+    private static let MAX_NUMBER_OF_CATEGORIES = 15
     
     private let dm: DatabaseManager
     
@@ -37,6 +38,14 @@ class SubscriptionService: ObservableObject {
         }
         
         return true
+    }
+    
+    func checkMaxCategoryCount(_ budget: BudgetEntity) -> Bool {
+        if (checkSubcription()) {
+            return true
+        }
+        
+        return budget.allCategories.count < SubscriptionService.MAX_NUMBER_OF_CATEGORIES
     }
     
     private func checkSubcription() -> Bool {

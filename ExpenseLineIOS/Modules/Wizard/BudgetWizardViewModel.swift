@@ -25,8 +25,9 @@ class BudgetWizardViewModel: ObservableObject {
     @Published var isFormValid: Bool = false
     @Published var selectedCategory: PlanCategoryEntity?
     
+    var budget: BudgetEntity
+    
     private var op: CategoryActionOperation = .none
-    private var budget: BudgetEntity
     private var budgetService: BudgetService
     private var dataService: DataService
     private var notificationService: NotificationService

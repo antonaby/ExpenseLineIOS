@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CategoryListWizardView: View {
     
+    @EnvironmentObject var subscriptionService: SubscriptionService
+    @EnvironmentObject var appState: AppState
+    
     @ObservedObject var vm: BudgetWizardViewModel
     
     let type: CategoryType
@@ -52,7 +55,11 @@ struct CategoryListWizardView: View {
             }
             HStack {
                 Button {
-                    vm.newCategory(type)
+                    if subscriptionService.checkMaxCategoryCount(vm.budget) {
+                        vm.newCategory(type)
+                    } else {
+                        appState.showPaywall()
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "plus")
@@ -128,6 +135,8 @@ struct CategoryListWizardView: View {
         vm: vm,
         type: .outcomeFixed
     )
+    .serviceBundle(bundle)
+    .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }
 
 #Preview("Amount EUR") {
@@ -186,5 +195,7 @@ struct CategoryListWizardView: View {
         vm: vm,
         type: .outcomePercent
     )
+    .serviceBundle(bundle)
+    .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }
 
