@@ -18,6 +18,10 @@ class SubscriptionService: ObservableObject {
         self.dm = dm
     }
     
+    func getStandartSubsctiprionCost() -> String {
+        "$4,99/month"
+    }
+ 
     func checkMaxBudgetCount() -> Bool {
         if (checkSubcription()) {
             return true
