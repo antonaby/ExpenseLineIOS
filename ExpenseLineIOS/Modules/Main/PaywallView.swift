@@ -16,18 +16,21 @@ struct PaywallView: View {
     
     var body: some View {
         VStack {
-            Text("Premium")
-                .foregroundStyle(.white)
-                .padding(8)
-                .font(.caption)
-                .background(RoundedRectangle(cornerRadius: 7).foregroundStyle(Color("FrDefault")))
-                .frame(maxWidth: .infinity)
-                .overlay(alignment: .topTrailing) {
-                    ToolButton(icon: "x.circle", color: Color("Accent1")) {
-                        dismiss()
-                    }
-                    .font(.title2)
+            HStack {
+                Image(systemName: "star.fill")
+                Text("Premium")
+            }
+            .foregroundStyle(.white)
+            .padding(8)
+            .font(.caption)
+            .background(RoundedRectangle(cornerRadius: 7).foregroundStyle(Color("FrDefault")))
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .topTrailing) {
+                ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                    dismiss()
                 }
+                .font(.title2)
+            }
             
             ScrollView {
                 Text("Full Access")
