@@ -16,22 +16,24 @@ struct PaywallView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
-                    dismiss()
-                }
-                .font(.title2)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
             Text("Premium")
                 .foregroundStyle(.white)
                 .padding(8)
                 .font(.caption)
                 .background(RoundedRectangle(cornerRadius: 7).foregroundStyle(Color("FrDefault")))
+                .frame(maxWidth: .infinity)
+                .overlay(alignment: .topTrailing) {
+                    ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                        dismiss()
+                    }
+                    .font(.title2)
+                }
+            
             ScrollView {
                 Text("Full Access")
                     .font(.title)
                 PremiumAdvantagesRow(icon: "piggy-bank", text: "Unlimited budgets")
+                PremiumAdvantagesRow(icon: "fl-shopping-cart", text: "Unlimited categories")
                 Color.clear.frame(height: 35)
                 VStack {
                     Text("7 day free trial. **Auto-renews at \(subscrioptionService.getStandartSubsctiprionCost()).** No commitment. Cancel anytime.")

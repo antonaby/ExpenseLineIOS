@@ -14,19 +14,17 @@ struct BudgetListView: View {
     @EnvironmentObject var appState: AppState
     
     @StateObject var vm: BudgetListViewModel
-    @State var isWizzardOpen = false
-    @State var settingsSheetOpen: Bool = false
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                Button {
-                    settingsSheetOpen.toggle()
+                NavigationLink {
+                    SettingsView()
+                        .navigationTitle("Settings")
                 } label: {
                     Image(systemName: "gear")
                         .font(.title2)
-                        .padding(.top, 5)
                 }
                 .tint(Color("FrDefault"))
             }
@@ -47,16 +45,19 @@ struct BudgetListView: View {
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
                                     Menu {
-                                        Button {
-                                            vm.selectedBudget = budget
+                                        NavigationLink {
+                                            BudgetWizardView(vm: vm.budgetWizzardViewModel(budget), editMode: true)
+                                                .navigationBarBackButtonHidden(true)
                                         } label: {
-                                            Text("Edit")
+                                            Label("Edit", systemImage: "pencil")
                                         }
+                                        .tint(Color("FrDefault"))
                                         Button(role: .destructive) {
                                             vm.deleteBudget(budget)
                                         } label: {
-                                            Text("Delete")
+                                            Label("Delete", systemImage: "trash")
                                         }
+                                        .tint(Color("Accent1"))
                                     } label: {
                                         Image(systemName: "ellipsis").font(.title2)
                                             .padding(.leading, 10)
@@ -69,43 +70,29 @@ struct BudgetListView: View {
                 }
             }
             .padding(.top, 20)
-            Button {
+            Group {
                 if subscriptionService.checkMaxBudgetCount() {
-                    isWizzardOpen.toggle()
+                    NavigationLink {
+                        BudgetWizardView(vm: vm.newBudgetWizzardViewModel(), editMode: false)
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        ButtonTextView()
+                    }
                 } else {
-                    appState.showPaywall()
+                    Button {
+                        appState.showPaywall()
+                    } label: {
+                        ButtonTextView()
+                    }
                 }
-            } label: {
-                Text("Create")
-                    .font(.title2)
-                    .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(Color("FrDefault"))
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 20)
         .background(Color("BgDefault"))
         .onAppear {
             vm.loadBudgets()
         }
-        .fullScreenCover(item: $vm.selectedBudget, onDismiss: onBudgetCreated) { budget in
-            BudgetWizardView(vm: vm.budgetWizzardViewModel(), editMode: true)
-        }
-        .fullScreenCover(isPresented: $isWizzardOpen, onDismiss: onBudgetCreated) {
-            BudgetWizardView(vm: vm.budgetWizzardViewModel(), editMode: false)
-        }
-        .fullScreenCover(isPresented: $settingsSheetOpen, onDismiss: onSettingsUpdated) {
-            SettingsView()
-        }
-    }
-    
-    func onBudgetCreated() {
-        vm.selectedBudget = nil
-        vm.loadBudgets()
-    }
-    
-    func onSettingsUpdated() {
-        vm.loadBudgets()
     }
     
     @ViewBuilder
@@ -114,6 +101,16 @@ struct BudgetListView: View {
             Text("No budgets yet...")
                 .font(.title)
         }
+    }
+    
+    @ViewBuilder
+    func ButtonTextView() -> some View {
+        Text("Create")
+            .font(.title2)
+            .frame(maxWidth: .infinity)
+            .padding(10)
+            .foregroundStyle(.white)
+            .background(RoundedRectangle(cornerRadius: 20).foregroundStyle(Color("FrDefault")))
     }
     
 }

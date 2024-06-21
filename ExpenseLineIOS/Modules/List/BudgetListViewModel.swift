@@ -10,7 +10,6 @@ import Foundation
 
 class BudgetListViewModel: ObservableObject {
     
-    @Published var selectedBudget: BudgetEntity?
     @Published var budgets: [BudgetEntity]
     
     private let budgetService: BudgetService
@@ -33,21 +32,21 @@ class BudgetListViewModel: ObservableObject {
         }
     }
     
-    func budgetWizzardViewModel() -> BudgetWizardViewModel {
-        if let budget = selectedBudget {
-            return BudgetWizardViewModel(budget, 
-                                         budgetService: budgetService,
-                                         dataService: dataService,
-                                         notificationService: notificationService)
-        }
-        
+    func budgetWizzardViewModel(_ budget: BudgetEntity) -> BudgetWizardViewModel {
+        return BudgetWizardViewModel(budget,
+                                     budgetService: budgetService,
+                                     dataService: dataService,
+                                     notificationService: notificationService)
+    }
+    
+    func newBudgetWizzardViewModel() -> BudgetWizardViewModel {
         let budget = budgetService.newBudgetEntity()
         budget.dailyRemainderAt = Date().currentDateAt(at: 20)
         for category in dataService.getDefaultCategories(budget: budget) {
             budget.addToCategories(category)
         }
         
-        return BudgetWizardViewModel(budget, 
+        return BudgetWizardViewModel(budget,
                                      budgetService: budgetService,
                                      dataService: dataService,
                                      notificationService: notificationService)

@@ -15,18 +15,21 @@ struct MainView: View {
     @StateObject var appState: AppState
     
     var body: some View {
-        VStack {
-            if let budget = appState.budget, 
-               let vm = appState.getBudgetViewModel(budget: budget, budgetService: budgetService, dataService: dataServise)  {
-                BudgetView(vm: vm)
-            } else {
-                BudgetListView(vm: BudgetListViewModel(
-                    budgetService: budgetService,
-                    dataService: dataServise,
-                    notificationService: notificationService)
-                )
+        NavigationStack {
+            VStack {
+                if let budget = appState.budget,
+                    let vm = appState.getBudgetViewModel(budget: budget, budgetService: budgetService, dataService: dataServise)  {
+                    BudgetView(vm: vm)
+                } else {
+                    BudgetListView(vm: BudgetListViewModel(
+                        budgetService: budgetService,
+                        dataService: dataServise,
+                        notificationService: notificationService)
+                    )
+                }
             }
         }
+        .tint(Color("FrDefault"))
         .fullScreenCover(isPresented: $appState.paywall) {
             PaywallView()
         }

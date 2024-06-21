@@ -10,7 +10,6 @@ import SwiftUI
 struct BudgetView: View {
     
     @StateObject var vm: BudgetViewModel
-    @State var path = NavigationPath()
     
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var budgetService: BudgetService
@@ -18,136 +17,131 @@ struct BudgetView: View {
     @EnvironmentObject var notificationService: NotificationService
     
     @State var transactionSheet: Bool = false
-    @State var editBudgetSheetOpen: Bool = false
     @State var changePeriodSheetOpen: Bool = false
-    @State var settingsSheetOpen: Bool = false
     
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack(spacing: 0) {
-                VStack {
-                    HStack {
-                        Button {
-                            editBudgetSheetOpen.toggle()
-                        } label: {
-                            Text(vm.budget.name ?? "Unknown")
-                                .font(.title2)
-                                .tint(.black)
-                        }
-                    }
-                    PeriodView()
-                        .bold()
+        VStack(spacing: 0) {
+            VStack {
+                NavigationLink {
+                    BudgetWizardView(
+                        vm: BudgetWizardViewModel(vm.budget,
+                                                  budgetService: budgetService,
+                                                  dataService: dataService,
+                                                  notificationService: notificationService),
+                        editMode: true
+                    )
+                    .navigationBarBackButtonHidden(true)
+                } label: {
+                    Text(vm.budget.name ?? "Unknown")
+                        .font(.title2)
+                        .tint(.black)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 20)
-                .background(Color("BgDefault"))
-                .overlay(alignment: .topLeading) {
-                    Button {
-                        appState.unselectBudget()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .font(.title2)
-                            .padding(.leading, 10)
-                            .padding(.top, 5)
-                    }
-                    .tint(Color("FrDefault"))
+                PeriodView()
+                    .bold()
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 20)
+            .background(Color("BgDefault"))
+            .overlay(alignment: .topLeading) {
+                Button {
+                    appState.unselectBudget()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.title2)
+                        .padding(.leading, 10)
+                        .padding(.top, 5)
                 }
-                .overlay(alignment: .topTrailing) {
-                    Button {
-                        settingsSheetOpen.toggle()
-                    } label: {
-                        Image(systemName: "gear")
-                            .font(.title2)
-                            .padding(.trailing, 10)
-                            .padding(.top, 5)
-                    }
-                    .tint(Color("FrDefault"))
+                .tint(Color("FrDefault"))
+            }
+            .overlay(alignment: .topTrailing) {
+                NavigationLink {
+                    SettingsView()
+                        .navigationTitle("Settings")
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.title2)
+                        .padding(.trailing, 10)
                 }
-                ZStack(alignment: .bottomTrailing) {
-                    TabView(selection: $vm.currenPage) {
-                        BudgetOverviewView(
-                            vm: BudgetOverviewViewModel(
-                                parent: vm,
-                                budgetService: budgetService,
-                                notificationService: notificationService
-                            ))
-                            .tabItem { Image(systemName: "house") }
-                            .tag(BudgetViewPage.overview)
-                        CategoryListView(vm: CategoryListViewModel(parent: vm, budgetService: budgetService))
-                            .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
-                            .tag(BudgetViewPage.categories)
-                        TransactionListView(vm: TransactionListViewModel(parent: vm, budgetService: budgetService))
-                            .tabItem { Image(systemName: "list.bullet") }
-                            .tag(BudgetViewPage.transactions)
-                        BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, budgetService: budgetService))
-                            .tabItem { Image(systemName: "chart.pie") }
-                            .tag(BudgetViewPage.stats)
-                    }
-                    .accentColor(Color("FrDefault"))
-                    AddExpenseButton {
-                        transactionSheet.toggle()
-                    }
-                    .offset(x: -20, y: -70)
+                .tint(Color("FrDefault"))
+            }
+            ZStack(alignment: .bottomTrailing) {
+                TabView(selection: $vm.currenPage) {
+                    BudgetOverviewView(
+                        vm: BudgetOverviewViewModel(
+                            parent: vm,
+                            budgetService: budgetService,
+                            notificationService: notificationService
+                        ))
+                        .tabItem { Image(systemName: "house") }
+                        .tag(BudgetViewPage.overview)
+                    CategoryListView(vm: CategoryListViewModel(parent: vm, budgetService: budgetService))
+                        .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
+                        .tag(BudgetViewPage.categories)
+                    TransactionListView(vm: TransactionListViewModel(parent: vm, budgetService: budgetService))
+                        .tabItem { Image(systemName: "list.bullet") }
+                        .tag(BudgetViewPage.transactions)
+                    BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, budgetService: budgetService))
+                        .tabItem { Image(systemName: "chart.pie") }
+                        .tag(BudgetViewPage.stats)
                 }
+                .accentColor(Color("FrDefault"))
+                AddExpenseButton {
+                    transactionSheet.toggle()
+                }
+                .offset(x: -20, y: -70)
             }
-            .sheet(isPresented: $transactionSheet, onDismiss: onTransactionUpdated) {
-                TransactionSheetView(
-                    vm: TransactionSheetViewModel(transaction: nil,
-                                                  budget: vm.budget,
-                                                  currency: vm.currency,
-                                                  budgetService: budgetService))
-                    .presentationDetents([.medium])
-            }
-            .sheet(isPresented: $changePeriodSheetOpen) {
-                PeriodListView(selected: $vm.period,
-                               vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
-                    .presentationDetents([.large, .medium])
-                    .presentationDragIndicator(.visible)
-            }
-            .fullScreenCover(isPresented: $editBudgetSheetOpen, onDismiss: onBudgetUpdated) {
-                BudgetWizardView(
-                    vm: BudgetWizardViewModel(vm.budget, 
-                                              budgetService: budgetService,
-                                              dataService: dataService,
-                                              notificationService: notificationService),
-                    editMode: true
-                )
-            }
-            .fullScreenCover(isPresented: $settingsSheetOpen, onDismiss: onBudgetUpdated) {
-                SettingsView()
-            }
-            .navigationDestination(for: PlanCategoryEntity.self) { category in
-                CategoryView(vm: CategoryViewModel(
-                    category: category,
-                    period: vm.period,
-                    budget: vm.budget,
-                    currency: vm.currency,
-                    budgetService: budgetService,
-                    notificationService: notificationService)
-                )
-                .navigationTitle("Category")
-            }
-            .navigationDestination(for: TransactionEntity.self) { transaction in
-                TransactionView(vm: TransactionViewModel(
-                    transaction: transaction,
-                    budget: vm.budget,
-                    currency: vm.currency,
-                    budgetService: budgetService)
-                )
-                .navigationTitle("Transaction")
-            }
-            .navigationDestination(for: CategoryNotificationsRef.self) { ref in
-                NotificationsView(vm: NotificationsViewModel(
-                    categoryRef: ref,
-                    budget: vm.budget,
-                    budgetService: budgetService,
-                    notificationService: notificationService
-                ))
-                    .navigationTitle("Reminders")
-            }
+        }
+        .sheet(isPresented: $transactionSheet, onDismiss: onTransactionUpdated) {
+            TransactionSheetView(
+                vm: TransactionSheetViewModel(transaction: nil,
+                                              budget: vm.budget,
+                                              currency: vm.currency,
+                                              budgetService: budgetService))
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $changePeriodSheetOpen) {
+            PeriodListView(selected: $vm.period,
+                           vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
+                .presentationDetents([.large, .medium])
+                .presentationDragIndicator(.visible)
+        }
+        .navigationDestination(for: PlanCategoryEntity.self) { category in
+            CategoryView(vm: CategoryViewModel(
+                category: category,
+                period: vm.period,
+                budget: vm.budget,
+                currency: vm.currency,
+                budgetService: budgetService,
+                notificationService: notificationService)
+            )
+            .environmentObject(vm.formatters)
+            .navigationTitle("Category")
+        }
+        .navigationDestination(for: TransactionEntity.self) { transaction in
+            TransactionView(vm: TransactionViewModel(
+                transaction: transaction,
+                budget: vm.budget,
+                currency: vm.currency,
+                budgetService: budgetService)
+            )
+            .environmentObject(vm.formatters)
+            .navigationTitle("Transaction")
+        }
+        .navigationDestination(for: CategoryNotificationsRef.self) { ref in
+            NotificationsView(vm: NotificationsViewModel(
+                categoryRef: ref,
+                budget: vm.budget,
+                budgetService: budgetService,
+                notificationService: notificationService
+            ))
+            .environmentObject(vm.formatters)
+            .navigationTitle("Reminders")
         }
         .environmentObject(vm.formatters)
         .tint(Color("FrDefault"))
+        .onAppear {
+            vm.reloadBudget()
+        }
         .onDisappear {
             vm.cancelAll()
         }

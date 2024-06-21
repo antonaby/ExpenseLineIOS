@@ -18,14 +18,6 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
-                    dismiss()
-                }
-                .font(.title2)
-            }
-            .padding(.horizontal, 20)
             Form {
                 Section {
                     ForEach($preferences) { $preference in

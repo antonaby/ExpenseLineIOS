@@ -33,13 +33,16 @@ struct BudgetWizardView: View {
             }
             .frame(maxWidth: .infinity)
             .overlay(alignment: .leading) {
-                if currentPage.rawValue != 0 {
-                    Button {
+                Button {
+                    if currentPage.rawValue != 0 {
                         previousPage()
-                    } label: {
-                        Label("Back", systemImage: "chevron.backward")
-                            .foregroundColor(Color("FrDefault"))
+                    } else {
+                        vm.rollback()
+                        dismiss()
                     }
+                } label: {
+                    Label("Back", systemImage: "chevron.backward")
+                        .foregroundColor(Color("FrDefault"))
                 }
             }
             .overlay(alignment: .trailing) {
