@@ -14,7 +14,8 @@ class NotificationsViewModel: ObservableObject {
     @Published var notifications: [NotificationEntity] = []
     @Published var todayNotifications: Bool = true
     
-    private let budget: BudgetEntity
+    let budget: BudgetEntity
+    
     private let budgetService: BudgetService
     private let notificationService: NotificationService
     

@@ -37,6 +37,8 @@ struct PaywallView: View {
                     .font(.title)
                 PremiumAdvantagesRow(icon: "piggy-bank", text: "Unlimited budgets")
                 PremiumAdvantagesRow(icon: "fl-shopping-cart", text: "Unlimited categories")
+                PremiumAdvantagesRow(icon: "fl-other", text: "Unlimited transactions")
+                PremiumAdvantagesRow(icon: "bell", text: "Unlimited reminders")
                 Color.clear.frame(height: 35)
                 VStack {
                     Text("7 day free trial. **Auto-renews at \(subscrioptionService.getStandartSubsctiprionCost()).** No commitment. Cancel anytime.")

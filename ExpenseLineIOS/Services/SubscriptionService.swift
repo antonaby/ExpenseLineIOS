@@ -12,6 +12,8 @@ class SubscriptionService: ObservableObject {
     
     private static let MAX_NUMBER_OF_BUDGETS = 1
     private static let MAX_NUMBER_OF_CATEGORIES = 15
+    private static let MAX_NUMBER_OF_TRANSACTIONS = 60
+    private static let MAX_NUMBER_OF_NOTIFICATIONS = 20
     
     private let dm: DatabaseManager
     
@@ -24,7 +26,7 @@ class SubscriptionService: ObservableObject {
     }
  
     func checkMaxBudgetCount() -> Bool {
-        if (checkSubcription()) {
+        if checkSubcription() {
             return true
         }
         
@@ -41,11 +43,49 @@ class SubscriptionService: ObservableObject {
     }
     
     func checkMaxCategoryCount(_ budget: BudgetEntity) -> Bool {
-        if (checkSubcription()) {
+        if checkSubcription() {
             return true
         }
         
         return budget.allCategories.count < SubscriptionService.MAX_NUMBER_OF_CATEGORIES
+    }
+    
+    func checkMaxTransactionCount(period: PeriodEntity, budget: BudgetEntity) -> Bool {
+        if checkSubcription() {
+            return true
+        }
+        
+        guard let budgetId = budget.id, let periodId = period.id else { return true }
+        let request = TransactionEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@ AND period.id == %@", budgetId as CVarArg, periodId as CVarArg)
+        do {
+            let numOfTransactions = try dm.viewContext.count(for: request)
+            return numOfTransactions < SubscriptionService.MAX_NUMBER_OF_TRANSACTIONS
+        } catch {
+            print("Something went wront \(error)")
+        }
+        
+        return true
+    }
+    
+    func checkMaxNotificationCount(budget: BudgetEntity) -> Bool {
+        if checkSubcription() {
+            return true
+        }
+        
+        guard let budgetId = budget.id else { return true }
+        let request = NotificationEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
+        
+        do {
+            let numOfNotifications = try dm.viewContext.count(for: request)
+            return numOfNotifications < SubscriptionService.MAX_NUMBER_OF_NOTIFICATIONS
+        } catch {
+            print("Something went wront \(error)")
+        }
+        
+        
+        return true
     }
     
     private func checkSubcription() -> Bool {
