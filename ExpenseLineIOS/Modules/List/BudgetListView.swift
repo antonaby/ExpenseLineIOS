@@ -60,7 +60,7 @@ struct BudgetListView: View {
                                         .tint(Color("Accent1"))
                                     } label: {
                                         Image(systemName: "ellipsis").font(.title2)
-                                            .padding(.leading, 10)
+                                            .frame(width: 35, height: 30, alignment: .center)
                                     }
                                 }
                                 .tint(.black)

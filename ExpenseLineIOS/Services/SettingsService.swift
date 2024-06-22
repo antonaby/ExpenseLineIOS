@@ -17,9 +17,6 @@ class SettingsService: ObservableObject {
     
     static let BUDGET_ID_KEY = "budgetId"
     
-    // Appearance
-    static let GAPS_IN_CIRCLE = "apperance.gap"
-    
     private let userSettings: UserDefaults
        
     init() {

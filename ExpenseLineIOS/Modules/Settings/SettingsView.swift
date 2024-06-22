@@ -13,7 +13,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     
     @State var preferences: [BoolUserPreference] = [
-        BoolUserPreference(id: SettingsService.GAPS_IN_CIRCLE, name: "Gaps In Circle", value: false)
+
     ]
     
     var body: some View {

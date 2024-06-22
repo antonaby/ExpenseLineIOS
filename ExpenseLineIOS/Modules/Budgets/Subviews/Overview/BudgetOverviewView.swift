@@ -44,7 +44,6 @@ struct SliderView: View {
 struct BudgetOverviewView: View {
     
     @EnvironmentObject var formatters: FormattersHolder
-    @EnvironmentObject var setting: SettingsService
     @StateObject var vm: BudgetOverviewViewModel
     
     @State var spendings: SpengingsType = .overall
@@ -64,7 +63,7 @@ struct BudgetOverviewView: View {
                             ],
                             colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
                             selected: spendings.rawValue,
-                            gap: setting.getBoolPreference(for: SettingsService.GAPS_IN_CIRCLE)
+                            gap: true
                         ) {
                             VStack {
                                 Text(formatters.formatPercent(getTotalSpentDecimal()))
@@ -442,8 +441,6 @@ struct BudgetOverviewView: View {
         notification3.weekDaysArr = [1, 2, 3, 4, 5, 6, 7]
         notification3.enabled = true
         
-        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
-        
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
@@ -486,8 +483,6 @@ struct BudgetOverviewView: View {
         vm.totalFixedBudgetLeft = 1000
         vm.totalFlexibleBudgetLeft = 500
         
-        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: true)
-        
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
@@ -529,8 +524,6 @@ struct BudgetOverviewView: View {
         vm.totalPercentOutcome = 1550
         vm.totalFixedBudgetLeft = 1000
         vm.totalFlexibleBudgetLeft = 500
-        
-        bundle.settingsService.setBoolPreference(for: SettingsService.GAPS_IN_CIRCLE, value: false)
         
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
