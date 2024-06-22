@@ -84,6 +84,16 @@ class EditNotificationSheetViewModel: ObservableObject {
         }
     }
     
+    func deleteNotification() {
+        do {
+            try notificationService.deleteNotification(notification)
+            try notificationService.save()
+        } catch {
+            // TODO: handle error
+            print("Something went wrong \(error)")
+        }
+    }
+    
     func rollback() {
         notificationService.rollback()
     }

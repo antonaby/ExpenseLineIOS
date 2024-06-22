@@ -32,6 +32,7 @@ class BudgetWizardViewModel: ObservableObject {
     private var dataService: DataService
     private var notificationService: NotificationService
     private var cancellables = Set<AnyCancellable>()
+    private var notificationsToDelete: [NotificationEntity] = []
     
     var formatters: FormattersHolder
     
@@ -83,6 +84,7 @@ class BudgetWizardViewModel: ObservableObject {
     
     func deleteCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
+        notificationsToDelete.append(contentsOf: category.allNotifications)
         budgetService.deleteCategory(category, budget: budget)
         
         op = .none
@@ -91,6 +93,7 @@ class BudgetWizardViewModel: ObservableObject {
     func dismissCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
         if op == .create {
+            notificationsToDelete.append(contentsOf: category.allNotifications)
             budgetService.deleteCategory(category, budget: budget)
         }
         
@@ -123,6 +126,12 @@ class BudgetWizardViewModel: ObservableObject {
         }
         
         do {
+            if !notificationsToDelete.isEmpty {
+                for notifications in notificationsToDelete {
+                    try notificationService.cancelNotification(notifications)
+                }
+            }
+            
             try budgetService.save()
         } catch {
             // TODO: show error

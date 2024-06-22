@@ -103,6 +103,17 @@ struct EditNotificationSheetView: View {
                     }
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
+                    Menu {
+                        Button(role: .destructive) {
+                            vm.deleteNotification()
+                            dismiss()
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                         }
+                    } label: {
+                        Text("More actions")
+                    }
+                    .tint(Color("FrDefault"))
                 }
                 .background(Color("BgDefault"))
             }

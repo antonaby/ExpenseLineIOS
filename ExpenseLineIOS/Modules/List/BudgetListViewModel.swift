@@ -54,7 +54,7 @@ class BudgetListViewModel: ObservableObject {
     
     func deleteBudget(_ budget: BudgetEntity) {
         do {
-            budgetService.deleteBudget(budget)
+            try budgetService.deleteBudget(budget)
             try budgetService.save()
             budgets = try budgetService.getAllBudgets()
         } catch {

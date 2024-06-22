@@ -19,9 +19,11 @@ enum BudgetServiceError: Error {
 class BudgetService: ObservableObject {
     
     private let dm: DatabaseManager
+    private let notificationService: NotificationService
     
-    init(dm: DatabaseManager) {
+    init(dm: DatabaseManager, notificationService: NotificationService) {
         self.dm = dm
+        self.notificationService = notificationService
     }
     
     func newBudgetEntity() -> BudgetEntity {
@@ -62,12 +64,33 @@ class BudgetService: ObservableObject {
         dm.viewContext.delete(category)
     }
     
+    func deleteCategoryWithNotifications(_ category: PlanCategoryEntity, budget: BudgetEntity) throws {
+        budget.removeFromCategories(category)
+        if let notifications = category.notifications?.allObjects as? [NotificationEntity] {
+            for notification in notifications {
+                try notificationService.deleteNotification(notification)
+            }
+        }
+        
+        dm.viewContext.delete(category)
+    }
+    
     func deleteTransaction(_ transaction: TransactionEntity, budget: BudgetEntity) {
         budget.removeFromTransactions(transaction)
         dm.viewContext.delete(transaction)
     }
     
-    func deleteBudget(_ budget: BudgetEntity) {
+    func deleteBudget(_ budget: BudgetEntity) throws {
+        if let notifications = budget.notifications?.allObjects as? [NotificationEntity] {
+            for notification in notifications {
+                try notificationService.deleteNotification(notification)
+            }
+        }
+        
+        if let budgetId = budget.id, budget.dailyRemainderAt != nil {
+            notificationService.cancelDailyReminder(budgetId: budgetId)
+        }
+        
         dm.viewContext.delete(budget)
     }
     

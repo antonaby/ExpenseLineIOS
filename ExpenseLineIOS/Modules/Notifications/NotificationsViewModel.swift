@@ -74,6 +74,7 @@ class NotificationsViewModel: ObservableObject {
     func deleteNotification(_ notification: NotificationEntity) {
         do {
             try notificationService.deleteNotification(notification)
+            try notificationService.save()
         } catch {
             // TODO: handle error
             print("Something went wrong \(error)")
