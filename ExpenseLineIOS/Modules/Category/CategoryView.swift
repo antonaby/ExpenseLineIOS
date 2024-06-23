@@ -58,9 +58,15 @@ struct CategoryView: View {
                     if !vm.notifications.isEmpty {
                         VStack(alignment: .leading) {
                             ForEach($vm.notifications) { $notification in
-                                HStack {
+                                HStack(alignment: .firstTextBaseline) {
                                     Image(systemName: notification.typeValue == .nonotification ? "pencil" : "bell")
-                                    Text(notification.nameValue)
+                                    VStack(alignment: .leading) {
+                                        Text(notification.nameValue)
+                                        if notification.typeValue != .nonotification {
+                                            NotificationsTimeView(notification)
+                                                .font(.caption)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -147,7 +153,14 @@ struct CategoryView: View {
             vm.loadNotifications()
         }
     }
-     
+    
+    @ViewBuilder
+    func NotificationsTimeView(_ notification: NotificationEntity) -> some View {
+        if let date = notification.date {
+            Text(formatters.formatHour(date))
+        }
+    }
+    
     @ViewBuilder
     func PlannedViewPercent() -> some View {
         HStack {
