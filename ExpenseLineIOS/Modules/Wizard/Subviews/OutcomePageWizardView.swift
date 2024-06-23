@@ -9,8 +9,11 @@ import SwiftUI
 
 struct OutcomePageWizardView: View {
     
+    @EnvironmentObject var appState: AppState
+    
     @ObservedObject var vm: BudgetWizardViewModel
     var type: CategoryType
+    var helpPage: HelpPage
     
     var body: some View {
         VStack {
@@ -19,6 +22,9 @@ struct OutcomePageWizardView: View {
                 .padding(.horizontal, 20)
         }
         .background(Color("BgDefault"))
+        .onAppear {
+            appState.showHelpPage(for: helpPage, firstTime: true)
+        }
     }
 }
 
@@ -72,8 +78,9 @@ struct OutcomePageWizardView: View {
         notificationService: bundle.notificationService
     )
     
-    return OutcomePageWizardView(vm: vm, type: .outcomeFixed)
+    return OutcomePageWizardView(vm: vm, type: .outcomeFixed, helpPage: .incomeWizard)
         .serviceBundle(bundle)
+        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }
 
 #Preview("Flexible") {
@@ -126,6 +133,7 @@ struct OutcomePageWizardView: View {
         notificationService: bundle.notificationService
     )
     
-    return OutcomePageWizardView(vm: vm, type: .outcomePercent)
+    return OutcomePageWizardView(vm: vm, type: .outcomePercent, helpPage: .incomeWizard)
         .serviceBundle(bundle)
+        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }

@@ -41,8 +41,16 @@ class AppState: ObservableObject {
         paywall.toggle()
     }
     
-    func showHelpPage(for page: HelpPage) {
-        self.helpPage = page
+    func showHelpPage(for page: HelpPage, firstTime: Bool = false) {
+        if !firstTime || settingsService.alwaysShowHelp() {
+            self.helpPage = page
+            return
+        }
+        
+        if !settingsService.getBoolPreference(for: page.rawValue) {
+            self.helpPage = page
+            settingsService.setBoolPreference(for: page.rawValue, value: true)
+        }
     }
     
     func getBudgetViewModel(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) -> BudgetViewModel? {

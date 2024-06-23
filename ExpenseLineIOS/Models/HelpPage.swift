@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum HelpPage: Int, Identifiable {
+enum HelpPage: String, Identifiable {
     
-    case mainWizard = 0
-    case incomeWizard = 1
-    case fixedOutcomeWizard = 2
-    case flexibleOutcomeWizard = 3
+    case mainWizard = "help.wizard.main.fisrt"
+    case incomeWizard = "help.wizard.income.fisrt"
+    case fixedOutcomeWizard = "help.wizard.outcome.fixed.fisrt"
+    case flexibleOutcomeWizard = "help.wizard.outcome.flexible.fisrt"
     
-    case mainPage = 4
+    case mainPage = "help.budget.main.first"
     
     var id: Self { self }
     

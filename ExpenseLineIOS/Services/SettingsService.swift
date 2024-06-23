@@ -52,4 +52,8 @@ class SettingsService: ObservableObject {
         userSettings.bool(forKey: key)
     }
     
+    func alwaysShowHelp() -> Bool {
+        return false
+    }
+    
 }

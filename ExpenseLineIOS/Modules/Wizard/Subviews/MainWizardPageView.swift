@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainWizardPageView: View {
     
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataService: DataService
     
     @ObservedObject var vm: BudgetWizardViewModel
@@ -79,6 +80,7 @@ struct MainWizardPageView: View {
         .padding(.top, 15)
         .onAppear {
             showDatePicker = vm.dailyReminderEnabled
+            appState.showHelpPage(for: .mainWizard, firstTime: true)
         }
         .background(Color("BgDefault"))
         .sheet(isPresented: $currencySheetOpen) {
@@ -105,4 +107,5 @@ struct MainWizardPageView: View {
             notificationService: bundle.notificationService
         ))
     .serviceBundle(bundle)
+    .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }

@@ -31,8 +31,18 @@ struct HelpView: View {
                 .font(.title2)
             }
             ScrollView {
-                Text("Info")
-                    .bold()
+                switch page {
+                case .mainWizard:
+                    MainWizardPage()
+                case .incomeWizard:
+                    ImcomeWizardPage()
+                case .fixedOutcomeWizard:
+                    OutcomeFixedWizardPage()
+                case .flexibleOutcomeWizard:
+                    OutcomeFlexibleWizardPage()
+                case .mainPage:
+                    Text("")
+                }
             }
             Button {
                 dismiss()
@@ -50,6 +60,31 @@ struct HelpView: View {
         .padding(.top, 15)
         .padding(.horizontal, 15)
         .background(Color("BgDefault"))
+    }
+    
+    @ViewBuilder
+    func MainWizardPage() -> some View {
+        Text("Let's create a new budget")
+    }
+    
+    @ViewBuilder
+    func ImcomeWizardPage() -> some View {
+        Text("It's your income")
+    }
+    
+    @ViewBuilder
+    func OutcomeFixedWizardPage() -> some View {
+        Text("It's your montly outcome")
+    }
+    
+    @ViewBuilder
+    func OutcomeFlexibleWizardPage() -> some View {
+        Text("It's your flexible outocmes")
+    }
+    
+    @ViewBuilder
+    func MainPage() -> some View {
+        Text("It's your budget")
     }
     
 }

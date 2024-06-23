@@ -143,11 +143,11 @@ struct BudgetWizardView: View {
         case .base:
             MainWizardPageView(vm: vm)
         case .income:
-            OutcomePageWizardView(vm: vm, type: .income)
+            OutcomePageWizardView(vm: vm, type: .income, helpPage: .incomeWizard)
         case .outcomeFixed:
-            OutcomePageWizardView(vm: vm, type: .outcomeFixed)
+            OutcomePageWizardView(vm: vm, type: .outcomeFixed, helpPage: .fixedOutcomeWizard)
         case .outcomeFlexible:
-            OutcomePageWizardView(vm: vm, type: .outcomePercent)
+            OutcomePageWizardView(vm: vm, type: .outcomePercent, helpPage: .flexibleOutcomeWizard)
         }
     }
     
