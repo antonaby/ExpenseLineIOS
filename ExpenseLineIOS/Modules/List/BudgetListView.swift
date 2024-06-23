@@ -68,20 +68,14 @@ struct BudgetListView: View {
                 }
             }
             .padding(.top, 20)
-            Group {
+            Button {
                 if subscriptionService.checkMaxBudgetCount() {
-                    Button {
-                        showNewBudgetPage.toggle()
-                    } label: {
-                        ButtonTextView()
-                    }
+                    showNewBudgetPage.toggle()
                 } else {
-                    Button {
-                        appState.showPaywall()
-                    } label: {
-                        ButtonTextView()
-                    }
+                    appState.showPaywall()
                 }
+            } label: {
+                ButtonTextView()
             }
             .padding(.horizontal, 20)
         }
