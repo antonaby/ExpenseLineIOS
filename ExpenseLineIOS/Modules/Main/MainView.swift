@@ -12,7 +12,9 @@ struct MainView: View {
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var dataServise: DataService
     @EnvironmentObject var notificationService: NotificationService
+    
     @StateObject var appState: AppState
+    @State var showNewBudgetPage: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -21,12 +23,28 @@ struct MainView: View {
                     let vm = appState.getBudgetViewModel(budget: budget, budgetService: budgetService, dataService: dataServise)  {
                     BudgetView(vm: vm)
                 } else {
-                    BudgetListView(vm: BudgetListViewModel(
-                        budgetService: budgetService,
-                        dataService: dataServise,
-                        notificationService: notificationService)
+                    BudgetListView(showNewBudgetPage: $showNewBudgetPage,
+                                   vm: BudgetListViewModel(
+                                        budgetService: budgetService,
+                                        dataService: dataServise,
+                                        notificationService: notificationService
+                                   )
                     )
                 }
+            }
+            .navigationDestination(for: BudgetEntity.self) { budget in
+                BudgetWizardView(vm: BudgetWizardViewModel(
+                    budget,
+                    editMode: true,
+                    budgetService: budgetService,
+                    dataService: dataServise,
+                    notificationService: notificationService)
+                )
+                .navigationBarBackButtonHidden(true)
+            }
+            .navigationDestination(isPresented: $showNewBudgetPage) {
+                BudgetWizardView(vm: appState.newBudgetWizzardViewModel())
+                    .navigationBarBackButtonHidden(true)
             }
         }
         .tint(Color("FrDefault"))
@@ -48,8 +66,7 @@ struct MainView: View {
 #Preview {
     let bundle = ServiceBundle.preview
     return MainView(appState: AppState(
-        budgetService: bundle.budgetService,
-        settingsService: bundle.settingsService)
+        bundle: bundle)
     )
     .serviceBundle(bundle)
 }

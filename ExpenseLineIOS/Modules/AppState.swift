@@ -15,22 +15,20 @@ class AppState: ObservableObject {
     @Published var paywall: Bool = false
     @Published var helpPage: HelpPage? = nil
 
-    private let budgetService: BudgetService
-    private let settingsService: SettingsService
+    private let bundle: ServiceBundle
     
-    init(budgetService: BudgetService, settingsService: SettingsService) {
-        self.budgetService = budgetService
-        self.settingsService = settingsService
+    init(bundle: ServiceBundle) {
+        self.bundle = bundle
     }
     
     func selectBudget(_ budget: BudgetEntity) {
         self.budget = budget
-        settingsService.setBudgetId(budget.id)
+        bundle.settingsService.setBudgetId(budget.id)
     }
     
     func unselectBudget() {
         budget = nil
-        settingsService.setBudgetId(nil)
+        bundle.settingsService.setBudgetId(nil)
     }
     
     func loadBudget() {
@@ -42,14 +40,14 @@ class AppState: ObservableObject {
     }
     
     func showHelpPage(for page: HelpPage, firstTime: Bool = false) {
-        if !firstTime || settingsService.alwaysShowHelp() {
+        if !firstTime || bundle.settingsService.alwaysShowHelp() {
             self.helpPage = page
             return
         }
         
-        if !settingsService.getBoolPreference(for: page.rawValue) {
+        if !bundle.settingsService.getBoolPreference(for: page.rawValue) {
             self.helpPage = page
-            settingsService.setBoolPreference(for: page.rawValue, value: true)
+            bundle.settingsService.setBoolPreference(for: page.rawValue, value: true)
         }
     }
     
@@ -66,11 +64,25 @@ class AppState: ObservableObject {
             return nil
         }
     }
+    
+    func newBudgetWizzardViewModel() -> BudgetWizardViewModel {
+        let budget = bundle.budgetService.newBudgetEntity()
+        budget.dailyRemainderAt = Date().currentDateAt(at: 20)
+        for category in bundle.dataService.getDefaultCategories(budget: budget) {
+            budget.addToCategories(category)
+        }
+        
+        return BudgetWizardViewModel(budget,
+                                     editMode: false,
+                                     budgetService: bundle.budgetService,
+                                     dataService: bundle.dataService,
+                                     notificationService: bundle.notificationService)
+    }
 
     private func getBudget() -> BudgetEntity? {
-        if let budgetId = settingsService.getBudgetId() {
+        if let budgetId = bundle.settingsService.getBudgetId() {
             do {
-                return try budgetService.getBudgetById(budgetId)
+                return try bundle.budgetService.getBudgetById(budgetId)
             } catch {
                 // TODO: show error
                 print("Can't fetch budget info: \(error)")

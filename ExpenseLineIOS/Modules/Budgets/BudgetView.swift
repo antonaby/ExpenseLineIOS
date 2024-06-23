@@ -23,16 +23,7 @@ struct BudgetView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack {
-                NavigationLink {
-                    BudgetWizardView(
-                        vm: BudgetWizardViewModel(vm.budget,
-                                                  budgetService: budgetService,
-                                                  dataService: dataService,
-                                                  notificationService: notificationService),
-                        editMode: true
-                    )
-                    .navigationBarBackButtonHidden(true)
-                } label: {
+                NavigationLink(value: vm.budget) {
                     Text(vm.budget.name ?? "Unknown")
                         .font(.title2)
                         .tint(.black)
@@ -254,7 +245,7 @@ struct BudgetView: View {
     transaction4.createdAt = Date()
     transaction4.category = category2
     
-    let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
+    let appState = AppState(bundle: bundle)
     appState.selectBudget(budget)
     
     do {

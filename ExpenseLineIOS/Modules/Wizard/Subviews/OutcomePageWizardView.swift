@@ -73,6 +73,7 @@ struct OutcomePageWizardView: View {
     
     let vm = BudgetWizardViewModel(
         budget,
+        editMode: true,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
@@ -80,7 +81,7 @@ struct OutcomePageWizardView: View {
     
     return OutcomePageWizardView(vm: vm, type: .outcomeFixed, helpPage: .incomeWizard)
         .serviceBundle(bundle)
-        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+        .environmentObject(AppState(bundle: bundle))
 }
 
 #Preview("Flexible") {
@@ -128,6 +129,7 @@ struct OutcomePageWizardView: View {
     
     let vm = BudgetWizardViewModel(
         budget,
+        editMode: true,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
@@ -135,5 +137,5 @@ struct OutcomePageWizardView: View {
     
     return OutcomePageWizardView(vm: vm, type: .outcomePercent, helpPage: .incomeWizard)
         .serviceBundle(bundle)
-        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+        .environmentObject(AppState(bundle: bundle))
 }

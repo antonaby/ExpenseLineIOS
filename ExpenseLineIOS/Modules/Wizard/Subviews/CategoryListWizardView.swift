@@ -134,6 +134,7 @@ struct CategoryListWizardView: View {
     
     let vm = BudgetWizardViewModel(
         budget,
+        editMode: true,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
@@ -144,7 +145,7 @@ struct CategoryListWizardView: View {
         type: .outcomeFixed
     )
     .serviceBundle(bundle)
-    .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+    .environmentObject(AppState(bundle: bundle))
 }
 
 #Preview("Amount EUR") {
@@ -194,6 +195,7 @@ struct CategoryListWizardView: View {
 
     let vm = BudgetWizardViewModel(
         budget,
+        editMode: true,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
@@ -204,6 +206,6 @@ struct CategoryListWizardView: View {
         type: .outcomePercent
     )
     .serviceBundle(bundle)
-    .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+    .environmentObject(AppState(bundle: bundle))
 }
 

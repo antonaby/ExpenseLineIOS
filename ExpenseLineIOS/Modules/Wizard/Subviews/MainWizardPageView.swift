@@ -102,10 +102,11 @@ struct MainWizardPageView: View {
     return MainWizardPageView(
         vm: BudgetWizardViewModel(
             budget, 
+            editMode: true,
             budgetService: bundle.budgetService,
             dataService: bundle.dataService,
             notificationService: bundle.notificationService
         ))
     .serviceBundle(bundle)
-    .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+    .environmentObject(AppState(bundle: bundle))
 }

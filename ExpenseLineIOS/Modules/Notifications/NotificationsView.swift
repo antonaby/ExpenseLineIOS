@@ -342,7 +342,7 @@ struct NotificationsView: View {
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
-        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+        .environmentObject(AppState(bundle: bundle))
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }
 
@@ -359,6 +359,6 @@ struct NotificationsView: View {
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
-        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+        .environmentObject(AppState(bundle: bundle))
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }

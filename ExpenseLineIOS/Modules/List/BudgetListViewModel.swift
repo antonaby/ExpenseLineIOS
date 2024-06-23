@@ -32,26 +32,6 @@ class BudgetListViewModel: ObservableObject {
         }
     }
     
-    func budgetWizzardViewModel(_ budget: BudgetEntity) -> BudgetWizardViewModel {
-        return BudgetWizardViewModel(budget,
-                                     budgetService: budgetService,
-                                     dataService: dataService,
-                                     notificationService: notificationService)
-    }
-    
-    func newBudgetWizzardViewModel() -> BudgetWizardViewModel {
-        let budget = budgetService.newBudgetEntity()
-        budget.dailyRemainderAt = Date().currentDateAt(at: 20)
-        for category in dataService.getDefaultCategories(budget: budget) {
-            budget.addToCategories(category)
-        }
-        
-        return BudgetWizardViewModel(budget,
-                                     budgetService: budgetService,
-                                     dataService: dataService,
-                                     notificationService: notificationService)
-    }
-    
     func deleteBudget(_ budget: BudgetEntity) {
         do {
             try budgetService.deleteBudget(budget)

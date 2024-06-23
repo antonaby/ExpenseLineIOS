@@ -13,6 +13,7 @@ struct BudgetListView: View {
     @EnvironmentObject var subscriptionService: SubscriptionService
     @EnvironmentObject var appState: AppState
     
+    @Binding var showNewBudgetPage: Bool
     @StateObject var vm: BudgetListViewModel
     
     var body: some View {
@@ -45,10 +46,7 @@ struct BudgetListView: View {
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
                                     Menu {
-                                        NavigationLink {
-                                            BudgetWizardView(vm: vm.budgetWizzardViewModel(budget), editMode: true)
-                                                .navigationBarBackButtonHidden(true)
-                                        } label: {
+                                        NavigationLink(value: budget) {
                                             Label("Edit", systemImage: "pencil")
                                         }
                                         .tint(Color("FrDefault"))
@@ -72,9 +70,8 @@ struct BudgetListView: View {
             .padding(.top, 20)
             Group {
                 if subscriptionService.checkMaxBudgetCount() {
-                    NavigationLink {
-                        BudgetWizardView(vm: vm.newBudgetWizzardViewModel(), editMode: false)
-                            .navigationBarBackButtonHidden(true)
+                    Button {
+                        showNewBudgetPage.toggle()
                     } label: {
                         ButtonTextView()
                     }
@@ -118,11 +115,11 @@ struct BudgetListView: View {
 #Preview("No budgets") {
     let bundle = ServiceBundle.preview
   
-    let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
-    return BudgetListView(vm:
-                            BudgetListViewModel(budgetService: bundle.budgetService,
-                                                dataService: bundle.dataService,
-                                                notificationService: bundle.notificationService))
+    let appState = AppState(bundle: bundle)
+    return BudgetListView(showNewBudgetPage: .constant(false),
+                          vm: BudgetListViewModel(budgetService: bundle.budgetService,
+                                                  dataService: bundle.dataService,
+                                                  notificationService: bundle.notificationService))
         .environmentObject(appState)
         .serviceBundle(bundle)
 }
@@ -140,11 +137,11 @@ struct BudgetListView: View {
     
     do {
         try dm.sync()
-        let appState = AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService)
-        return BudgetListView(vm:
-                                BudgetListViewModel(budgetService: bundle.budgetService,
-                                                    dataService: bundle.dataService,
-                                                    notificationService: bundle.notificationService))
+        let appState = AppState(bundle: bundle)
+        return BudgetListView(showNewBudgetPage: .constant(false),
+                              vm: BudgetListViewModel(budgetService: bundle.budgetService,
+                                                      dataService: bundle.dataService,
+                                                      notificationService: bundle.notificationService))
             .environmentObject(appState)
             .serviceBundle(bundle)
     } catch {

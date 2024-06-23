@@ -24,7 +24,6 @@ struct BudgetWizardView: View {
     @State var currentPage: WizzardPage = .base
     
     @StateObject var vm: BudgetWizardViewModel
-    let editMode: Bool
     
     var body: some View {
         VStack(spacing: 15) {
@@ -66,7 +65,7 @@ struct BudgetWizardView: View {
             .padding(.horizontal, 20)
             WizardPageView()
             Group {
-                if editMode {
+                if vm.editMode {
                     EditModeControlView()
                 } else {
                     CreateModeControlView()
@@ -225,14 +224,15 @@ struct BudgetWizardView: View {
     let bundle = ServiceBundle.preview
     let vm = BudgetWizardViewModel(
         bundle.budgetService.newBudgetEntity(),
+        editMode: false,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
     )
     
-    return BudgetWizardView(vm: vm, editMode: false)
+    return BudgetWizardView(vm: vm)
         .serviceBundle(bundle)
-        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+        .environmentObject(AppState(bundle: bundle))
 }
 
 #Preview("Edit Budget") {
@@ -299,12 +299,13 @@ struct BudgetWizardView: View {
     
     let vm = BudgetWizardViewModel(
         budget,
+        editMode: true,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
     )
     
-    return BudgetWizardView(vm: vm, editMode: true)
+    return BudgetWizardView(vm: vm)
         .serviceBundle(bundle)
-        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
+        .environmentObject(AppState(bundle: bundle))
 }
