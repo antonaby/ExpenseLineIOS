@@ -111,9 +111,7 @@ struct BudgetListView: View {
   
     let appState = AppState(bundle: bundle)
     return BudgetListView(showNewBudgetPage: .constant(false),
-                          vm: BudgetListViewModel(budgetService: bundle.budgetService,
-                                                  dataService: bundle.dataService,
-                                                  notificationService: bundle.notificationService))
+                          vm: BudgetListViewModel(budgetService: bundle.budgetService))
         .environmentObject(appState)
         .serviceBundle(bundle)
 }
@@ -133,9 +131,7 @@ struct BudgetListView: View {
         try dm.sync()
         let appState = AppState(bundle: bundle)
         return BudgetListView(showNewBudgetPage: .constant(false),
-                              vm: BudgetListViewModel(budgetService: bundle.budgetService,
-                                                      dataService: bundle.dataService,
-                                                      notificationService: bundle.notificationService))
+                              vm: BudgetListViewModel(budgetService: bundle.budgetService))
             .environmentObject(appState)
             .serviceBundle(bundle)
     } catch {

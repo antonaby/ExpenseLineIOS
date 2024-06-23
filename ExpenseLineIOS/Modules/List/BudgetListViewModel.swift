@@ -13,13 +13,9 @@ class BudgetListViewModel: ObservableObject {
     @Published var budgets: [BudgetEntity]
     
     private let budgetService: BudgetService
-    private let dataService: DataService
-    private let notificationService: NotificationService
     
-    init(budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
+    init(budgetService: BudgetService) {
         self.budgetService = budgetService
-        self.dataService = dataService
-        self.notificationService = notificationService
         self.budgets = []
     }
     

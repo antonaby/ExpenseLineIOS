@@ -14,21 +14,16 @@ struct MainView: View {
     @EnvironmentObject var notificationService: NotificationService
     
     @StateObject var appState: AppState
-    @State var showNewBudgetPage: Bool = false
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $appState.path) {
             VStack {
                 if let budget = appState.budget,
                     let vm = appState.getBudgetViewModel(budget: budget, budgetService: budgetService, dataService: dataServise)  {
                     BudgetView(vm: vm)
                 } else {
-                    BudgetListView(showNewBudgetPage: $showNewBudgetPage,
-                                   vm: BudgetListViewModel(
-                                        budgetService: budgetService,
-                                        dataService: dataServise,
-                                        notificationService: notificationService
-                                   )
+                    BudgetListView(showNewBudgetPage: $appState.showNewBudgetPage,
+                                   vm: BudgetListViewModel(budgetService: budgetService)
                     )
                 }
             }
@@ -42,7 +37,7 @@ struct MainView: View {
                 )
                 .navigationBarBackButtonHidden(true)
             }
-            .navigationDestination(isPresented: $showNewBudgetPage) {
+            .navigationDestination(isPresented: $appState.showNewBudgetPage) {
                 BudgetWizardView(vm: appState.newBudgetWizzardViewModel())
                     .navigationBarBackButtonHidden(true)
             }
@@ -65,8 +60,6 @@ struct MainView: View {
 
 #Preview {
     let bundle = ServiceBundle.preview
-    return MainView(appState: AppState(
-        bundle: bundle)
-    )
+    return MainView(appState: AppState(bundle: bundle))
     .serviceBundle(bundle)
 }

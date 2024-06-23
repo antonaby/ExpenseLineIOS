@@ -16,6 +16,7 @@ struct BoolUserPreference: Identifiable {
 class SettingsService: ObservableObject {
     
     static let BUDGET_ID_KEY = "budgetId"
+    static let APP_FIRST_LAUNCH_DONE = "app.first.launch.done"
     
     private let userSettings: UserDefaults
        

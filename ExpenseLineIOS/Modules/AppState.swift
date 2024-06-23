@@ -6,14 +6,16 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 class AppState: ObservableObject {
     
+    @Published var path: NavigationPath = NavigationPath()
     @Published var showError: Bool?
     @Published var budget: BudgetEntity?
     @Published var paywall: Bool = false
     @Published var helpPage: HelpPage? = nil
+    @Published var showNewBudgetPage: Bool = false
 
     private let bundle: ServiceBundle
     
@@ -32,6 +34,13 @@ class AppState: ObservableObject {
     }
     
     func loadBudget() {
+        let settings = bundle.settingsService
+        if !settings.getBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE) {
+            settings.setBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE, value: true)
+            showNewBudgetPage = true
+            return
+        }
+        
         budget = getBudget()
     }
     
