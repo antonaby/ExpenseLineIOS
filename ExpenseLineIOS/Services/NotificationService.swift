@@ -72,10 +72,9 @@ class NotificationService: ObservableObject {
         request.predicate = NSPredicate(
             format: getQueryForTodayNotifications(showNoNotifications, ownerPredicate: "budget.id == %@"),
             budgetId as CVarArg, startDate as NSDate, endDate as NSDate, currentDay as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
-            return try dm.viewContext.fetch(request)
+            return try dm.viewContext.fetch(request).sorted(by: sortNotifications)
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
         }
@@ -92,13 +91,43 @@ class NotificationService: ObservableObject {
         request.predicate = NSPredicate(
             format: getQueryForTodayNotifications(showNoNotifications, ownerPredicate: "category.id == %@"),
             categoryId as CVarArg, startDate as NSDate, endDate as NSDate, currentDay as CVarArg)
-        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
-            return try dm.viewContext.fetch(request)
+            return try dm.viewContext.fetch(request).sorted(by: sortNotifications)
         } catch {
             throw BudgetServiceError.FetchError(msg: "Failed to fetch notification", reason: error)
         }
+    }
+    
+    private func sortNotifications(_ n1: NotificationEntity, _ n2: NotificationEntity) -> Bool {
+        if n1.typeValue == .nonotification && n2.typeValue == .nonotification {
+            return n1.nameValue < n2.nameValue
+        }
+        
+        if n1.typeValue == .nonotification {
+            return true
+        }
+        
+        if n2.typeValue == .nonotification {
+            return false
+        }
+        
+        if let date1 = n1.date, let date2 = n2.date {
+            let components1 = Calendar.current.dateComponents([.hour, .minute], from: date1)
+            let components2 = Calendar.current.dateComponents([.hour, .minute], from: date2)
+            
+            if components1.hour == components2.hour {
+                if let minute1 = components1.minute, let minute2 = components2.minute {
+                    return minute1 < minute2
+                }
+            }
+            
+            if let hour1 = components1.hour, let hour2 = components2.hour {
+                return hour1 < hour2
+            }
+        }
+        
+        return n1.nameValue < n2.nameValue
     }
     
     private func getQueryForTodayNotifications(_ showNoNotifications: Bool, ownerPredicate: String) -> String {

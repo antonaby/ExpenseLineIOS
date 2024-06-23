@@ -159,6 +159,9 @@ struct NotificationCard: View {
                     Text("Weekly")
                 }
                 HStack {
+                    if let date = notification.date {
+                        Text(formatters.formatHour(date))
+                    }
                     ForEach(notificationService.getWeekDays()) { day in
                         Text(day.shortName)
                             .foregroundStyle(
@@ -322,6 +325,7 @@ struct NotificationsView: View {
     notification4.typeValue = .weekly
     notification4.weekDaysArr = [1, 3, 6]
     notification4.category = category
+    notification4.date = Date()
     
     let notification5 = bundle.notificationService.newNotificationEntity(budget)
     notification5.name = "Preview 5"

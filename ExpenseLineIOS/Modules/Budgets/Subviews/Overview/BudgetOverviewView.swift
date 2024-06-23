@@ -424,7 +424,7 @@ struct BudgetOverviewView: View {
         let notification1 = budgetService.newNotificationEntity(budget)
         notification1.name = "Preview 1"
         notification1.typeValue = .exact
-        notification1.date = Date()
+        notification1.date = Date().plusHour(1)
         notification1.enabled = true
         notification1.category = category
         
