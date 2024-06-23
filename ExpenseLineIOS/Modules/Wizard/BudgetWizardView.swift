@@ -18,6 +18,8 @@ enum WizzardPage: Int, Identifiable, CaseIterable {
 
 struct BudgetWizardView: View {
     
+    @EnvironmentObject var appState: AppState
+    
     @Environment(\.dismiss) var dismiss
     @State var currentPage: WizzardPage = .base
     
@@ -54,9 +56,14 @@ struct BudgetWizardView: View {
                 .font(.title2)
                 .padding(.trailing, 10)
             }
-            Text(getPageTitle())
-                .modifier(FormTitleViewModifier.modifier)
-                .padding(.horizontal, 20)
+            HStack {
+                Text(getPageTitle())
+                    .modifier(FormTitleViewModifier.modifier)
+                HelpButton {
+                    appState.showHelpPage(for: getHelpPage())
+                }
+            }
+            .padding(.horizontal, 20)
             WizardPageView()
             Group {
                 if editMode {
@@ -185,6 +192,19 @@ struct BudgetWizardView: View {
         }
     }
     
+    func getHelpPage() -> HelpPage {
+        switch currentPage {
+        case .income:
+            return .incomeWizard
+        case .outcomeFixed:
+            return .fixedOutcomeWizard
+        case .outcomeFlexible:
+            return .flexibleOutcomeWizard
+        default:
+            return .mainWizard
+        }
+    }
+    
     func nextPage() {
         let nextValue = currentPage.rawValue + 1
         if  nextValue <= WizzardPage.outcomeFlexible.rawValue {
@@ -212,6 +232,7 @@ struct BudgetWizardView: View {
     
     return BudgetWizardView(vm: vm, editMode: false)
         .serviceBundle(bundle)
+        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }
 
 #Preview("Edit Budget") {
@@ -285,4 +306,5 @@ struct BudgetWizardView: View {
     
     return BudgetWizardView(vm: vm, editMode: true)
         .serviceBundle(bundle)
+        .environmentObject(AppState(budgetService: bundle.budgetService, settingsService: bundle.settingsService))
 }

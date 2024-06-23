@@ -30,6 +30,11 @@ struct MainView: View {
             }
         }
         .tint(Color("FrDefault"))
+        .sheet(item: $appState.helpPage) { page in
+            HelpView(page: page)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
         .fullScreenCover(isPresented: $appState.paywall) {
             PaywallView()
         }

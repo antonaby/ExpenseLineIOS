@@ -14,7 +14,6 @@ struct FormTitleViewModifier: ViewModifier {
         content
             .font(.title)
             .foregroundColor(Color("Accent3"))
-            .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     static let modifier = FormTitleViewModifier()

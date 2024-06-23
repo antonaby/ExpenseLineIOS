@@ -13,6 +13,7 @@ class AppState: ObservableObject {
     @Published var showError: Bool?
     @Published var budget: BudgetEntity?
     @Published var paywall: Bool = false
+    @Published var helpPage: HelpPage? = nil
 
     private let budgetService: BudgetService
     private let settingsService: SettingsService
@@ -38,6 +39,10 @@ class AppState: ObservableObject {
     
     func showPaywall() {
         paywall.toggle()
+    }
+    
+    func showHelpPage(for page: HelpPage) {
+        self.helpPage = page
     }
     
     func getBudgetViewModel(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) -> BudgetViewModel? {

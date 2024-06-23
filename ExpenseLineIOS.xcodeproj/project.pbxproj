@@ -46,6 +46,9 @@
 		D23B85172BF22E8300A62196 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B85162BF22E8300A62196 /* Period.swift */; };
 		D23B851A2BF235D600A62196 /* PeriodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23B85192BF235D600A62196 /* PeriodListView.swift */; };
 		D23EE3332BC66B7C0088B246 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23EE3322BC66B7C0088B246 /* BudgetService.swift */; };
+		D23F49A12C28032000604CAF /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23F49A02C28032000604CAF /* HelpView.swift */; };
+		D23F49A32C2804C700604CAF /* HelpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23F49A22C2804C700604CAF /* HelpPage.swift */; };
+		D23F49A52C28066500604CAF /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23F49A42C28066500604CAF /* HelpButton.swift */; };
 		D244C0722BFB74530015EA61 /* Celendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D244C0712BFB74530015EA61 /* Celendar+Extension.swift */; };
 		D247B4E62BF619F7004E72A4 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E52BF619F7004E72A4 /* CategoryView.swift */; };
 		D247B4E82BF61A08004E72A4 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */; };
@@ -150,6 +153,9 @@
 		D23B85162BF22E8300A62196 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		D23B85192BF235D600A62196 /* PeriodListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodListView.swift; sourceTree = "<group>"; };
 		D23EE3322BC66B7C0088B246 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
+		D23F49A02C28032000604CAF /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		D23F49A22C2804C700604CAF /* HelpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPage.swift; sourceTree = "<group>"; };
+		D23F49A42C28066500604CAF /* HelpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButton.swift; sourceTree = "<group>"; };
 		D244C0712BFB74530015EA61 /* Celendar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Celendar+Extension.swift"; sourceTree = "<group>"; };
 		D247B4E52BF619F7004E72A4 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
@@ -318,6 +324,7 @@
 				D26C11CD2C04A7D6004DB285 /* IconView.swift */,
 				D258A1982C0748F30009B3D2 /* DailyProgressView.swift */,
 				D23685482C1EC96900733439 /* ListCardViewModifier.swift */,
+				D23F49A42C28066500604CAF /* HelpButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -331,6 +338,7 @@
 				D20EF2E32BB19436006CF8CD /* Transaction.swift */,
 				D23B85162BF22E8300A62196 /* Period.swift */,
 				D22238F22C145C010054A003 /* Notification.swift */,
+				D23F49A22C2804C700604CAF /* HelpPage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -372,6 +380,7 @@
 			children = (
 				D2350E692BBC35A0002B93A0 /* MainView.swift */,
 				D22776CA2C245E6000B49782 /* PaywallView.swift */,
+				D23F49A02C28032000604CAF /* HelpView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -648,6 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D23F49A52C28066500604CAF /* HelpButton.swift in Sources */,
 				D2C124DA2C01CAF500CD8C04 /* SettingsService.swift in Sources */,
 				D22776CB2C245E6000B49782 /* PaywallView.swift in Sources */,
 				D2DEFC142BB4349D00AC7CA0 /* DatabaseManager.swift in Sources */,
@@ -675,6 +685,7 @@
 				D221C0862BE755000096DF89 /* Date+Extension.swift in Sources */,
 				D247B4E62BF619F7004E72A4 /* CategoryView.swift in Sources */,
 				D2C58AD42BE22F5800F1BB03 /* CategoryTemplateSelectorView.swift in Sources */,
+				D23F49A12C28032000604CAF /* HelpView.swift in Sources */,
 				D23B851A2BF235D600A62196 /* PeriodListView.swift in Sources */,
 				D221C08A2BE758170096DF89 /* Currency.swift in Sources */,
 				D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */,
@@ -697,6 +708,7 @@
 				D22238F12C1450B10054A003 /* NotificationsViewModel.swift in Sources */,
 				D2246B3C2BBAD67B00556936 /* AppState.swift in Sources */,
 				D2370CD62BDA702000B75B4D /* WizzardNextButton.swift in Sources */,
+				D23F49A32C2804C700604CAF /* HelpPage.swift in Sources */,
 				D226FB0B2BED175000B54654 /* OutcomePageWizardView.swift in Sources */,
 				D258A19B2C074FD50009B3D2 /* Array+Extension.swift in Sources */,
 				D221C0882BE757200096DF89 /* CurrencySelectorSheet.swift in Sources */,
