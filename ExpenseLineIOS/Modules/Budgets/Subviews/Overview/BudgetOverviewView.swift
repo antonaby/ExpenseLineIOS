@@ -43,6 +43,7 @@ struct SliderView: View {
 
 struct BudgetOverviewView: View {
     
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var formatters: FormattersHolder
     @StateObject var vm: BudgetOverviewViewModel
     
@@ -208,6 +209,9 @@ struct BudgetOverviewView: View {
     @ViewBuilder
     func SpenginsView() -> some View {
         VStack {
+            HelpButton {
+                appState.showHelpPage(for: .mainPage)
+            }
             ForEach(SpengingsType.allCases) { type in
                 Button {
                     spendings = type
@@ -406,7 +410,6 @@ struct BudgetOverviewView: View {
             notificationService: bundle.notificationService
         )
         
-        
         vm.totalPlannedFixedOutcome = 600
         vm.totalPlannedPercentOutcomeAmount = 1500
         vm.totalOutcome = 2000
@@ -444,6 +447,7 @@ struct BudgetOverviewView: View {
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -486,6 +490,7 @@ struct BudgetOverviewView: View {
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -528,6 +533,7 @@ struct BudgetOverviewView: View {
         return BudgetOverviewView(vm: vm, loadStats: false)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }

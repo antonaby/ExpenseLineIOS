@@ -39,10 +39,16 @@ struct BudgetView: View {
                 Button {
                     appState.unselectBudget()
                 } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.title2)
-                        .padding(.leading, 10)
-                        .padding(.top, 5)
+                    HStack(alignment: .center) {
+                        Image(systemName: "chevron.left")
+                            .font(.title3)
+                        Text("Budgets")
+                            .font(.caption)
+                    }
+                    .foregroundStyle(.white)
+                    .padding(5)
+                    .background(RoundedRectangle(cornerRadius: 5))
+                    .padding(.leading, 10)
                 }
                 .tint(Color("FrDefault"))
             }
@@ -53,7 +59,7 @@ struct BudgetView: View {
                 } label: {
                     Image(systemName: "gear")
                         .font(.title2)
-                        .padding(.trailing, 10)
+                        .padding(.trailing, 20)
                 }
                 .tint(Color("FrDefault"))
             }
@@ -137,6 +143,7 @@ struct BudgetView: View {
         .environmentObject(vm.formatters)
         .tint(Color("FrDefault"))
         .onAppear {
+            appState.showHelpPage(for: .mainPage, firstTime: true)
             vm.reloadBudget()
         }
         .onDisappear {
@@ -153,7 +160,6 @@ struct BudgetView: View {
         }
         .buttonStyle(.borderless)
         .tint(Color("FrDefault"))
-        .padding(.bottom, 5)
     }
     
     func onBudgetUpdated() {

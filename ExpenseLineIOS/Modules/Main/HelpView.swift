@@ -41,7 +41,7 @@ struct HelpView: View {
                 case .flexibleOutcomeWizard:
                     OutcomeFlexibleWizardPage()
                 case .mainPage:
-                    Text("")
+                    MainPage()
                 }
             }
             Button {
