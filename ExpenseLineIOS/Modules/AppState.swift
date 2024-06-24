@@ -15,7 +15,6 @@ class AppState: ObservableObject {
     @Published var budget: BudgetEntity?
     @Published var paywall: Bool = false
     @Published var helpPage: HelpPage? = nil
-    @Published var showNewBudgetPage: Bool = false
 
     private let bundle: ServiceBundle
     
@@ -37,7 +36,6 @@ class AppState: ObservableObject {
         let settings = bundle.settingsService
         if !settings.getBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE) {
             settings.setBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE, value: true)
-            showNewBudgetPage = true
             return
         }
         
@@ -74,18 +72,20 @@ class AppState: ObservableObject {
         }
     }
     
-    func newBudgetWizzardViewModel() -> BudgetWizardViewModel {
+    func navigateNewBudgetWizzard() {
         let budget = bundle.budgetService.newBudgetEntity()
+        budget.isNew = true
         budget.dailyRemainderAt = Date().currentDateAt(at: 20)
         for category in bundle.dataService.getDefaultCategories(budget: budget) {
             budget.addToCategories(category)
         }
         
-        return BudgetWizardViewModel(budget,
-                                     editMode: false,
-                                     budgetService: bundle.budgetService,
-                                     dataService: bundle.dataService,
-                                     notificationService: bundle.notificationService)
+        path.append(budget)
+    }
+    
+    func navigateEditBudget(_ budget: BudgetEntity) {
+        budget.isNew = false
+        path.append(budget)
     }
 
     private func getBudget() -> BudgetEntity? {

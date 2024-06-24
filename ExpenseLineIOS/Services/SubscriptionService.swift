@@ -89,7 +89,7 @@ class SubscriptionService: ObservableObject {
     }
     
     private func checkSubcription() -> Bool {
-        return false
+        return true
     }
     
 }

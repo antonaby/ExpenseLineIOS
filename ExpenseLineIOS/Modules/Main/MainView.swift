@@ -22,24 +22,26 @@ struct MainView: View {
                     let vm = appState.getBudgetViewModel(budget: budget, budgetService: budgetService, dataService: dataServise)  {
                     BudgetView(vm: vm)
                 } else {
-                    BudgetListView(showNewBudgetPage: $appState.showNewBudgetPage,
-                                   vm: BudgetListViewModel(budgetService: budgetService)
-                    )
+                    BudgetListView(vm: BudgetListViewModel(budgetService: budgetService))
                 }
             }
             .navigationDestination(for: BudgetEntity.self) { budget in
                 BudgetWizardView(vm: BudgetWizardViewModel(
                     budget,
-                    editMode: true,
                     budgetService: budgetService,
                     dataService: dataServise,
                     notificationService: notificationService)
                 )
                 .navigationBarBackButtonHidden(true)
-            }
-            .navigationDestination(isPresented: $appState.showNewBudgetPage) {
-                BudgetWizardView(vm: appState.newBudgetWizzardViewModel())
-                    .navigationBarBackButtonHidden(true)
+                .onUpdateBudget { budget in
+                    appState.path.removeLast()
+                    DispatchQueue.main.async {
+                        appState.selectBudget(budget)
+                    }
+                }
+                .onDismissBudget { budget in
+                    appState.path.removeLast()
+                }
             }
         }
         .tint(Color("FrDefault"))

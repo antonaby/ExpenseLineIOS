@@ -13,7 +13,6 @@ struct BudgetListView: View {
     @EnvironmentObject var subscriptionService: SubscriptionService
     @EnvironmentObject var appState: AppState
     
-    @Binding var showNewBudgetPage: Bool
     @StateObject var vm: BudgetListViewModel
     
     var body: some View {
@@ -46,7 +45,9 @@ struct BudgetListView: View {
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
                                     Menu {
-                                        NavigationLink(value: budget) {
+                                        Button {
+                                            appState.navigateEditBudget(budget)
+                                        } label: {
                                             Label("Edit", systemImage: "pencil")
                                         }
                                         .tint(Color("FrDefault"))
@@ -70,7 +71,7 @@ struct BudgetListView: View {
             .padding(.top, 20)
             Button {
                 if subscriptionService.checkMaxBudgetCount() {
-                    showNewBudgetPage.toggle()
+                    appState.navigateNewBudgetWizzard()
                 } else {
                     appState.showPaywall()
                 }
@@ -110,8 +111,7 @@ struct BudgetListView: View {
     let bundle = ServiceBundle.preview
   
     let appState = AppState(bundle: bundle)
-    return BudgetListView(showNewBudgetPage: .constant(false),
-                          vm: BudgetListViewModel(budgetService: bundle.budgetService))
+    return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService))
         .environmentObject(appState)
         .serviceBundle(bundle)
 }
@@ -130,8 +130,7 @@ struct BudgetListView: View {
     do {
         try dm.sync()
         let appState = AppState(bundle: bundle)
-        return BudgetListView(showNewBudgetPage: .constant(false),
-                              vm: BudgetListViewModel(budgetService: bundle.budgetService))
+        return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService))
             .environmentObject(appState)
             .serviceBundle(bundle)
     } catch {

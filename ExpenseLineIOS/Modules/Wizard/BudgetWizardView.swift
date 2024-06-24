@@ -7,6 +7,71 @@
 
 import SwiftUI
 
+struct BudgetAction {
+    
+    typealias Action = (BudgetEntity) -> Void
+    let action: Action
+    
+    func callAsFunction(_ budget: BudgetEntity) {
+        action(budget)
+    }
+    
+}
+
+struct UpdateBudgetActionKey: EnvironmentKey {
+    
+    static var defaultValue: BudgetAction?
+    
+}
+
+struct DeleteBudgetActionKey: EnvironmentKey {
+    
+    static var defaultValue: BudgetAction?
+    
+}
+
+struct DismissBudgetActionKey: EnvironmentKey {
+    
+    static var defaultValue: BudgetAction?
+    
+}
+
+extension EnvironmentValues {
+    
+    var updateBudget: BudgetAction? {
+       get { self[UpdateBudgetActionKey.self] }
+       set { self[UpdateBudgetActionKey.self] = newValue }
+    }
+    
+    var deleteBudget: BudgetAction? {
+        get { self[DeleteBudgetActionKey.self] }
+        set { self[DeleteBudgetActionKey.self] = newValue }
+    }
+    
+    var dismissBudget: BudgetAction? {
+        get { self[DismissBudgetActionKey.self] }
+        set { self[DismissBudgetActionKey.self] = newValue }
+    }
+    
+}
+
+extension View {
+    
+    func onUpdateBudget(_ action: @escaping BudgetAction.Action) -> some View {
+        self.environment(\.updateBudget, BudgetAction(action: action))
+    }
+    
+    func onDeleteBudget(_ action: @escaping BudgetAction.Action) -> some View {
+        self.environment(\.deleteBudget, BudgetAction(action: action))
+    }
+    
+    func onDismissBudget(_ action: @escaping BudgetAction.Action) -> some View {
+        self.environment(\.dismissBudget, BudgetAction(action: action))
+    }
+    
+}
+
+
 enum WizzardPage: Int, Identifiable, CaseIterable {
     case base = 0
     case income
@@ -20,7 +85,9 @@ struct BudgetWizardView: View {
     
     @EnvironmentObject var appState: AppState
     
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.updateBudget) private var update
+    @Environment(\.dismissBudget) private var dismiss
+    
     @State var currentPage: WizzardPage = .base
     
     @StateObject var vm: BudgetWizardViewModel
@@ -39,7 +106,7 @@ struct BudgetWizardView: View {
                         previousPage()
                     } else {
                         vm.rollback()
-                        dismiss()
+                        dismiss?(vm.budget)
                     }
                 } label: {
                     Label("Back", systemImage: "chevron.backward")
@@ -50,7 +117,7 @@ struct BudgetWizardView: View {
             .overlay(alignment: .trailing) {
                 ToolButton(icon: "x.circle", color: Color("Accent1")) {
                     vm.rollback()
-                    dismiss()
+                    dismiss?(vm.budget)
                 }
                 .font(.title2)
                 .padding(.trailing, 10)
@@ -98,7 +165,7 @@ struct BudgetWizardView: View {
         HStack {
             WizzardNextButton {
                 vm.save()
-                dismiss()
+                update?(vm.budget)
             } content: {
                 Text("Save")
                     .modifier(WizardButtonContentViewModifier.modifier)
@@ -122,7 +189,7 @@ struct BudgetWizardView: View {
                 nextPage()
             } else {
                 vm.save()
-                dismiss()
+                update?(vm.budget)
             }
         } content: {
             if currentPage != .outcomeFlexible {
@@ -224,7 +291,6 @@ struct BudgetWizardView: View {
     let bundle = ServiceBundle.preview
     let vm = BudgetWizardViewModel(
         bundle.budgetService.newBudgetEntity(),
-        editMode: false,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
@@ -299,7 +365,6 @@ struct BudgetWizardView: View {
     
     let vm = BudgetWizardViewModel(
         budget,
-        editMode: true,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService

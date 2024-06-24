@@ -37,9 +37,9 @@ class BudgetWizardViewModel: ObservableObject {
     
     var formatters: FormattersHolder
     
-    init(_ budget: BudgetEntity, editMode: Bool, budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
+    init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
         self.budget = budget
-        self.editMode = editMode
+        self.editMode = !budget.isNew
         self.budgetService = budgetService
         self.dataService = dataService
         self.notificationService = notificationService

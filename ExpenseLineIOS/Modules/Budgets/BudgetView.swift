@@ -23,13 +23,14 @@ struct BudgetView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack {
-                NavigationLink(value: vm.budget) {
-                    Text(vm.budget.name ?? "Unknown")
+                Button {
+                    appState.navigateEditBudget(vm.budget)
+                } label: {
+                    Text(vm.budget.name ?? "?")
                         .font(.title2)
                         .tint(.black)
                 }
-                PeriodView()
-                    .bold()
+                PeriodView().bold()
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 20)

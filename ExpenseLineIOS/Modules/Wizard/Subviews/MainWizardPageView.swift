@@ -102,7 +102,6 @@ struct MainWizardPageView: View {
     return MainWizardPageView(
         vm: BudgetWizardViewModel(
             budget, 
-            editMode: true,
             budgetService: bundle.budgetService,
             dataService: bundle.dataService,
             notificationService: bundle.notificationService
