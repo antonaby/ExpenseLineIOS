@@ -102,6 +102,27 @@ class BudgetWizardViewModel: ObservableObject {
         op = .none
     }
     
+    func isPageValid(_ page: WizzardPage) -> Bool {
+        switch page {
+        case .base:
+            return isFormValid
+        case .income:
+            return budgetHasIncome()
+        case .outcomeFixed:
+            return true
+        case .outcomeFlexible:
+            return isBudgetValid()
+        }
+    }
+    
+    func isBudgetValid() -> Bool {
+        return isFormValid && budgetHasIncome()
+    }
+    
+    private func budgetHasIncome() -> Bool {
+        budget.totalAmountForCategoryType(.income) > 0
+    }
+    
     func calculateTotalIncome() -> Decimal {
         budget.totalAmountForCategoryType(.income)
     }

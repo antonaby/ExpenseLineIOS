@@ -170,7 +170,7 @@ struct BudgetWizardView: View {
                 Text("Save")
                     .modifier(WizardButtonContentViewModifier.modifier)
             }
-            .disabled(!vm.isFormValid)
+            .disabled(!vm.isBudgetValid())
             WizzardNextButton {
                 nextPage()
             } content: {
@@ -200,7 +200,7 @@ struct BudgetWizardView: View {
                     .modifier(WizardButtonContentViewModifier.modifier)
             }
         }
-        .disabled(!vm.isFormValid && currentPage == .outcomeFlexible)
+        .disabled(!vm.isPageValid(currentPage))
     }
  
     @ViewBuilder
@@ -289,8 +289,11 @@ struct BudgetWizardView: View {
 
 #Preview("New Budget") {
     let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
+    budget.isNew = true
+    
     let vm = BudgetWizardViewModel(
-        bundle.budgetService.newBudgetEntity(),
+        budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
         notificationService: bundle.notificationService
