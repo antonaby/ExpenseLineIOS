@@ -162,10 +162,6 @@ struct BudgetView: View {
         .tint(Color("FrDefault"))
     }
     
-    func onBudgetUpdated() {
-        vm.reloadBudget()
-    }
-    
     func onTransactionUpdated() {
         vm.sendTransactionUpdated()
     }

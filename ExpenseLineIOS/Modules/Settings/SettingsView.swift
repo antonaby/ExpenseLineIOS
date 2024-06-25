@@ -22,6 +22,18 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Form {
+                if let budget = appState.budget {
+                    Section {
+                        Button {
+                            appState.navigateEditBudget(budget)
+                        } label: {
+                            Text("Edit **\(budget.name ?? "Budget")**")
+                        }
+                        .tint(.black)
+                    } header: {
+                        Text("Budget")
+                    }
+                }
                 Section {
                     Toggle(isOn: $isHelpButtonVisible) {
                         Text("Show help")
@@ -63,8 +75,13 @@ struct SettingsView: View {
 
 #Preview {
     let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
+    budget.name = "Preview"
+    
+    let appState = AppState(bundle: bundle)
+    appState.budget = budget
     
     return SettingsView()
         .serviceBundle(bundle)
-        .environmentObject(AppState(bundle: bundle))
+        .environmentObject(appState)
 }
