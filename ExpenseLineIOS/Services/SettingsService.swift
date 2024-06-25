@@ -54,8 +54,12 @@ class SettingsService: ObservableObject {
         userSettings.bool(forKey: key)
     }
     
+    func isFirstLaunch() -> Bool {
+        !getBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE)
+    }
+    
     func alwaysShowHelp() -> Bool {
-        return false
+        false
     }
     
 }

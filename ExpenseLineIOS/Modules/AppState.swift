@@ -34,10 +34,12 @@ class AppState: ObservableObject {
     
     func loadBudget() {
         let settings = bundle.settingsService
-        if !settings.getBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE) {
+        if settings.isFirstLaunch() {
             settings.setBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE, value: true)
-            settings.setBoolPreference(for: SettingsService.SHOW_HELP_BUTTON, value: true)
-            //navigateNewBudgetWizzard()
+            DispatchQueue.main.async { [weak self] in
+                self?.helpButtonVisible(true)
+                self?.navigateNewBudgetWizzard()
+            }
             return
         }
         
