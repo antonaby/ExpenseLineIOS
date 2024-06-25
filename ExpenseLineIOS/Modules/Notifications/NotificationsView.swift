@@ -7,63 +7,24 @@
 
 import SwiftUI
 
-enum NotificationAction {
-    
-    case enable
-    case delete
-    
-}
-
 struct NotificationCard: View {
     
     @EnvironmentObject var formatters: FormattersHolder
     @EnvironmentObject var notificationService: NotificationService
     @Binding var notification: NotificationEntity
-    @Binding var selectedNotification: NotificationEntity?
-    @State var isEnabled: Bool
-    
-    private var updateNotification: (NotificationAction, NotificationEntity) -> Void
-    
-    init(notification: Binding<NotificationEntity>,
-         selectedNotification: Binding<NotificationEntity?>,
-         updateNotification: @escaping (NotificationAction, NotificationEntity) -> Void) {
-        self._notification = notification
-        self._selectedNotification = selectedNotification
-        self.isEnabled = notification.wrappedValue.enabled
-        self.updateNotification = updateNotification
-    }
-    
+        
     var body: some View {
         FlexibleCardView {
             VStack {
                 HStack(alignment: .firstTextBaseline) {
-                    VStack(alignment: .leading) {
-                        if let category = notification.category {
-                            HStack {
-                                IconView(name: category.iconNameValue, color: category.colorValue, size: 25)
-                                Text(category.nameValue)
-                                    .font(.caption)
-                                Spacer()
-                            }
-                        }
-                        Text(notification.nameValue)
-                    }
+                    Text(notification.nameValue)
                     Spacer()
-                    Menu {
-                        Button {
-                            selectedNotification = notification
-                        } label: {
-                            Text("Edit")
+                    if let category = notification.category {
+                        HStack {
+                            Text(category.nameValue)
+                                .font(.caption)
+                            IconView(name: category.iconNameValue, color: category.colorValue, size: 25)
                         }
-                        Button(role: .destructive) {
-                            updateNotification(.delete, notification)
-                        } label: {
-                            Text("Delete")
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(Color("FrDefault"))
                     }
                 }
                 HStack {
@@ -80,9 +41,6 @@ struct NotificationCard: View {
                 }
             }
         }
-        .onChange(of: notification.enabled) { value in
-            isEnabled = value
-        }
     }
     
     @ViewBuilder
@@ -97,22 +55,17 @@ struct NotificationCard: View {
     
     @ViewBuilder
     func DailyNotificationHeaderView() -> some View {
-        Toggle(isOn: $isEnabled) {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "bell")
-                    Text("Daily")
-                }
-                if let date = notification.date {
-                    Text(formatters.formatHour(date))
-                }
+        VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: notification.enabled ? "bell" : "bell.slash")
+                Text("Daily")
             }
-            .font(.caption)
+            if let date = notification.date {
+                Text(formatters.formatHour(date))
+            }
         }
-        .onChange(of: isEnabled) { value in
-            notification.enabled = value
-            updateNotification(.enable, notification)
-        }
+        .font(.caption)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .tint(Color("FrDefault"))
     }
     
@@ -120,20 +73,15 @@ struct NotificationCard: View {
     func OneTimeNotificationHeaderView() -> some View {
         if let date = notification.date {
             if date > Date() {
-                Toggle(isOn: $isEnabled) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Image(systemName: "bell")
-                            Text("One Time")
-                        }
-                        Text(formatters.formatDate(date))
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: notification.enabled ? "bell" : "bell.slash")
+                        Text("One Time")
                     }
-                    .font(.caption)
+                    Text(formatters.formatDate(date))
                 }
-                .onChange(of: isEnabled) { value in
-                    notification.enabled = value
-                    updateNotification(.enable, notification)
-                }
+                .font(.caption)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .tint(Color("FrDefault"))
             } else {
                 VStack(alignment: .leading) {
@@ -146,39 +94,35 @@ struct NotificationCard: View {
                         .foregroundStyle(Color("Accent1"))
                 }
                 .font(.caption)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
     
     @ViewBuilder
     func WeeklyNotificationHeaderView() -> some View {
-        Toggle(isOn: $isEnabled) {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "bell")
-                    Text("Weekly")
+        VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: notification.enabled ? "bell" : "bell.slash")
+                Text("Weekly")
+            }
+            HStack {
+                if let date = notification.date {
+                    Text(formatters.formatHour(date))
                 }
-                HStack {
-                    if let date = notification.date {
-                        Text(formatters.formatHour(date))
-                    }
-                    ForEach(notificationService.getWeekDays()) { day in
-                        Text(day.shortName)
-                            .foregroundStyle(
-                                notification.weekDaysArr.contains(day.id)
-                                ? Color("FrDefault")
-                                : .black
-                            )
-                            .underline(notification.weekDaysArr.contains(day.id))
-                    }
+                ForEach(notificationService.getWeekDays()) { day in
+                    Text(day.shortName)
+                        .foregroundStyle(
+                            notification.weekDaysArr.contains(day.id)
+                            ? Color("FrDefault")
+                            : .black
+                        )
+                        .underline(notification.weekDaysArr.contains(day.id))
                 }
             }
-            .font(.caption)
         }
-        .onChange(of: isEnabled) { value in
-            notification.enabled = value
-            updateNotification(.enable, notification)
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(.caption)
         .tint(Color("FrDefault"))
     }
     
@@ -197,32 +141,46 @@ struct NotificationsView: View {
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            ScrollView {
-                VStack {
-                    Color.clear
-                        .frame(height: 45)
-                    ForEach($vm.notifications) { $notification in
-                        NotificationCard(
-                            notification: $notification,
-                            selectedNotification: $selectedNotification
-                        ) { action, notification in
-                            DispatchQueue.main.async {
-                                switch action {
-                                case .enable:
-                                    vm.resheduleNotification(notification)
-                                case .delete:
-                                    vm.deleteNotification(notification)
-                                }
-                                vm.loadNotifications()
+            List {
+                ForEach($vm.notifications) { $notification in
+                    NotificationCard(notification: $notification)
+                        .defaultListCard()
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                vm.deleteNotification(notification)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
                             }
+                            .tint(Color("Accent1"))
+                            Button {
+                                selectedNotification = notification
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            .tint(Color("FrDefault"))
                         }
-                    }
-                    Color.clear
-                        .frame(height: 70)
+                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                            Button {
+                                notification.enabled.toggle()
+                                vm.resheduleNotification(notification)
+                            } label: {
+                                if notification.enabled {
+                                    Label("Turn off", systemImage: "bell.slash")
+                                } else {
+                                    Label("Turn on", systemImage: "bell")
+                                }
+                            }
+                            .tint(Color("FrDefault"))
+                        }
                 }
-                .padding(.horizontal, 20)
-                .frame(maxWidth: .infinity)
+                Color.clear
+                    .frame(height: 70)
+                    .defaultListCard()
             }
+            .scrollContentBackground(.hidden)
+            .background(Color("BgDefault"))
+            .listStyle(.insetGrouped)
+            .listRowSpacing(10)
             VStack {
                 HStack {
                     Button {
@@ -267,6 +225,7 @@ struct NotificationsView: View {
         }
         .background(Color("BgDefault"))
         .onAppear {
+            UICollectionView.appearance().contentInset.top = 10
             vm.loadNotifications()
         }
         .onDisappear {

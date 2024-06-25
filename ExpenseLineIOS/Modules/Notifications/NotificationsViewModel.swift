@@ -89,6 +89,8 @@ class NotificationsViewModel: ObservableObject {
             // TODO: handle error
             print("Something went wrong \(error)")
         }
+        
+        objectWillChange.send()
     }
     
     func cancelAll() {
