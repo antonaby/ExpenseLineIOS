@@ -11,7 +11,7 @@ struct TransactionCard: View {
     
     @EnvironmentObject var formatters: FormattersHolder
 
-    let transaction: TransactionEntity
+   @Binding var transaction: TransactionEntity
     
     var body: some View {
         FlexibleCardView {
@@ -98,8 +98,8 @@ struct TransactionListView: View {
             }
             .padding(.horizontal, 20)
             List {
-                ForEach(vm.transactions) { transaction in
-                    TransactionCard(transaction: transaction)
+                ForEach($vm.transactions) { $transaction in
+                    TransactionCard(transaction: $transaction)
                         .defaultListCard()
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
