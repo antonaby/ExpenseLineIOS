@@ -7,7 +7,37 @@
 
 import SwiftUI
 
+struct HelpButtonVisible: EnvironmentKey {
+    
+    static var defaultValue: Bool?
+    
+}
+
+extension EnvironmentValues {
+        
+    var helpButtonVisible: Bool? {
+        get {
+            self[HelpButtonVisible.self]
+        }
+        set {
+            self[HelpButtonVisible.self] = newValue
+        }
+    }
+    
+}
+
+extension View {
+    
+    func helpButtonVisible(_ value: Bool) -> some View {
+        self.environment(\.helpButtonVisible, value)
+    }
+    
+}
+
+
 struct HelpButton: View {
+    
+    @Environment(\.helpButtonVisible) var visible
     
     let action: () -> Void
     
@@ -16,20 +46,25 @@ struct HelpButton: View {
     }
     
     var body: some View {
-        Button {
-            action()
-        } label: {
-            Image(systemName: "questionmark")
-                .foregroundStyle(.white)
-                .padding(5)
-                .font(.caption)
-                .background(Circle().foregroundStyle(Color("FrDefault")))
+        if let isVisible = visible, isVisible {
+            Button {
+                action()
+            } label: {
+                Image(systemName: "questionmark")
+                    .foregroundStyle(.white)
+                    .padding(5)
+                    .font(.caption)
+                    .background(Circle().foregroundStyle(Color("FrDefault")))
+            }
+        } else {
+            EmptyView()
         }
     }
 }
 
-#Preview {
+#Preview("Visible") {
     HelpButton {
         print("Preview")
     }
+    .helpButtonVisible(true)
 }

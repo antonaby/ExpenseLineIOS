@@ -17,6 +17,7 @@ class SettingsService: ObservableObject {
     
     static let BUDGET_ID_KEY = "budgetId"
     static let APP_FIRST_LAUNCH_DONE = "app.first.launch.done"
+    static let SHOW_HELP_BUTTON = "show.help.button"
     
     private let userSettings: UserDefaults
        

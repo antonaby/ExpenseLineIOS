@@ -209,6 +209,9 @@ struct NotificationsView: View {
                     .buttonStyle(.borderedProminent)
                     .foregroundStyle(.white)
                     .tint(!vm.todayNotifications ? Color("FrDefault") : .gray)
+                    HelpButton {
+                        appState.showHelpPage(for: .notificationPage)
+                    }
                 }
                 .padding(.top, 5)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -227,6 +230,7 @@ struct NotificationsView: View {
         .onAppear {
             UICollectionView.appearance().contentInset.top = 10
             vm.loadNotifications()
+            appState.showHelpPage(for: .notificationPage, firstTime: true)
         }
         .onDisappear {
             vm.cancelAll()

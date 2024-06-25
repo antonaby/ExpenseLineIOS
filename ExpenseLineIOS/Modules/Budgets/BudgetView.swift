@@ -263,6 +263,7 @@ struct BudgetView: View {
         ))
             .environmentObject(appState)
             .serviceBundle(bundle)
+            .helpButtonVisible(true)
     } catch {
         print("Something went wrong \(error)")
         return Text("Something went wrong \(error)")

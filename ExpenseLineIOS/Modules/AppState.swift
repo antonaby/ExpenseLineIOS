@@ -36,6 +36,8 @@ class AppState: ObservableObject {
         let settings = bundle.settingsService
         if !settings.getBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE) {
             settings.setBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE, value: true)
+            settings.setBoolPreference(for: SettingsService.SHOW_HELP_BUTTON, value: true)
+            //navigateNewBudgetWizzard()
             return
         }
         
@@ -56,6 +58,15 @@ class AppState: ObservableObject {
             self.helpPage = page
             bundle.settingsService.setBoolPreference(for: page.rawValue, value: true)
         }
+    }
+    
+    func helpButtonVisible(_ value: Bool) {
+        bundle.settingsService.setBoolPreference(for: SettingsService.SHOW_HELP_BUTTON, value: value)
+        objectWillChange.send()
+    }
+    
+    func isHelpButtonVisible() -> Bool {
+        bundle.settingsService.getBoolPreference(for: SettingsService.SHOW_HELP_BUTTON)
     }
     
     func getBudgetViewModel(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) -> BudgetViewModel? {

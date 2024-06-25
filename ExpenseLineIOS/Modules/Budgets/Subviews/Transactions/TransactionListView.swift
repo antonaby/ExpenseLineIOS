@@ -46,6 +46,7 @@ struct TransactionCard: View {
 
 struct TransactionListView: View {
     
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var budgetService: BudgetService
     
     @StateObject var vm: TransactionListViewModel
@@ -79,6 +80,9 @@ struct TransactionListView: View {
                             Image(systemName: "chevron.down")
                                 .foregroundStyle(Color("FrDefault"))
                                 .rotationEffect(Angle(degrees: chevronRotate))
+                        }
+                        HelpButton {
+                            appState.showHelpPage(for: .transactionPage)
                         }
                     }
                     if showPeriod {
@@ -134,6 +138,7 @@ struct TransactionListView: View {
         .onAppear {
             vm.subscribe()
             UICollectionView.appearance().contentInset.top = -20
+            appState.showHelpPage(for: .transactionPage, firstTime: true)
         }
         .onDisappear {
             vm.cancelAll()
@@ -215,6 +220,7 @@ struct TransactionListView: View {
         )
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }

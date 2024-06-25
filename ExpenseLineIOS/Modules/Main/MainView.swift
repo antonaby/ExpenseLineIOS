@@ -44,6 +44,7 @@ struct MainView: View {
                 }
             }
         }
+        .helpButtonVisible(appState.isHelpButtonVisible())
         .tint(Color("FrDefault"))
         .sheet(item: $appState.helpPage) { page in
             HelpView(page: page)

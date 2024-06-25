@@ -42,6 +42,10 @@ struct HelpView: View {
                     OutcomeFlexibleWizardPage()
                 case .mainPage:
                     MainPage()
+                case .notificationPage:
+                    NotificationsPage()
+                case .transactionPage:
+                    TransactionsPage()
                 }
             }
             Button {
@@ -85,6 +89,16 @@ struct HelpView: View {
     @ViewBuilder
     func MainPage() -> some View {
         Text("It's your budget")
+    }
+    
+    @ViewBuilder
+    func NotificationsPage() -> some View {
+        Text("It's your notifications")
+    }
+    
+    @ViewBuilder
+    func TransactionsPage() -> some View {
+        Text("It's your transactions")
     }
     
 }

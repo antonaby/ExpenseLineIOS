@@ -15,6 +15,8 @@ enum HelpPage: String, Identifiable {
     case flexibleOutcomeWizard = "help.wizard.outcome.flexible.fisrt"
     
     case mainPage = "help.budget.main.first"
+    case notificationPage = "help.budget.notifications.first"
+    case transactionPage = "help.budget.transactions.first"
     
     var id: Self { self }
     
