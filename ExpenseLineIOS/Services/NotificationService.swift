@@ -136,16 +136,11 @@ class NotificationService: ObservableObject {
         : ownerPredicate + " AND enabled == true AND ((type == 1 AND date BETWEEN {%@, %@}) OR type == 2 OR (type == 3 AND weekDays CONTAINS[cd] %@))"
     }
     
-    func getNotifications(budget: BudgetEntity, onlyCurrent: Bool = true) throws -> [NotificationEntity] {
+    func getNotifications(budget: BudgetEntity) throws -> [NotificationEntity] {
         let budgetId = try getBudgetId(budget)
         
         let request = NotificationEntity.fetchRequest()
-        if onlyCurrent {
-            request.predicate = NSPredicate(
-                format: "budget.id == %@ AND (type != 1 OR (type == 1 AND date >= %@))", budgetId as CVarArg, Date() as NSDate)
-        } else {
-            request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
-        }
+        request.predicate = NSPredicate(format: "budget.id == %@", budgetId as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {
@@ -155,16 +150,11 @@ class NotificationService: ObservableObject {
         }
     }
     
-    func getNotifications(category: PlanCategoryEntity, onlyCurrent: Bool = true) throws -> [NotificationEntity] {
+    func getNotifications(category: PlanCategoryEntity) throws -> [NotificationEntity] {
         let categoryId = try getCategoryId(category)
         
         let request = NotificationEntity.fetchRequest()
-        if onlyCurrent {
-            request.predicate = NSPredicate(
-                format: "category.id == %@ AND (type != 1 OR (type == 1 AND date >= %@))", categoryId as CVarArg, Date() as NSDate)
-        } else {
-            request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
-        }
+        request.predicate = NSPredicate(format: "category.id == %@", categoryId as CVarArg)
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
         do {

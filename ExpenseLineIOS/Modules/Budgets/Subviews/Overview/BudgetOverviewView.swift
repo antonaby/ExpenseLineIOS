@@ -132,21 +132,8 @@ struct BudgetOverviewView: View {
                         .padding(.trailing, 15)
                     }
                     FlexibleCardView {
-                        VStack(spacing: 10) {
-                            if !vm.notifications.isEmpty {
-                                ForEach(vm.notifications) { notification in
-                                    switch notification.typeValue {
-                                    case .daily:
-                                        DailyNotificationShortView(notification)
-                                    case .exact:
-                                        ExactNotificationShortView(notification)
-                                    case .weekly:
-                                        WeeklyNotificationShortView(notification)
-                                    default:
-                                        EmptyView()
-                                    }
-                                }
-                            } 
+                        VStack {
+                            ShortNotificationsListView(notifications: $vm.notifications)
                             NavigationLink(value: CategoryNotificationsRef(category: nil)) {
                                 HStack {
                                     Text("Reminders")
@@ -225,83 +212,6 @@ struct BudgetOverviewView: View {
                 }
             }
         }
-    }
-    
-    @ViewBuilder
-    func DailyNotificationShortView(_ notification: NotificationEntity) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Image(systemName: "bell")
-            VStack {
-                NotificationName(notification)
-                if let date = notification.date {
-                    HStack(spacing: 5) {
-                        Text("Daily")
-                        Text(formatters.formatHour(date))
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.caption)
-                }
-            }
-            NotificationCategoryView(notification)
-        }
-    }
-    
-    @ViewBuilder
-    func ExactNotificationShortView(_ notification: NotificationEntity) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Image(systemName: "bell")
-            VStack {
-                NotificationName(notification)
-                if let date = notification.date {
-                    Text(formatters.formatDate(date))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
-                }
-            }
-            NotificationCategoryView(notification)
-        }
-    }
-    
-    @ViewBuilder
-    func WeeklyNotificationShortView(_ notification: NotificationEntity) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Image(systemName: "bell")
-            VStack {
-                NotificationName(notification)
-                if let date = notification.date {
-                    HStack(spacing: 5) {
-                        Text(weekDaySymbol())
-                        Text(formatters.formatHour(date))
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.caption)
-                }
-            }
-            NotificationCategoryView(notification)
-        }
-    }
-    
-    @ViewBuilder
-    func NotificationName(_ notification: NotificationEntity) -> some View {
-        Text(notification.nameValue)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .truncationMode(.tail)
-            .lineLimit(2)
-    }
-    
-    @ViewBuilder
-    func NotificationCategoryView(_ notification: NotificationEntity) -> some View {
-        if let category = notification.category {
-            HStack {
-                Text(category.nameValue)
-                IconView(name: category.iconNameValue, color: category.colorValue, size: 25)
-            }
-            .font(.caption)
-        }
-    }
-    
-    func weekDaySymbol() -> String {
-        Calendar.current.shortWeekdaySymbols[Date().currentWeekDay() - 1]
     }
     
     func getTypeColor(_ type: SpengingsType) -> Color {

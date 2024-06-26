@@ -56,21 +56,7 @@ struct CategoryView: View {
             FlexibleCardView {
                 NavigationLink(value: CategoryNotificationsRef(category: vm.category)) {
                     if !vm.notifications.isEmpty {
-                        VStack(alignment: .leading) {
-                            ForEach($vm.notifications) { $notification in
-                                HStack(alignment: .firstTextBaseline) {
-                                    Image(systemName: notification.typeValue == .nonotification ? "pencil" : "bell")
-                                    VStack(alignment: .leading) {
-                                        Text(notification.nameValue)
-                                        if notification.typeValue != .nonotification {
-                                            NotificationsTimeView(notification)
-                                                .font(.caption)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        ShortNotificationsListView(notifications: $vm.notifications, showCategory: false)
                     } else {
                         Text("Reminders")
                     }
@@ -116,7 +102,6 @@ struct CategoryView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            
         }
         .scrollContentBackground(.hidden)
         .background(Color("BgDefault"))
@@ -151,13 +136,6 @@ struct CategoryView: View {
             UICollectionView.appearance().contentInset.top = -20
             vm.loadTransactions()
             vm.loadNotifications()
-        }
-    }
-    
-    @ViewBuilder
-    func NotificationsTimeView(_ notification: NotificationEntity) -> some View {
-        if let date = notification.date {
-            Text(formatters.formatHour(date))
         }
     }
     

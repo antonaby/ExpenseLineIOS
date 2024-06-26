@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D20203DE2C2C31D600B7F476 /* ShortNotificationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20203DD2C2C31D600B7F476 /* ShortNotificationsListView.swift */; };
 		D20EF2AB2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20EF2AA2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift */; };
 		D20EF2AF2BB18CFB006CF8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */; };
 		D20EF2B22BB18CFB006CF8CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D20EF2B12BB18CFB006CF8CD /* Preview Assets.xcassets */; };
@@ -111,6 +112,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D20203DD2C2C31D600B7F476 /* ShortNotificationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortNotificationsListView.swift; sourceTree = "<group>"; };
 		D20EF2A72BB18CFA006CF8CD /* ExpenseLineIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExpenseLineIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D20EF2AA2BB18CFA006CF8CD /* ExpenseLineIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseLineIOSApp.swift; sourceTree = "<group>"; };
 		D20EF2AE2BB18CFB006CF8CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				D22238F02C1450B10054A003 /* NotificationsViewModel.swift */,
 				D2673F2B2C1715E000C0613B /* EditNotificationSheetView.swift */,
 				D2673F2D2C17173F00C0613B /* EditNotificationSheetViewModel.swift */,
+				D20203DD2C2C31D600B7F476 /* ShortNotificationsListView.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				D26C11CE2C04A7D6004DB285 /* IconView.swift in Sources */,
 				D2F7685B2BC952A6001CE98C /* TransactionSheetView.swift in Sources */,
 				D296AE612C0DE0FC00FFA422 /* BudgetOverviewViewModel.swift in Sources */,
+				D20203DE2C2C31D600B7F476 /* ShortNotificationsListView.swift in Sources */,
 				D250D4CF2BB828EB0050638C /* Budget.swift in Sources */,
 				D20EF2E12BB193FD006CF8CD /* BudgetViewModel.swift in Sources */,
 				D221C0862BE755000096DF89 /* Date+Extension.swift in Sources */,

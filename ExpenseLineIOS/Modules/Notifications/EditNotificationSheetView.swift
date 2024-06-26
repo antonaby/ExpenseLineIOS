@@ -170,7 +170,7 @@ struct EditNotificationSheetView: View {
     func DailyNotificationView() -> some View {
         FlexibleCardView {
             VStack {
-                DatePicker(selection: $vm.date, in: Date()..., displayedComponents: [.hourAndMinute]) {
+                DatePicker(selection: $vm.date, displayedComponents: [.hourAndMinute]) {
                     HStack {
                         Image(systemName: "clock")
                             .frame(width: 30)
@@ -205,7 +205,7 @@ struct EditNotificationSheetView: View {
                         }
                     }
                 }
-                DatePicker(selection: $vm.date, in: Date()..., displayedComponents: [.hourAndMinute]) {
+                DatePicker(selection: $vm.date, displayedComponents: [.hourAndMinute]) {
                     HStack {
                         Image(systemName: "clock")
                             .frame(width: 30)

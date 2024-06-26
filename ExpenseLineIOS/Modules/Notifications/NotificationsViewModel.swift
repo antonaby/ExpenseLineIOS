@@ -42,7 +42,7 @@ class NotificationsViewModel: ObservableObject {
             do {
                 notifications = todayNotifications 
                 ? try notificationService.getNotificationsForToday(category: category, showNoNotifications: true)
-                : try notificationService.getNotifications(category: category, onlyCurrent: false)
+                : try notificationService.getNotifications(category: category)
             } catch {
                 // TODO: handle error
                 print("Something went wrong \(error)")
@@ -51,7 +51,7 @@ class NotificationsViewModel: ObservableObject {
             do {
                 notifications = todayNotifications
                 ? try notificationService.getNotificationsForToday(budget: budget, showNoNotifications: false)
-                : try notificationService.getNotifications(budget: budget, onlyCurrent: false)
+                : try notificationService.getNotifications(budget: budget)
             } catch {
                 // TODO: handle error
                 print("Something went wrong \(error)")
