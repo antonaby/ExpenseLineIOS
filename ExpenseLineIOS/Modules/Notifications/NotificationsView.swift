@@ -160,17 +160,19 @@ struct NotificationsView: View {
                             .tint(Color("FrDefault"))
                         }
                         .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                            Button {
-                                notification.enabled.toggle()
-                                vm.resheduleNotification(notification)
-                            } label: {
-                                if notification.enabled {
-                                    Label("Turn off", systemImage: "bell.slash")
-                                } else {
-                                    Label("Turn on", systemImage: "bell")
+                            if showEnableNotification(notification) {
+                                Button {
+                                    notification.enabled.toggle()
+                                    vm.resheduleNotification(notification)
+                                } label: {
+                                    if notification.enabled {
+                                        Label("Turn off", systemImage: "bell.slash")
+                                    } else {
+                                        Label("Turn on", systemImage: "bell")
+                                    }
                                 }
+                                .tint(Color("FrDefault"))
                             }
-                            .tint(Color("FrDefault"))
                         }
                 }
                 Color.clear
@@ -253,6 +255,18 @@ struct NotificationsView: View {
     
     func onNotificationUpdated() {
         vm.loadNotifications()
+    }
+    
+    func showEnableNotification(_ notification: NotificationEntity) -> Bool {
+        if let date = notification.date, notification.typeValue != .nonotification {
+            if notification.typeValue == .exact && date < Date() {
+                return false
+            }
+            
+            return true
+        }
+        
+        return false
     }
     
 }
