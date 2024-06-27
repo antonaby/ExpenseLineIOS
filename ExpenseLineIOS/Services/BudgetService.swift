@@ -87,10 +87,6 @@ class BudgetService: ObservableObject {
             }
         }
         
-        if let budgetId = budget.id, budget.dailyRemainderAt != nil {
-            notificationService.cancelDailyReminder(budgetId: budgetId)
-        }
-        
         dm.viewContext.delete(budget)
     }
     

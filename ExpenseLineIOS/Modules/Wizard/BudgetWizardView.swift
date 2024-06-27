@@ -310,7 +310,6 @@ struct BudgetWizardView: View {
     let budget = BudgetEntity(context: dm.viewContext)
     budget.name = "Preview"
     budget.currency = "en_US"
-    budget.planTypeValue = .mountly
     
     let category1 = PlanCategoryEntity(context: dm.viewContext)
     category1.id = UUID()

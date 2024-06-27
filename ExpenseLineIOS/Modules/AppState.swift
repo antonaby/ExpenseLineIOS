@@ -37,6 +37,7 @@ class AppState: ObservableObject {
         if settings.isFirstLaunch() {
             settings.setBoolPreference(for: SettingsService.APP_FIRST_LAUNCH_DONE, value: true)
             DispatchQueue.main.async { [weak self] in
+                self?.sheduleDailyReminder()
                 self?.helpButtonVisible(true)
                 self?.navigateNewBudgetWizzard()
             }
@@ -88,7 +89,6 @@ class AppState: ObservableObject {
     func navigateNewBudgetWizzard() {
         let budget = bundle.budgetService.newBudgetEntity()
         budget.isNew = true
-        budget.dailyRemainderAt = Date().currentDateAt(at: 20)
         for category in bundle.dataService.getDefaultCategories(budget: budget) {
             budget.addToCategories(category)
         }
@@ -112,6 +112,18 @@ class AppState: ObservableObject {
         }
         
         return nil
+    }
+    
+    private func sheduleDailyReminder() {
+        let defaultTime = Date().currentDateAt(at: 20)
+        
+        let settings = bundle.settingsService
+        settings.setBoolPreference(for: SettingsService.DAILY_REMINDER_ENABLED, value: true)
+        settings.setDailyReminder(date: defaultTime)
+        
+        let notifications = bundle.notificationService
+        notifications.requestAuthorization()
+        notifications.scheduleDailyReminder(date: defaultTime)
     }
     
 }

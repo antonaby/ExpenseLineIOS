@@ -20,15 +20,6 @@ enum PlanType: Int, CaseIterable, Identifiable {
 
 extension BudgetEntity {
     
-    var planTypeValue: PlanType {
-        get {
-            PlanType(rawValue: Int(self.planType)) ?? .mountly
-        }
-        set {
-            self.planType = Int64(newValue.rawValue)
-        }
-    }
-    
     var currencyValue: String {
         get {
             currency ?? Locale.current.identifier

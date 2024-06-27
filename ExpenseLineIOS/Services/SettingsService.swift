@@ -7,17 +7,13 @@
 
 import Foundation
 
-struct BoolUserPreference: Identifiable {
-    var id: String
-    var name: String
-    var value: Bool
-}
-
 class SettingsService: ObservableObject {
     
     static let BUDGET_ID_KEY = "budgetId"
     static let APP_FIRST_LAUNCH_DONE = "app.first.launch.done"
     static let SHOW_HELP_BUTTON = "show.help.button"
+    static let DAILY_REMINDER_ENABLED = "reminder.daily.enabled"
+    static let DAILY_REMINDER_TIME = "reminder.daily.time"
     
     private let userSettings: UserDefaults
        
@@ -46,6 +42,22 @@ class SettingsService: ObservableObject {
         }
     }
     
+    func setDailyReminder(date: Date) {
+        let time = getHourFormatter().string(from: date)
+        userSettings.setValue(time, forKey: SettingsService.DAILY_REMINDER_TIME)
+    }
+    
+    func getDailyReminder() -> Date {
+        if let dailyReminderStr = userSettings.string(forKey: SettingsService.DAILY_REMINDER_TIME) {
+            let date = getHourFormatter().date(from: dailyReminderStr)
+            if date != nil {
+                return date!
+            }
+        }
+        
+        return Date().currentDateAt(at: 20)
+    }
+    
     func setBoolPreference(for key: String, value: Bool) {
         userSettings.setValue(value, forKey: key)
     }
@@ -60,6 +72,14 @@ class SettingsService: ObservableObject {
     
     func alwaysShowHelp() -> Bool {
         false
+    }
+    
+    private func getHourFormatter() -> DateFormatter {
+        let hourFormatter = DateFormatter()
+        hourFormatter.locale = Locale(identifier: "en_US")
+        hourFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
+        
+        return hourFormatter
     }
     
 }

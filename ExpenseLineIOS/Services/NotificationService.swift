@@ -18,6 +18,8 @@ enum NotificationServiceError: Error {
 
 class NotificationService: ObservableObject {
     
+    private static let DAILY_REMINDER_ID = "DAILY_REMINDER_ID"
+    
     private let dm: DatabaseManager
     
     init(dm: DatabaseManager) {
@@ -164,7 +166,7 @@ class NotificationService: ObservableObject {
         }
     }
     
-    func scheduleDailyReminder(budgetId: UUID, date: Date) {
+    func scheduleDailyReminder(date: Date) {
         let content = UNMutableNotificationContent()
         content.title = "ExpenseLine"
         content.body = "Have you added your spendings today?"
@@ -172,14 +174,14 @@ class NotificationService: ObservableObject {
         
         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let request = UNNotificationRequest(identifier: budgetId.uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: NotificationService.DAILY_REMINDER_ID, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
     }
     
-    func cancelDailyReminder(budgetId: UUID) {
+    func cancelDailyReminder() {
         UNUserNotificationCenter.current()
-            .removePendingNotificationRequests(withIdentifiers: [budgetId.uuidString])
+            .removePendingNotificationRequests(withIdentifiers: [NotificationService.DAILY_REMINDER_ID])
     }
     
     func sheduleNotification(_ notification: NotificationEntity) throws {

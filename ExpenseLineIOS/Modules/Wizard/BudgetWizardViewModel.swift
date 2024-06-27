@@ -19,8 +19,6 @@ class BudgetWizardViewModel: ObservableObject {
     
     @Published var name: String
     @Published var currency: CurrencySymbol
-    @Published var dailyReminderEnabled: Bool
-    @Published var dailyReminderAt: Date
     
     @Published var isFormValid: Bool = false
     @Published var selectedCategory: PlanCategoryEntity?
@@ -48,8 +46,6 @@ class BudgetWizardViewModel: ObservableObject {
         let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.currency = currency
         self.formatters = FormattersHolder(locale: currency.locale)
-        self.dailyReminderEnabled = budget.dailyRemainderAt != nil
-        self.dailyReminderAt = budget.dailyRemainderAt ?? Date().currentDateAt(at: 20)
         
         isValid.sink { [weak self]  isValid in
             guard let self = self else { return }
@@ -142,11 +138,6 @@ class BudgetWizardViewModel: ObservableObject {
     func save() {
         budget.name = name
         budget.currency = currency.id
-        if dailyReminderEnabled {
-            budget.dailyRemainderAt = dailyReminderAt
-        } else {
-            budget.dailyRemainderAt = nil
-        }
         
         do {
             if !notificationsToDelete.isEmpty {
@@ -160,7 +151,6 @@ class BudgetWizardViewModel: ObservableObject {
             // TODO: show error
             print("Something went wrong \(error)")
         }
-        sheduleNotification()
     }
     
     func rollback() {
@@ -169,17 +159,6 @@ class BudgetWizardViewModel: ObservableObject {
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
-    }
-    
-    private func sheduleNotification() {
-        guard let budgetId = budget.id else { return }
-        
-        if let dayliReminder = budget.dailyRemainderAt {
-            notificationService.requestAuthorization()
-            notificationService.scheduleDailyReminder(budgetId: budgetId, date: dayliReminder)
-        } else {
-            notificationService.cancelDailyReminder(budgetId: budgetId)
-        }
     }
     
 }

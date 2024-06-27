@@ -9,15 +9,26 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @EnvironmentObject var notificationService: NotificationService
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var settings: SettingsService
     @Environment(\.dismiss) var dismiss
     
-    @State var isHelpButtonVisible: Bool = false
+    @State var helpButtonVisible: Bool
+    @State var dailyReminderEnabled: Bool
+    @State var dailyReminderTime: Date
     
-    @State var preferences: [BoolUserPreference] = [
+    private let settings: SettingsService
+    
+    init(settings: SettingsService) {
+        self.settings = settings
         
-    ]
+        self._helpButtonVisible = State(
+            wrappedValue: settings.getBoolPreference(for: SettingsService.SHOW_HELP_BUTTON))
+        self._dailyReminderEnabled = State(
+            wrappedValue: settings.getBoolPreference(for: SettingsService.DAILY_REMINDER_ENABLED))
+        self._dailyReminderTime = State(
+            wrappedValue: settings.getDailyReminder())
+    }
     
     var body: some View {
         VStack {
@@ -35,40 +46,60 @@ struct SettingsView: View {
                     }
                 }
                 Section {
-                    Toggle(isOn: $isHelpButtonVisible) {
-                        Text("Show help")
+                    Toggle(isOn: $helpButtonVisible) {
+                        Label {
+                            Text("Help button")
+                        } icon: {
+                            Image(systemName: "questionmark")
+                                .foregroundStyle(Color("FrDefault"))
+                        }
                     }
                     .tint(Color("FrDefault"))
-                    .onChange(of: isHelpButtonVisible) { value in
+                    .onChange(of: helpButtonVisible) { value in
                         appState.helpButtonVisible(value)
                     }
-                    
-                    ForEach($preferences) { $preference in
-                        Toggle(preference.name, isOn: $preference.value)
-                            .onChange(of: preference.value) { value in
-                                settings.setBoolPreference(for: preference.id, value: value)
+                    Toggle(isOn: $dailyReminderEnabled) {
+                        Label {
+                            Text("Daily Reminder")
+                        } icon: {
+                            Image(systemName: "bell")
+                                .foregroundStyle(Color("FrDefault"))
+                        }
+                    }
+                    .tint(Color("FrDefault"))
+                    .onChange(of: dailyReminderEnabled) { value in
+                        settings.setBoolPreference(for: SettingsService.DAILY_REMINDER_ENABLED, value: value)
+                        if value {
+                            notificationService.scheduleDailyReminder(date: dailyReminderTime)
+                        } else {
+                            notificationService.cancelDailyReminder()
+                        }
+                    }
+                    if dailyReminderEnabled {
+                        DatePicker(selection: $dailyReminderTime, displayedComponents: [.hourAndMinute]) {
+                            Label {
+                                Text("Remind me at")
+                            } icon: {
+                                Image(systemName: "clock")
+                                    .foregroundStyle(Color("FrDefault"))
                             }
-                            .tint(Color("FrDefault"))
+                        }
+                        .onChange(of: dailyReminderTime) { value in
+                            if dailyReminderEnabled {
+                                notificationService.cancelDailyReminder()
+                                notificationService.scheduleDailyReminder(date: value)
+                                settings.setDailyReminder(date: value)
+                            } 
+                        }
                     }
                 } header: {
-                    Text("Appearance")
+                    Text("Settings")
                 }
             }
             .background(Color("BgDefault"))
             .scrollContentBackground(.hidden)
         }
         .background(Color(uiColor: .secondarySystemBackground))
-        .onAppear {
-            isHelpButtonVisible = settings.getBoolPreference(for: SettingsService.SHOW_HELP_BUTTON)
-            
-            preferences = preferences.map {
-                BoolUserPreference(
-                    id: $0.id,
-                    name: $0.name,
-                    value: settings.getBoolPreference(for: $0.id)
-                )
-            }
-        }
     }
     
 }
@@ -81,7 +112,7 @@ struct SettingsView: View {
     let appState = AppState(bundle: bundle)
     appState.budget = budget
     
-    return SettingsView()
+    return SettingsView(settings: bundle.settingsService)
         .serviceBundle(bundle)
         .environmentObject(appState)
 }

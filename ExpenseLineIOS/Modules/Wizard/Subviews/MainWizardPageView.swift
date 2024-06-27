@@ -15,8 +15,6 @@ struct MainWizardPageView: View {
     @ObservedObject var vm: BudgetWizardViewModel
     @State var currencySheetOpen: Bool = false
     
-    @State var showDatePicker: Bool = false
-    
     var body: some View {
         ScrollView {
             VStack(spacing: 15) {
@@ -45,41 +43,11 @@ struct MainWizardPageView: View {
                         }
                     }
                 }
-                Text("Notification")
-                    .modifier(FormTitleViewModifier.modifier)
-                FlexibleCardView {
-                    VStack(spacing: 10) {
-                        Toggle(isOn: $vm.dailyReminderEnabled) {
-                            HStack {
-                                Image(systemName: "bell")
-                                    .frame(width: 25)
-                                    .foregroundColor(Color("Accent3"))
-                                Text("Daily Reminder")
-                            }
-                        }
-                        .tint(Color("FrDefault"))
-                        .onChange(of: vm.dailyReminderEnabled) { value in
-                            withAnimation {
-                                showDatePicker = value
-                            }
-                        }
-                        if showDatePicker {
-                            HStack {
-                                Image(systemName: "clock")
-                                    .frame(width: 25)
-                                DatePicker("Notify me at",
-                                           selection: $vm.dailyReminderAt,
-                                           displayedComponents: [.hourAndMinute])
-                            }
-                        }
-                    }
-                }
             }
         }
         .padding(.horizontal, 20)
         .padding(.top, 15)
         .onAppear {
-            showDatePicker = vm.dailyReminderEnabled
             appState.showHelpPage(for: .mainWizard, firstTime: true)
         }
         .background(Color("BgDefault"))
@@ -97,7 +65,6 @@ struct MainWizardPageView: View {
     let budget = BudgetEntity(context: dm.viewContext)
     budget.name = "Preview"
     budget.currency = "en_US"
-    budget.planTypeValue = .mountly
     
     return MainWizardPageView(
         vm: BudgetWizardViewModel(

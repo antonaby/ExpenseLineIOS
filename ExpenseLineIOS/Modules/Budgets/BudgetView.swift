@@ -14,6 +14,7 @@ struct BudgetView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var dataService: DataService
+    @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var notificationService: NotificationService
     @EnvironmentObject var subscriptionService: SubscriptionService
     
@@ -54,7 +55,7 @@ struct BudgetView: View {
             }
             .overlay(alignment: .topTrailing) {
                 NavigationLink {
-                    SettingsView()
+                    SettingsView(settings: settingsService)
                         .navigationTitle("Settings")
                 } label: {
                     Image(systemName: "gear")

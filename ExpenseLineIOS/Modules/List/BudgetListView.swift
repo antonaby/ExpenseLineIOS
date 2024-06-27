@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BudgetListView: View {
     
+    @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var subscriptionService: SubscriptionService
     @EnvironmentObject var appState: AppState
     
@@ -20,7 +21,7 @@ struct BudgetListView: View {
             HStack {
                 Spacer()
                 NavigationLink {
-                    SettingsView()
+                    SettingsView(settings: settingsService)
                         .navigationTitle("Settings")
                 } label: {
                     Image(systemName: "gear")

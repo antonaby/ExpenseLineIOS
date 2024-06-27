@@ -51,7 +51,7 @@ struct HelpView: View {
             Button {
                 dismiss()
             } label: {
-                Text("Understand")
+                Text("Understood")
                     .font(.title2)
                     .frame(maxWidth: .infinity)
                     .padding(10)
