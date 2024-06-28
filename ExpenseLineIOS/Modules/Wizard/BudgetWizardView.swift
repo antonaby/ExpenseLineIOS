@@ -372,7 +372,10 @@ struct BudgetWizardView: View {
         notificationService: bundle.notificationService
     )
     
+    let appState = AppState(bundle: bundle)
+    appState.helpButtonVisible(true)
+    
     return BudgetWizardView(vm: vm)
         .serviceBundle(bundle)
-        .environmentObject(AppState(bundle: bundle))
+        .environmentObject(appState)
 }
