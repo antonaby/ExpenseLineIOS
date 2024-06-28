@@ -332,16 +332,12 @@ struct EditCategorySheet: View {
                         }
                     }
                     .frame(minHeight: 70)
-                    Menu {
-                        Button(role: .destructive) {
-                            delete?(vm.category)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                         }
+                    Button {
+                        delete?(vm.category)
                     } label: {
-                        Text("More actions")
+                        Label("Delete", systemImage: "trash")
+                            .tint(Color("Accent1"))
                     }
-                    .tint(Color("FrDefault"))
                 }
             }
             .padding([.top, .horizontal], 10)

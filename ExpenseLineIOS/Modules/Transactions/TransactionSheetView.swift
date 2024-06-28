@@ -86,17 +86,13 @@ struct TransactionSheetView: View {
                             }
                             .focused($showKeyboard)
                         }
-                        Menu {
-                            Button(role: .destructive) {
-                                vm.deleteTransaction()
-                                dismiss()
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                             }
+                        Button {
+                            vm.deleteTransaction()
+                            dismiss()
                         } label: {
-                            Text("More actions")
+                            Label("Delete", systemImage: "trash")
+                                .tint(Color("Accent1"))
                         }
-                        .tint(Color("FrDefault"))
                     }
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
