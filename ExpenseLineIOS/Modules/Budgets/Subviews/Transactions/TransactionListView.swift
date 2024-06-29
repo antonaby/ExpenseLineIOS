@@ -126,7 +126,7 @@ struct TransactionListView: View {
             .listRowSpacing(10)
         }
         .padding(.top, 15)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .sheet(item: $selectedTransaction, onDismiss: loadTransactions) { transaction in
             TransactionSheetView(
                 vm: TransactionSheetViewModel(transaction: transaction,

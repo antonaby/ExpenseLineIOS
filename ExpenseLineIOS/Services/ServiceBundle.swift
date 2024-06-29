@@ -11,7 +11,9 @@ import SwiftUI
 struct ServiceBundle {
     
     static var preview: ServiceBundle {
-        ServiceBundle(inMemory: true)
+        let bundle = ServiceBundle(inMemory: true)
+        bundle.settingsService.setColorScheme(nil)
+        return bundle
     }
     
     let databaseManager: DatabaseManager

@@ -14,7 +14,7 @@ struct FlexibleCardView<Content: View>: View {
     private let color: Color
     private let content: Content
     
-    init(cornerRadius: CGFloat = 10, padding: CGFloat = 10, color: Color = .white, @ViewBuilder content: @escaping () -> Content) {
+    init(cornerRadius: CGFloat = 10, padding: CGFloat = 10, color: Color = Color.backgroundSecondary, @ViewBuilder content: @escaping () -> Content) {
         self.cornerRadius = cornerRadius
         self.padding = padding
         self.color = color

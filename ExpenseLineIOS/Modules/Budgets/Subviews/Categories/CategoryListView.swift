@@ -26,9 +26,11 @@ struct CategoryCard: View {
                                 size: 45
                             )
                             Text(category.entity.nameValue)
+                                .foregroundStyle(Color.appCardTextColor)
                                 .bold()
                         }
                         Text(formatters.formatAmount(category.spendings.totalAmount))
+                            .foregroundStyle(Color.appCardTextColor)
                             .font(.largeTitle)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if category.entity.typeValue == .outcomePercent {
@@ -52,7 +54,7 @@ struct CategoryCard: View {
                     .frame(width: 85, height: 85)
                     .padding(.trailing, 5)
                 }
-                .tint(.black)
+                .tint(Color.appLink)
             }
         }
     }
@@ -130,7 +132,7 @@ struct CategoryListView: View {
         }
         .padding(.horizontal, 20)
         .padding(.top, 15)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .onAppear {
             vm.subscribe()
             vm.loadCategories()

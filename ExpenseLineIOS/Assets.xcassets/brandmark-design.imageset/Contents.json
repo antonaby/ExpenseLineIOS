@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "brandmark-design-min.png",
+      "filename" : "brandmark-design.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "brandmark-design-min 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "brandmark-design-min 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

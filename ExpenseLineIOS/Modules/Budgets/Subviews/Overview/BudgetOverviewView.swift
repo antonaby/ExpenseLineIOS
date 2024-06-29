@@ -149,7 +149,7 @@ struct BudgetOverviewView: View {
                         .frame(height: 70)
                 }
             }
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
             .onAppear {
                 vm.subscribe()
                 if loadStats {

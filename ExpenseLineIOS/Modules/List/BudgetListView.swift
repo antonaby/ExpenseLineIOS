@@ -27,9 +27,8 @@ struct BudgetListView: View {
                     Image(systemName: "gear")
                         .font(.title2)
                 }
-                .tint(Color("FrDefault"))
             }
-            IconView(name: "piggy-bank", color: Color("FrDefault"), size: 100)
+            IconView(name: "piggy-bank", color: Color.appLink, size: 100)
             ScrollView {
                 VStack {
                     if vm.budgets.isEmpty {
@@ -51,19 +50,17 @@ struct BudgetListView: View {
                                         } label: {
                                             Label("Edit", systemImage: "pencil")
                                         }
-                                        .tint(Color("FrDefault"))
                                         Button(role: .destructive) {
                                             vm.deleteBudget(budget)
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
-                                        .tint(Color("Accent1"))
                                     } label: {
                                         Image(systemName: "ellipsis").font(.title2)
                                             .frame(width: 35, height: 30, alignment: .center)
                                     }
                                 }
-                                .tint(.black)
+                                .tint(Color.appCardTextColor)
                             }
                         }
                     }
@@ -81,8 +78,9 @@ struct BudgetListView: View {
             }
             .padding(.horizontal, 20)
         }
+        .tint(Color.appLink)
         .padding(.horizontal, 20)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .onAppear {
             vm.loadBudgets()
         }
@@ -93,6 +91,7 @@ struct BudgetListView: View {
         VStack {
             Text("No budgets yet...")
                 .font(.title)
+                .foregroundStyle(Color.appCardTextColor)
         }
     }
     
@@ -102,8 +101,8 @@ struct BudgetListView: View {
             .font(.title2)
             .frame(maxWidth: .infinity)
             .padding(10)
-            .foregroundStyle(.white)
-            .background(RoundedRectangle(cornerRadius: 20).foregroundStyle(Color("FrDefault")))
+            .foregroundStyle(Color.appButtonTextColor)
+            .background(RoundedRectangle(cornerRadius: 20).foregroundStyle(Color.appLink))
     }
     
 }

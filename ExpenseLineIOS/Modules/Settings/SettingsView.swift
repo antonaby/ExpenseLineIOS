@@ -16,6 +16,7 @@ struct SettingsView: View {
     @State var helpButtonVisible: Bool
     @State var dailyReminderEnabled: Bool
     @State var dailyReminderTime: Date
+    @State var darkMode: Bool
     
     private let settings: SettingsService
     
@@ -28,19 +29,23 @@ struct SettingsView: View {
             wrappedValue: settings.getBoolPreference(for: SettingsService.DAILY_REMINDER_ENABLED))
         self._dailyReminderTime = State(
             wrappedValue: settings.getDailyReminder())
+        self._darkMode = State(
+            wrappedValue: settings.getColorScheme() == .dark)
     }
     
     var body: some View {
-        VStack {
             Form {
                 if let budget = appState.budget {
                     Section {
                         Button {
                             appState.navigateEditBudget(budget)
                         } label: {
-                            Text("Edit **\(budget.name ?? "Budget")**")
+                            Label {
+                                Text(budget.name ?? "Budget")
+                            } icon: {
+                                Image(systemName: "pencil")
+                            }
                         }
-                        .tint(.black)
                     } header: {
                         Text("Budget")
                     }
@@ -51,22 +56,34 @@ struct SettingsView: View {
                             Text("Help button")
                         } icon: {
                             Image(systemName: "questionmark")
-                                .foregroundStyle(Color("FrDefault"))
                         }
                     }
-                    .tint(Color("FrDefault"))
                     .onChange(of: helpButtonVisible) { value in
                         appState.helpButtonVisible(value)
+                    }
+                    Toggle(isOn: $darkMode) {
+                        Label {
+                            Text("Dark Mode")
+                        } icon: {
+                            Image(systemName: "moon.stars")
+                        }
+                    }
+                    .onChange(of: darkMode) { value in
+                        if value {
+                            appState.setColorScheme(.dark)
+                            settings.setColorScheme(.dark)
+                        } else {
+                            appState.setColorScheme(.light)
+                            settings.setColorScheme(.light)
+                        }
                     }
                     Toggle(isOn: $dailyReminderEnabled) {
                         Label {
                             Text("Daily Reminder")
                         } icon: {
                             Image(systemName: "bell")
-                                .foregroundStyle(Color("FrDefault"))
                         }
                     }
-                    .tint(Color("FrDefault"))
                     .onChange(of: dailyReminderEnabled) { value in
                         settings.setBoolPreference(for: SettingsService.DAILY_REMINDER_ENABLED, value: value)
                         if value {
@@ -81,7 +98,6 @@ struct SettingsView: View {
                                 Text("Remind me at")
                             } icon: {
                                 Image(systemName: "clock")
-                                    .foregroundStyle(Color("FrDefault"))
                             }
                         }
                         .onChange(of: dailyReminderTime) { value in
@@ -95,11 +111,10 @@ struct SettingsView: View {
                 } header: {
                     Text("Settings")
                 }
-            }
-            .background(Color("BgDefault"))
-            .scrollContentBackground(.hidden)
         }
-        .background(Color(uiColor: .secondarySystemBackground))
+        .tint(Color.appLink)
+        .background(Color.appBackground)
+        .scrollContentBackground(.hidden)
     }
     
 }

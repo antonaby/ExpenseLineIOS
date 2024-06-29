@@ -29,13 +29,13 @@ struct BudgetView: View {
                 } label: {
                     Text(vm.budget.name ?? "?")
                         .font(.title2)
-                        .tint(.black)
+                        .tint(Color.appCardTextColor)
                 }
                 PeriodView().bold()
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 20)
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
             .overlay(alignment: .topLeading) {
                 Button {
                     appState.unselectBudget()
@@ -46,12 +46,12 @@ struct BudgetView: View {
                         Text("Budgets")
                             .font(.caption)
                     }
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.appButtonTextColor)
                     .padding(5)
                     .background(RoundedRectangle(cornerRadius: 5))
                     .padding(.leading, 10)
                 }
-                .tint(Color("FrDefault"))
+                .tint(Color.appLink)
             }
             .overlay(alignment: .topTrailing) {
                 NavigationLink {
@@ -62,7 +62,7 @@ struct BudgetView: View {
                         .font(.title2)
                         .padding(.trailing, 20)
                 }
-                .tint(Color("FrDefault"))
+                .tint(Color.appLink)
             }
             ZStack(alignment: .bottomTrailing) {
                 TabView(selection: $vm.currenPage) {
@@ -84,7 +84,7 @@ struct BudgetView: View {
                         .tabItem { Image(systemName: "chart.pie") }
                         .tag(BudgetViewPage.stats)
                 }
-                .accentColor(Color("FrDefault"))
+                .accentColor(Color.appLink)
                 AddExpenseButton {
                     if subscriptionService.checkMaxTransactionCount(period: vm.period, budget: vm.budget) {
                         transactionSheet.toggle()
@@ -142,7 +142,7 @@ struct BudgetView: View {
             .navigationTitle("Reminders")
         }
         .environmentObject(vm.formatters)
-        .tint(Color("FrDefault"))
+        .tint(Color.appLink)
         .onAppear {
             appState.showHelpPage(for: .mainPage, firstTime: true)
             vm.reloadBudget()
@@ -160,7 +160,7 @@ struct BudgetView: View {
             Text(vm.formatters.formatMonth(vm.period.startsAt))
         }
         .buttonStyle(.borderless)
-        .tint(Color("FrDefault"))
+        .tint(Color.appLink)
     }
     
     func onTransactionUpdated() {

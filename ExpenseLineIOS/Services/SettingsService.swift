@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 class SettingsService: ObservableObject {
     
     static let BUDGET_ID_KEY = "budgetId"
     static let APP_FIRST_LAUNCH_DONE = "app.first.launch.done"
+    static let APP_COLOR_SCHEME = "app.color.scheme"
     static let SHOW_HELP_BUTTON = "show.help.button"
     static let DAILY_REMINDER_ENABLED = "reminder.daily.enabled"
     static let DAILY_REMINDER_TIME = "reminder.daily.time"
@@ -56,6 +58,32 @@ class SettingsService: ObservableObject {
         }
         
         return Date().currentDateAt(at: 20)
+    }
+    
+    func getColorScheme() -> ColorScheme? {
+        if let schemeStr = userSettings.string(forKey: SettingsService.APP_COLOR_SCHEME) {
+            switch schemeStr {
+            case "dark":
+                return .dark
+            default:
+                return .light
+            }
+        }
+        
+        return nil
+    }
+    
+    func setColorScheme(_ scheme: ColorScheme?) {
+        if let scheme = scheme {
+            switch scheme {
+            case .dark:
+                userSettings.setValue("dark", forKey: SettingsService.APP_COLOR_SCHEME)
+            default:
+                userSettings.setValue("light", forKey: SettingsService.APP_COLOR_SCHEME)
+            }
+        } else {
+            userSettings.removeObject(forKey: SettingsService.APP_COLOR_SCHEME)
+        }
     }
     
     func setBoolPreference(for key: String, value: Bool) {

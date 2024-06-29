@@ -61,7 +61,7 @@ struct BudgetStatsView: View {
         }
         .padding(.top, 15)
         .padding(.horizontal, 20)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .onAppear {
             vm.subscribe()
             if loadStats {

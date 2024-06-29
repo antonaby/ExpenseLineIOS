@@ -15,11 +15,14 @@ class AppState: ObservableObject {
     @Published var budget: BudgetEntity?
     @Published var paywall: Bool = false
     @Published var helpPage: HelpPage? = nil
-
+    
+    var colorScheme: ColorScheme? = nil
+    
     private let bundle: ServiceBundle
     
     init(bundle: ServiceBundle) {
         self.bundle = bundle
+        self.colorScheme = bundle.settingsService.getColorScheme()
     }
     
     func selectBudget(_ budget: BudgetEntity) {
@@ -101,6 +104,11 @@ class AppState: ObservableObject {
     func navigateEditBudget(_ budget: BudgetEntity) {
         budget.isNew = false
         path.append(budget)
+    }
+    
+    func setColorScheme(_ scheme: ColorScheme?) {
+        colorScheme = scheme
+        objectWillChange.send()
     }
 
     private func getBudget() -> BudgetEntity? {

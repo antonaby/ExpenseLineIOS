@@ -10,6 +10,12 @@ import SwiftUI
 
 extension Color {
     
+    static let appBackground: Color = Color("Background")
+    static let appBackgroundSecondary: Color = Color("BackgroundSecondary")
+    static let appButtonTextColor: Color = Color("ButtonTextColor")
+    static let appCardTextColor: Color = Color("CardTextColor")
+    static let appLink: Color = Color("Link")
+    
     init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")

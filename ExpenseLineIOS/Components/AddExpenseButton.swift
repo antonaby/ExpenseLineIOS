@@ -22,8 +22,8 @@ struct AddExpenseButton: View {
             Image(systemName: "plus")
                 .font(.title.weight(.semibold))
                 .padding(15)
-                .background(Color("FrDefault"))
-                .foregroundColor(.white)
+                .background(Color.appLink)
+                .foregroundColor(Color.appButtonTextColor)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
         }
     }

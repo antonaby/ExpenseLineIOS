@@ -16,6 +16,16 @@ struct MainView: View {
     @StateObject var appState: AppState
     
     var body: some View {
+        if let colorScheme = appState.colorScheme {
+            MainView()
+                .environment(\.colorScheme, colorScheme)
+        } else {
+            MainView()
+        }
+    }
+    
+    @ViewBuilder
+    func MainView() -> some View {
         NavigationStack(path: $appState.path) {
             VStack {
                 if let budget = appState.budget,
@@ -45,7 +55,7 @@ struct MainView: View {
             }
         }
         .helpButtonVisible(appState.isHelpButtonVisible())
-        .tint(Color("FrDefault"))
+        .tint(Color.appLink)
         .sheet(item: $appState.helpPage) { page in
             HelpView(page: page)
                 .presentationDetents([.medium, .large])
@@ -59,6 +69,7 @@ struct MainView: View {
             appState.loadBudget()
         }
     }
+    
 }
 
 #Preview {
