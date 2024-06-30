@@ -13,8 +13,14 @@ extension Color {
     static let appBackground: Color = Color("Background")
     static let appBackgroundSecondary: Color = Color("BackgroundSecondary")
     static let appButtonTextColor: Color = Color("ButtonTextColor")
+    static let appButtonTextColorInactive: Color = Color("ButtonTextColorInactive")
     static let appCardTextColor: Color = Color("CardTextColor")
     static let appLink: Color = Color("Link")
+    static let appLinkInactive: Color = Color("LinkInactive")
+    static let appDestructiveLink: Color = Color("DestructiveLink")
+    static let appExpensesAll: Color = Color("ExpensesAll")
+    static let appExpensesFixed: Color = Color("ExpensesFixed")
+    static let appExpensesFlexible: Color = Color("ExpensesFlexible")
     
     init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)

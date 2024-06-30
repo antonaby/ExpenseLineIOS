@@ -39,7 +39,7 @@ struct CirclularBudgetProgressView<Content: View>: View {
             ZStack {
                 ForEach(Array(progress.enumerated()), id: \.offset) { index, progress in
                     Circle()
-                        .stroke(getColor(index, progress: progress).opacity(0.2), lineWidth: lineWidth)
+                        .stroke(getColor(index, progress: progress).opacity(0.1), lineWidth: lineWidth)
                         .frame(
                             width: geometry.size.width - lineWidth * CGFloat(multiplier * index),
                             height: geometry.size.height - lineWidth * CGFloat(multiplier * index)
@@ -77,7 +77,7 @@ struct CirclularBudgetProgressView<Content: View>: View {
             return getColor(i, progress: progress)
         }
         
-        return getColor(i, progress: progress).opacity(0.5)
+        return getColor(i, progress: progress).opacity(0.3)
     }
 }
 

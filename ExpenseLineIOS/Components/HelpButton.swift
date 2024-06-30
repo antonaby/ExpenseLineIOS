@@ -51,10 +51,10 @@ struct HelpButton: View {
                 action()
             } label: {
                 Image(systemName: "questionmark")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.appButtonTextColor)
                     .padding(5)
                     .font(.caption)
-                    .background(Circle().foregroundStyle(Color("FrDefault")))
+                    .background(Circle().foregroundStyle(Color.appLink))
             }
         } else {
             EmptyView()

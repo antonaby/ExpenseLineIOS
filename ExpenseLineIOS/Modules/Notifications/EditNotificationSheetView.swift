@@ -17,7 +17,7 @@ struct EditNotificationSheetView: View {
     var body: some View {
         VStack {
             HStack {
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
                     vm.rollback()
                     dismiss()
                 }
@@ -25,7 +25,7 @@ struct EditNotificationSheetView: View {
                 Text("Reminder")
                     .font(.headline)
                 Spacer()
-                ToolButton(color: Color("FrDefault")) {
+                ToolButton(color: Color.appLink) {
                     vm.save()
                     dismiss()
                 }
@@ -42,6 +42,7 @@ struct EditNotificationSheetView: View {
                                 HStack {
                                     Image(systemName: "pencil")
                                         .frame(width: 30)
+                                        .foregroundStyle(Color.appLink)
                                     TextField("Name", text: $vm.name)
                                 }
                             }
@@ -66,7 +67,7 @@ struct EditNotificationSheetView: View {
                                                 } label: {
                                                     Text("remove")
                                                         .font(.caption)
-                                                        .foregroundStyle(Color("FrDefault"))
+                                                        .foregroundStyle(Color.appLink)
                                                 }
                                             }
                                         } else {
@@ -77,7 +78,7 @@ struct EditNotificationSheetView: View {
                                             }
                                         }
                                     }
-                                    .foregroundStyle(.black)
+                                    .foregroundStyle(Color.appCardTextColor)
                                 }
                             }
                         }
@@ -86,7 +87,7 @@ struct EditNotificationSheetView: View {
                             FlexibleCardView {
                                 HStack {
                                     Toggle("Enabled", isOn: $vm.enabled)
-                                        .tint(Color("FrDefault"))
+                                        .tint(Color.appLink)
                                 }
                             }
                         }
@@ -108,13 +109,14 @@ struct EditNotificationSheetView: View {
                         dismiss()
                     } label: {
                         Label("Delete", systemImage: "trash")
-                            .tint(Color("Accent1"))
+                            .tint(Color.appDestructiveLink)
                     }
                     
                 }
-                .background(Color("BgDefault"))
+                .background(Color.appBackground)
             }
         }
+        .background(Color.appBackgroundSecondary)
         .interactiveDismissDisabled(true)
         .onAppear {
             vm.loadCategories()
@@ -141,7 +143,7 @@ struct EditNotificationSheetView: View {
                                 .font(.caption)
                         }
                         .frame(maxWidth: .infinity)
-                        .foregroundStyle(vm.type == type ? Color("FrDefault") : .black)
+                        .foregroundStyle(vm.type == type ? Color.appLink : Color.appCardTextColor)
                     }
                 }
             }
@@ -156,6 +158,7 @@ struct EditNotificationSheetView: View {
                     HStack {
                         Image(systemName: "clock")
                             .frame(width: 30)
+                            .foregroundStyle(Color.appLink)
                         Text("Reminder")
                     }
                 }
@@ -171,6 +174,7 @@ struct EditNotificationSheetView: View {
                     HStack {
                         Image(systemName: "clock")
                             .frame(width: 30)
+                            .foregroundStyle(Color.appLink)
                         Text("Reminder")
                     }
                 }
@@ -194,10 +198,10 @@ struct EditNotificationSheetView: View {
                             Text(day.shortName)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 40)
-                                .foregroundStyle(vm.weekDays.contains(day.id) ? .white : .black)
+                                .foregroundStyle(vm.weekDays.contains(day.id) ? Color.appLink : Color.appLinkInactive)
                                 .background {
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .foregroundStyle(vm.weekDays.contains(day.id) ? Color("FrDefault") : .white)
+                                    RoundedRectangle(cornerRadius: 7)
+                                        .foregroundStyle(vm.weekDays.contains(day.id) ? Color.appBackground: Color.appBackgroundSecondary)
                                 }
                         }
                     }
@@ -206,6 +210,7 @@ struct EditNotificationSheetView: View {
                     HStack {
                         Image(systemName: "clock")
                             .frame(width: 30)
+                            .foregroundStyle(Color.appLink)
                         Text("Time")
                     }
                 }

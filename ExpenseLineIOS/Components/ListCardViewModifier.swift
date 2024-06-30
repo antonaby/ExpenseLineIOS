@@ -12,7 +12,7 @@ struct ListCardViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .listRowBackground(Color("BgDefault"))
+            .listRowBackground(Color.appBackgroundSecondary)
             .listRowInsets(.init())
             .listRowSeparator(.hidden)
     }

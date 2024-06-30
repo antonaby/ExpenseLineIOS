@@ -39,6 +39,7 @@ struct ShortNotificationsListView: View {
     func NoNotificationShortView(_ notification: NotificationEntity) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell.slash")
+                .foregroundStyle(Color.appLink)
             NotificationName(notification)
             NotificationCategoryView(notification)
         }
@@ -48,6 +49,7 @@ struct ShortNotificationsListView: View {
     func DailyNotificationShortView(_ notification: NotificationEntity) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell")
+                .foregroundStyle(Color.appLink)
             VStack {
                 NotificationName(notification)
                 if let date = notification.date {
@@ -68,6 +70,7 @@ struct ShortNotificationsListView: View {
     func ExactNotificationShortView(_ notification: NotificationEntity) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell")
+                .foregroundStyle(Color.appLink)
             VStack {
                 NotificationName(notification)
                 if let date = notification.date {
@@ -85,6 +88,7 @@ struct ShortNotificationsListView: View {
     func WeeklyNotificationShortView(_ notification: NotificationEntity) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Image(systemName: "bell")
+                .foregroundStyle(Color.appLink)
             VStack {
                 NotificationName(notification)
                 if let date = notification.date {
@@ -123,10 +127,10 @@ struct ShortNotificationsListView: View {
     
     func rowColor(_ notification: NotificationEntity) -> Color {
         if isAfter(notification) {
-            return .gray
+            return Color.appLinkInactive
         }
         
-        return .black
+        return Color.appCardTextColor
     }
     
     func isAfter(_ notification: NotificationEntity) -> Bool {

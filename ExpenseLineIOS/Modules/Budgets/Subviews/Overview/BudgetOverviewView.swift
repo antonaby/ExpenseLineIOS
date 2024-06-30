@@ -35,7 +35,7 @@ struct SliderView: View {
         } label: {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(isEnabled ? Color("FrDefault") : .gray)
+                .foregroundColor(isEnabled ? Color.appLink : Color.appLinkInactive)
         }
     }
 
@@ -62,7 +62,7 @@ struct BudgetOverviewView: View {
                                 getFixedSpent(),
                                 getPercentSpent()
                             ],
-                            colors: [Color("Accent1"), Color("Accent2"), Color("Accent3")],
+                            colors: [Color.appExpensesAll, Color.appExpensesFixed, Color.appExpensesFlexible],
                             selected: spendings.rawValue,
                             gap: true
                         ) {
@@ -71,7 +71,6 @@ struct BudgetOverviewView: View {
                                     .font(.title3)
                                     .bold()
                                 Text("Spent")
-                                    .foregroundColor(.gray)
                                     .font(.caption)
                             }
                         }
@@ -88,8 +87,8 @@ struct BudgetOverviewView: View {
                         TabView(selection: $spendings) {
                             SpendingsView(
                                 title: "Spendings",
-                                firstColor: Color("Accent1"),
-                                secondColor: Color("Accent1").opacity(0.3),
+                                firstColor: Color.appExpensesAll,
+                                secondColor: Color.appExpensesAll.opacity(0.3),
                                 left: { AmountView(vm.totalOutcome) {
                                     vm.totalPlannedFixedOutcome + vm.totalPlannedPercentOutcomeAmount - $0 < 0
                                 }},
@@ -100,8 +99,8 @@ struct BudgetOverviewView: View {
                             .tag(SpengingsType.overall)
                             SpendingsView(
                                 title: "Fixed",
-                                firstColor: Color("Accent2"),
-                                secondColor: Color("Accent2").opacity(0.3),
+                                firstColor: Color.appExpensesFixed,
+                                secondColor: Color.appExpensesFixed.opacity(0.3),
                                 left: { AmountView(vm.totalFixedOutcome) {
                                     vm.totalPlannedFixedOutcome - $0 < 0
                                 }},
@@ -112,8 +111,8 @@ struct BudgetOverviewView: View {
                             .tag(SpengingsType.fixed)
                             SpendingsView(
                                 title: "Flexible",
-                                firstColor: Color("Accent3"),
-                                secondColor: Color("Accent3").opacity(0.3),
+                                firstColor: Color.appExpensesFlexible,
+                                secondColor: Color.appExpensesFlexible.opacity(0.3),
                                 left: { AmountView(vm.totalPercentOutcome) {
                                     vm.totalPlannedPercentOutcomeAmount - $0 < 0
                                 }},
@@ -140,7 +139,7 @@ struct BudgetOverviewView: View {
                                     Image(systemName: "chevron.right")
                                 }
                                 .font(.caption)
-                                .tint(Color("FrDefault"))
+                                .tint(Color.appLink)
                             }
                         }
                     }
@@ -166,7 +165,7 @@ struct BudgetOverviewView: View {
     @ViewBuilder
     func AmountView(_ amount: Decimal, isSpent: (Decimal) -> Bool) -> some View {
         Text(formatters.formatAmount(amount))
-            .foregroundColor(isSpent(amount) ? .red : .black)
+            .foregroundColor(isSpent(amount) ? Color.appDestructiveLink : Color.appCardTextColor)
     }
     
     @ViewBuilder
@@ -203,9 +202,9 @@ struct BudgetOverviewView: View {
                 Button {
                     spendings = type
                 } label: {
-                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? getTypeColor(type) : Color("BgDefault")) {
+                    FlexibleCardView(cornerRadius: 7, color: spendings == type ? getTypeColor(type) : Color.appBackground) {
                         Image(systemName: getIconForPage(type))
-                            .foregroundColor(spendings == type ? .white : .black)
+                            .foregroundColor(spendings == type ? Color.appButtonTextColor : Color.appLink)
                             .bold()
                     }
                     .frame(width: 45, height: 45)
@@ -217,11 +216,11 @@ struct BudgetOverviewView: View {
     func getTypeColor(_ type: SpengingsType) -> Color {
         switch type {
         case .overall:
-            Color("Accent1")
+            Color.appExpensesAll
         case .fixed:
-            Color("Accent2")
+            Color.appExpensesFixed
         case .flexible:
-            Color("Accent3")
+            Color.appExpensesFlexible
         }
     }
     
@@ -337,7 +336,7 @@ struct BudgetOverviewView: View {
         let notification1 = budgetService.newNotificationEntity(budget)
         notification1.name = "Preview 1"
         notification1.typeValue = .exact
-        notification1.date = Date().plusHour(1)
+        notification1.date = Date().plusHour(-1)
         notification1.enabled = true
         notification1.category = category
         

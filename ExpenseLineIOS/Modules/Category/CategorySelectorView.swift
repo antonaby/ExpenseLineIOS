@@ -23,23 +23,25 @@ struct CategorySelectorView: View {
                     HStack {
                         IconView(name: ctg.iconNameValue, color: ctg.colorValue)
                         Text(ctg.nameValue)
+                            .foregroundStyle(Color.appCardTextColor)
                     }
                 }
                 .listRowSeparator(.hidden)
-                .tint(.black)
+                .listRowBackground(Color.appBackgroundSecondary)
             }
             Button {
                 category = nil
                 dismiss()
             } label: {
                 Text("No Category")
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color.appLink)
                     .frame(maxWidth: .infinity)
                     .font(.caption)
             }
+            .listRowBackground(Color.appBackgroundSecondary)
         }
         .navigationBarBackButtonHidden(true)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .scrollContentBackground(.hidden)
     }
     

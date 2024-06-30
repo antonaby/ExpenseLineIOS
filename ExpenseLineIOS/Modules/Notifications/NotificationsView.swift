@@ -18,6 +18,7 @@ struct NotificationCard: View {
             VStack {
                 HStack(alignment: .firstTextBaseline) {
                     Text(notification.nameValue)
+                        .bold()
                     Spacer()
                     if let category = notification.category {
                         HStack {
@@ -47,6 +48,7 @@ struct NotificationCard: View {
     func NoNotificationHeaderView() -> some View {
         HStack {
             Image(systemName: "bell.slash")
+                .foregroundColor(Color.appLink)
             Text("No Signal")
             Spacer()
         }
@@ -58,6 +60,7 @@ struct NotificationCard: View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: notification.enabled ? "bell" : "bell.slash")
+                    .foregroundColor(Color.appLink)
                 Text("Daily")
             }
             if let date = notification.date {
@@ -66,7 +69,6 @@ struct NotificationCard: View {
         }
         .font(.caption)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .tint(Color("FrDefault"))
     }
     
     @ViewBuilder
@@ -76,22 +78,23 @@ struct NotificationCard: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Image(systemName: notification.enabled ? "bell" : "bell.slash")
+                            .foregroundColor(Color.appLink)
                         Text("One Time")
                     }
                     Text(formatters.formatDate(date))
                 }
                 .font(.caption)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .tint(Color("FrDefault"))
             } else {
                 VStack(alignment: .leading) {
                     HStack {
                         Image(systemName: "bell.slash")
+                            .foregroundColor(Color.appLink)
                         Text("One Time")
                         Spacer()
                     }
                     Text(formatters.formatDate(date))
-                        .foregroundStyle(Color("Accent1"))
+                        .foregroundStyle(Color.appDestructiveLink)
                 }
                 .font(.caption)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -104,6 +107,7 @@ struct NotificationCard: View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: notification.enabled ? "bell" : "bell.slash")
+                    .foregroundColor(Color.appLink)
                 Text("Weekly")
             }
             HStack {
@@ -114,8 +118,8 @@ struct NotificationCard: View {
                     Text(day.shortName)
                         .foregroundStyle(
                             notification.weekDaysArr.contains(day.id)
-                            ? Color("FrDefault")
-                            : .black
+                            ? Color.appLink
+                            : Color.appCardTextColor
                         )
                         .underline(notification.weekDaysArr.contains(day.id))
                 }
@@ -123,7 +127,6 @@ struct NotificationCard: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .font(.caption)
-        .tint(Color("FrDefault"))
     }
     
 }
@@ -151,13 +154,13 @@ struct NotificationsView: View {
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
-                            .tint(Color("Accent1"))
+                            .tint(Color.appDestructiveLink)
                             Button {
                                 selectedNotification = notification
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
-                            .tint(Color("FrDefault"))
+                            .tint(Color.appLink)
                         }
                         .swipeActions(edge: .leading, allowsFullSwipe: false) {
                             if showEnableNotification(notification) {
@@ -171,16 +174,18 @@ struct NotificationsView: View {
                                         Label("Turn on", systemImage: "bell")
                                     }
                                 }
-                                .tint(Color("FrDefault"))
+                                .tint(Color.appLink)
                             }
                         }
                 }
                 Color.clear
+                    .background(Color.appBackground)
                     .frame(height: 70)
-                    .defaultListCard()
+                    .listRowInsets(.init())
+                    .listRowSeparator(.hidden)
             }
             .scrollContentBackground(.hidden)
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
             .listStyle(.insetGrouped)
             .listRowSpacing(10)
             VStack {
@@ -196,8 +201,8 @@ struct NotificationsView: View {
                         .font(.caption)
                     }
                     .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.white)
-                    .tint(vm.todayNotifications ? Color("FrDefault") : .gray)
+                    .foregroundStyle(vm.todayNotifications ? Color.appButtonTextColor : Color.appButtonTextColorInactive)
+                    .tint(vm.todayNotifications ? Color.appLink : Color.appBackgroundSecondary)
                     Button {
                         vm.todayNotifications = false
                     } label: {
@@ -209,8 +214,8 @@ struct NotificationsView: View {
                         .font(.caption)
                     }
                     .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.white)
-                    .tint(!vm.todayNotifications ? Color("FrDefault") : .gray)
+                    .foregroundStyle(!vm.todayNotifications ? Color.appButtonTextColor : Color.appButtonTextColorInactive)
+                    .tint(!vm.todayNotifications ? Color.appLink : Color.appBackgroundSecondary)
                     HelpButton {
                         appState.showHelpPage(for: .notificationPage)
                     }
@@ -228,7 +233,6 @@ struct NotificationsView: View {
             }
             .offset(x: -20, y: -20)
         }
-        .background(Color("BgDefault"))
         .onAppear {
             UICollectionView.appearance().contentInset.top = 10
             vm.loadNotifications()

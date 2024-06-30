@@ -35,7 +35,7 @@ struct ToolButton: View {
             return color
         }
         
-        return Color.gray
+        return Color.appLinkInactive
     }
     
 }
