@@ -247,16 +247,16 @@ struct EditCategorySheet: View {
     @State var showCategrotyTemplateSheet: Bool = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
                     dismiss?(vm.category)
                 }
                 Spacer()
                 Text("Category")
                     .font(.headline)
                 Spacer()
-                ToolButton(color: Color("FrDefault")) {
+                ToolButton(color: Color.appLink) {
                     update?(vm.getUpdatedCategory())
                 }
                 .disabled(!vm.isValid)
@@ -264,6 +264,7 @@ struct EditCategorySheet: View {
             .padding([.top, .horizontal], 10)
             .padding([.bottom], 5)
             .font(.title2)
+            .background(Color.appBackgroundSecondary)
             ScrollView {
                 VStack(spacing: 15) {
                     HStack(spacing: 15) {
@@ -299,7 +300,7 @@ struct EditCategorySheet: View {
                                     } label: {
                                         CategoryLabel(categoryType)
                                             .frame(maxWidth: .infinity)
-                                            .foregroundColor(categoryType == vm.type ? Color("FrDefault") : .black)
+                                            .foregroundColor(categoryType == vm.type ? Color.appLink : Color.appCardTextColor)
                                     }
                                 }
                             }
@@ -336,12 +337,12 @@ struct EditCategorySheet: View {
                         delete?(vm.category)
                     } label: {
                         Label("Delete", systemImage: "trash")
-                            .tint(Color("Accent1"))
+                            .tint(Color.appDestructiveLink)
                     }
                 }
             }
             .padding([.top, .horizontal], 10)
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
         }
         .sheet(isPresented: $showCategrotyTemplateSheet, onDismiss: onIconSelected) {
             CategoryTemplateSelectorView(color: $vm.color, selectedTemplate: $vm.template, type: vm.type)

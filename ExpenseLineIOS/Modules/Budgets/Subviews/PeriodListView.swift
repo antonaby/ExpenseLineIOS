@@ -48,8 +48,9 @@ struct PeriodListView: View {
                     Text(formatters.formatMonth(period.startsAt))
                         .tint(.black)
                 }
+                .foregroundStyle(Color.appCardTextColor)
             }
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
             .scrollContentBackground(.hidden)
         }
         .onAppear {

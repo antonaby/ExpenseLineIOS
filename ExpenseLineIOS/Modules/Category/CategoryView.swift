@@ -11,6 +11,7 @@ import SwiftUI
 struct CategoryView: View {
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var formatters: FormattersHolder
     
@@ -32,7 +33,7 @@ struct CategoryView: View {
                             .font(.title2)
                         Spacer()
                         Image(systemName: "pencil")
-                            .foregroundColor(Color("FrDefault"))
+                            .foregroundColor(Color.appLink)
                             .frame(width: 50, height: 50, alignment: .topTrailing)
                             .padding([.top, .trailing], 10)
                             .onTapGesture {
@@ -44,7 +45,7 @@ struct CategoryView: View {
                     }
                     .font(.largeTitle)
                     .bold()
-                    ProgressView(progress: vm.percentSpent(), color: Color("FrDefault"), fullColor: Color("Accent1"))
+                    ProgressView(progress: vm.percentSpent(), color: Color.appLink, fullColor: Color.appDestructiveLink)
                     if vm.category.typeValue == .outcomePercent {
                         PlannedViewPercent()
                     } else {
@@ -86,13 +87,13 @@ struct CategoryView: View {
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
-                        .tint(Color("Accent1"))
+                        .tint(Color.appDestructiveLink)
                         Button {
                             selectedTransaction = transaction
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
-                        .tint(Color("FrDefault"))
+                        .tint(Color.appLink)
                     }
                 }
             } else {
@@ -101,10 +102,11 @@ struct CategoryView: View {
                         .bold()
                         .frame(maxWidth: .infinity)
                 }
+                .defaultListCard()
             }
         }
         .scrollContentBackground(.hidden)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .listStyle(.insetGrouped)
         .listRowSpacing(10)
         .sheet(item: $selectedTransaction, onDismiss: onTransactionUpdated) { transaction in
@@ -114,6 +116,7 @@ struct CategoryView: View {
                                               currency: vm.currency,
                                               budgetService: budgetService))
                 .presentationDetents([.medium])
+                .preferredColorScheme(appState.colorScheme)
         }
         .sheet(item: $selectedCategory) { category in
             EditCategorySheet(title: "Save",
@@ -131,6 +134,7 @@ struct CategoryView: View {
                     selectedCategory = nil
                 }
                 .presentationDetents([.medium])
+                .preferredColorScheme(appState.colorScheme)
         }
         .onAppear {
             UICollectionView.appearance().contentInset.top = -20
@@ -149,6 +153,7 @@ struct CategoryView: View {
                 .font(.caption)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .foregroundStyle(Color.appLinkInactive)
     }
     
     @ViewBuilder
@@ -158,6 +163,7 @@ struct CategoryView: View {
             Text(formatters.formatAmount(vm.category.amountDecimal))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .foregroundStyle(Color.appLinkInactive)
     }
     
     func onTransactionUpdated() {
@@ -236,6 +242,7 @@ struct CategoryView: View {
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -266,6 +273,7 @@ struct CategoryView: View {
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -314,6 +322,7 @@ struct CategoryView: View {
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }
@@ -367,6 +376,7 @@ struct CategoryView: View {
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .environmentObject(AppState(bundle: bundle))
     } catch {
         return Text("Something went wrong \(error)")
     }

@@ -20,13 +20,13 @@ struct PaywallView: View {
                 Image(systemName: "star.fill")
                 Text("Premium")
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.appButtonTextColor)
             .padding(8)
             .font(.caption)
-            .background(RoundedRectangle(cornerRadius: 7).foregroundStyle(Color("FrDefault")))
+            .background(RoundedRectangle(cornerRadius: 7).foregroundStyle(Color.appLink))
             .frame(maxWidth: .infinity)
             .overlay(alignment: .topTrailing) {
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
                     dismiss()
                 }
                 .font(.title2)
@@ -50,25 +50,26 @@ struct PaywallView: View {
                         Text("Try for free and subscribe")
                             .font(.title2)
                             .frame(maxWidth: .infinity)
+                            .foregroundStyle(Color.appButtonTextColor)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color("FrDefault"))
+                    .tint(Color.appLink)
                     Button {
                         
                     } label: {
                         Text("Restore")
-                            .foregroundStyle(Color("FrDefault"))
+                            .foregroundStyle(Color.appLink)
                     }
                 }
                 .padding(.horizontal, 15)
             }
         }
         .padding(.horizontal, 15)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
     }
     
     @ViewBuilder
-    func PremiumAdvantagesRow(icon: String, color: Color = Color("FrDefault"), text: String) -> some View {
+    func PremiumAdvantagesRow(icon: String, color: Color = Color.appLink, text: String) -> some View {
         HStack {
             IconView(name: icon, color: color, size: 45)
                 .frame(width: 50, height: 50)

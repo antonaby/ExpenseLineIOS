@@ -102,12 +102,14 @@ struct BudgetView: View {
                                               currency: vm.currency,
                                               budgetService: budgetService))
                 .presentationDetents([.medium])
+                .preferredColorScheme(appState.colorScheme)
         }
         .sheet(isPresented: $changePeriodSheetOpen) {
             PeriodListView(selected: $vm.period,
                            vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
+                .preferredColorScheme(appState.colorScheme)
         }
         .navigationDestination(for: PlanCategoryEntity.self) { category in
             CategoryView(vm: CategoryViewModel(
@@ -120,6 +122,7 @@ struct BudgetView: View {
             )
             .environmentObject(vm.formatters)
             .navigationTitle("Category")
+            .preferredColorScheme(appState.colorScheme)
         }
         .navigationDestination(for: TransactionEntity.self) { transaction in
             TransactionView(vm: TransactionViewModel(
@@ -130,6 +133,7 @@ struct BudgetView: View {
             )
             .environmentObject(vm.formatters)
             .navigationTitle("Transaction")
+            .preferredColorScheme(appState.colorScheme)
         }
         .navigationDestination(for: CategoryNotificationsRef.self) { ref in
             NotificationsView(vm: NotificationsViewModel(
@@ -140,6 +144,7 @@ struct BudgetView: View {
             ))
             .environmentObject(vm.formatters)
             .navigationTitle("Reminders")
+            .preferredColorScheme(appState.colorScheme)
         }
         .environmentObject(vm.formatters)
         .tint(Color.appLink)

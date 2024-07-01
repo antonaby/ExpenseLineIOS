@@ -15,9 +15,9 @@ struct TransactionSheetView: View {
     @FocusState private var showKeyboard: Bool
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
                     vm.rollback()
                     dismiss()
                 }
@@ -25,7 +25,7 @@ struct TransactionSheetView: View {
                 Text("Transaction")
                     .font(.headline)
                 Spacer()
-                ToolButton(color: Color("FrDefault")) {
+                ToolButton(color: Color.appLink) {
                     vm.save()
                     dismiss()
                 }
@@ -34,6 +34,7 @@ struct TransactionSheetView: View {
             .padding([.horizontal, .top], 10)
             .padding([.bottom], 5)
             .font(.title2)
+            .background(Color.appBackgroundSecondary)
             NavigationStack {
                 ScrollView {
                     VStack(spacing: 15) {
@@ -44,7 +45,7 @@ struct TransactionSheetView: View {
                                 HStack {
                                     IconView(
                                         name: vm.category?.iconNameValue ?? "question",
-                                        color: vm.category?.colorValue ?? .black,
+                                        color: vm.category?.colorValue ?? Color.appLink,
                                         size: 45
                                     )
                                     if let category = vm.category {
@@ -53,7 +54,7 @@ struct TransactionSheetView: View {
                                         Text("Choose category")
                                     }
                                 }
-                                .foregroundColor(.black)
+                                .foregroundColor(Color.appCardTextColor)
                                 .font(.title2)
                             }
                         }
@@ -62,14 +63,15 @@ struct TransactionSheetView: View {
                                 HStack {
                                     Image(systemName: "wallet.pass")
                                         .frame(width: 25)
+                                        .foregroundStyle(Color.appLink)
                                     TextField(text: $vm.name) {
                                         Text("Name")
                                     }
                                 }
-                                
                                 HStack {
                                     Image(systemName: "calendar")
                                         .frame(width: 25)
+                                        .foregroundStyle(Color.appLink)
                                     DatePicker("Date", selection: $vm.date, in: ...Date())
                                 }
                             }
@@ -91,13 +93,13 @@ struct TransactionSheetView: View {
                             dismiss()
                         } label: {
                             Label("Delete", systemImage: "trash")
-                                .tint(Color("Accent1"))
+                                .tint(Color.appDestructiveLink)
                         }
                     }
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
                 }
-                .background(Color("BgDefault"))
+                .background(Color.appBackground)
             }
         }
         .interactiveDismissDisabled(true)

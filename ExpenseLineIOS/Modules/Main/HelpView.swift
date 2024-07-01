@@ -17,10 +17,10 @@ struct HelpView: View {
         VStack {
             HStack {
                 Image(systemName: "questionmark")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.appButtonTextColor)
                     .padding(5)
                     .font(.caption)
-                    .background(Circle().foregroundStyle(Color("FrDefault")))
+                    .background(Circle().foregroundStyle(Color.appLink))
                 Text("Help")
             }
             .frame(maxWidth: .infinity)
@@ -49,21 +49,21 @@ struct HelpView: View {
                     .font(.title2)
                     .frame(maxWidth: .infinity)
                     .padding(10)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.appButtonTextColor)
                     .background(RoundedRectangle(cornerRadius: 20)
-                    .foregroundStyle(Color("FrDefault")))
+                        .foregroundStyle(Color.appLink))
             }
             .padding(.horizontal, 25)
         }
         .padding(.top, 15)
         .padding(.horizontal, 15)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
     }
     
     @ViewBuilder
     func MainWizardPage() -> some View {
         VStack {
-            IconView(name: "piggy-bank", color: Color("FrDefault"), size: 60)
+            IconView(name: "piggy-bank", color: Color.appLink, size: 60)
             Text("Budget")
                 .font(.title2)
                 .bold()
@@ -76,7 +76,7 @@ struct HelpView: View {
     @ViewBuilder
     func ImcomeWizardPage() -> some View {
         VStack {
-            IconView(name: "in-briefcase", color: Color("FrDefault"), size: 60)
+            IconView(name: "in-briefcase", color: Color.appLink, size: 60)
             Text("Income")
                 .font(.title2)
                 .bold()
@@ -94,7 +94,7 @@ struct HelpView: View {
     @ViewBuilder
     func OutcomeFixedWizardPage() -> some View {
         VStack {
-            IconView(name: "fi-house", color: Color("FrDefault"), size: 60)
+            IconView(name: "fi-house", color: Color.appLink, size: 60)
             Text("Fixed Expenses")
                 .font(.title2)
                 .bold()
@@ -109,7 +109,7 @@ struct HelpView: View {
     @ViewBuilder
     func OutcomeFlexibleWizardPage() -> some View {
         VStack {
-            IconView(name: "fl-shopping", color: Color("FrDefault"), size: 60)
+            IconView(name: "fl-shopping", color: Color.appLink, size: 60)
             Text("Flexible Expenses")
                 .font(.title2)
                 .bold()
@@ -124,7 +124,7 @@ struct HelpView: View {
     @ViewBuilder
     func MainPage() -> some View {
         VStack {
-            IconView(name: "piggy-bank", color: Color("FrDefault"), size: 60)
+            IconView(name: "piggy-bank", color: Color.appLink, size: 60)
             Text("Budget")
                 .font(.title2)
                 .bold()
@@ -139,7 +139,7 @@ struct HelpView: View {
         VStack {
             Image(systemName: "bell")
                 .font(.system(size: 50))
-                .foregroundStyle(Color("FrDefault"))
+                .foregroundStyle(Color.appLink)
             Text("Reminders")
                 .font(.title2)
                 .bold()
@@ -158,7 +158,7 @@ struct HelpView: View {
         VStack {
             Image(systemName: "list.bullet")
                 .font(.system(size: 50))
-                .foregroundStyle(Color("FrDefault"))
+                .foregroundStyle(Color.appLink)
             Text("Expenses")
                 .font(.title2)
                 .bold()

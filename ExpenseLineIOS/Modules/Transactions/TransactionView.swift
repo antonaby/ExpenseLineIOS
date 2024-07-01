@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TransactionView: View {
     
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var formatters: FormattersHolder
     
     @Environment(\.dismiss) var dismiss
@@ -24,11 +25,12 @@ struct TransactionView: View {
                     HStack {
                         IconView(
                             name: vm.transaction.category?.iconNameValue ?? "question",
-                            color: vm.transaction.category?.colorValue ?? .black,
+                            color: vm.transaction.category?.colorValue ?? Color.appLink,
                             size: 45)
                         VStack(alignment: .listRowSeparatorLeading) {
                             Text(vm.transaction.category?.nameValue ?? "Category")
                                 .font(.caption)
+                                .foregroundStyle(Color.appLinkInactive)
                             Text(vm.transaction.nameValue)
                                 .bold()
                         }
@@ -37,7 +39,7 @@ struct TransactionView: View {
                             editSheetOpen.toggle()
                         } label: {
                             Image(systemName: "pencil")
-                                .foregroundColor(Color("FrDefault"))
+                                .foregroundColor(Color.appLink)
                                 .frame(width: 50, height: 50, alignment: .topTrailing)
                                 .padding([.top, .trailing], 10)
                         }
@@ -47,12 +49,13 @@ struct TransactionView: View {
                         .font(.largeTitle)
                     Text(formatters.formatDate(vm.transaction.createdAt))
                         .font(.caption)
+                        .foregroundStyle(Color.appLinkInactive)
                 }
             }
             Spacer()
         }
         .padding(.horizontal, 20)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .sheet(isPresented: $editSheetOpen, onDismiss: onEditSheetClosed) {
             TransactionSheetView(
                 vm: TransactionSheetViewModel(transaction: vm.transaction,
@@ -60,6 +63,7 @@ struct TransactionView: View {
                                               currency: vm.currency,
                                               budgetService: budgetService))
                 .presentationDetents([.medium])
+                .preferredColorScheme(appState.colorScheme)
         }
     }
     
@@ -100,4 +104,5 @@ struct TransactionView: View {
     return TransactionView(vm: vm)
         .serviceBundle(bundle)
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+        .environmentObject(AppState(bundle: bundle))
 }
