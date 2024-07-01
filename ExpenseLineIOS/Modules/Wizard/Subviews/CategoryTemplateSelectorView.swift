@@ -23,17 +23,17 @@ struct CategoryTemplateSelectorView: View {
     @State private var otherTemplates: [CategoryTemplate] = []
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Spacer()
-                ToolButton(color: Color("FrDefault")) {
+                ToolButton(color: Color.appLink) {
                     dismiss()
                 }
             }
             .font(.title2)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 5)
-            .background(Color.white)
+            .background(Color.appBackgroundSecondary)
             VStack(spacing: 15) {
                 FlexibleCardView {
                     HStack {
@@ -57,7 +57,7 @@ struct CategoryTemplateSelectorView: View {
             }
             .padding([.top], 10)
             .padding([.horizontal], 10)
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
             .onAppear {
                 mainTemplates = dataService.getCategoryTemplates(of: type)
                 otherTemplates = Array(dataService.getCategoryTemplates(not: type).map { $0.templates }.joined())
@@ -81,17 +81,17 @@ struct CategoryTemplateSelectorView: View {
                 Button {
                     selectedTemplate = template
                 } label: {
-                    FlexibleCardView(color: selectedTemplate?.id == template.id ? color : .white) {
+                    FlexibleCardView(color: selectedTemplate?.id == template.id ? color : Color.appBackgroundSecondary) {
                         VStack {
                             IconView(
                                 name: template.iconName,
-                                color: selectedTemplate?.id == template.id ? .white : .black,
+                                color: selectedTemplate?.id == template.id ? Color.buttonText : Color.appCardTextColor,
                                 size: 40
                             )
                             Text(template.name)
                                 .lineLimit(1)
                                 .font(.caption2)
-                                .foregroundColor(selectedTemplate?.id == template.id ? .white : .black)
+                                .foregroundColor(selectedTemplate?.id == template.id ? Color.buttonText : Color.appCardTextColor)
                         }
                     }
                 }

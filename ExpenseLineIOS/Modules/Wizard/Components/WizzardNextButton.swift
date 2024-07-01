@@ -36,6 +36,7 @@ struct WizzardNextButton<Content: View>: View {
             action()
         } label: {
             content
+                .foregroundStyle(isEnabled ? Color.appButtonTextColor : Color.appButtonTextColorInactive)
         }
         .buttonStyle(.borderedProminent)
         .tint(buttonColor())
@@ -43,10 +44,10 @@ struct WizzardNextButton<Content: View>: View {
     
     private func buttonColor() -> Color {
         if isEnabled {
-            return Color("FrDefault")
+            return Color.appLink
         }
         
-        return Color.gray
+        return Color.appLinkInactive
     }
 }
 

@@ -21,7 +21,7 @@ struct OutcomePageWizardView: View {
             BudgetShortSummaryView(vm: vm)
                 .padding(.horizontal, 20)
         }
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .onAppear {
             appState.showHelpPage(for: helpPage, firstTime: true)
         }

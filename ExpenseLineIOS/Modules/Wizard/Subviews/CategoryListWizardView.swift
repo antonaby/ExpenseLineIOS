@@ -36,13 +36,13 @@ struct CategoryListWizardView: View {
                                     Text(vm.formatters.formatPercent(category.percentDecimal))
                                     Text("≈" + formatPercentAmount(category))
                                         .font(.caption)
-                                        .foregroundColor(Color("Accent3"))
+                                        .foregroundColor(Color.appLinkInactive)
                                 }
                             } else {
                                 Text(vm.formatters.formatAmount(category.amountDecimal))
                             }
                         }
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.appCardTextColor)
                     }
                 }
                 .defaultListCard()
@@ -52,7 +52,7 @@ struct CategoryListWizardView: View {
                     } label: {
                         Label("delete", systemImage: "trash.fill")
                     }
-                    .tint(Color("Accent1"))
+                    .tint(Color.appDestructiveLink)
                 }
             }
             HStack {
@@ -67,15 +67,16 @@ struct CategoryListWizardView: View {
                         Image(systemName: "plus")
                         Text("Add")
                     }
-                    .foregroundColor(Color("FrDefault"))
+                    .foregroundColor(Color.appLink)
                     .frame(maxWidth: .infinity)
                     .font(.title3)
                 }
             }
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.appBackgroundSecondary)
         }
         .scrollContentBackground(.hidden)
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .listStyle(.insetGrouped)
         .listRowSpacing(10)
         .onAppear {

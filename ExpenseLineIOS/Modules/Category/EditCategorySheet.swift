@@ -232,6 +232,7 @@ extension EditPlanCategorySheetViewModel {
 
 struct EditCategorySheet: View {
     
+    @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataService: DataService
     
     @Environment(\.updateCategory) private var update
@@ -274,7 +275,7 @@ struct EditCategorySheet: View {
                             FlexibleCardView {
                                 IconView(
                                     name: vm.template?.iconName ?? "question",
-                                    color: vm.template != nil ? vm.color : .black,
+                                    color: vm.template != nil ? vm.color : Color.appLink,
                                     size: 45
                                 )
                             }
@@ -346,6 +347,7 @@ struct EditCategorySheet: View {
         }
         .sheet(isPresented: $showCategrotyTemplateSheet, onDismiss: onIconSelected) {
             CategoryTemplateSelectorView(color: $vm.color, selectedTemplate: $vm.template, type: vm.type)
+                .preferredColorScheme(appState.colorScheme)
         }
         .interactiveDismissDisabled(true)
         .onAppear {
@@ -403,6 +405,7 @@ struct EditCategorySheet: View {
                              vm: EditPlanCategorySheetViewModel(category,
                                                                 currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
     .serviceBundle(bundle)
+    .environmentObject(AppState(bundle: bundle))
 }
 
 #Preview("New") {
@@ -415,4 +418,5 @@ struct EditCategorySheet: View {
                              vm: EditPlanCategorySheetViewModel(category,
                                                                 currencySymbol: CurrencySymbol(id: "de_DE", name: "Preview")))
     .serviceBundle(bundle)
+    .environmentObject(AppState(bundle: bundle))
 }

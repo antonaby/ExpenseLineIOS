@@ -13,7 +13,7 @@ struct FormTitleViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.title)
-            .foregroundColor(Color("Accent3"))
+            .foregroundColor(Color.appCardTextColor)
     }
     
     static let modifier = FormTitleViewModifier()

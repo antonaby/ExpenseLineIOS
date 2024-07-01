@@ -110,12 +110,12 @@ struct BudgetWizardView: View {
                     }
                 } label: {
                     Label("Back", systemImage: "chevron.backward")
-                        .foregroundColor(Color("FrDefault"))
+                        .foregroundColor(Color.appLink)
                         .padding(.leading, 10)
                 }
             }
             .overlay(alignment: .trailing) {
-                ToolButton(icon: "x.circle", color: Color("Accent1")) {
+                ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
                     vm.rollback()
                     dismiss?(vm.budget)
                 }
@@ -140,7 +140,7 @@ struct BudgetWizardView: View {
             }
             .padding(.horizontal, 20)
         }
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .sheet(item: $vm.selectedCategory) { category in
             EditCategorySheet(title: "Save",
                               vm: EditPlanCategorySheetViewModel(category, currencySymbol: vm.currency))
@@ -154,6 +154,7 @@ struct BudgetWizardView: View {
                     vm.dismissCategory(category)
                 }
                 .presentationDetents([.medium])
+                .preferredColorScheme(appState.colorScheme)
         }
         .onDisappear {
             vm.cancelAll()
@@ -222,9 +223,9 @@ struct BudgetWizardView: View {
         Button {
             currentPage = page
         } label: {
-            FlexibleCardView(cornerRadius: 7, color: currentPage == page ? Color("FrDefault") : Color("BgDefault")) {
+            FlexibleCardView(cornerRadius: 7, color: currentPage == page ? Color.appLink : Color.appBackground) {
                 Image(systemName: getIconForPage(page))
-                    .foregroundColor(currentPage == page ? .white : .black)
+                    .foregroundColor(currentPage == page ? Color.appButtonTextColor : Color.appCardTextColor)
                     .font(.caption)
                     .bold()
             }

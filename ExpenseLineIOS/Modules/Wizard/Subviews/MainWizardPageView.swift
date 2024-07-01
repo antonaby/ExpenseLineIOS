@@ -23,7 +23,7 @@ struct MainWizardPageView: View {
                         HStack {
                             Image(systemName: "pencil")
                                 .frame(width: 30)
-                                .foregroundColor(Color("Accent3"))
+                                .foregroundColor(Color.appLink)
                             TextField("Name", text: $vm.name)
                         }
                         Divider()
@@ -33,13 +33,13 @@ struct MainWizardPageView: View {
                             HStack {
                                 Image(systemName: "banknote")
                                     .frame(width: 30)
-                                    .foregroundColor(Color("Accent3"))
+                                    .foregroundColor(Color.appLink)
                                 Text("Currency")
                                 Spacer()
                                 Text(vm.currency.code)
                                     .bold()
                             }
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.appCardTextColor)
                         }
                     }
                 }
@@ -50,11 +50,12 @@ struct MainWizardPageView: View {
         .onAppear {
             appState.showHelpPage(for: .mainWizard, firstTime: true)
         }
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .sheet(isPresented: $currencySheetOpen) {
             CurrencySelectorSheet(currency: $vm.currency, vm: CurrencySelectorSheetViewModel(dataService: dataService))
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
+                .preferredColorScheme(appState.colorScheme)
         }
     }
 }

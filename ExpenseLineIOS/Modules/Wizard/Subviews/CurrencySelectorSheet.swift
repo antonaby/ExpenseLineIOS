@@ -88,10 +88,11 @@ struct CurrencySelectorSheet: View {
                             Spacer()
                             Text(currencySymbol.code)
                         }
-                        .foregroundColor(.black)
+                        .foregroundColor(Color.appCardTextColor)
                     }
+                    .listRowBackground(Color.appBackgroundSecondary)
                 }
-                .background(Color("BgDefault"))
+                .background(Color.appBackground)
                 .scrollContentBackground(.hidden)
             } else {
                 Text("no results")
@@ -99,7 +100,7 @@ struct CurrencySelectorSheet: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .background(Color("BgDefault"))
+        .background(Color.appBackground)
         .onAppear {
             vm.loadCurrencies()
         }

@@ -60,9 +60,11 @@ struct MainView: View {
             HelpView(page: page)
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
+                .preferredColorScheme(appState.colorScheme)
         }
         .fullScreenCover(isPresented: $appState.paywall) {
             PaywallView()
+                .preferredColorScheme(appState.colorScheme)
         }
         .environmentObject(appState)
         .onAppear {
