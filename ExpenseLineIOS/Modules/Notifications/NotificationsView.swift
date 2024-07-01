@@ -247,6 +247,7 @@ struct NotificationsView: View {
                                                    notificationService: notificationService))
             .presentationDetents([.large])
             .presentationDragIndicator(.hidden)
+            .preferredColorScheme(appState.colorScheme)
         }
         .sheet(item: $selectedNotification, onDismiss: onNotificationUpdated) { notification in
             EditNotificationSheetView(
@@ -254,6 +255,7 @@ struct NotificationsView: View {
                                                    notificationService: notificationService))
             .presentationDetents([.large])
             .presentationDragIndicator(.hidden)
+            .preferredColorScheme(appState.colorScheme)
         }
     }
     
