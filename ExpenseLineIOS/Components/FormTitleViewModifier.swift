@@ -20,17 +20,3 @@ struct FormTitleViewModifier: ViewModifier {
     
 }
 
-struct FormTipViewModifier: ViewModifier {
-    
-    func body(content: Content) -> some View {
-        content
-            .font(.caption)
-            .foregroundColor(.gray)
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    static let modifier = FormTipViewModifier()
-    
-}
-
-

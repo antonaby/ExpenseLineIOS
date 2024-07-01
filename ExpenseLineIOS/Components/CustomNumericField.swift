@@ -132,7 +132,7 @@ struct CustomNumericKeybord: View {
                         refreshText()
                     } label: {
                         Image(systemName: "delete.backward")
-                            .modifier(KeyboardButtonViewModifier(color: .blue))
+                            .modifier(KeyboardButtonViewModifier(color: Color.appDestructiveLink))
                     }
                 }
                 GridRow {
@@ -148,7 +148,7 @@ struct CustomNumericKeybord: View {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.title)
                             .fontWeight(.semibold)
-                            .foregroundColor(.green)
+                            .foregroundColor(Color.appLink)
                     }
                 }
                 GridRow {
@@ -176,7 +176,7 @@ struct CustomNumericKeybord: View {
         .padding(.vertical, 5)
         .background {
             Rectangle()
-                .fill(.white)
+                .fill(Color.appBackgroundSecondary)
                 .ignoresSafeArea()
         }
         .onAppear {
@@ -211,7 +211,7 @@ struct CustomNumericKeybord: View {
     func NumericKeyboardButton(_ value: String, onTap: @escaping () -> ()) -> some View {
         Button(action: onTap) {
             Text(value)
-                .modifier(KeyboardButtonViewModifier(color: isEnabled ? .black : .gray))
+                .modifier(KeyboardButtonViewModifier(color: isEnabled ? Color.appCardTextColor : Color.appLinkInactive))
         }
         .disabled(!isEnabled)
     }
