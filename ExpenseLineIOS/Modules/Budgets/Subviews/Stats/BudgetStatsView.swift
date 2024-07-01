@@ -29,13 +29,13 @@ struct BudgetStatsView: View {
                             )
                             .symbol(.circle)
                             .interpolationMethod(.catmullRom)
-                            .foregroundStyle(Color("FrDefault"))
+                            .foregroundStyle(Color.appLink)
                             AreaMark(
                                 x: .value("Day", spendings.date, unit: .day),
                                 y: .value("Amount", spendings.value)
                             )
                             .interpolationMethod(.catmullRom)
-                            .foregroundStyle(Gradient(colors: [Color("FrDefault"), Color("FrDefault").opacity(0.1)]))
+                            .foregroundStyle(Gradient(colors: [Color.appLink, Color.appLink.opacity(0.1)]))
                         }
                         .frame(height: 150)
                     }
@@ -51,7 +51,7 @@ struct BudgetStatsView: View {
                                     y: .value("Amount", spendings.value)
                                 )
                                 .cornerRadius(10)
-                                .foregroundStyle(Color("FrDefault"))
+                                .foregroundStyle(Color.appLink)
                             }
                         }
                         .frame(height: 150)

@@ -20,18 +20,20 @@ struct TransactionCard: View {
                     HStack {
                         IconView(
                             name: transaction.category?.iconNameValue ?? "question",
-                            color: transaction.category?.colorValue ?? .black,
+                            color: transaction.category?.colorValue ?? Color.appCardTextColor,
                             size: 45
                         )
                         VStack(alignment: .listRowSeparatorLeading) {
                             Text(transaction.category?.name ?? "?")
                                 .font(.caption)
+                                .foregroundStyle(Color.appLinkInactive)
                             Text(transaction.name ?? "?")
                                 .bold()
                             Text(formatters.formatAmount(transaction.amountDecimal))
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                        .foregroundStyle(Color.appCardTextColor)
                     }
                 }
                 .tint(.black)
@@ -67,7 +69,7 @@ struct TransactionListView: View {
                                     } label: {
                                         Text("Clear")
                                             .font(.caption)
-                                            .foregroundStyle(Color("FrDefault"))
+                                            .foregroundStyle(Color.appLink)
                                     }
                                 }
                             }
@@ -78,7 +80,7 @@ struct TransactionListView: View {
                             }
                         } label: {
                             Image(systemName: "chevron.down")
-                                .foregroundStyle(Color("FrDefault"))
+                                .foregroundStyle(Color.appLink)
                                 .rotationEffect(Angle(degrees: chevronRotate))
                         }
                         HelpButton {
@@ -107,21 +109,23 @@ struct TransactionListView: View {
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
-                            .tint(Color("Accent1"))
+                            .tint(Color.appDestructiveLink)
                             Button {
                                 selectedTransaction = transaction
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
-                            .tint(Color("FrDefault"))
+                            .tint(Color.appLink)
                         }
                 }
                 Color.clear
+                    .background(Color.appBackground)
                     .frame(height: 70)
-                    .defaultListCard()
+                    .listRowInsets(.init())
+                    .listRowSeparator(.hidden)
             }
             .scrollContentBackground(.hidden)
-            .background(Color("BgDefault"))
+            .background(Color.appBackground)
             .listStyle(.insetGrouped)
             .listRowSpacing(10)
         }
@@ -134,6 +138,7 @@ struct TransactionListView: View {
                                               currency: vm.parent.currency,
                                               budgetService: budgetService))
                 .presentationDetents([.medium])
+                .preferredColorScheme(appState.colorScheme)
         }
         .onAppear {
             vm.subscribe()
