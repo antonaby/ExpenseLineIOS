@@ -41,20 +41,19 @@ struct CategoryCard: View {
                     }
                     CircularProgressView(
                         progress: getPercentSpent(),
-                        color: Color("FrDefault"),
-                        fullColor: Color("Accent1"),
+                        color: Color.appLink,
+                        fullColor: Color.appDestructiveLink,
                         lineWidth: 10) {
                         VStack {
                             Text(formatters.formatPercent(getPercentSpentDecimal()))
                             Text("Spent")
-                                .foregroundColor(.gray)
                                 .font(.caption)
                         }
+                        .foregroundColor(Color.appLinkInactive)
                     }
                     .frame(width: 85, height: 85)
                     .padding(.trailing, 5)
                 }
-                .tint(Color.appLink)
             }
         }
     }
@@ -67,8 +66,8 @@ struct CategoryCard: View {
                 .bold()
             Text("≈" + formatters.formatAmount(getExpectedAmount()))
                 .font(.caption)
-                .foregroundColor(Color("Accent3"))
         }
+        .foregroundStyle(Color.appLinkInactive)
     }
     
     @ViewBuilder
@@ -78,6 +77,7 @@ struct CategoryCard: View {
             Text(formatters.formatAmount(category.entity.amountDecimal))
                 .bold()
         }
+        .foregroundStyle(Color.appLinkInactive)
     }
     
     func getPercentSpent() -> Double {
