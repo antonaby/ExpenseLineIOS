@@ -30,6 +30,26 @@ struct CategoryTemplate: Identifiable, Codable {
     var name: String
     var iconName: String
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case iconName
+    }
+    
+    init(id: String, name: String, iconName: String) {
+        self.id = id
+        self.name = String(localized: String.LocalizationValue(name))
+        self.iconName = iconName
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try values.decode(String.self, forKey: .id)
+        let nameStr = try values.decode(String.self, forKey: .name)
+        self.name = String(localized: String.LocalizationValue(nameStr))
+        self.iconName = try values.decode(String.self, forKey: .iconName)
+    }
+    
 }
 
 struct CategoryTemplateType: Identifiable, Codable {

@@ -196,6 +196,7 @@ struct NotificationsView: View {
                         HStack {
                             Image(systemName: "calendar")
                             Text("Today")
+                                .lineLimit(1)
                         }
                         .frame(width: 100)
                         .font(.caption)
@@ -209,6 +210,7 @@ struct NotificationsView: View {
                         HStack {
                             Image(systemName: "bell")
                             Text("Reminders")
+                                .lineLimit(1)
                         }
                         .frame(width: 100)
                         .font(.caption)
