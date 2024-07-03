@@ -16,12 +16,8 @@ struct MainView: View {
     @StateObject var appState: AppState
     
     var body: some View {
-        if let colorScheme = appState.colorScheme {
-            MainView()
-                .environment(\.colorScheme, colorScheme)
-        } else {
-            MainView()
-        }
+        MainView()
+            .preferredColorScheme(appState.colorScheme)
     }
     
     @ViewBuilder

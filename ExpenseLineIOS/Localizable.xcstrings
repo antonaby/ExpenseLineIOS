@@ -133,6 +133,9 @@
         }
       }
     },
+    "Color Scheme" : {
+
+    },
     "Create" : {
       "localizations" : {
         "ru" : {
@@ -173,7 +176,11 @@
         }
       }
     },
+    "Dark" : {
+
+    },
     "Dark Mode" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -310,6 +317,7 @@
       }
     },
     "Help button" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -328,6 +336,9 @@
           }
         }
       }
+    },
+    "Light" : {
+
     },
     "Month" : {
       "localizations" : {
@@ -532,6 +543,9 @@
         }
       }
     },
+    "Show Help Button" : {
+
+    },
     "Spending by day" : {
       "localizations" : {
         "ru" : {
@@ -561,6 +575,9 @@
           }
         }
       }
+    },
+    "System" : {
+
     },
     "Time" : {
       "localizations" : {
