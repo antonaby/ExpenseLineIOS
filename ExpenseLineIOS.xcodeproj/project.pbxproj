@@ -417,6 +417,7 @@
 		D247B4E42BF619E8004E72A4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				D2C58AD32BE22F5800F1BB03 /* CategoryTemplateSelectorView.swift */,
 				D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */,
 				D247B4E52BF619F7004E72A4 /* CategoryView.swift */,
 				D247B4E72BF61A08004E72A4 /* CategoryViewModel.swift */,
@@ -439,7 +440,6 @@
 			children = (
 				D24CA2962BD2944C00896BC6 /* MainWizardPageView.swift */,
 				D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */,
-				D2C58AD32BE22F5800F1BB03 /* CategoryTemplateSelectorView.swift */,
 				D221C0872BE757200096DF89 /* CurrencySelectorSheet.swift */,
 				D226FB0A2BED175000B54654 /* OutcomePageWizardView.swift */,
 				D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */,

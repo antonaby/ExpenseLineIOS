@@ -12,6 +12,8 @@ extension Color {
     
     static let appBackground: Color = Color("Background")
     static let appBackgroundSecondary: Color = Color("BackgroundSecondary")
+    static let appIcon: Color = Color("Icon")
+    static let appBackgroundIcon: Color = Color("BackgroundIcon")
     static let appButtonTextColor: Color = Color("ButtonTextColor")
     static let appButtonTextColorInactive: Color = Color("ButtonTextColorInactive")
     static let appCardTextColor: Color = Color("CardTextColor")

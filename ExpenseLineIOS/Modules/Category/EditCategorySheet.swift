@@ -80,7 +80,6 @@ class EditPlanCategorySheetViewModel: ObservableObject {
     
     @Published var name: String
     @Published var template: CategoryTemplate?
-    @Published var color: Color
     @Published var type: CategoryType
     @Published var amount: String
     @Published var percent: String
@@ -108,7 +107,6 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         let locale = currencySymbol.locale
         self.locale = locale
         self.name = category.name ?? ""
-        self.color = category.colorValue
         self.type = category.typeValue
         
         if category.amountDecimal > 0 {
@@ -148,7 +146,6 @@ class EditPlanCategorySheetViewModel: ObservableObject {
             category.percentDecimalFraction = 0
         }
         category.typeValue = type
-        category.colorValue = color
         category.templateId = template?.id
         
         return category
@@ -272,14 +269,10 @@ struct EditCategorySheet: View {
                         Button {
                             showCategrotyTemplateSheet.toggle()
                         } label: {
-                            FlexibleCardView {
-                                IconView(
-                                    name: vm.template?.iconName ?? "question",
-                                    color: vm.template != nil ? vm.color : Color.appLink,
-                                    size: 45
-                                )
-                            }
-                            .frame(maxWidth: 70)
+                            IconView(
+                                name: vm.template?.iconName ?? "question",
+                                size: 45
+                            )
                         }
                         FlexibleCardView {
                             HStack {
@@ -346,7 +339,7 @@ struct EditCategorySheet: View {
             .background(Color.appBackground)
         }
         .sheet(isPresented: $showCategrotyTemplateSheet, onDismiss: onIconSelected) {
-            CategoryTemplateSelectorView(color: $vm.color, selectedTemplate: $vm.template, type: vm.type)
+            CategoryTemplateSelectorView(selectedTemplate: $vm.template, type: vm.type)
                 .preferredColorScheme(appState.colorScheme)
         }
         .interactiveDismissDisabled(true)
@@ -397,7 +390,6 @@ struct EditCategorySheet: View {
     let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview"
     category.amount = 1000
-    category.colorValue = .orange
     category.typeValue = .income
     category.templateId = template?.id
 

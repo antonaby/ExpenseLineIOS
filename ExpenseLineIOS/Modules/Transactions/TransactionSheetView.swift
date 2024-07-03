@@ -45,7 +45,6 @@ struct TransactionSheetView: View {
                                 HStack {
                                     IconView(
                                         name: vm.category?.iconNameValue ?? "question",
-                                        color: vm.category?.colorValue ?? Color.appLink,
                                         size: 45
                                     )
                                     if let category = vm.category {
@@ -125,7 +124,6 @@ struct TransactionSheetView: View {
     category1.name = "Test"
     category1.budget = budget
     category1.typeValue = .income
-    category1.colorValue = .blue
     category1.iconName = "018-income"
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
@@ -133,7 +131,6 @@ struct TransactionSheetView: View {
     category2.name = "Other"
     category2.budget = budget
     category2.typeValue = .outcomeFixed
-    category2.colorValue = .cyan
     category2.iconName = "024-mortgage"
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
@@ -141,7 +138,6 @@ struct TransactionSheetView: View {
     category3.name = "Thrid"
     category3.budget = budget
     category3.typeValue = .outcomePercent
-    category3.colorValue = .green
     category3.iconName = "005-coffee"
     
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
@@ -163,7 +159,6 @@ struct TransactionSheetView: View {
     category1.name = "Test"
     category1.budget = budget
     category1.typeValue = .income
-    category1.colorValue = .blue
     category1.iconName = "018-income"
     
     let category2 = PlanCategoryEntity(context: dm.viewContext)
@@ -171,7 +166,6 @@ struct TransactionSheetView: View {
     category2.name = "Other"
     category2.budget = budget
     category2.typeValue = .outcomeFixed
-    category2.colorValue = .cyan
     category2.iconName = "024-mortgage"
     
     let category3 = PlanCategoryEntity(context: dm.viewContext)
@@ -179,7 +173,6 @@ struct TransactionSheetView: View {
     category3.name = "Thrid"
     category3.budget = budget
     category3.typeValue = .outcomePercent
-    category3.colorValue = .green
     category3.iconName = "005-coffee"
     
     let transaction = bundle.budgetService.newTransactionEntity(budget)

@@ -123,6 +123,7 @@
       }
     },
     "Color" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

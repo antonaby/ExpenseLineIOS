@@ -14,7 +14,6 @@ struct CategoryTemplateSelectorView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var dataService: DataService
     
-    @Binding var color: Color
     @Binding var selectedTemplate: CategoryTemplate?
     
     var type: CategoryType
@@ -35,19 +34,6 @@ struct CategoryTemplateSelectorView: View {
             .padding(.bottom, 5)
             .background(Color.appBackgroundSecondary)
             VStack(spacing: 15) {
-                FlexibleCardView {
-                    HStack {
-                        ForEach(predifinedColors, id: \.self) { predifinedColor in
-                            ColorBoxView(predifinedColor, selected: predifinedColor.toHex() == color.toHex())
-                                .frame(maxWidth: .infinity)
-                        }
-                        Divider()
-                        ColorPicker("Color", selection: $color)
-                        .labelsHidden()
-                        .frame(maxWidth: .infinity)
-                    }
-                }
-                .frame(maxHeight: 50)
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
                         TemplatesSectionsView(mainTemplates)
@@ -81,17 +67,22 @@ struct CategoryTemplateSelectorView: View {
                 Button {
                     selectedTemplate = template
                 } label: {
-                    FlexibleCardView(color: selectedTemplate?.id == template.id ? color : Color.appBackgroundSecondary) {
+                    FlexibleCardView(color: selectedTemplate?.id == template.id
+                                     ? Color.appLink
+                                     : Color.appBackgroundSecondary) {
                         VStack {
                             IconView(
                                 name: template.iconName,
-                                color: selectedTemplate?.id == template.id ? Color.buttonText : Color.appCardTextColor,
+                                withBacground: false,
+                                color: selectedTemplate?.id == template.id
+                                ? Color.appButtonTextColor
+                                : Color.appCardTextColor,
                                 size: 40
                             )
                             Text(template.name)
                                 .lineLimit(1)
                                 .font(.caption2)
-                                .foregroundColor(selectedTemplate?.id == template.id ? Color.buttonText : Color.appCardTextColor)
+                                .foregroundColor(selectedTemplate?.id == template.id ? Color.appButtonTextColor : Color.appCardTextColor)
                         }
                     }
                 }
@@ -103,29 +94,10 @@ struct CategoryTemplateSelectorView: View {
         }
     }
     
-    @ViewBuilder
-    func ColorBoxView(_ predifinedColor: Color, selected: Bool) -> some View {
-        Button {
-            color = predifinedColor
-        } label: {
-            ZStack(alignment: .center) {
-                if selected {
-                    Circle()
-                        .strokeBorder(predifinedColor, lineWidth: 2)
-                }
-                Circle()
-                    .foregroundColor(predifinedColor)
-                    .frame(width: 25, height: 25)
-            }
-            .frame(width: 35, height: 35)
-        }
-    }
-    
 }
 
 #Preview {
     CategoryTemplateSelectorView(
-        color: .constant(.red),
         selectedTemplate: .constant(nil),
         type: .outcomePercent
     )

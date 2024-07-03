@@ -55,7 +55,7 @@ struct EditNotificationSheetView: View {
                                     } label: {
                                         if let category = vm.category {
                                             HStack {
-                                                IconView(name: category.iconNameValue, color: category.colorValue)
+                                                IconView(name: category.iconNameValue)
                                                 Text(category.nameValue)
                                                     .frame(height: 45)
                                                     .font(.title2)
@@ -261,7 +261,6 @@ struct EditNotificationSheetView: View {
     category1.amount = 0
     category1.percent = 0.2
     category1.iconName = "fi-house"
-    category1.colorValue = .orange
     category1.typeValue = .outcomePercent
     category1.createdAt = Date()
     
@@ -271,7 +270,6 @@ struct EditNotificationSheetView: View {
     category2.amount = 2000
     category2.percent = 0
     category2.iconName = "fi-insurance"
-    category2.colorValue = .green
     category2.typeValue = .outcomeFixed
     category2.createdAt = Date()
     

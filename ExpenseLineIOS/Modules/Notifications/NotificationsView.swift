@@ -24,7 +24,7 @@ struct NotificationCard: View {
                         HStack {
                             Text(category.nameValue)
                                 .font(.caption)
-                            IconView(name: category.iconNameValue, color: category.colorValue, size: 25)
+                            IconView(name: category.iconNameValue, size: 25)
                         }
                     }
                 }
@@ -287,7 +287,6 @@ struct NotificationsView: View {
     category.typeValue = .outcomeFixed
     category.name = "Preview Category"
     category.iconName = "fi-insurance"
-    category.colorValue = .indigo
     
     let notification1 = bundle.notificationService.newNotificationEntity(budget)
     notification1.name = "Preview 1"

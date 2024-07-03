@@ -26,7 +26,6 @@ struct CategoryView: View {
                     HStack {
                         IconView(
                             name: vm.category.iconNameValue,
-                            color: vm.category.colorValue,
                             size: 45
                         )
                         Text(vm.category.nameValue)
@@ -181,7 +180,6 @@ struct CategoryView: View {
     category.typeValue = .outcomeFixed
     category.amountDecimal = 1000
     category.iconName = "fi-electricity"
-    category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)
     transaction1.name = "Transaction 1"
@@ -258,7 +256,6 @@ struct CategoryView: View {
     category.typeValue = .outcomeFixed
     category.amountDecimal = 1000
     category.iconName = "007-electricity"
-    category.colorValue = .orange
     
     do {
         let period = try budgetService.getOrCreateLastPeriod(budget)
@@ -289,7 +286,6 @@ struct CategoryView: View {
     category.typeValue = .outcomeFixed
     category.amountDecimal = 1000
     category.iconName = "007-electricity"
-    category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)
     transaction1.name = "Transaction 1"
@@ -343,7 +339,6 @@ struct CategoryView: View {
     category.typeValue = .outcomePercent
     category.percentDecimal = 0.2
     category.iconName = "015-groceries"
-    category.colorValue = .orange
     
     let transaction1 = budgetService.newTransactionEntity(budget)
     transaction1.name = "Transaction 1"

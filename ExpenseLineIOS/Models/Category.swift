@@ -135,19 +135,6 @@ extension PlanCategoryEntity {
         }
     }
     
-    var colorValue: Color {
-        get {
-            if let value = color {
-                return Color(hex: value) ?? .green
-            }
-            
-            return .green
-        }
-        set {
-            color = newValue.toHex() ?? "000000"
-        }
-    }
-    
     var allNotifications: [NotificationEntity] {
         get {
             notifications?.allObjects as? [NotificationEntity] ?? []

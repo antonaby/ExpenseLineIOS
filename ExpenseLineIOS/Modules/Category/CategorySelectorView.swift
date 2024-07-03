@@ -21,7 +21,7 @@ struct CategorySelectorView: View {
                     dismiss()
                 } label: {
                     HStack {
-                        IconView(name: ctg.iconNameValue, color: ctg.colorValue)
+                        IconView(name: ctg.iconNameValue)
                         Text(ctg.nameValue)
                             .foregroundStyle(Color.appCardTextColor)
                     }
@@ -59,21 +59,18 @@ struct CategorySelectorView: View {
     category1.id = UUID()
     category1.name = "Test"
     category1.typeValue = .income
-    category1.colorValue = .blue
     category1.iconName = "fi-gym"
     
     let category2 = budgetService.newCategoryEntity(budget)
     category2.id = UUID()
     category2.name = "Other"
     category2.typeValue = .outcomeFixed
-    category2.colorValue = .cyan
     category2.iconName = "fl-book"
     
     let category3 = budgetService.newCategoryEntity(budget)
     category3.id = UUID()
     category3.name = "Thrid"
     category3.typeValue = .outcomePercent
-    category3.colorValue = .green
     category3.iconName = "fi-house"
     
     return CategorySelectorView(

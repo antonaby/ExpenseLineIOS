@@ -124,7 +124,6 @@ class DataService: ObservableObject {
         category.name = template.name
         category.iconName = template.iconName
         category.templateId = template.id
-        category.colorValue = Color.init(hex: color) ?? .black
         category.order = order
         
         return category

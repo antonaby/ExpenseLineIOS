@@ -119,7 +119,7 @@ struct ShortNotificationsListView: View {
         if let category = notification.category, showCategory {
             HStack {
                 Text(category.nameValue)
-                IconView(name: category.iconNameValue, color: category.colorValue, size: 25)
+                IconView(name: category.iconNameValue, size: 25)
             }
             .font(.caption)
         }

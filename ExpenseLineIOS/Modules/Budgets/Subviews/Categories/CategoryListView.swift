@@ -22,7 +22,6 @@ struct CategoryCard: View {
                         HStack {
                             IconView(
                                 name: category.entity.iconNameValue,
-                                color: category.entity.colorValue,
                                 size: 45
                             )
                             Text(category.entity.nameValue)
@@ -164,7 +163,6 @@ struct CategoryListView: View {
         category1.amount = 0
         category1.percent = 0.2
         category1.iconName = "015-groceries"
-        category1.colorValue = .orange
         category1.typeValue = .outcomePercent
         category1.createdAt = Date()
         category1.budget = budget
@@ -175,7 +173,6 @@ struct CategoryListView: View {
         category2.amount = 2000
         category2.percent = 0
         category2.iconName = "024-mortgage"
-        category2.colorValue = .green
         category2.typeValue = .outcomeFixed
         category2.createdAt = Date()
         category2.budget = budget

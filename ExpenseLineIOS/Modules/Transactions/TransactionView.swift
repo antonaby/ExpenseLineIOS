@@ -25,7 +25,6 @@ struct TransactionView: View {
                     HStack {
                         IconView(
                             name: vm.transaction.category?.iconNameValue ?? "question",
-                            color: vm.transaction.category?.colorValue ?? Color.appLink,
                             size: 45)
                         VStack(alignment: .listRowSeparatorLeading) {
                             Text(vm.transaction.category?.nameValue ?? "Category")
@@ -82,7 +81,6 @@ struct TransactionView: View {
     category.name = "Preview"
     category.typeValue = .outcomePercent
     category.iconName = "fi-gym"
-    category.colorValue = .purple
     category.percentDecimal = 0.2
     
     let transaction = budgetService.newTransactionEntity(budget)

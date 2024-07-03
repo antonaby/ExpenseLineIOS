@@ -20,7 +20,6 @@ struct TransactionCard: View {
                     HStack {
                         IconView(
                             name: transaction.category?.iconNameValue ?? "question",
-                            color: transaction.category?.colorValue ?? Color.appCardTextColor,
                             size: 45
                         )
                         VStack(alignment: .listRowSeparatorLeading) {
@@ -174,7 +173,6 @@ struct TransactionListView: View {
         category1.percent = 0.2
         category1.iconName = "fl-groceries"
         category1.typeValue = .outcomePercent
-        category1.colorValue = .orange
         category1.createdAt = Date()
         category1.budget = budget
         
@@ -185,7 +183,6 @@ struct TransactionListView: View {
         category2.percent = 0
         category2.iconName = "fi-rent"
         category2.typeValue = .outcomeFixed
-        category2.colorValue = .green
         category2.createdAt = Date()
         category2.budget = budget
         

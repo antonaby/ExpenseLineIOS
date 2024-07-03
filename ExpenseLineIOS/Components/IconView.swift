@@ -10,16 +10,31 @@ import SwiftUI
 struct IconView: View {
     
     var name: String
-    var color: Color = .black
+    var padding: CGFloat = 5
+    var withBacground: Bool = true
+    var color: Color = Color.appIcon
+    var backgroundColor = Color.appBackgroundIcon
     var size: CGFloat = 35
     
     var body: some View {
-        Image(name)
-            .renderingMode(.template)
-            .resizable()
-            .scaledToFit()
-            .foregroundColor(color)
-            .frame(width: size, height: size)
+        if withBacground {
+            Image(name)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(color)
+                .frame(width: size, height: size)
+                .padding(padding)
+                .background(RoundedRectangle(cornerRadius: 10)
+                    .foregroundStyle(backgroundColor))
+        } else {
+            Image(name)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(color)
+                .frame(width: size, height: size)
+        }
     }
     
 }

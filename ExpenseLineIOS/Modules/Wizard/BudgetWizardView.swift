@@ -316,7 +316,6 @@ struct BudgetWizardView: View {
     category1.id = UUID()
     category1.name = "Preview 1"
     category1.typeValue = .outcomeFixed
-    category1.colorValue = .pink
     category1.iconName = "case"
     category1.budget = budget
     category1.amountDecimal = 1000
@@ -325,7 +324,6 @@ struct BudgetWizardView: View {
     category2.id = UUID()
     category2.name = "Preview 2"
     category2.typeValue = .outcomeFixed
-    category2.colorValue = .green
     category2.iconName = "globe"
     category2.budget = budget
     category2.amountDecimal = 1000000
@@ -334,7 +332,6 @@ struct BudgetWizardView: View {
     category3.id = UUID()
     category3.name = "Preview 3"
     category3.typeValue = .outcomePercent
-    category3.colorValue = .brown
     category3.iconName = "cup.and.saucer"
     category3.budget = budget
     category3.percentDecimalFraction = 15
@@ -343,7 +340,6 @@ struct BudgetWizardView: View {
     category4.id = UUID()
     category4.name = "Preview 4"
     category4.typeValue = .outcomePercent
-    category4.colorValue = .green
     category4.iconName = "takeoutbag.and.cup.and.straw"
     category4.budget = budget
     category4.percentDecimalFraction = 20
@@ -352,7 +348,6 @@ struct BudgetWizardView: View {
     category5.id = UUID()
     category5.name = "Preview 1 Income"
     category5.typeValue = .income
-    category5.colorValue = .yellow
     category5.iconName = "case"
     category5.budget = budget
     category5.amountDecimal = 1000
@@ -361,7 +356,6 @@ struct BudgetWizardView: View {
     category6.id = UUID()
     category6.name = "Preview 2 Income"
     category6.typeValue = .income
-    category6.colorValue = .orange
     category6.iconName = "globe"
     category6.budget = budget
     category6.amountDecimal = 1000000
