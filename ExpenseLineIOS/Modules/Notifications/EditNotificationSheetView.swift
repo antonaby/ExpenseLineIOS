@@ -59,6 +59,7 @@ struct EditNotificationSheetView: View {
                                                 Text(category.nameValue)
                                                     .frame(height: 45)
                                                     .font(.title2)
+                                                Spacer()
                                             }
                                             .frame(maxWidth: .infinity)
                                             .overlay(alignment: .trailing) {

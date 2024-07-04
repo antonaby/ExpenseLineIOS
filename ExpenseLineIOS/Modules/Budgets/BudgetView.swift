@@ -78,7 +78,7 @@ struct BudgetView: View {
                         .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
                         .tag(BudgetViewPage.categories)
                     TransactionListView(vm: TransactionListViewModel(parent: vm, budgetService: budgetService))
-                        .tabItem { Image(systemName: "list.bullet") }
+                        .tabItem { Image(systemName: "wallet.pass") }
                         .tag(BudgetViewPage.transactions)
                     BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, budgetService: budgetService))
                         .tabItem { Image(systemName: "chart.pie") }

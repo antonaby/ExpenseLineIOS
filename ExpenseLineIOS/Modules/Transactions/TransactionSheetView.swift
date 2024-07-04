@@ -42,20 +42,24 @@ struct TransactionSheetView: View {
                             NavigationLink {
                                 CategorySelectorView(category: $vm.category, categories: $vm.categories)
                             } label: {
-                                HStack {
-                                    IconView(
-                                        name: vm.category?.iconNameValue ?? "question",
-                                        size: 45
-                                    )
-                                    if let category = vm.category {
+                                if let category = vm.category {
+                                    HStack {
+                                        IconView(
+                                            name: vm.category?.iconNameValue ?? "question",
+                                            size: 45
+                                        )
                                         Text(category.nameValue)
-                                    } else {
-                                        Text("Choose category")
+                                        Spacer()
+                                    }
+                                } else {
+                                    HStack {
+                                        Text("Choose Category")
+                                            .frame(height: 45)
                                     }
                                 }
-                                .foregroundColor(Color.appCardTextColor)
-                                .font(.title2)
                             }
+                            .font(.title2)
+                            .foregroundColor(Color.appCardTextColor)
                         }
                         FlexibleCardView {
                             VStack(alignment: .leading, spacing: 20) {

@@ -187,12 +187,13 @@ class NotificationService: ObservableObject {
     func sheduleNotification(_ notification: NotificationEntity) throws {
         if !notification.enabled {
             try cancelNotification(notification)
+            return
         }
         
         var requests: [UNNotificationRequest] = []
         
         do {
-            removeOldEntries(notification)
+            try cancelNotification(notification)
             
             switch notification.typeValue {
             case .nonotification:

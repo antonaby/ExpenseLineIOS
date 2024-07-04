@@ -1,18 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "**Note:** swipe left to delete a category." : {
-
-    },
-    "**Note:** swipe left to edit or delete a notification." : {
-
-    },
-    "**Note:** swipe left to edit or delete an entry." : {
-
-    },
-    "**Note:** swipe right to turn it on or off." : {
-
-    },
     "7 day free trial. **Auto-renews at %@.** No commitment. Cancel anytime." : {
 
     },
@@ -103,6 +91,7 @@
       }
     },
     "Choose category" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -111,6 +100,9 @@
           }
         }
       }
+    },
+    "Choose Category" : {
+
     },
     "Clear" : {
       "localizations" : {
@@ -575,6 +567,18 @@
           }
         }
       }
+    },
+    "Swipe left to delete a category." : {
+
+    },
+    "Swipe left to edit or delete a notification." : {
+
+    },
+    "Swipe left to edit or delete an entry." : {
+
+    },
+    "Swipe right to turn a notification on or off." : {
+
     },
     "System" : {
 
