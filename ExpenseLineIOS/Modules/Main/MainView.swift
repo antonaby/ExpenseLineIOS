@@ -54,7 +54,7 @@ struct MainView: View {
         .tint(Color.appLink)
         .sheet(item: $appState.helpPage) { page in
             HelpView(page: page)
-                .presentationDetents([.medium, .large])
+                .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
                 .preferredColorScheme(appState.colorScheme)
         }
