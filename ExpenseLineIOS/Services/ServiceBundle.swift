@@ -22,6 +22,7 @@ struct ServiceBundle {
     let settingsService: SettingsService
     let notificationService: NotificationService
     let subscriptionService: SubscriptionService
+    let analyticsService: AnalyticsService
     
     init(inMemory: Bool = false) {
         databaseManager = DatabaseManager()
@@ -31,6 +32,7 @@ struct ServiceBundle {
         dataService = DataService(budgetService: budgetService)
         settingsService = SettingsService()
         subscriptionService = SubscriptionService(dm: databaseManager)
+        analyticsService = AnalyticsService()
     }
     
 }
@@ -44,6 +46,7 @@ extension View {
             .environmentObject(bundle.settingsService)
             .environmentObject(bundle.notificationService)
             .environmentObject(bundle.subscriptionService)
+            .environmentObject(bundle.analyticsService)
     }
     
 }

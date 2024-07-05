@@ -17,6 +17,7 @@ struct BudgetView: View {
     @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var notificationService: NotificationService
     @EnvironmentObject var subscriptionService: SubscriptionService
+    @EnvironmentObject var analyticsService: AnalyticsService
     
     @State var transactionSheet: Bool = false
     @State var changePeriodSheetOpen: Bool = false
@@ -151,6 +152,7 @@ struct BudgetView: View {
         .onAppear {
             appState.showHelpPage(for: .mainPage, firstTime: true)
             vm.reloadBudget()
+            analyticsService.logEvent(name: "budget_open")
         }
         .onDisappear {
             vm.cancelAll()
