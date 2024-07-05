@@ -264,16 +264,19 @@ struct EditCategorySheet: View {
             .font(.title2)
             .background(Color.appBackgroundSecondary)
             ScrollView {
-                VStack(spacing: 15) {
-                    HStack(spacing: 15) {
-                        Button {
-                            showCategrotyTemplateSheet.toggle()
-                        } label: {
-                            IconView(
-                                name: vm.template?.iconName ?? "question",
-                                size: 45
-                            )
+                VStack(spacing: 10) {
+                    HStack(spacing: 10) {
+                        FlexibleCardView {
+                            Button {
+                                showCategrotyTemplateSheet.toggle()
+                            } label: {
+                                IconView(
+                                    name: vm.template?.iconName ?? "question",
+                                    size: 45
+                                )
+                            }
                         }
+                        .frame(width: 75)
                         FlexibleCardView {
                             HStack {
                                 TextField("Name", text: $vm.name)
