@@ -39,6 +39,7 @@
 		D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = D22CED992C05C0A0000C9A08 /* categories.json */; };
 		D22E47522C0B1DF9006C4C3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */; };
 		D22E5F082C0893B100DE7DE3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22E5F072C0893B100DE7DE3 /* NotificationService.swift */; };
+		D23109122C3939AF00DE6372 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D23109112C3939AF00DE6372 /* StoreKit.framework */; };
 		D23126A72BC2799C0008BDD6 /* EditCategorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */; };
 		D23416CB2BE616E4000178FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23416CA2BE616E4000178FB /* Color+Extension.swift */; };
 		D2350E6A2BBC35A0002B93A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2350E692BBC35A0002B93A0 /* MainView.swift */; };
@@ -151,6 +152,8 @@
 		D22CED992C05C0A0000C9A08 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
 		D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D22E5F072C0893B100DE7DE3 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		D23109102C3938B000DE6372 /* Percent Budget.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Percent Budget.storekit"; sourceTree = "<group>"; };
+		D23109112C3939AF00DE6372 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D23126A62BC2799C0008BDD6 /* EditCategorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategorySheet.swift; sourceTree = "<group>"; };
 		D23416CA2BE616E4000178FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		D2350E692BBC35A0002B93A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -214,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D23109122C3939AF00DE6372 /* StoreKit.framework in Frameworks */,
 				D24F9E502C37E005005260D8 /* FirebaseAnalyticsSwift in Frameworks */,
 				D24F9E4D2C37DCE9005260D8 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -239,6 +243,7 @@
 		D20EF29E2BB18CFA006CF8CD = {
 			isa = PBXGroup;
 			children = (
+				D23109102C3938B000DE6372 /* Percent Budget.storekit */,
 				D20EF2A92BB18CFA006CF8CD /* ExpenseLineIOS */,
 				D20EF2BA2BB18CFB006CF8CD /* ExpenseLineIOSTests */,
 				D20EF2C42BB18CFB006CF8CD /* ExpenseLineIOSUITests */,
@@ -461,6 +466,7 @@
 		D24F9E4E2C37E005005260D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D23109112C3939AF00DE6372 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

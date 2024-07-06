@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
-
+import StoreKit
 
 
 struct PaywallView: View {
     
     @EnvironmentObject var subscrioptionService: SubscriptionService
     @Environment(\.dismiss) var dismiss
+    
+    @State var products: [Product] = []
     
     var body: some View {
         VStack {
@@ -41,31 +43,38 @@ struct PaywallView: View {
                 PremiumAdvantagesRow(icon: "bell", text: "Unlimited reminders")
                 Color.clear.frame(height: 35)
                 VStack {
-                    Text("7 day free trial. **Auto-renews at \(subscrioptionService.getStandartSubsctiprionCost()).** No commitment. Cancel anytime.")
-                        .multilineTextAlignment(.center)
-                        .font(.caption)
-                    Button {
-                        
-                    } label: {
-                        Text("Try for free and subscribe")
-                            .font(.title2)
-                            .frame(maxWidth: .infinity)
+                    ForEach(products) { product in
+                        Button {
+                            Task {
+                                await subscrioptionService.buyProduct(product)
+                            }
+                        } label: {
+                            FlexibleCardView(color: Color.appLink) {
+                                VStack {
+                                    HStack {
+                                        Text(product.displayName)
+                                            .bold()
+                                        Spacer()
+                                        Text(product.displayPrice)
+                                    }
+                                    Text(product.description)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
                             .foregroundStyle(Color.appButtonTextColor)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.appLink)
-                    Button {
-                        
-                    } label: {
-                        Text("Restore")
-                            .foregroundStyle(Color.appLink)
+                        }
                     }
                 }
-                .padding(.horizontal, 15)
             }
         }
         .padding(.horizontal, 15)
         .background(Color.appBackground)
+        .task {
+            let list = await subscrioptionService.allProducts()
+            await MainActor.run {
+                products = list
+            }
+        }
     }
     
     @ViewBuilder
