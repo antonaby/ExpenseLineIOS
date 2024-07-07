@@ -75,6 +75,8 @@
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
 		D2673F2C2C1715E000C0613B /* EditNotificationSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2673F2B2C1715E000C0613B /* EditNotificationSheetView.swift */; };
 		D2673F2E2C17173F00C0613B /* EditNotificationSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2673F2D2C17173F00C0613B /* EditNotificationSheetViewModel.swift */; };
+		D26B0E522C3A5FEA0072C945 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26B0E512C3A5FEA0072C945 /* NotificationView.swift */; };
+		D26B0E542C3A61C70072C945 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26B0E532C3A61C70072C945 /* NotificationViewModel.swift */; };
 		D26C11CE2C04A7D6004DB285 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26C11CD2C04A7D6004DB285 /* IconView.swift */; };
 		D26DB1B92BEE487F00450617 /* FormTitleViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */; };
 		D2705E5B2BC01D5B003426A8 /* BudgetWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */; };
@@ -187,6 +189,8 @@
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
 		D2673F2B2C1715E000C0613B /* EditNotificationSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationSheetView.swift; sourceTree = "<group>"; };
 		D2673F2D2C17173F00C0613B /* EditNotificationSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationSheetViewModel.swift; sourceTree = "<group>"; };
+		D26B0E512C3A5FEA0072C945 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		D26B0E532C3A61C70072C945 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		D26C11CD2C04A7D6004DB285 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		D26DB1B82BEE487F00450617 /* FormTitleViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTitleViewModifier.swift; sourceTree = "<group>"; };
 		D2705E5A2BC01D5B003426A8 /* BudgetWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetWizardView.swift; sourceTree = "<group>"; };
@@ -381,6 +385,8 @@
 				D2673F2B2C1715E000C0613B /* EditNotificationSheetView.swift */,
 				D2673F2D2C17173F00C0613B /* EditNotificationSheetViewModel.swift */,
 				D20203DD2C2C31D600B7F476 /* ShortNotificationsListView.swift */,
+				D26B0E512C3A5FEA0072C945 /* NotificationView.swift */,
+				D26B0E532C3A61C70072C945 /* NotificationViewModel.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -719,6 +725,7 @@
 				D247B4E62BF619F7004E72A4 /* CategoryView.swift in Sources */,
 				D2C58AD42BE22F5800F1BB03 /* CategoryTemplateSelectorView.swift in Sources */,
 				D23F49A12C28032000604CAF /* HelpView.swift in Sources */,
+				D26B0E522C3A5FEA0072C945 /* NotificationView.swift in Sources */,
 				D23B851A2BF235D600A62196 /* PeriodListView.swift in Sources */,
 				D221C08A2BE758170096DF89 /* Currency.swift in Sources */,
 				D2246B3A2BBACC4B00556936 /* BudgetListViewModel.swift in Sources */,
@@ -755,6 +762,7 @@
 				D2246B382BBACC3500556936 /* BudgetListView.swift in Sources */,
 				D20EF2EA2BB19ADD006CF8CD /* ToolButton.swift in Sources */,
 				D22776C92C2451A600B49782 /* FormattersHolder.swift in Sources */,
+				D26B0E542C3A61C70072C945 /* NotificationViewModel.swift in Sources */,
 				D24CA2972BD2944C00896BC6 /* MainWizardPageView.swift in Sources */,
 				D23B85172BF22E8300A62196 /* Period.swift in Sources */,
 				D2C58AD62BE230CC00F1BB03 /* Category.swift in Sources */,

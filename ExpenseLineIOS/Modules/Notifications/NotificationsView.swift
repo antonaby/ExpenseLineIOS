@@ -15,29 +15,31 @@ struct NotificationCard: View {
         
     var body: some View {
         FlexibleCardView {
-            VStack {
-                HStack(alignment: .firstTextBaseline) {
-                    Text(notification.nameValue)
-                        .bold()
-                    Spacer()
-                    if let category = notification.category {
-                        HStack {
-                            Text(category.nameValue)
-                                .font(.caption)
-                            IconView(name: category.iconNameValue, size: 25)
+            NavigationLink(value: notification) {
+                VStack {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(notification.nameValue)
+                            .bold()
+                        Spacer()
+                        if let category = notification.category {
+                            HStack {
+                                Text(category.nameValue)
+                                    .font(.caption)
+                                IconView(name: category.iconNameValue, size: 25)
+                            }
                         }
                     }
-                }
-                HStack {
-                    switch notification.typeValue {
-                    case .nonotification:
-                        NoNotificationHeaderView()
-                    case .exact:
-                        OneTimeNotificationHeaderView()
-                    case .daily:
-                        DailyNotificationHeaderView()
-                    case .weekly:
-                        WeeklyNotificationHeaderView()
+                    HStack {
+                        switch notification.typeValue {
+                        case .nonotification:
+                            NoNotificationHeaderView()
+                        case .exact:
+                            OneTimeNotificationHeaderView()
+                        case .daily:
+                            DailyNotificationHeaderView()
+                        case .weekly:
+                            WeeklyNotificationHeaderView()
+                        }
                     }
                 }
             }

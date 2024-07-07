@@ -147,6 +147,15 @@ struct BudgetView: View {
             .navigationTitle("Reminders")
             .preferredColorScheme(appState.colorScheme)
         }
+        .navigationDestination(for: NotificationEntity.self) { notification in
+            NotificationView(vm: NotificationViewModel(
+                notification: notification,
+                notificationService: notificationService)
+            )
+                .environmentObject(vm.formatters)
+                .navigationTitle("Reminder")
+                .preferredColorScheme(appState.colorScheme)
+        }
         .environmentObject(vm.formatters)
         .tint(Color.appLink)
         .onAppear {

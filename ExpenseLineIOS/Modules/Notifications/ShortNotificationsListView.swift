@@ -20,15 +20,17 @@ struct ShortNotificationsListView: View {
         VStack(spacing: 10) {
             if !notifications.isEmpty {
                 ForEach($notifications) { $notification in
-                    switch notification.typeValue {
-                    case .nonotification:
-                        NoNotificationShortView(notification)
-                    case .daily:
-                        DailyNotificationShortView(notification)
-                    case .exact:
-                        ExactNotificationShortView(notification)
-                    case .weekly:
-                        WeeklyNotificationShortView(notification)
+                    NavigationLink(value: notification) {
+                        switch notification.typeValue {
+                        case .nonotification:
+                            NoNotificationShortView(notification)
+                        case .daily:
+                            DailyNotificationShortView(notification)
+                        case .exact:
+                            ExactNotificationShortView(notification)
+                        case .weekly:
+                            WeeklyNotificationShortView(notification)
+                        }
                     }
                 }
             }

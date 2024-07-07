@@ -19,7 +19,7 @@ struct TransactionView: View {
     @State var editSheetOpen: Bool = false
     
     var body: some View {
-        VStack {
+        ScrollView {
             ContentSizeCardView {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
