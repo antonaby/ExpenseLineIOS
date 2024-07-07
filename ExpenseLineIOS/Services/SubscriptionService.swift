@@ -40,6 +40,7 @@ class SubscriptionService: ObservableObject {
             case let .success(.verified(transaction)):
                 // Successful purhcase
                 await transaction.finish()
+                await fetchActiveTransactions()
             case let .success(.unverified(_, error)):
                 // Successful purchase but transaction/receipt can't be verified
                 // Could be a jailbroken phone
@@ -63,16 +64,20 @@ class SubscriptionService: ObservableObject {
     }
     
     func fetchActiveTransactions() async  {
+        var transactions: Set<Transaction> = []
+        
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result else {
                 continue
             }
             if transaction.revocationDate == nil {
-                //self.purchasedProductIDs.insert(transaction.productID)
+                transactions.insert(transaction)
             } else {
                 //self.purchasedProductIDs.remove(transaction.productID)
             }
         }
+        
+        print("Total Transactions \(transactions.count)")
     }
  
     func checkMaxBudgetCount() -> Bool {
