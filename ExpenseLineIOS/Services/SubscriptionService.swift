@@ -50,7 +50,7 @@ class SubscriptionService: ObservableObject {
                 // approval from Ask to Buy
                 break
             case .userCancelled:
-                // ^^^
+                // Canceled
                 print("User Cancelled!")
                 break
             @unknown default:
@@ -62,8 +62,17 @@ class SubscriptionService: ObservableObject {
         }
     }
     
-    func getStandartSubsctiprionCost() -> String {
-        "$4,99/month"
+    func fetchActiveTransactions() async  {
+        for await result in Transaction.currentEntitlements {
+            guard case .verified(let transaction) = result else {
+                continue
+            }
+            if transaction.revocationDate == nil {
+                //self.purchasedProductIDs.insert(transaction.productID)
+            } else {
+                //self.purchasedProductIDs.remove(transaction.productID)
+            }
+        }
     }
  
     func checkMaxBudgetCount() -> Bool {

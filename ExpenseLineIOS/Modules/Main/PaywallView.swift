@@ -52,13 +52,19 @@ struct PaywallView: View {
                             FlexibleCardView(color: Color.appLink) {
                                 VStack {
                                     HStack {
-                                        Text(product.displayName)
-                                            .bold()
+                                        VStack(alignment: .leading) {
+                                            Text(product.displayName)
+                                                .bold()
+                                            Text(product.description)
+                                        }
                                         Spacer()
-                                        Text(product.displayPrice)
+                                        VStack(alignment: .trailing) {
+                                            Text(product.displayPrice)
+                                            if let p = product.subscription?.subscriptionPeriod {
+                                                Text("\(p)")
+                                            }
+                                        }
                                     }
-                                    Text(product.description)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
                             .foregroundStyle(Color.appButtonTextColor)
