@@ -55,6 +55,10 @@ class NotificationService: ObservableObject {
         return entity
     }
     
+    func refreshNotification(_ notification: NotificationEntity) {
+        dm.viewContext.refresh(notification, mergeChanges: false)
+    }
+    
     func save() throws {
         try dm.sync()
     }

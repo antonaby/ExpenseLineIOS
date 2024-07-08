@@ -20,7 +20,8 @@ class NotificationViewModel: ObservableObject {
     }
     
     func reloadNotification() {
-        
+        notificationService.refreshNotification(notification)
+        objectWillChange.send()
     }
     
     func isActive() -> Bool {
