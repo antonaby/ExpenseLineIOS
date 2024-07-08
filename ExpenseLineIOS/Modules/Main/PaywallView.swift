@@ -11,10 +11,8 @@ import StoreKit
 
 struct PaywallView: View {
     
-    @EnvironmentObject var subscrioptionService: SubscriptionService
+    @EnvironmentObject var subscrioptionManager: SubscriptionManager
     @Environment(\.dismiss) var dismiss
-    
-    @State var products: [Product] = []
     
     var body: some View {
         VStack {
@@ -33,7 +31,6 @@ struct PaywallView: View {
                 }
                 .font(.title2)
             }
-            
             ScrollView {
                 Text("Full Access")
                     .font(.title)
@@ -43,10 +40,10 @@ struct PaywallView: View {
                 PremiumAdvantagesRow(icon: "bell", text: "Unlimited reminders")
                 Color.clear.frame(height: 35)
                 VStack {
-                    ForEach(products) { product in
+                    ForEach(subscrioptionManager.products) { product in
                         Button {
                             Task {
-                                await subscrioptionService.buyProduct(product)
+                                await subscrioptionManager.buyProduct(product)
                             }
                         } label: {
                             FlexibleCardView(color: Color.appLink) {
@@ -76,10 +73,7 @@ struct PaywallView: View {
         .padding(.horizontal, 15)
         .background(Color.appBackground)
         .task {
-            let list = await subscrioptionService.allProducts()
-            await MainActor.run {
-                products = list
-            }
+            await subscrioptionManager.fetchProducts()
         }
     }
     
@@ -100,4 +94,5 @@ struct PaywallView: View {
     
     return PaywallView()
         .serviceBundle(bundle)
+        .environmentObject(SubscriptionManager())
 }

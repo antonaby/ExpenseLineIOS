@@ -21,64 +21,6 @@ class SubscriptionService: ObservableObject {
     init(dm: DatabaseManager) {
         self.dm = dm
     }
-    
-    func allProducts() async -> [Product] {
-        do {
-            let productIdentifiers = ["default_monthly_subscription"]
-            return try await Product.products(for: productIdentifiers)
-        } catch {
-            print("Something went wrong \(error)")
-            return []
-        }
-    }
-    
-    func buyProduct(_ product: Product) async {
-        do {
-            let result = try await product.purchase()
-            
-            switch result {
-            case let .success(.verified(transaction)):
-                // Successful purhcase
-                await transaction.finish()
-                await fetchActiveTransactions()
-            case let .success(.unverified(_, error)):
-                // Successful purchase but transaction/receipt can't be verified
-                // Could be a jailbroken phone
-                print("Unverified purchase. Might be jailbroken. Error: \(error)")
-                break
-            case .pending:
-                // Transaction waiting on SCA (Strong Customer Authentication) or
-                // approval from Ask to Buy
-                break
-            case .userCancelled:
-                // Canceled
-                print("User Cancelled!")
-                break
-            @unknown default:
-                print("Failed to purchase the product!")
-                break
-            }
-        } catch {
-            print("Failed to purchase the product!")
-        }
-    }
-    
-    func fetchActiveTransactions() async  {
-        var transactions: Set<Transaction> = []
-        
-        for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else {
-                continue
-            }
-            if transaction.revocationDate == nil {
-                transactions.insert(transaction)
-            } else {
-                //self.purchasedProductIDs.remove(transaction.productID)
-            }
-        }
-        
-        print("Total Transactions \(transactions.count)")
-    }
  
     func checkMaxBudgetCount() -> Bool {
         if checkSubcription() {

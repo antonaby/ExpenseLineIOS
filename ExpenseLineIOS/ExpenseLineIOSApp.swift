@@ -28,10 +28,19 @@ struct ExpenseLineIOSApp: App {
     
     let serviceBundle = ServiceBundle()
     
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var subscriptionManager = SubscriptionManager()
+    
     var body: some Scene {
         WindowGroup {
             MainView(appState: AppState(bundle: serviceBundle))
+                .environmentObject(subscriptionManager)
                 .serviceBundle(serviceBundle)
+                .task(id: scenePhase) {
+                    if scenePhase == .active {
+                        await subscriptionManager.fetchActiveTransactions()
+                    }
+                }
         }
     }
 }
