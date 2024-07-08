@@ -16,7 +16,7 @@ struct BudgetView: View {
     @EnvironmentObject var dataService: DataService
     @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var notificationService: NotificationService
-    @EnvironmentObject var subscriptionService: SubscriptionService
+    @EnvironmentObject var subscriptionService: SubscriptionLimitService
     @EnvironmentObject var analyticsService: AnalyticsService
     
     @State var transactionSheet: Bool = false

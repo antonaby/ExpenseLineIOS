@@ -21,7 +21,7 @@ struct ServiceBundle {
     let dataService: DataService
     let settingsService: SettingsService
     let notificationService: NotificationService
-    let subscriptionService: SubscriptionService
+    let subscriptionService: SubscriptionLimitService
     let analyticsService: AnalyticsService
     
     init(inMemory: Bool = false) {
@@ -31,7 +31,7 @@ struct ServiceBundle {
         budgetService = BudgetService(dm: databaseManager, notificationService: notificationService)
         dataService = DataService(budgetService: budgetService)
         settingsService = SettingsService()
-        subscriptionService = SubscriptionService(dm: databaseManager)
+        subscriptionService = SubscriptionLimitService(dm: databaseManager)
         analyticsService = AnalyticsService()
     }
     

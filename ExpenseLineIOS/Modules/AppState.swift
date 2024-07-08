@@ -13,7 +13,7 @@ class AppState: ObservableObject {
     @Published var path: NavigationPath = NavigationPath()
     @Published var showError: Bool?
     @Published var budget: BudgetEntity?
-    @Published var paywall: Bool = false
+    
     @Published var helpPage: HelpPage? = nil
     
     var colorScheme: ColorScheme? = nil
@@ -51,7 +51,7 @@ class AppState: ObservableObject {
     }
     
     func showPaywall() {
-        paywall.toggle()
+        
     }
     
     func showHelpPage(for page: HelpPage, firstTime: Bool = false) {

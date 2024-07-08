@@ -10,8 +10,9 @@ import SwiftUI
 
 struct BudgetListView: View {
     
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @EnvironmentObject var settingsService: SettingsService
-    @EnvironmentObject var subscriptionService: SubscriptionService
+    @EnvironmentObject var subscriptionLimit: SubscriptionLimitService
     @EnvironmentObject var appState: AppState
     
     @StateObject var vm: BudgetListViewModel
@@ -68,10 +69,10 @@ struct BudgetListView: View {
             }
             .padding(.top, 20)
             Button {
-                if subscriptionService.checkMaxBudgetCount() {
+                if subscriptionManager.hasProSubscription() || subscriptionLimit.checkMaxBudgetCount() {
                     appState.navigateNewBudgetWizzard()
                 } else {
-                    appState.showPaywall()
+                    subscriptionManager.showPaywall()
                 }
             } label: {
                 ButtonTextView()
@@ -133,6 +134,7 @@ struct BudgetListView: View {
         return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService))
             .environmentObject(appState)
             .serviceBundle(bundle)
+            .environmentObject(SubscriptionManager())
     } catch {
         return Text("Something went wrong \(error)")
     }

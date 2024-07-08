@@ -137,7 +137,7 @@ struct NotificationCard: View {
 struct NotificationsView: View {
     
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var subscriptionService: SubscriptionService
+    @EnvironmentObject var subscriptionService: SubscriptionLimitService
     @EnvironmentObject var notificationService: NotificationService
     
     @StateObject var vm: NotificationsViewModel

@@ -34,7 +34,7 @@
 		D226FB0E2BED1EE100B54654 /* BudgetShortSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */; };
 		D22776C92C2451A600B49782 /* FormattersHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22776C82C2451A600B49782 /* FormattersHolder.swift */; };
 		D22776CB2C245E6000B49782 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22776CA2C245E6000B49782 /* PaywallView.swift */; };
-		D22776CD2C24604100B49782 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22776CC2C24604100B49782 /* SubscriptionService.swift */; };
+		D22776CD2C24604100B49782 /* SubscriptionLimitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22776CC2C24604100B49782 /* SubscriptionLimitService.swift */; };
 		D22AB4CF2C0318B500306F5B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = D22AB4CE2C0318B500306F5B /* countries.json */; };
 		D22CED9A2C05C0A0000C9A08 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = D22CED992C05C0A0000C9A08 /* categories.json */; };
 		D22E47522C0B1DF9006C4C3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */; };
@@ -150,7 +150,7 @@
 		D226FB0D2BED1EE100B54654 /* BudgetShortSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetShortSummaryView.swift; sourceTree = "<group>"; };
 		D22776C82C2451A600B49782 /* FormattersHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattersHolder.swift; sourceTree = "<group>"; };
 		D22776CA2C245E6000B49782 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		D22776CC2C24604100B49782 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
+		D22776CC2C24604100B49782 /* SubscriptionLimitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLimitService.swift; sourceTree = "<group>"; };
 		D22AB4CE2C0318B500306F5B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		D22CED992C05C0A0000C9A08 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
 		D22E47512C0B1DF9006C4C3B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -420,7 +420,7 @@
 				D24CA2982BD295F400896BC6 /* DataService.swift */,
 				D2C124D92C01CAF500CD8C04 /* SettingsService.swift */,
 				D22E5F072C0893B100DE7DE3 /* NotificationService.swift */,
-				D22776CC2C24604100B49782 /* SubscriptionService.swift */,
+				D22776CC2C24604100B49782 /* SubscriptionLimitService.swift */,
 				D24F9E512C37E02B005260D8 /* AnalyticsService.swift */,
 				D29675942C3C05F700F20B69 /* SubscriptionManager.swift */,
 			);
@@ -774,7 +774,7 @@
 				D249E2A12BD13EEF00F104F6 /* CategoryListView.swift in Sources */,
 				D258A1992C0748F30009B3D2 /* DailyProgressView.swift in Sources */,
 				D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */,
-				D22776CD2C24604100B49782 /* SubscriptionService.swift in Sources */,
+				D22776CD2C24604100B49782 /* SubscriptionLimitService.swift in Sources */,
 				D25AF79A2BF9D787009FEDD1 /* CircularProgressView.swift in Sources */,
 				D2554A1D2C1B24F70056ADD5 /* CategorySelectorView.swift in Sources */,
 				D2C58AD02BE22B5E00F1BB03 /* ContentSizeCardView.swift in Sources */,

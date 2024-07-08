@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryListWizardView: View {
     
-    @EnvironmentObject var subscriptionService: SubscriptionService
+    @EnvironmentObject var subscriptionService: SubscriptionLimitService
     @EnvironmentObject var appState: AppState
     
     @ObservedObject var vm: BudgetWizardViewModel

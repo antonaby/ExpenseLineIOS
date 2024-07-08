@@ -11,6 +11,7 @@ import StoreKit
 
 @MainActor class SubscriptionManager: ObservableObject {
     
+    @Published var paywall: Bool = false
     @Published var products: [Product] = []
     @Published var activeTransactions: Set<Transaction> = []
     private var updates: Task<Void, Never>?
@@ -28,6 +29,10 @@ import StoreKit
     
     deinit {
         updates?.cancel()
+    }
+    
+    func showPaywall() {
+        paywall = true
     }
     
     func fetchProducts() async {
@@ -81,6 +86,9 @@ import StoreKit
         }
         
         self.activeTransactions = activeTransactions
+        if !activeTransactions.isEmpty && paywall {
+            paywall = false
+        }
     }
     
     func hasProSubscription() -> Bool {

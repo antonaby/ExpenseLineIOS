@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var dataServise: DataService
     @EnvironmentObject var notificationService: NotificationService
@@ -58,7 +59,7 @@ struct MainView: View {
                 .presentationDragIndicator(.visible)
                 .preferredColorScheme(appState.colorScheme)
         }
-        .fullScreenCover(isPresented: $appState.paywall) {
+        .fullScreenCover(isPresented: $subscriptionManager.paywall) {
             PaywallView()
                 .preferredColorScheme(appState.colorScheme)
         }
@@ -73,5 +74,6 @@ struct MainView: View {
 #Preview {
     let bundle = ServiceBundle.preview
     return MainView(appState: AppState(bundle: bundle))
-    .serviceBundle(bundle)
+        .serviceBundle(bundle)
+        .environmentObject(SubscriptionManager())
 }
