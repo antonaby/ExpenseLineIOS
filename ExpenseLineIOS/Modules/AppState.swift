@@ -50,10 +50,6 @@ class AppState: ObservableObject {
         budget = getBudget()
     }
     
-    func showPaywall() {
-        
-    }
-    
     func showHelpPage(for page: HelpPage, firstTime: Bool = false) {
         if !firstTime || bundle.settingsService.alwaysShowHelp() {
             self.helpPage = page

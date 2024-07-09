@@ -137,7 +137,8 @@ struct NotificationCard: View {
 struct NotificationsView: View {
     
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var subscriptionService: SubscriptionLimitService
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @EnvironmentObject var subscriptionLimitService: SubscriptionLimitService
     @EnvironmentObject var notificationService: NotificationService
     
     @StateObject var vm: NotificationsViewModel
@@ -229,10 +230,11 @@ struct NotificationsView: View {
                 Spacer()
             }
             AddExpenseButton {
-                if subscriptionService.checkMaxNotificationCount(budget: vm.budget) {
+                if subscriptionManager.hasProSubscription()
+                    || subscriptionLimitService.checkMaxNotificationCount(budget: vm.budget) {
                     showEditNotificationSheet.toggle()
                 } else {
-                    appState.showPaywall()
+                    subscriptionManager.showPaywall()
                 }
             }
             .offset(x: -20, y: -20)
@@ -329,6 +331,7 @@ struct NotificationsView: View {
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
         .environmentObject(AppState(bundle: bundle))
+        .environmentObject(SubscriptionManager())
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }
 
@@ -346,5 +349,6 @@ struct NotificationsView: View {
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
         .environmentObject(AppState(bundle: bundle))
+        .environmentObject(SubscriptionManager())
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }

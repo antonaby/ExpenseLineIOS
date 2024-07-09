@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CategoryListWizardView: View {
     
-    @EnvironmentObject var subscriptionService: SubscriptionLimitService
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @EnvironmentObject var subscriptionLimitService: SubscriptionLimitService
     @EnvironmentObject var appState: AppState
     
     @ObservedObject var vm: BudgetWizardViewModel
@@ -56,10 +57,11 @@ struct CategoryListWizardView: View {
             }
             HStack {
                 Button {
-                    if subscriptionService.checkMaxCategoryCount(vm.budget) {
+                    if subscriptionManager.hasProSubscription()
+                        || subscriptionLimitService.checkMaxCategoryCount(vm.budget) {
                         vm.newCategory(type)
                     } else {
-                        appState.showPaywall()
+                        subscriptionManager.showPaywall()
                     }
                 } label: {
                     HStack {
@@ -141,6 +143,7 @@ struct CategoryListWizardView: View {
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
+    .environmentObject(SubscriptionManager())
 }
 
 #Preview("Amount EUR") {
@@ -197,5 +200,6 @@ struct CategoryListWizardView: View {
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
+    .environmentObject(SubscriptionManager())
 }
 

@@ -16,7 +16,8 @@ struct BudgetView: View {
     @EnvironmentObject var dataService: DataService
     @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var notificationService: NotificationService
-    @EnvironmentObject var subscriptionService: SubscriptionLimitService
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @EnvironmentObject var subscriptionLimitService: SubscriptionLimitService
     @EnvironmentObject var analyticsService: AnalyticsService
     
     @State var transactionSheet: Bool = false
@@ -87,10 +88,11 @@ struct BudgetView: View {
                 }
                 .accentColor(Color.appLink)
                 AddExpenseButton {
-                    if subscriptionService.checkMaxTransactionCount(period: vm.period, budget: vm.budget) {
+                    if subscriptionManager.hasProSubscription()
+                        || subscriptionLimitService.checkMaxTransactionCount(period: vm.period, budget: vm.budget) {
                         transactionSheet.toggle()
                     } else {
-                        appState.showPaywall()
+                        subscriptionManager.showPaywall()
                     }
                 }
                 .offset(x: -20, y: -70)
@@ -275,6 +277,7 @@ struct BudgetView: View {
             budget: budget, period: period, budgetService: bundle.budgetService, dataService: bundle.dataService
         ))
             .environmentObject(appState)
+            .environmentObject(SubscriptionManager())
             .serviceBundle(bundle)
             .helpButtonVisible(true)
     } catch {
