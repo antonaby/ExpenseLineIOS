@@ -48,10 +48,8 @@ struct BudgetView: View {
                         Text("Budgets")
                             .font(.caption)
                     }
-                    .foregroundStyle(Color.appButtonTextColor)
+                    .foregroundStyle(Color.appLink)
                     .padding(5)
-                    .background(RoundedRectangle(cornerRadius: 5))
-                    .padding(.leading, 10)
                 }
                 .tint(Color.appLink)
             }

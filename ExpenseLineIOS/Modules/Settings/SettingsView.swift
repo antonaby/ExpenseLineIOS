@@ -56,6 +56,7 @@ struct ColorSchemeView: View {
 
 struct SettingsView: View {
     
+    @EnvironmentObject var subscriptioManager: SubscriptionManager
     @EnvironmentObject var notificationService: NotificationService
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) var dismiss
@@ -81,6 +82,27 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
+            Section {
+                if subscriptioManager.hasProSubscription() {
+                    Label {
+                        Text("Premium")
+                    } icon: {
+                        Image(systemName: "star.fill")
+                    }
+                } else {
+                    Button {
+                        subscriptioManager.showPaywall()
+                    } label: {
+                        Label {
+                            Text("Upgrade to Premium")
+                        } icon: {
+                            Image(systemName: "star")
+                        }
+                    }
+                }
+            } header: {
+                Text("Subscription")
+            }
             if let budget = appState.budget {
                 Section {
                     Button {
@@ -97,16 +119,6 @@ struct SettingsView: View {
                 }
             }
             Section {
-                Toggle(isOn: $helpButtonVisible) {
-                    Label {
-                        Text("Show Help Button")
-                    } icon: {
-                        Image(systemName: "questionmark")
-                    }
-                }
-                .onChange(of: helpButtonVisible) { value in
-                    appState.helpButtonVisible(value)
-                }
                 NavigationLink {
                     ColorSchemeView(colorScheme: $colorScheme)
                         .navigationTitle("Color Scheme")
@@ -119,12 +131,22 @@ struct SettingsView: View {
                                 .bold()
                         }
                     } icon: {
-                        Image(systemName: "moon.stars")
+                        Image(systemName: "paintpalette")
                     }
                 }
                 .onChange(of: colorScheme) { value in
                     appState.setColorScheme(value)
                     settings.setColorScheme(value)
+                }
+                Toggle(isOn: $helpButtonVisible) {
+                    Label {
+                        Text("Show Help Button")
+                    } icon: {
+                        Image(systemName: "questionmark")
+                    }
+                }
+                .onChange(of: helpButtonVisible) { value in
+                    appState.helpButtonVisible(value)
                 }
                 Toggle(isOn: $dailyReminderEnabled) {
                     Label {
@@ -195,5 +217,6 @@ struct SettingsView: View {
         SettingsView(settings: bundle.settingsService)
             .serviceBundle(bundle)
             .environmentObject(appState)
+            .environmentObject(SubscriptionManager())
     }
 }

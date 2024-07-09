@@ -48,7 +48,7 @@ struct PaywallView: View {
                         } label: {
                             FlexibleCardView(color: Color.appLink) {
                                 VStack {
-                                    HStack {
+                                    HStack(alignment: .top) {
                                         VStack(alignment: .leading) {
                                             Text(product.displayName)
                                                 .bold()

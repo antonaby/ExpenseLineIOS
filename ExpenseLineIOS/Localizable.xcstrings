@@ -566,6 +566,9 @@
         }
       }
     },
+    "Subscription" : {
+
+    },
     "Swipe left to delete a category." : {
 
     },
@@ -650,6 +653,9 @@
           }
         }
       }
+    },
+    "Upgrade to Premium" : {
+
     },
     "Weekly" : {
       "localizations" : {
