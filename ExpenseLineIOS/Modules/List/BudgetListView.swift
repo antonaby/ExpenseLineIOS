@@ -28,8 +28,10 @@ struct BudgetListView: View {
                     Image(systemName: "gear")
                         .font(.title2)
                 }
+                .accessibilityLabel("Settings")
             }
             IconView(name: "piggy-bank", color: Color.appLink, size: 100)
+                .accessibilityHidden(true)
             ScrollView {
                 VStack {
                     if vm.budgets.isEmpty {

@@ -63,6 +63,7 @@ struct BudgetView: View {
                         .padding(.trailing, 20)
                 }
                 .tint(Color.appLink)
+                .accessibilityLabel("Settings")
             }
             ZStack(alignment: .bottomTrailing) {
                 TabView(selection: $vm.currenPage) {
