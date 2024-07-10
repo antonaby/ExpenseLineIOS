@@ -208,6 +208,8 @@ struct NotificationsView: View {
                     .buttonStyle(.borderedProminent)
                     .foregroundStyle(vm.todayNotifications ? Color.appButtonTextColor : Color.appButtonTextColorInactive)
                     .tint(vm.todayNotifications ? Color.appLink : Color.appBackgroundSecondary)
+                    .accessibilityLabel("Today's Reminders")
+                    .accessibilityElement(children: .combine)
                     Button {
                         vm.todayNotifications = false
                     } label: {
@@ -222,6 +224,8 @@ struct NotificationsView: View {
                     .buttonStyle(.borderedProminent)
                     .foregroundStyle(!vm.todayNotifications ? Color.appButtonTextColor : Color.appButtonTextColorInactive)
                     .tint(!vm.todayNotifications ? Color.appLink : Color.appBackgroundSecondary)
+                    .accessibilityLabel("All Reminders")
+                    .accessibilityElement(children: .combine)
                     HelpButton {
                         appState.showHelpPage(for: .notificationPage)
                     }

@@ -22,6 +22,8 @@ struct BudgetShortSummaryView: View {
                         .lineLimit(1)
                 }
                 .frame(maxWidth: .infinity)
+                .accessibilityLabel("Income \(vm.getTotalIncome())")
+                .accessibilityElement(children: .combine)
                 Divider()
                     .frame(maxHeight: 30)
                 VStack {
@@ -32,6 +34,8 @@ struct BudgetShortSummaryView: View {
                         .lineLimit(1)
                 }
                 .frame(maxWidth: .infinity)
+                .accessibilityLabel("Outcome \(vm.getTotalOutcome())")
+                .accessibilityElement(children: .combine)
             }
         }
     }

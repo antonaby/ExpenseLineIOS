@@ -89,6 +89,8 @@ struct CurrencySelectorSheet: View {
                             Text(currencySymbol.code)
                         }
                         .foregroundColor(Color.appCardTextColor)
+                        .accessibilityLabel(currencySymbol.name)
+                        .accessibilityElement(children: .combine)
                     }
                     .listRowBackground(Color.appBackgroundSecondary)
                 }

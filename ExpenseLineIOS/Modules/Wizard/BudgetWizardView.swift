@@ -125,7 +125,7 @@ struct BudgetWizardView: View {
                 .accessibilityElement(children: .combine)
             }
             HStack {
-                Text(getPageTitle())
+                Text(getPageTitle(currentPage))
                     .modifier(FormTitleViewModifier.modifier)
                 HelpButton {
                     appState.showHelpPage(for: getHelpPage())
@@ -174,6 +174,8 @@ struct BudgetWizardView: View {
                     .modifier(WizardButtonContentViewModifier.modifier)
             }
             .disabled(!vm.isBudgetValid())
+            .accessibilityLabel("Save")
+            .accessibilityElement(children: .combine)
             WizzardNextButton {
                 nextPage()
             } content: {
@@ -182,6 +184,8 @@ struct BudgetWizardView: View {
                     .font(.headline)
             }
             .disabled(currentPage == .outcomeFlexible)
+            .accessibilityLabel("Next")
+            .accessibilityElement(children: .combine)
         }
     }
     
@@ -230,6 +234,7 @@ struct BudgetWizardView: View {
                     .foregroundColor(currentPage == page ? Color.appButtonTextColor : Color.appCardTextColor)
                     .font(.caption)
                     .bold()
+                    .accessibilityLabel(getPageTitle(page))
             }
             .frame(width: 30, height: 30)
         }
@@ -248,14 +253,14 @@ struct BudgetWizardView: View {
         }
     }
     
-    func getPageTitle() -> String {
-        switch currentPage {
+    func getPageTitle(_ page: WizzardPage) -> String {
+        switch page {
         case .base:
             return "Budget"
         case .income:
             return "Wages & Income"
         case .outcomeFixed:
-            return "Montly Spendings"
+            return "Monthly Spendings"
         case .outcomeFlexible:
             return "Flexible Spendings"
         }

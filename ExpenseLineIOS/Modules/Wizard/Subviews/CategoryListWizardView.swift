@@ -29,7 +29,7 @@ struct CategoryListWizardView: View {
                                 name: category.iconNameValue,
                                 size: 45
                             )
-                            .accessibilityLabel(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Text Label@*/Text("Label")/*@END_MENU_TOKEN@*/)
+                            .accessibilityLabel(category.nameValue)
                             Text(category.nameValue)
                             Spacer()
                             if category.typeValue == .outcomePercent {
