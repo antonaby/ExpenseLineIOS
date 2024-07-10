@@ -250,6 +250,8 @@ struct EditCategorySheet: View {
                 ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
                     dismiss?(vm.category)
                 }
+                .accessibilityLabel("Close")
+                .accessibilityElement(children: .combine)
                 Spacer()
                 Text("Category")
                     .font(.headline)
@@ -258,6 +260,8 @@ struct EditCategorySheet: View {
                     update?(vm.getUpdatedCategory())
                 }
                 .disabled(!vm.isValid)
+                .accessibilityLabel("Save")
+                .accessibilityElement(children: .combine)
             }
             .padding([.top, .horizontal], 10)
             .padding([.bottom], 5)
@@ -274,6 +278,7 @@ struct EditCategorySheet: View {
                                     name: vm.template?.iconName ?? "question",
                                     size: 45
                                 )
+                                .accessibilityLabel(vm.name)
                             }
                         }
                         .frame(width: 75)
@@ -316,6 +321,8 @@ struct EditCategorySheet: View {
                                 )
                             }
                             .focused($showKeyboard)
+                            .accessibilityLabel("Percent")
+                            .accessibilityElement(children: .combine)
                         } else {
                             CustomNumericField(text: vm.amount, placeholder: "Amount") {
                                 CustomNumericKeybord(
@@ -327,6 +334,8 @@ struct EditCategorySheet: View {
                                 )
                             }
                             .focused($showKeyboard)
+                            .accessibilityLabel("Amount")
+                            .accessibilityElement(children: .combine)
                         }
                     }
                     .frame(minHeight: 70)

@@ -21,6 +21,8 @@ struct EditNotificationSheetView: View {
                     vm.rollback()
                     dismiss()
                 }
+                .accessibilityLabel("Close")
+                .accessibilityElement(children: .combine)
                 Spacer()
                 Text("Reminder")
                     .font(.headline)
@@ -30,6 +32,8 @@ struct EditNotificationSheetView: View {
                     dismiss()
                 }
                 .disabled(!vm.isValid)
+                .accessibilityLabel("Save")
+                .accessibilityElement(children: .combine)
             }
             .padding([.horizontal, .top], 10)
             .padding([.bottom], 5)
@@ -56,6 +60,7 @@ struct EditNotificationSheetView: View {
                                         if let category = vm.category {
                                             HStack {
                                                 IconView(name: category.iconNameValue)
+                                                    .accessibilityLabel(category.nameValue)
                                                 Text(category.nameValue)
                                                     .frame(height: 45)
                                                     .font(.title2)

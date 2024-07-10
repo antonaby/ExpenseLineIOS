@@ -21,6 +21,8 @@ struct TransactionSheetView: View {
                     vm.rollback()
                     dismiss()
                 }
+                .accessibilityLabel("Close")
+                .accessibilityElement(children: .combine)
                 Spacer()
                 Text("Transaction")
                     .font(.headline)
@@ -30,6 +32,8 @@ struct TransactionSheetView: View {
                     dismiss()
                 }
                 .disabled(!vm.isValid)
+                .accessibilityLabel("Save")
+                .accessibilityElement(children: .combine)
             }
             .padding([.horizontal, .top], 10)
             .padding([.bottom], 5)
@@ -48,6 +52,7 @@ struct TransactionSheetView: View {
                                             name: vm.category?.iconNameValue ?? "question",
                                             size: 45
                                         )
+                                        .accessibilityLabel(category.nameValue)
                                         Text(category.nameValue)
                                         Spacer()
                                     }
@@ -90,6 +95,8 @@ struct TransactionSheetView: View {
                                 )
                             }
                             .focused($showKeyboard)
+                            .accessibilityLabel("Amount")
+                            .accessibilityElement(children: .combine)
                         }
                         Button {
                             vm.deleteTransaction()

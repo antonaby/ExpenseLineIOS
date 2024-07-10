@@ -121,6 +121,8 @@ struct BudgetWizardView: View {
                 }
                 .font(.title2)
                 .padding(.trailing, 10)
+                .accessibilityLabel("Close")
+                .accessibilityElement(children: .combine)
             }
             HStack {
                 Text(getPageTitle())

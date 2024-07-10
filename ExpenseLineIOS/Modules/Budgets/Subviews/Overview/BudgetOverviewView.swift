@@ -75,6 +75,8 @@ struct BudgetOverviewView: View {
                             }
                         }
                         .frame(width: getMaxSize(geometry.size.width), height: getMaxSize(geometry.size.width))
+                        .accessibilityLabel("\(getTotalSpent())% Spent")
+                        .accessibilityElement(children: .combine)
                         SpenginsView()
                     }
                     .padding(.top, 30)

@@ -26,6 +26,7 @@ struct TransactionView: View {
                         IconView(
                             name: vm.transaction.category?.iconNameValue ?? "question",
                             size: 45)
+                        .accessibilityLabel(vm.transaction.category?.nameValue ?? "Category")
                         VStack(alignment: .listRowSeparatorLeading) {
                             Text(vm.transaction.category?.nameValue ?? "Category")
                                 .font(.caption)

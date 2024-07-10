@@ -26,6 +26,7 @@ struct NotificationCard: View {
                                 Text(category.nameValue)
                                     .font(.caption)
                                 IconView(name: category.iconNameValue, size: 25)
+                                    .accessibilityLabel(category.nameValue)
                             }
                         }
                     }
@@ -238,6 +239,8 @@ struct NotificationsView: View {
                 }
             }
             .offset(x: -20, y: -20)
+            .accessibilityLabel("Create a reminder")
+            .accessibilityElement(children: .combine)
         }
         .onAppear {
             UICollectionView.appearance().contentInset.top = 10

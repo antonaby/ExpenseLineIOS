@@ -64,6 +64,7 @@ struct HelpView: View {
     func MainWizardPage() -> some View {
         VStack {
             IconView(name: "piggy-bank", color: Color.appLink, size: 60)
+                .accessibilityHidden(true)
             Text("Budget")
                 .font(.title2)
                 .bold()
@@ -78,6 +79,7 @@ struct HelpView: View {
     func ImcomeWizardPage() -> some View {
         VStack {
             IconView(name: "in-briefcase", color: Color.appLink, size: 60)
+                .accessibilityHidden(true)
             Text("Income")
                 .font(.title2)
                 .bold()
@@ -101,6 +103,7 @@ struct HelpView: View {
     func OutcomeFixedWizardPage() -> some View {
         VStack {
             IconView(name: "fi-house", color: Color.appLink, size: 60)
+                .accessibilityHidden(true)
             Text("Fixed Expenses")
                 .font(.title2)
                 .bold()
@@ -123,6 +126,7 @@ struct HelpView: View {
     func OutcomeFlexibleWizardPage() -> some View {
         VStack {
             IconView(name: "fl-shopping", color: Color.appLink, size: 60)
+                .accessibilityHidden(true)
             Text("Flexible Expenses")
                 .font(.title2)
                 .bold()
@@ -145,6 +149,7 @@ struct HelpView: View {
     func MainPage() -> some View {
         VStack {
             IconView(name: "piggy-bank", color: Color.appLink, size: 60)
+                .accessibilityHidden(true)
             Text("Budget")
                 .font(.title2)
                 .bold()

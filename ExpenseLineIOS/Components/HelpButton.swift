@@ -56,6 +56,7 @@ struct HelpButton: View {
                     .font(.caption)
                     .background(Circle().foregroundStyle(Color.appLink))
             }
+            .accessibilityLabel("Help Button")
         } else {
             EmptyView()
         }

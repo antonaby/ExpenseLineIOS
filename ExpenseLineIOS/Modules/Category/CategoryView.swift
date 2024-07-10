@@ -28,6 +28,7 @@ struct CategoryView: View {
                             name: vm.category.iconNameValue,
                             size: 45
                         )
+                        .accessibilityLabel(vm.category.nameValue)
                         Text(vm.category.nameValue)
                             .font(.title2)
                         Spacer()
@@ -45,6 +46,8 @@ struct CategoryView: View {
                     .font(.largeTitle)
                     .bold()
                     ProgressView(progress: vm.percentSpent(), color: Color.appLink, fullColor: Color.appDestructiveLink)
+                        .accessibilityLabel("\(vm.percentSpent())% Spent")
+                        .accessibilityElement(children: .combine)
                     if vm.category.typeValue == .outcomePercent {
                         PlannedViewPercent()
                     } else {

@@ -79,6 +79,7 @@ struct CategoryTemplateSelectorView: View {
                                 : Color.appCardTextColor,
                                 size: 40
                             )
+                            .accessibilityLabel(template.name)
                             Text(template.name)
                                 .lineLimit(1)
                                 .font(.caption2)

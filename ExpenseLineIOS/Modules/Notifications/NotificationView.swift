@@ -55,6 +55,7 @@ struct NotificationView: View {
                 FlexibleCardView {
                     HStack {
                         IconView(name: category.iconNameValue)
+                            .accessibilityLabel(category.nameValue)
                         Text(category.nameValue)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

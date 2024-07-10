@@ -22,6 +22,7 @@ struct TransactionCard: View {
                             name: transaction.category?.iconNameValue ?? "question",
                             size: 45
                         )
+                        .accessibilityLabel(transaction.category?.nameValue ?? "Category")
                         VStack(alignment: .listRowSeparatorLeading) {
                             Text(transaction.category?.name ?? "?")
                                 .font(.caption)

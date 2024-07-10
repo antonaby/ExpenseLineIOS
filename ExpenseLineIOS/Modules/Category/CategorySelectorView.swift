@@ -22,6 +22,7 @@ struct CategorySelectorView: View {
                 } label: {
                     HStack {
                         IconView(name: ctg.iconNameValue)
+                            .accessibilityLabel(ctg.nameValue)
                         Text(ctg.nameValue)
                             .foregroundStyle(Color.appCardTextColor)
                     }

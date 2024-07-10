@@ -122,6 +122,7 @@ struct ShortNotificationsListView: View {
             HStack {
                 Text(category.nameValue)
                 IconView(name: category.iconNameValue, size: 25)
+                    .accessibilityLabel(category.nameValue)
             }
             .font(.caption)
         }

@@ -24,6 +24,7 @@ struct CategoryCard: View {
                                 name: category.entity.iconNameValue,
                                 size: 45
                             )
+                            .accessibilityLabel(category.entity.nameValue)
                             Text(category.entity.nameValue)
                                 .foregroundStyle(Color.appCardTextColor)
                                 .bold()
@@ -52,6 +53,8 @@ struct CategoryCard: View {
                     }
                     .frame(width: 85, height: 85)
                     .padding(.trailing, 5)
+                    .accessibilityLabel("\(getPercentSpent())% Spent")
+                    .accessibilityElement(children: .combine)
                 }
             }
         }

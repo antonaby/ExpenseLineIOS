@@ -94,6 +94,8 @@ struct BudgetView: View {
                     }
                 }
                 .offset(x: -20, y: -70)
+                .accessibilityLabel("Add Expenses")
+                .accessibilityElement(children: .combine)
             }
         }
         .sheet(isPresented: $transactionSheet, onDismiss: onTransactionUpdated) {

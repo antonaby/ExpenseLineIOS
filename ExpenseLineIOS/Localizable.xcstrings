@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lf%% Spent" : {
+
+    },
     "A comprehensive budget includes overall, fixed, and flexible expenses, providing a clear financial roadmap. Fixed expenses, like rent and subscriptions, are predictable, while flexible expenses, such as shopping and dining out, vary and are typically allocated as a percentage of your budget. Balancing these elements helps ensure financial stability and effective resource management." : {
 
     },
@@ -16,6 +19,9 @@
           }
         }
       }
+    },
+    "Add Expenses" : {
+
     },
     "Amount" : {
       "localizations" : {
@@ -111,6 +117,9 @@
         }
       }
     },
+    "Close" : {
+
+    },
     "Color" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -134,6 +143,9 @@
           }
         }
       }
+    },
+    "Create a reminder" : {
+
     },
     "Currency" : {
       "localizations" : {
@@ -316,6 +328,9 @@
         }
       }
     },
+    "Help Button" : {
+
+    },
     "Income" : {
       "localizations" : {
         "ru" : {
@@ -325,6 +340,9 @@
           }
         }
       }
+    },
+    "Label" : {
+
     },
     "Light" : {
 
@@ -428,6 +446,9 @@
           }
         }
       }
+    },
+    "Percent" : {
+
     },
     "Please add at least one income source." : {
 

@@ -30,6 +30,8 @@ struct PaywallView: View {
                     dismiss()
                 }
                 .font(.title2)
+                .accessibilityLabel("Close")
+                .accessibilityElement(children: .combine)
             }
             ScrollView {
                 Text("Full Access")
@@ -82,6 +84,7 @@ struct PaywallView: View {
         HStack {
             IconView(name: icon, color: color, size: 45)
                 .frame(width: 50, height: 50)
+                .accessibilityHidden(true)
             Text(text)
                 .bold()
         }
