@@ -71,6 +71,7 @@ class BudgetWizardViewModel: ObservableObject {
     func newCategory(_ type: CategoryType) {
         let category = budgetService.newCategoryEntity(budget)
         category.typeValue = type
+        category.isNew = true
         op = .create
         selectedCategory = category
     }

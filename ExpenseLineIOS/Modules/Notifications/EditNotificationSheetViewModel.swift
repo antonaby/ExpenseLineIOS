@@ -20,7 +20,7 @@ class EditNotificationSheetViewModel: ObservableObject {
     @Published var weekDays: Set<Int>
     @Published var isValid: Bool = false
     
-    private var notification: NotificationEntity
+    var notification: NotificationEntity
     private var notificationService: NotificationService
     
     private var cancellables = Set<AnyCancellable>()
@@ -75,6 +75,7 @@ class EditNotificationSheetViewModel: ObservableObject {
         notification.weekDaysArr = Array(weekDays)
         notification.enabled = enabled
         notification.category = category
+        notification.isNew = false
         
         do {
             try notificationService.sheduleNotification(notification)

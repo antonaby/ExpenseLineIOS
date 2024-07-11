@@ -32,7 +32,7 @@ struct ServiceBundle {
         dataService = DataService(budgetService: budgetService)
         settingsService = SettingsService()
         subscriptionService = SubscriptionLimitService(dm: databaseManager)
-        analyticsService = AnalyticsService()
+        analyticsService = AnalyticsService(settingService: settingsService)
     }
     
 }

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BudgetListView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var subscriptionLimit: SubscriptionLimitService
@@ -72,6 +73,7 @@ struct BudgetListView: View {
             .padding(.top, 20)
             Button {
                 if subscriptionManager.hasProSubscription() || subscriptionLimit.checkMaxBudgetCount() {
+                    analyticsService.logEvent(name: AnalyticsService.BUDGET_NEW_OPEN)
                     appState.navigateNewBudgetWizzard()
                 } else {
                     subscriptionManager.showPaywall()

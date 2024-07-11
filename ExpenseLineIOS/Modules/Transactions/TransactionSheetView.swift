@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TransactionSheetView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @Environment(\.dismiss) var dismiss
     @StateObject var vm: TransactionSheetViewModel
     
@@ -28,6 +29,11 @@ struct TransactionSheetView: View {
                     .font(.headline)
                 Spacer()
                 ToolButton(color: Color.appLink) {
+                    if vm.transaction.isNew {
+                        analyticsService.logEvent(name: AnalyticsService.TRANSACTION_CREATED)
+                    } else {
+                        analyticsService.logEvent(name: AnalyticsService.TRANSACTION_EDITED)
+                    }
                     vm.save()
                     dismiss()
                 }
@@ -155,6 +161,7 @@ struct TransactionSheetView: View {
     
     return TransactionSheetView(
         vm: TransactionSheetViewModel(transaction: nil, budget: budget, currency: symbol, budgetService: bundle.budgetService))
+    .serviceBundle(bundle)
 }
 
 #Preview("Existing") {
@@ -196,4 +203,5 @@ struct TransactionSheetView: View {
     
     return TransactionSheetView(
         vm: TransactionSheetViewModel(transaction: transaction, budget: budget, currency: symbol, budgetService: bundle.budgetService))
+    .serviceBundle(bundle)
 }

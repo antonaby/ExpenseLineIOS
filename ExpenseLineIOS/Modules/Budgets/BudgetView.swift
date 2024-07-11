@@ -164,7 +164,7 @@ struct BudgetView: View {
         .onAppear {
             appState.showHelpPage(for: .mainPage, firstTime: true)
             vm.reloadBudget()
-            analyticsService.logEvent(name: "budget_open")
+            analyticsService.logEvent(name: AnalyticsService.BUDGET_OPEN)
         }
         .onDisappear {
             vm.cancelAll()

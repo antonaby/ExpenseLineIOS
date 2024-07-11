@@ -55,6 +55,7 @@ class TransactionSheetViewModel: ObservableObject {
             self.date = transactionEntity.createdAtValue
         } else {
             self.transaction = budgetService.newTransactionEntity(budget)
+            self.transaction.isNew = true
             self.name = ""
             self.amount = ""
             self.category = nil
@@ -83,6 +84,7 @@ class TransactionSheetViewModel: ObservableObject {
         transaction.budget = budget
         transaction.createdAt = date
         transaction.day = Calendar.current.startOfDay(for: date)
+        transaction.isNew = false
         
         do {
             transaction.period = try budgetService.getPeriodByDate(for: date, budget: budget)

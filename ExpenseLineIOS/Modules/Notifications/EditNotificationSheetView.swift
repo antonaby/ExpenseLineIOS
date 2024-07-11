@@ -11,6 +11,7 @@ struct EditNotificationSheetView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var notificationService: NotificationService
+    @EnvironmentObject var analyticsService: AnalyticsService
     
     @StateObject var vm: EditNotificationSheetViewModel
     
@@ -28,6 +29,11 @@ struct EditNotificationSheetView: View {
                     .font(.headline)
                 Spacer()
                 ToolButton(color: Color.appLink) {
+                    if vm.notification.isNew {
+                        analyticsService.logEvent(name: AnalyticsService.NOTIFICATION_CREATED)
+                    } else {
+                        analyticsService.logEvent(name: AnalyticsService.NOTIFICATION_EDITED)
+                    }
                     vm.save()
                     dismiss()
                 }

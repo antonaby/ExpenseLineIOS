@@ -64,6 +64,7 @@ class NotificationsViewModel: ObservableObject {
         entity.typeValue = .nonotification
         entity.enabled = true
         entity.date = Date().plusHour(1)
+        entity.isNew = true
         
         if let category = categoryRef.category {
             entity.category = category

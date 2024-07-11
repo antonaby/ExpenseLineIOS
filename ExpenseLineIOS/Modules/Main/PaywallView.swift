@@ -11,6 +11,7 @@ import StoreKit
 
 struct PaywallView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var subscrioptionManager: SubscriptionManager
     @Environment(\.dismiss) var dismiss
     
@@ -27,6 +28,7 @@ struct PaywallView: View {
             .frame(maxWidth: .infinity)
             .overlay(alignment: .topTrailing) {
                 ToolButton(icon: "x.circle", color: Color.appDestructiveLink) {
+                    analyticsService.logEvent(name: AnalyticsService.PAYWALL_CLOSED)
                     dismiss()
                 }
                 .font(.title2)
@@ -76,6 +78,9 @@ struct PaywallView: View {
         .background(Color.appBackground)
         .task {
             await subscrioptionManager.fetchProducts()
+        }
+        .onAppear {
+            analyticsService.logEvent(name: AnalyticsService.PAYWALL_OPEN)
         }
     }
     

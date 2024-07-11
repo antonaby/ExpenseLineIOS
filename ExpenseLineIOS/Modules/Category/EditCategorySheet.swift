@@ -147,6 +147,7 @@ class EditPlanCategorySheetViewModel: ObservableObject {
         }
         category.typeValue = type
         category.templateId = template?.id
+        category.isNew = false
         
         return category
     }
@@ -229,6 +230,7 @@ extension EditPlanCategorySheetViewModel {
 
 struct EditCategorySheet: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var dataService: DataService
     
@@ -257,6 +259,11 @@ struct EditCategorySheet: View {
                     .font(.headline)
                 Spacer()
                 ToolButton(color: Color.appLink) {
+                    if vm.category.isNew {
+                        analyticsService.logEvent(name: AnalyticsService.CATEGORY_CREATED)
+                    } else {
+                        analyticsService.logEvent(name: AnalyticsService.CATEGORY_EDITED)
+                    }
                     update?(vm.getUpdatedCategory())
                 }
                 .disabled(!vm.isValid)

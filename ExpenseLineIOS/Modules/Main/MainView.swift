@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
+    @EnvironmentObject var analytincService: AnalyticsService
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @EnvironmentObject var budgetService: BudgetService
     @EnvironmentObject var dataServise: DataService
@@ -19,6 +20,9 @@ struct MainView: View {
     var body: some View {
         MainView()
             .preferredColorScheme(appState.colorScheme)
+            .onAppear {
+                analytincService.updateUserId()
+            }
     }
     
     @ViewBuilder

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ColorSchemeView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @Environment(\.dismiss) var dismiss
     @Binding var colorScheme: ColorScheme?
     
@@ -16,6 +17,7 @@ struct ColorSchemeView: View {
         Form {
             Button {
                 colorScheme = nil
+                analyticsService.logEvent(name: AnalyticsService.SETTGINS_COLOR_SCHEME, params: ["mode": "system"])
                 dismiss()
             } label: {
                 Label {
@@ -27,6 +29,7 @@ struct ColorSchemeView: View {
             }
             Button {
                 colorScheme = .light
+                analyticsService.logEvent(name: AnalyticsService.SETTGINS_COLOR_SCHEME, params: ["mode": "light"])
                 dismiss()
             } label: {
                 Label {
@@ -38,6 +41,7 @@ struct ColorSchemeView: View {
             }
             Button {
                 colorScheme = .dark
+                analyticsService.logEvent(name: AnalyticsService.SETTGINS_COLOR_SCHEME, params: ["mode": "dark"])
                 dismiss()
             } label: {
                 Label {
@@ -56,6 +60,7 @@ struct ColorSchemeView: View {
 
 struct SettingsView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var subscriptioManager: SubscriptionManager
     @EnvironmentObject var notificationService: NotificationService
     @EnvironmentObject var appState: AppState
@@ -159,8 +164,10 @@ struct SettingsView: View {
                     settings.setBoolPreference(for: SettingsService.DAILY_REMINDER_ENABLED, value: value)
                     if value {
                         notificationService.scheduleDailyReminder(date: dailyReminderTime)
+                        analyticsService.logEvent(name: AnalyticsService.DAILY_REMINDER_ENABLED)
                     } else {
                         notificationService.cancelDailyReminder()
+                        analyticsService.logEvent(name: AnalyticsService.DAILY_REMINDER_DISABLED)
                     }
                 }
                 if dailyReminderEnabled {

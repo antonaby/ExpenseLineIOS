@@ -52,6 +52,7 @@ class AppState: ObservableObject {
     
     func showHelpPage(for page: HelpPage, firstTime: Bool = false) {
         if !firstTime || bundle.settingsService.alwaysShowHelp() {
+            bundle.analyticsService.logEvent(name: AnalyticsService.HELP_OPEN, params: ["page": page.rawValue])
             self.helpPage = page
             return
         }

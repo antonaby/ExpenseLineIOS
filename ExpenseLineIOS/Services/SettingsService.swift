@@ -16,6 +16,7 @@ class SettingsService: ObservableObject {
     static let SHOW_HELP_BUTTON = "show.help.button"
     static let DAILY_REMINDER_ENABLED = "reminder.daily.enabled"
     static let DAILY_REMINDER_TIME = "reminder.daily.time"
+    static let USER_ID = "user.id"
     
     private let userSettings: UserDefaults
        
@@ -100,6 +101,16 @@ class SettingsService: ObservableObject {
     
     func alwaysShowHelp() -> Bool {
         false
+    }
+    
+    func getUserId() -> String {
+        if let id = userSettings.string(forKey: SettingsService.USER_ID) {
+            return id
+        }
+        
+        let newId = UUID().uuidString
+        userSettings.setValue(newId, forKey: SettingsService.USER_ID)
+        return newId
     }
     
     private func getHourFormatter() -> DateFormatter {

@@ -32,6 +32,7 @@ class PeriodListViewModel: ObservableObject {
 
 struct PeriodListView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var formatters: FormattersHolder
     
     @Environment(\.dismiss) var dismiss
@@ -55,6 +56,7 @@ struct PeriodListView: View {
         }
         .onAppear {
             vm.loadPeriods()
+            analyticsService.logEvent(name: AnalyticsService.BUDGET_PERIOD_OPEN)
         }
     }
 }
@@ -92,4 +94,5 @@ struct PeriodListView: View {
     return PeriodListView(selected: .constant(period1),
                           vm: PeriodListViewModel(budget: budget, budgetService: bundle.budgetService))
     .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+    .serviceBundle(bundle)
 }

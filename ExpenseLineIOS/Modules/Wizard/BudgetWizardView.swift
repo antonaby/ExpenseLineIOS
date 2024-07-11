@@ -83,6 +83,7 @@ enum WizzardPage: Int, Identifiable, CaseIterable {
 
 struct BudgetWizardView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var appState: AppState
     
     @Environment(\.updateBudget) private var update
@@ -168,6 +169,7 @@ struct BudgetWizardView: View {
         HStack {
             WizzardNextButton {
                 vm.save()
+                analyticsService.logEvent(name: AnalyticsService.BUDGET_EDITED)
                 update?(vm.budget)
             } content: {
                 Text("Save")
@@ -196,6 +198,7 @@ struct BudgetWizardView: View {
                 nextPage()
             } else {
                 vm.save()
+                analyticsService.logEvent(name: AnalyticsService.BUDGET_NEW_CREATED)
                 update?(vm.budget)
             }
         } content: {
