@@ -44,6 +44,7 @@ struct SliderView: View {
 struct BudgetOverviewView: View {
     
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var formatters: FormattersHolder
     @StateObject var vm: BudgetOverviewViewModel
     
@@ -157,6 +158,7 @@ struct BudgetOverviewView: View {
                     vm.loadAmounts()
                 }
                 vm.loadNotifications()
+                analyticsService.logEvent(name: AnalyticsService.BUDGET_OPEN_MAIN)
             }
             .onDisappear {
                 vm.cancelAll()

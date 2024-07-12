@@ -11,6 +11,8 @@ import Charts
 
 struct BudgetStatsView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
+    
     @StateObject var vm: BudgetStatsViewModel
     
     var loadStats: Bool = true
@@ -67,6 +69,7 @@ struct BudgetStatsView: View {
             if loadStats {
                 vm.loadSpendings()
             }
+            analyticsService.logEvent(name: AnalyticsService.BUDGET_OPEN_STATS)
         }
         .onDisappear {
             vm.cancelAll()
@@ -121,6 +124,7 @@ struct BudgetStatsView: View {
         ]
         
         return BudgetStatsView(vm: vm, loadStats: false)
+            .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
     }

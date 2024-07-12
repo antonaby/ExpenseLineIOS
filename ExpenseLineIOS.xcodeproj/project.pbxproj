@@ -414,6 +414,7 @@
 		D239608D2BB2E95C0071547D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D24F9E512C37E02B005260D8 /* AnalyticsService.swift */,
 				D2DEFC132BB4349D00AC7CA0 /* DatabaseManager.swift */,
 				D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */,
 				D23EE3322BC66B7C0088B246 /* BudgetService.swift */,
@@ -421,7 +422,6 @@
 				D2C124D92C01CAF500CD8C04 /* SettingsService.swift */,
 				D22E5F072C0893B100DE7DE3 /* NotificationService.swift */,
 				D22776CC2C24604100B49782 /* SubscriptionLimitService.swift */,
-				D24F9E512C37E02B005260D8 /* AnalyticsService.swift */,
 				D29675942C3C05F700F20B69 /* SubscriptionManager.swift */,
 			);
 			path = Services;

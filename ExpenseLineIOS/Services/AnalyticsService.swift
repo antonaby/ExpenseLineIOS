@@ -13,6 +13,10 @@ import FirebaseAnalyticsSwift
 class AnalyticsService: ObservableObject {
     
     public static let BUDGET_OPEN = "budget_open"
+    public static let BUDGET_OPEN_MAIN = "budget_open_main"
+    public static let BUDGET_OPEN_CATEGORIES = "budget_open_categories"
+    public static let BUDGET_OPEN_TRANSACTIONS = "budget_open_transactions"
+    public static let BUDGET_OPEN_STATS = "budget_open_stats"
     public static let BUDGET_PERIOD_OPEN = "budget_period_open"
     public static let BUDGET_EDITED = "budget_edited"
     public static let BUDGET_NEW_OPEN = "budget_new_open"

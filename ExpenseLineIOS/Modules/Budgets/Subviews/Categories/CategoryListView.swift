@@ -120,6 +120,7 @@ struct CategoryCard: View {
 struct CategoryListView: View {
     
     @StateObject var vm: CategoryListViewModel
+    @EnvironmentObject var analyticsService: AnalyticsService
     
     var body: some View {
         ScrollView {
@@ -138,6 +139,7 @@ struct CategoryListView: View {
         .onAppear {
             vm.subscribe()
             vm.loadCategories()
+            analyticsService.logEvent(name: AnalyticsService.BUDGET_OPEN_CATEGORIES)
         }
         .onDisappear {
             vm.cancelAll()
@@ -217,6 +219,7 @@ struct CategoryListView: View {
                                        analyticsService: bundle.analyticsService)
         return CategoryListView(vm: vm)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
+            .serviceBundle(bundle)
     } catch {
         return Text("Something went wrong \(error)")
     }

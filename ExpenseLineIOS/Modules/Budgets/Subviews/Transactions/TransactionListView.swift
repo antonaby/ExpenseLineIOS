@@ -146,6 +146,7 @@ struct TransactionListView: View {
             vm.subscribe()
             UICollectionView.appearance().contentInset.top = -20
             appState.showHelpPage(for: .transactionPage, firstTime: true)
+            analyticsService.logEvent(name: AnalyticsService.BUDGET_OPEN_TRANSACTIONS)
         }
         .onDisappear {
             vm.cancelAll()
