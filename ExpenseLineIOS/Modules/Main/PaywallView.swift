@@ -50,25 +50,26 @@ struct PaywallView: View {
                                 await subscrioptionManager.buyProduct(product)
                             }
                         } label: {
-                            FlexibleCardView(color: Color.appLink) {
+                            FlexibleCardView {
                                 VStack {
                                     HStack(alignment: .top) {
                                         VStack(alignment: .leading) {
                                             Text(product.displayName)
                                                 .bold()
                                             Text(product.description)
+                                                .font(.caption)
                                         }
                                         Spacer()
-                                        VStack(alignment: .trailing) {
+                                        VStack {
                                             Text(product.displayPrice)
-                                            if let p = product.subscription?.subscriptionPeriod {
-                                                Text("\(p)")
-                                            }
+                                                .padding(5)
+                                                .foregroundStyle(Color.appButtonTextColor)
+                                                .background(RoundedRectangle(cornerRadius: 5).foregroundStyle(Color.appLink))
                                         }
                                     }
                                 }
                             }
-                            .foregroundStyle(Color.appButtonTextColor)
+                            .foregroundStyle(Color.appCardTextColor)
                         }
                     }
                 }

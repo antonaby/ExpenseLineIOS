@@ -41,7 +41,7 @@ import StoreKit
     
     func fetchProducts() async {
         do {
-            let productIdentifiers = ["default_monthly_subscription"]
+            let productIdentifiers = ["3_day_trial", "default_monthly_subscription"]
             products = try await Product.products(for: productIdentifiers)
         } catch {
             logErrorEvent(error)

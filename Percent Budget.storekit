@@ -10,7 +10,7 @@
     "_applicationInternalID" : "6514299632",
     "_developerTeamID" : "N27LL4XQG6",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 741947572.01630497,
+    "_lastSynchronizedDate" : 742478713.48044395,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -74,7 +74,14 @@
       "subscriptions" : [
         {
           "adHocOffers" : [
-
+            {
+              "internalID" : "F5E2370D",
+              "numberOfPeriods" : 1,
+              "offerID" : "3_day_trial",
+              "paymentMode" : "free",
+              "referenceName" : "3 day trial",
+              "subscriptionPeriod" : "P3D"
+            }
           ],
           "codeOffers" : [
 
@@ -86,7 +93,7 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Monthly Subscription",
+              "description" : "Monthly, Cancel Any Time",
               "displayName" : "Monthly Subscription",
               "locale" : "en_US"
             }
