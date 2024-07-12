@@ -102,5 +102,5 @@ struct PaywallView: View {
     
     return PaywallView()
         .serviceBundle(bundle)
-        .environmentObject(SubscriptionManager())
+        .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
 }

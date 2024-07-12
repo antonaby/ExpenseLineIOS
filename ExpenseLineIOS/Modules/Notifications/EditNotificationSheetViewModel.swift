@@ -21,13 +21,15 @@ class EditNotificationSheetViewModel: ObservableObject {
     @Published var isValid: Bool = false
     
     var notification: NotificationEntity
-    private var notificationService: NotificationService
+    private let notificationService: NotificationService
+    private let analyticsService: AnalyticsService
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(notification: NotificationEntity, notificationService: NotificationService) {
+    init(notification: NotificationEntity, notificationService: NotificationService, analyticsService: AnalyticsService) {
         self.notification = notification
         self.notificationService = notificationService
+        self.analyticsService = analyticsService
         
         self.name = notification.nameValue
         self.type = notification.typeValue
@@ -80,7 +82,7 @@ class EditNotificationSheetViewModel: ObservableObject {
         do {
             try notificationService.sheduleNotification(notification)
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -90,7 +92,7 @@ class EditNotificationSheetViewModel: ObservableObject {
             try notificationService.deleteNotification(notification)
             try notificationService.save()
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -114,6 +116,10 @@ class EditNotificationSheetViewModel: ObservableObject {
         } else {
             isValid = true
         }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "edit_notification", "msg": "\(error)"])
     }
     
 }

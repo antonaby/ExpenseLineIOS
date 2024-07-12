@@ -13,9 +13,11 @@ class BudgetListViewModel: ObservableObject {
     @Published var budgets: [BudgetEntity]
     
     private let budgetService: BudgetService
+    private let analyticsService: AnalyticsService
     
-    init(budgetService: BudgetService) {
+    init(budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.budgetService = budgetService
+        self.analyticsService = analyticsService
         self.budgets = []
     }
     
@@ -23,7 +25,7 @@ class BudgetListViewModel: ObservableObject {
         do {
             budgets = try budgetService.getAllBudgets()
         } catch {
-            // TODO: show error message
+            logErrorEvent(error)
             print("Something went wrong: \(error)")
         }
     }
@@ -34,9 +36,13 @@ class BudgetListViewModel: ObservableObject {
             try budgetService.save()
             budgets = try budgetService.getAllBudgets()
         } catch {
-            // TODO: show error message
+            logErrorEvent(error)
             print("Something went wrong: \(error)")
         }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "budget_list", "msg": "\(error)"])
     }
     
 }

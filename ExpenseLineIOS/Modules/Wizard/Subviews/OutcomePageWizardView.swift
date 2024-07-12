@@ -71,7 +71,8 @@ struct OutcomePageWizardView: View {
         budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return OutcomePageWizardView(vm: vm, type: .outcomeFixed, helpPage: .incomeWizard)
@@ -122,7 +123,8 @@ struct OutcomePageWizardView: View {
         budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return OutcomePageWizardView(vm: vm, type: .outcomePercent, helpPage: .incomeWizard)

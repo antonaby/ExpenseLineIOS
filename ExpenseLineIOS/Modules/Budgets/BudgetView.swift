@@ -71,17 +71,24 @@ struct BudgetView: View {
                         vm: BudgetOverviewViewModel(
                             parent: vm,
                             budgetService: budgetService,
-                            notificationService: notificationService
+                            notificationService: notificationService,
+                            analyticsService: analyticsService
                         ))
                         .tabItem { Image(systemName: "house") }
                         .tag(BudgetViewPage.overview)
-                    CategoryListView(vm: CategoryListViewModel(parent: vm, budgetService: budgetService))
+                    CategoryListView(vm: CategoryListViewModel(parent: vm, 
+                                                               budgetService: budgetService,
+                                                               analyticsService: analyticsService))
                         .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
                         .tag(BudgetViewPage.categories)
-                    TransactionListView(vm: TransactionListViewModel(parent: vm, budgetService: budgetService))
+                    TransactionListView(vm: TransactionListViewModel(parent: vm, 
+                                                                     budgetService: budgetService,
+                                                                     analyticsService: analyticsService))
                         .tabItem { Image(systemName: "wallet.pass") }
                         .tag(BudgetViewPage.transactions)
-                    BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, budgetService: budgetService))
+                    BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, 
+                                                             budgetService: budgetService,
+                                                             analyticsService: analyticsService))
                         .tabItem { Image(systemName: "chart.pie") }
                         .tag(BudgetViewPage.stats)
                 }
@@ -104,13 +111,18 @@ struct BudgetView: View {
                 vm: TransactionSheetViewModel(transaction: nil,
                                               budget: vm.budget,
                                               currency: vm.currency,
-                                              budgetService: budgetService))
+                                              budgetService: budgetService,
+                                              analyticsService: analyticsService))
                 .presentationDetents([.medium])
                 .preferredColorScheme(appState.colorScheme)
         }
         .sheet(isPresented: $changePeriodSheetOpen) {
             PeriodListView(selected: $vm.period,
-                           vm: PeriodListViewModel(budget: vm.budget, budgetService: budgetService))
+                           vm: PeriodListViewModel(
+                            budget: vm.budget,
+                            budgetService: budgetService,
+                            analyticsService: analyticsService
+                           ))
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
                 .preferredColorScheme(appState.colorScheme)
@@ -122,7 +134,8 @@ struct BudgetView: View {
                 budget: vm.budget,
                 currency: vm.currency,
                 budgetService: budgetService,
-                notificationService: notificationService)
+                notificationService: notificationService,
+                analyticsService: analyticsService)
             )
             .environmentObject(vm.formatters)
             .navigationTitle("Category")
@@ -133,7 +146,8 @@ struct BudgetView: View {
                 transaction: transaction,
                 budget: vm.budget,
                 currency: vm.currency,
-                budgetService: budgetService)
+                budgetService: budgetService,
+                analyticsService: analyticsService)
             )
             .environmentObject(vm.formatters)
             .navigationTitle("Transaction")
@@ -144,7 +158,8 @@ struct BudgetView: View {
                 categoryRef: ref,
                 budget: vm.budget,
                 budgetService: budgetService,
-                notificationService: notificationService
+                notificationService: notificationService,
+                analyticsService: analyticsService
             ))
             .environmentObject(vm.formatters)
             .navigationTitle("Reminders")
@@ -275,10 +290,13 @@ struct BudgetView: View {
         var period = try budgetService.getOrCreateLastPeriod(budget)
         try dm.sync()
         return BudgetView(vm: BudgetViewModel(
-            budget: budget, period: period, budgetService: bundle.budgetService, dataService: bundle.dataService
+            budget: budget, period: period, 
+            budgetService: bundle.budgetService,
+            dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         ))
             .environmentObject(appState)
-            .environmentObject(SubscriptionManager())
+            .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
             .serviceBundle(bundle)
             .helpButtonVisible(true)
     } catch {

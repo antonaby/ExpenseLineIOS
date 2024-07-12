@@ -307,7 +307,8 @@ struct BudgetWizardView: View {
         budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return BudgetWizardView(vm: vm)
@@ -374,7 +375,8 @@ struct BudgetWizardView: View {
         budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     let appState = AppState(bundle: bundle)

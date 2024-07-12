@@ -291,7 +291,8 @@ struct EditNotificationSheetView: View {
     
     let vm = EditNotificationSheetViewModel(
         notification: notification,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return EditNotificationSheetView(vm: vm)

@@ -27,20 +27,23 @@ class BudgetWizardViewModel: ObservableObject {
     var editMode: Bool
     
     private var op: CategoryActionOperation = .none
-    private var budgetService: BudgetService
-    private var dataService: DataService
-    private var notificationService: NotificationService
+    private let budgetService: BudgetService
+    private let dataService: DataService
+    private let analyticsService: AnalyticsService
+    private let notificationService: NotificationService
     private var cancellables = Set<AnyCancellable>()
     private var notificationsToDelete: [NotificationEntity] = []
     
     var formatters: FormattersHolder
     
-    init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService, notificationService: NotificationService) {
+    init(_ budget: BudgetEntity, budgetService: BudgetService, dataService: DataService,
+         notificationService: NotificationService, analyticsService: AnalyticsService) {
         self.budget = budget
         self.editMode = !budget.isNew
         self.budgetService = budgetService
         self.dataService = dataService
         self.notificationService = notificationService
+        self.analyticsService = analyticsService
         
         self.name = budget.name ?? ""
         let currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
@@ -149,7 +152,7 @@ class BudgetWizardViewModel: ObservableObject {
             
             try budgetService.save()
         } catch {
-            // TODO: show error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -160,6 +163,10 @@ class BudgetWizardViewModel: ObservableObject {
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "bundge_wizard", "msg": "\(error)"])
     }
     
 }

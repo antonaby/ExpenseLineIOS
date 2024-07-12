@@ -224,6 +224,6 @@ struct SettingsView: View {
         SettingsView(settings: bundle.settingsService)
             .serviceBundle(bundle)
             .environmentObject(appState)
-            .environmentObject(SubscriptionManager())
+            .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
     }
 }

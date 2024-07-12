@@ -16,11 +16,13 @@ class CategoryListViewModel: ObservableObject {
     let parent: BudgetViewModel
     
     private let budgetService: BudgetService
+    private let analyticsService: AnalyticsService
     private var cancellables = Set<AnyCancellable>()
  
-    init(parent: BudgetViewModel, budgetService: BudgetService) {
+    init(parent: BudgetViewModel, budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.parent = parent
         self.budgetService = budgetService
+        self.analyticsService = analyticsService
     }
     
     func subscribe() {
@@ -56,13 +58,17 @@ class CategoryListViewModel: ObservableObject {
                 )
             }.sorted(by: { $0.entity.nameValue < $1.entity.nameValue })
         } catch {
-            // TODO: shopw error
-            print("Error \(error)")
+            logErrorEvent(error)
+            print("Something went wrong \(error)")
         }
     }
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "budget_categories", "msg": "\(error)"])
     }
     
 }

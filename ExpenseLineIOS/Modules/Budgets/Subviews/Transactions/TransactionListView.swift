@@ -49,6 +49,7 @@ struct TransactionCard: View {
 struct TransactionListView: View {
     
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var budgetService: BudgetService
     
     @StateObject var vm: TransactionListViewModel
@@ -136,7 +137,8 @@ struct TransactionListView: View {
                 vm: TransactionSheetViewModel(transaction: transaction,
                                               budget: vm.parent.budget,
                                               currency: vm.parent.currency,
-                                              budgetService: budgetService))
+                                              budgetService: budgetService,
+                                              analyticsService: analyticsService))
                 .presentationDetents([.medium])
                 .preferredColorScheme(appState.colorScheme)
         }
@@ -215,11 +217,14 @@ struct TransactionListView: View {
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: bundle.budgetService,
-            dataService: bundle.dataService
+            dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         )
         
         return TransactionListView(
-            vm: TransactionListViewModel(parent: vm, budgetService: budgetService)
+            vm: TransactionListViewModel(parent: vm,
+                                         budgetService: budgetService,
+                                         analyticsService: bundle.analyticsService)
         )
             .serviceBundle(bundle)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))

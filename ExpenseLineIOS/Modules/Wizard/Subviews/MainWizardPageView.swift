@@ -72,7 +72,8 @@ struct MainWizardPageView: View {
             budget, 
             budgetService: bundle.budgetService,
             dataService: bundle.dataService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         ))
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))

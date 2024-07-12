@@ -26,10 +26,16 @@ struct ExpenseLineIOSApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    let serviceBundle = ServiceBundle()
+    var serviceBundle: ServiceBundle
     
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var subscriptionManager = SubscriptionManager()
+    @StateObject private var subscriptionManager: SubscriptionManager
+    
+    init() {
+        var bundle = ServiceBundle()
+        self.serviceBundle = bundle
+        self._subscriptionManager = StateObject(wrappedValue: SubscriptionManager(analyticsService: bundle.analyticsService))
+    }
     
     var body: some Scene {
         WindowGroup {

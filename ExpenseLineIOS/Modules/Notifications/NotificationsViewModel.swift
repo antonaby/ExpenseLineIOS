@@ -18,14 +18,20 @@ class NotificationsViewModel: ObservableObject {
     
     private let budgetService: BudgetService
     private let notificationService: NotificationService
+    private let analyticsService: AnalyticsService
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(categoryRef: CategoryNotificationsRef, budget: BudgetEntity, budgetService: BudgetService, notificationService: NotificationService) {
+    init(categoryRef: CategoryNotificationsRef, 
+         budget: BudgetEntity,
+         budgetService: BudgetService,
+         notificationService: NotificationService,
+         analyticsService: AnalyticsService) {
         self.categoryRef = categoryRef
         self.budget = budget
         self.budgetService = budgetService
         self.notificationService = notificationService
+        self.analyticsService = analyticsService
         
         $todayNotifications
             .receive(on: DispatchQueue.main)
@@ -44,7 +50,7 @@ class NotificationsViewModel: ObservableObject {
                 ? try notificationService.getNotificationsForToday(category: category, showNoNotifications: true)
                 : try notificationService.getNotifications(category: category)
             } catch {
-                // TODO: handle error
+                logErrorEvent(error)
                 print("Something went wrong \(error)")
             }
         } else {
@@ -53,7 +59,7 @@ class NotificationsViewModel: ObservableObject {
                 ? try notificationService.getNotificationsForToday(budget: budget, showNoNotifications: false)
                 : try notificationService.getNotifications(budget: budget)
             } catch {
-                // TODO: handle error
+                logErrorEvent(error)
                 print("Something went wrong \(error)")
             }
         }
@@ -78,7 +84,7 @@ class NotificationsViewModel: ObservableObject {
             try notificationService.deleteNotification(notification)
             try notificationService.save()
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -87,7 +93,7 @@ class NotificationsViewModel: ObservableObject {
         do {
             try notificationService.sheduleNotification(notification)
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
         
@@ -96,6 +102,10 @@ class NotificationsViewModel: ObservableObject {
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "notifications", "msg": "\(error)"])
     }
     
 }

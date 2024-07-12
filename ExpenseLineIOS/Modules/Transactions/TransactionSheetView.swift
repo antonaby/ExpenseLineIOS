@@ -160,7 +160,9 @@ struct TransactionSheetView: View {
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
     return TransactionSheetView(
-        vm: TransactionSheetViewModel(transaction: nil, budget: budget, currency: symbol, budgetService: bundle.budgetService))
+        vm: TransactionSheetViewModel(transaction: nil, budget: budget, currency: symbol,
+                                      budgetService: bundle.budgetService,
+                                      analyticsService: bundle.analyticsService))
     .serviceBundle(bundle)
 }
 
@@ -202,6 +204,8 @@ struct TransactionSheetView: View {
     let symbol = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
     return TransactionSheetView(
-        vm: TransactionSheetViewModel(transaction: transaction, budget: budget, currency: symbol, budgetService: bundle.budgetService))
+        vm: TransactionSheetViewModel(transaction: transaction, budget: budget, currency: symbol, 
+                                      budgetService: bundle.budgetService,
+                                      analyticsService: bundle.analyticsService))
     .serviceBundle(bundle)
 }

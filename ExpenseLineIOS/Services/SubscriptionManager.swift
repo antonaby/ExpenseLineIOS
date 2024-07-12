@@ -14,9 +14,13 @@ import StoreKit
     @Published var paywall: Bool = false
     @Published var products: [Product] = []
     @Published var activeTransactions: Set<Transaction> = []
-    private var updates: Task<Void, Never>?
     
-    init() {
+    private var updates: Task<Void, Never>?
+    private let analyticsService: AnalyticsService
+    
+    init(analyticsService: AnalyticsService) {
+        self.analyticsService = analyticsService
+        
         updates = Task {
             for await update in StoreKit.Transaction.updates {
                 if let transaction = try? update.payloadValue {
@@ -40,7 +44,7 @@ import StoreKit
             let productIdentifiers = ["default_monthly_subscription"]
             products = try await Product.products(for: productIdentifiers)
         } catch {
-            print("Something went wrong \(error)")
+            logErrorEvent(error)
             products = []
         }
     }
@@ -57,21 +61,24 @@ import StoreKit
             case let .success(.unverified(_, error)):
                 // Successful purchase but transaction/receipt can't be verified
                 // Could be a jailbroken phone
+                logSubscriptionErrorEvent("success_unverified")
                 print("Unverified purchase. Might be jailbroken. Error: \(error)")
                 break
             case .pending:
                 // Transaction waiting on SCA (Strong Customer Authentication) or
                 // approval from Ask to Buy
+                logSubscriptionErrorEvent("pending")
                 break
             case .userCancelled:
                 // Canceled
-                print("User Cancelled!")
+                logSubscriptionErrorEvent("canceled")
                 break
             @unknown default:
-                print("Failed to purchase the product!")
+                logSubscriptionErrorEvent("unknown")
                 break
             }
         } catch {
+            logErrorEvent(error)
             print("Failed to purchase the product!")
         }
     }
@@ -93,6 +100,14 @@ import StoreKit
     
     func hasProSubscription() -> Bool {
         !activeTransactions.isEmpty
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "sunscription_manager", "msg": "\(error)"])
+    }
+    
+    private func logSubscriptionErrorEvent(_ reason: String) {
+        analyticsService.logEvent(name: AnalyticsService.SUBSCRIPTION_ERROR, params: ["place": "sunscription_manager", "msg": reason])
     }
     
 }

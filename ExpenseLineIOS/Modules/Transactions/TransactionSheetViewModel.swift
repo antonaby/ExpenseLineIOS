@@ -24,6 +24,7 @@ class TransactionSheetViewModel: ObservableObject {
     
     private let budget: BudgetEntity
     private let budgetService: BudgetService
+    private let analyticsService: AnalyticsService
     
     private var cancellables = Set<AnyCancellable>()
     private var categoryEntities: [PlanCategoryEntity] = []
@@ -40,9 +41,11 @@ class TransactionSheetViewModel: ObservableObject {
         locale.isCurrencySymbolTrailing()
     }
     
-    init(transaction: TransactionEntity?, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
+    init(transaction: TransactionEntity?, budget: BudgetEntity, currency: CurrencySymbol,
+         budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.budget = budget
         self.budgetService = budgetService
+        self.analyticsService = analyticsService
         self.currency = currency
         self.locale = currency.locale
         if let transactionEntity = transaction {
@@ -90,7 +93,7 @@ class TransactionSheetViewModel: ObservableObject {
             transaction.period = try budgetService.getPeriodByDate(for: date, budget: budget)
             try budgetService.save()
         } catch {
-            // TODO: show error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -100,7 +103,7 @@ class TransactionSheetViewModel: ObservableObject {
             budgetService.deleteTransaction(transaction, budget: budget)
             try budgetService.save()
         } catch {
-            // TODO: show error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -121,6 +124,10 @@ class TransactionSheetViewModel: ObservableObject {
         let result = formatter.number(from: cleanAmount)?.decimalValue ?? 0
         
         return result
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "edit_transaction", "msg": "\(error)"])
     }
     
 }

@@ -11,6 +11,7 @@ struct TransactionView: View {
     
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var formatters: FormattersHolder
+    @EnvironmentObject var analyticsService: AnalyticsService
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var budgetService: BudgetService
@@ -61,7 +62,8 @@ struct TransactionView: View {
                 vm: TransactionSheetViewModel(transaction: vm.transaction,
                                               budget: vm.budget,
                                               currency: vm.currency,
-                                              budgetService: budgetService))
+                                              budgetService: budgetService,
+                                              analyticsService: analyticsService))
                 .presentationDetents([.medium])
                 .preferredColorScheme(appState.colorScheme)
         }
@@ -95,7 +97,9 @@ struct TransactionView: View {
     let currency = bundle.dataService.getCurrencySymbolOrDefault("en_US")
     
     let vm = TransactionViewModel(
-        transaction: transaction, budget: budget, currency: currency, budgetService: budgetService
+        transaction: transaction, budget: budget, currency: currency, 
+        budgetService: budgetService,
+        analyticsService: bundle.analyticsService
     )
     
     try! budgetService.save()

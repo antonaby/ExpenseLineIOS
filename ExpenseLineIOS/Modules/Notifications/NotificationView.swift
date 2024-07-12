@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NotificationView: View {
     
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var formatters: FormattersHolder
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var notificationService: NotificationService
@@ -68,7 +69,8 @@ struct NotificationView: View {
             EditNotificationSheetView(
                 vm: EditNotificationSheetViewModel(
                     notification: vm.notification,
-                    notificationService: notificationService))
+                    notificationService: notificationService,
+                    analyticsService: analyticsService))
             .preferredColorScheme(appState.colorScheme)
         }
     }

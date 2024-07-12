@@ -30,10 +30,11 @@ struct MainView: View {
         NavigationStack(path: $appState.path) {
             VStack {
                 if let budget = appState.budget,
-                    let vm = appState.getBudgetViewModel(budget: budget, budgetService: budgetService, dataService: dataServise)  {
+                    let vm = appState.getBudgetViewModel(budget: budget)  {
                     BudgetView(vm: vm)
                 } else {
-                    BudgetListView(vm: BudgetListViewModel(budgetService: budgetService))
+                    BudgetListView(vm: BudgetListViewModel(budgetService: budgetService,
+                                                           analyticsService: analytincService))
                 }
             }
             .navigationDestination(for: BudgetEntity.self) { budget in
@@ -41,7 +42,8 @@ struct MainView: View {
                     budget,
                     budgetService: budgetService,
                     dataService: dataServise,
-                    notificationService: notificationService)
+                    notificationService: notificationService,
+                    analyticsService: analytincService)
                 )
                 .navigationBarBackButtonHidden(true)
                 .onUpdateBudget { budget in
@@ -79,5 +81,5 @@ struct MainView: View {
     let bundle = ServiceBundle.preview
     return MainView(appState: AppState(bundle: bundle))
         .serviceBundle(bundle)
-        .environmentObject(SubscriptionManager())
+        .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
 }

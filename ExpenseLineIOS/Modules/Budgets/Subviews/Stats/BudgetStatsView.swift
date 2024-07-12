@@ -86,10 +86,13 @@ struct BudgetStatsView: View {
         let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
-            budgetService: bundle.budgetService, dataService: bundle.dataService
+            budgetService: bundle.budgetService, dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         )
         
-        let vm = BudgetStatsViewModel(parent: parent, budgetService: bundle.budgetService)
+        let vm = BudgetStatsViewModel(parent: parent,
+                                      budgetService: bundle.budgetService,
+                                      analyticsService: bundle.analyticsService)
         
         vm.daySpendings = [
             SpenginsStat(id: 0, date: Date(), value: 10),

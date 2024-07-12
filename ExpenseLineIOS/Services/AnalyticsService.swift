@@ -30,6 +30,8 @@ class AnalyticsService: ObservableObject {
     public static let DAILY_REMINDER_DISABLED = "daily_reminder_disabled"
     public static let TRANSACTION_CREATED = "transaction_created"
     public static let TRANSACTION_EDITED = "transaction_edited"
+    public static let DATA_ERROR = "data_error"
+    public static let SUBSCRIPTION_ERROR = "subscription_error"
     
     private let settingService: SettingsService
     

@@ -47,7 +47,8 @@ struct BudgetShortSummaryView: View {
         bundle.budgetService.newBudgetEntity(),
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return BudgetShortSummaryView(vm: vm)

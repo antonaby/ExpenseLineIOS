@@ -36,6 +36,7 @@ class BudgetViewModel: ObservableObject {
     
     private let budgetService: BudgetService
     private let dataService: DataService
+    private let analyticsService: AnalyticsService
     
     var totalPlannedIncome: Decimal {
         get {
@@ -45,12 +46,14 @@ class BudgetViewModel: ObservableObject {
     
     private var totalPlannedIncomeCalculated: Decimal
     
-    init(budget: BudgetEntity, period: PeriodEntity, page: BudgetViewPage = .overview, budgetService: BudgetService, dataService: DataService) {
+    init(budget: BudgetEntity, period: PeriodEntity, page: BudgetViewPage = .overview, 
+         budgetService: BudgetService, dataService: DataService, analyticsService: AnalyticsService) {
         self.budget = budget
         self.period = period
         self.currenPage = page
         self.budgetService = budgetService
         self.dataService = dataService
+        self.analyticsService = analyticsService
         self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
         self.formatters = FormattersHolder(locale: currency.locale)
@@ -74,7 +77,7 @@ class BudgetViewModel: ObservableObject {
                 formatters = FormattersHolder(locale: currency.locale)
             }
         } catch {
-            // TODO: handle exception
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -85,6 +88,10 @@ class BudgetViewModel: ObservableObject {
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "budget", "msg": "\(error)"])
     }
     
 }

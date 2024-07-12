@@ -17,9 +17,11 @@ class SubscriptionLimitService: ObservableObject {
     private static let MAX_NUMBER_OF_NOTIFICATIONS = 20
     
     private let dm: DatabaseManager
+    private let analyticsService: AnalyticsService
     
-    init(dm: DatabaseManager) {
+    init(dm: DatabaseManager, analyticsService: AnalyticsService) {
         self.dm = dm
+        self.analyticsService = analyticsService
     }
  
     func checkMaxBudgetCount() -> Bool {
@@ -29,6 +31,7 @@ class SubscriptionLimitService: ObservableObject {
             let numOfBudgets = try dm.viewContext.count(for: request)
             return numOfBudgets < SubscriptionLimitService.MAX_NUMBER_OF_BUDGETS
         } catch {
+            logErrorEvent(error)
             print("Something went wront \(error)")
         }
         
@@ -47,6 +50,7 @@ class SubscriptionLimitService: ObservableObject {
             let numOfTransactions = try dm.viewContext.count(for: request)
             return numOfTransactions < SubscriptionLimitService.MAX_NUMBER_OF_TRANSACTIONS
         } catch {
+            logErrorEvent(error)
             print("Something went wront \(error)")
         }
         
@@ -62,11 +66,16 @@ class SubscriptionLimitService: ObservableObject {
             let numOfNotifications = try dm.viewContext.count(for: request)
             return numOfNotifications < SubscriptionLimitService.MAX_NUMBER_OF_NOTIFICATIONS
         } catch {
+            logErrorEvent(error)
             print("Something went wront \(error)")
         }
         
         
         return true
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "sunscription_limit", "msg": "\(error)"])
     }
     
 }

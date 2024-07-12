@@ -208,10 +208,13 @@ struct CategoryListView: View {
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
             budgetService: budgetService,
-            dataService: bundle.dataService
+            dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         )
         
-        let vm = CategoryListViewModel(parent: parent, budgetService: budgetService)
+        let vm = CategoryListViewModel(parent: parent,
+                                       budgetService: budgetService,
+                                       analyticsService: bundle.analyticsService)
         return CategoryListView(vm: vm)
             .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     } catch {

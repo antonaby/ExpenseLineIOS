@@ -116,7 +116,8 @@ struct BudgetListView: View {
     let bundle = ServiceBundle.preview
   
     let appState = AppState(bundle: bundle)
-    return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService))
+    return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService,
+                                                  analyticsService: bundle.analyticsService))
         .environmentObject(appState)
         .serviceBundle(bundle)
 }
@@ -135,10 +136,11 @@ struct BudgetListView: View {
     do {
         try dm.sync()
         let appState = AppState(bundle: bundle)
-        return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService))
+        return BudgetListView(vm: BudgetListViewModel(budgetService: bundle.budgetService,
+                                                      analyticsService: bundle.analyticsService))
             .environmentObject(appState)
             .serviceBundle(bundle)
-            .environmentObject(SubscriptionManager())
+            .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
     } catch {
         return Text("Something went wrong \(error)")
     }

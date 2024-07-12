@@ -18,11 +18,13 @@ class TransactionListViewModel: ObservableObject {
     let parent: BudgetViewModel
     
     private let budgetService: BudgetService
+    private let analyticsService: AnalyticsService
     private var cancellables = Set<AnyCancellable>()
     
-    init(parent: BudgetViewModel, budgetService: BudgetService) {
+    init(parent: BudgetViewModel, budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.parent = parent
         self.budgetService = budgetService
+        self.analyticsService = analyticsService
         self.startsAt = parent.period.startsAt ?? Date().firstDayOfMonth()
         self.endsAt = parent.period.endsAt ?? Date().lastDayOfMonth()
     }
@@ -72,7 +74,7 @@ class TransactionListViewModel: ObservableObject {
                 transactions = try budgetService.searchTransactions(serachFilter, startsAt: startsAt, endsAt: endsAt, budget: parent.budget)
             }
         } catch {
-            // TODO: show error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -82,7 +84,7 @@ class TransactionListViewModel: ObservableObject {
             budgetService.deleteTransaction(transaction, budget: parent.budget)
             try budgetService.save()
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Somwthing went wrong \(error)")
         }
     }
@@ -90,6 +92,10 @@ class TransactionListViewModel: ObservableObject {
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
         cancellables = []
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "budget_transactions", "msg": "\(error)"])
     }
     
 }

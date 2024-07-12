@@ -27,12 +27,14 @@ class BudgetOverviewViewModel: ObservableObject {
     
     private let budgetService: BudgetService
     private let notificationService: NotificationService
+    private let analyticsService: AnalyticsService
     private var cancellables = Set<AnyCancellable>()
  
-    init(parent: BudgetViewModel, budgetService: BudgetService, notificationService: NotificationService) {
+    init(parent: BudgetViewModel, budgetService: BudgetService, notificationService: NotificationService, analyticsService: AnalyticsService) {
         self.parent = parent
         self.budgetService = budgetService
         self.notificationService = notificationService
+        self.analyticsService = analyticsService
     }
     
     func subscribe() {
@@ -58,7 +60,7 @@ class BudgetOverviewViewModel: ObservableObject {
             totalFixedBudgetLeft = totalPlannedFixedOutcome - totalFixedOutcome
             totalFlexibleBudgetLeft = totalPlannedPercentOutcomeAmount - totalPercentOutcome
         } catch {
-            // TODO: show error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
         
@@ -70,13 +72,17 @@ class BudgetOverviewViewModel: ObservableObject {
             notifications = try notificationService
                 .getNotificationsForToday(budget: parent.budget)
         } catch {
-            // TODO: show error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
     
     func cancelAll() {
         cancellables.forEach { $0.cancel() }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "budget_overview", "msg": "\(error)"])
     }
     
 }

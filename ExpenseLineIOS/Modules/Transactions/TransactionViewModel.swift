@@ -16,26 +16,33 @@ class TransactionViewModel: ObservableObject {
     var currency: CurrencySymbol
     
     private let budgetService: BudgetService
+    private let analyticsService: AnalyticsService
     
-    init(transaction: TransactionEntity, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService) {
+    init(transaction: TransactionEntity, budget: BudgetEntity, currency: CurrencySymbol,
+         budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.transaction = transaction
         self.budget = budget
         self.currency = currency
         self.budgetService = budgetService
+        self.analyticsService = analyticsService
     }
     
     func reloadTransaction() {
         guard let id = transaction.id
         else {
-            print("Transaction has no id") // TODO: handle error
             return
         }
         
         do {
             transaction = try budgetService.getTransaction(id)
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "transaction", "msg": "\(error)"])
+    }
+    
 }

@@ -72,15 +72,16 @@ class AppState: ObservableObject {
         bundle.settingsService.getBoolPreference(for: SettingsService.SHOW_HELP_BUTTON)
     }
     
-    func getBudgetViewModel(budget: BudgetEntity, budgetService: BudgetService, dataService: DataService) -> BudgetViewModel? {
+    func getBudgetViewModel(budget: BudgetEntity) -> BudgetViewModel? {
         do {
             return BudgetViewModel(
                 budget: budget,
-                period: try budgetService.getOrCreateLastPeriod(budget),
-                budgetService: budgetService,
-                dataService: dataService)
+                period: try bundle.budgetService.getOrCreateLastPeriod(budget),
+                budgetService: bundle.budgetService,
+                dataService: bundle.dataService,
+                analyticsService: bundle.analyticsService)
         } catch {
-            // TODO: hadnle error
+            logErrorEvent(error)
             print("Somethiong went wrong \(error)")
             return nil
         }
@@ -113,7 +114,7 @@ class AppState: ObservableObject {
             do {
                 return try bundle.budgetService.getBudgetById(budgetId)
             } catch {
-                // TODO: show error
+                logErrorEvent(error)
                 print("Can't fetch budget info: \(error)")
             }
         }
@@ -131,6 +132,10 @@ class AppState: ObservableObject {
         let notifications = bundle.notificationService
         notifications.requestAuthorization()
         notifications.scheduleDailyReminder(date: defaultTime)
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        bundle.analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "app_sate", "msg": "\(error)"])
     }
     
 }

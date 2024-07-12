@@ -29,10 +29,10 @@ struct ServiceBundle {
         databaseManager.initializeStore(inMemory: inMemory)
         notificationService = NotificationService(dm: databaseManager)
         budgetService = BudgetService(dm: databaseManager, notificationService: notificationService)
-        dataService = DataService(budgetService: budgetService)
         settingsService = SettingsService()
-        subscriptionService = SubscriptionLimitService(dm: databaseManager)
         analyticsService = AnalyticsService(settingService: settingsService)
+        subscriptionService = SubscriptionLimitService(dm: databaseManager, analyticsService: analyticsService)
+        dataService = DataService(budgetService: budgetService, analyticsService: analyticsService)
     }
     
 }

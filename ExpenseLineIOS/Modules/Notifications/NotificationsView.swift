@@ -141,6 +141,7 @@ struct NotificationsView: View {
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @EnvironmentObject var subscriptionLimitService: SubscriptionLimitService
     @EnvironmentObject var notificationService: NotificationService
+    @EnvironmentObject var analyticsService: AnalyticsService
     
     @StateObject var vm: NotificationsViewModel
     @State var showEditNotificationSheet: Bool = false
@@ -257,7 +258,8 @@ struct NotificationsView: View {
         .sheet(isPresented: $showEditNotificationSheet, onDismiss: onNotificationUpdated) {
             EditNotificationSheetView(
                 vm: EditNotificationSheetViewModel(notification: vm.newNotification(),
-                                                   notificationService: notificationService))
+                                                   notificationService: notificationService,
+                                                   analyticsService: analyticsService))
             .presentationDetents([.large])
             .presentationDragIndicator(.hidden)
             .preferredColorScheme(appState.colorScheme)
@@ -265,7 +267,8 @@ struct NotificationsView: View {
         .sheet(item: $selectedNotification, onDismiss: onNotificationUpdated) { notification in
             EditNotificationSheetView(
                 vm: EditNotificationSheetViewModel(notification: notification,
-                                                   notificationService: notificationService))
+                                                   notificationService: notificationService,
+                                                   analyticsService: analyticsService))
             .presentationDetents([.large])
             .presentationDragIndicator(.hidden)
             .preferredColorScheme(appState.colorScheme)
@@ -331,14 +334,15 @@ struct NotificationsView: View {
         categoryRef: CategoryNotificationsRef(category: nil),
         budget: budget,
         budgetService: bundle.budgetService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     try! bundle.notificationService.save()
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
         .environmentObject(AppState(bundle: bundle))
-        .environmentObject(SubscriptionManager())
+        .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }
 
@@ -350,12 +354,13 @@ struct NotificationsView: View {
         categoryRef: CategoryNotificationsRef(category: nil),
         budget: budget,
         budgetService: bundle.budgetService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return NotificationsView(vm: vm)
         .serviceBundle(bundle)
         .environmentObject(AppState(bundle: bundle))
-        .environmentObject(SubscriptionManager())
+        .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
         .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
 }

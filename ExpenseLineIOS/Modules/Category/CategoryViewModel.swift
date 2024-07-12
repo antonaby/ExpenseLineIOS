@@ -21,18 +21,21 @@ class CategoryViewModel: ObservableObject {
     
     private var budgetService: BudgetService
     private var notificationService: NotificationService
+    private var analyticsService: AnalyticsService
     
     var name: String {
         category.nameValue
     }
     
-    init(category: PlanCategoryEntity, period: PeriodEntity, budget: BudgetEntity, currency: CurrencySymbol, budgetService: BudgetService, notificationService: NotificationService) {
+    init(category: PlanCategoryEntity, period: PeriodEntity, budget: BudgetEntity, currency: CurrencySymbol, 
+         budgetService: BudgetService, notificationService: NotificationService, analyticsService: AnalyticsService) {
         self.category = category
         self.period = period
         self.budget = budget
         self.currency = currency
         self.budgetService = budgetService
         self.notificationService = notificationService
+        self.analyticsService = analyticsService
     }
     
     func percentSpent() -> Double {
@@ -68,7 +71,7 @@ class CategoryViewModel: ObservableObject {
             transactions = try budgetService.getAllTransactionsForCategory(category, period: period)
             totalAmount = transactions.reduce(0) { $0 + $1.amountDecimal }
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -77,7 +80,7 @@ class CategoryViewModel: ObservableObject {
         do {
             notifications = try notificationService.getNotificationsForToday(category: category, showNoNotifications: true)
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
     }
@@ -92,7 +95,7 @@ class CategoryViewModel: ObservableObject {
             try budgetService.deleteCategoryWithNotifications(category, budget: budget)
             try budgetService.save()
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Somwthing went wrong \(error)")
         }
     }
@@ -102,10 +105,14 @@ class CategoryViewModel: ObservableObject {
             budgetService.deleteTransaction(transaction, budget: budget)
             try budgetService.save()
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Somwthing went wrong \(error)")
         }
         loadTransactions()
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "category", "msg": "\(error)"])
     }
     
 }

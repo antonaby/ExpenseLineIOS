@@ -312,13 +312,15 @@ struct BudgetOverviewView: View {
         let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
-            budgetService: bundle.budgetService, dataService: bundle.dataService
+            budgetService: bundle.budgetService, dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         )
         
         let vm = BudgetOverviewViewModel(
             parent: parent, 
             budgetService: bundle.budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         
         vm.totalPlannedFixedOutcome = 600
@@ -380,13 +382,15 @@ struct BudgetOverviewView: View {
         let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
-            budgetService: bundle.budgetService, dataService: bundle.dataService
+            budgetService: bundle.budgetService, dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         )
         
         let vm = BudgetOverviewViewModel(
             parent: parent, 
             budgetService: bundle.budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         
         vm.totalPlannedFixedOutcome = 600
@@ -423,13 +427,15 @@ struct BudgetOverviewView: View {
         let parent = BudgetViewModel(
             budget: budget,
             period: try bundle.budgetService.getOrCreateLastPeriod(budget),
-            budgetService: bundle.budgetService, dataService: bundle.dataService
+            budgetService: bundle.budgetService, dataService: bundle.dataService,
+            analyticsService: bundle.analyticsService
         )
         
         let vm = BudgetOverviewViewModel(
             parent: parent,
             budgetService: bundle.budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         
         vm.totalPlannedFixedOutcome = 600

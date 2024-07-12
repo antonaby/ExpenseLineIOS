@@ -13,6 +13,7 @@ struct CategoryView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var budgetService: BudgetService
+    @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var formatters: FormattersHolder
     
     @State var selectedTransaction: TransactionEntity? = nil
@@ -116,7 +117,8 @@ struct CategoryView: View {
                 vm: TransactionSheetViewModel(transaction: transaction,
                                               budget: vm.budget,
                                               currency: vm.currency,
-                                              budgetService: budgetService))
+                                              budgetService: budgetService,
+                                              analyticsService: analyticsService))
                 .presentationDetents([.medium])
                 .preferredColorScheme(appState.colorScheme)
         }
@@ -238,7 +240,8 @@ struct CategoryView: View {
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
             budgetService: budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
@@ -268,7 +271,8 @@ struct CategoryView: View {
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
             budgetService: budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
@@ -316,7 +320,8 @@ struct CategoryView: View {
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
             budgetService: budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)
@@ -369,7 +374,8 @@ struct CategoryView: View {
             budget: budget,
             currency: bundle.dataService.getCurrencySymbolOrDefault("en_US"),
             budgetService: budgetService,
-            notificationService: bundle.notificationService
+            notificationService: bundle.notificationService,
+            analyticsService: bundle.analyticsService
         )
         return CategoryView(vm: vm)
             .serviceBundle(bundle)

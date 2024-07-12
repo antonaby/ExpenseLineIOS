@@ -13,19 +13,28 @@ class PeriodListViewModel: ObservableObject {
     
     private let budget: BudgetEntity
     private let budgetService: BudgetService
+    private let analyticsService: AnalyticsService
     
-    init(budget: BudgetEntity, budgetService: BudgetService) {
+    init(budget: BudgetEntity, budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.budget = budget
         self.budgetService = budgetService
+        self.analyticsService = analyticsService
     }
     
     func loadPeriods() {
         do {
             periods = try budgetService.getBudgetPeriods(budget)
         } catch {
-            // TODO: handle error
+            logErrorEvent(error)
             print("Something went wrong \(error)")
         }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logEvent(
+            name: AnalyticsService.DATA_ERROR,
+            params: ["place": "budget_period", "msg": "\(error)"]
+        )
     }
     
 }
@@ -92,7 +101,10 @@ struct PeriodListView: View {
     period3.budget = budget
     
     return PeriodListView(selected: .constant(period1),
-                          vm: PeriodListViewModel(budget: budget, budgetService: bundle.budgetService))
+                          vm: PeriodListViewModel(
+                            budget: budget,
+                            budgetService: bundle.budgetService,
+                            analyticsService: bundle.analyticsService))
     .environmentObject(FormattersHolder(locale: Locale(identifier: "en_US")))
     .serviceBundle(bundle)
 }

@@ -135,7 +135,8 @@ struct CategoryListWizardView: View {
         budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return CategoryListWizardView(
@@ -144,7 +145,7 @@ struct CategoryListWizardView: View {
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
-    .environmentObject(SubscriptionManager())
+    .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
 }
 
 #Preview("Amount EUR") {
@@ -192,7 +193,8 @@ struct CategoryListWizardView: View {
         budget,
         budgetService: bundle.budgetService,
         dataService: bundle.dataService,
-        notificationService: bundle.notificationService
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService
     )
     
     return CategoryListWizardView(
@@ -201,6 +203,6 @@ struct CategoryListWizardView: View {
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
-    .environmentObject(SubscriptionManager())
+    .environmentObject(SubscriptionManager(analyticsService: bundle.analyticsService))
 }
 

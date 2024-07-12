@@ -14,7 +14,7 @@ class DataService: ObservableObject {
     private let categories: [CategoryTemplateType]
     private let countryCurrencies: [CountryCurrency]
     
-    init(budgetService: BudgetService) {
+    init(budgetService: BudgetService, analyticsService: AnalyticsService) {
         self.budgetService = budgetService
         
         let decoder = JSONDecoder()
@@ -26,6 +26,7 @@ class DataService: ObservableObject {
                     loadedCategories = try decoder.decode([CategoryTemplateType].self, from: data)
                 }
             } catch {
+                analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "data_service", "msg": "\(error)"])
                 print("Something went wrong \(error)")
             }
         }
@@ -54,6 +55,7 @@ class DataService: ObservableObject {
                     loadedCountryCurrencies = try decoder.decode([CountryCurrency].self, from: data)
                 }
             } catch {
+                analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "data_service", "msg": "\(error)"])
                 print("Something went wrong \(error)")
             }
         }
