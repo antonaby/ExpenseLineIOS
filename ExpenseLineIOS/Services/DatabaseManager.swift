@@ -17,7 +17,7 @@ enum DatabaseManagerError: Error {
 
 class DatabaseManager: ObservableObject {
     
-    private var container: NSPersistentContainer
+    private var container: NSPersistentCloudKitContainer
     
     var viewContext: NSManagedObjectContext {
         get {
@@ -26,7 +26,7 @@ class DatabaseManager: ObservableObject {
     }
     
     init() {
-        container = NSPersistentContainer(name: "DataContainer")
+        container = NSPersistentCloudKitContainer(name: "DataContainer")
     }
     
     func initializeStore(inMemory: Bool = false) {
@@ -39,6 +39,14 @@ class DatabaseManager: ObservableObject {
                 fatalError("Failed to load persisten store \(error)")
             }
         }
+        
+        #if DEBUG
+        do {
+            try container.initializeCloudKitSchema(options: [])
+        } catch {
+            print("Something went wrong \(error)")
+        }
+        #endif
     }
     
     func sync() throws {

@@ -180,6 +180,7 @@
 		D24F9E492C37DC21005260D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D24F9E512C37E02B005260D8 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		D250D4CE2BB828EB0050638C /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
+		D2526BA22C426F1E00104844 /* ExpenseLineIOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ExpenseLineIOS.entitlements; sourceTree = "<group>"; };
 		D254094D2C3417E800E9FFED /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D2554A1C2C1B24F70056ADD5 /* CategorySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorView.swift; sourceTree = "<group>"; };
 		D2563E4F2BD7D9A800D28F65 /* CategoryListWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListWizardView.swift; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		D20EF2A92BB18CFA006CF8CD /* ExpenseLineIOS */ = {
 			isa = PBXGroup;
 			children = (
+				D2526BA22C426F1E00104844 /* ExpenseLineIOS.entitlements */,
 				D24F9E492C37DC21005260D8 /* GoogleService-Info.plist */,
 				D28942922C0B2077001277F5 /* Info.plist */,
 				D22AB4CE2C0318B500306F5B /* countries.json */,
@@ -940,6 +942,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = ExpenseLineIOS/ExpenseLineIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"ExpenseLineIOS/Preview Content\"";
@@ -973,6 +976,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = ExpenseLineIOS/ExpenseLineIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"ExpenseLineIOS/Preview Content\"";
