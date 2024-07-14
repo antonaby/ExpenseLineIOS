@@ -259,13 +259,13 @@ struct BudgetWizardView: View {
     func getPageTitle(_ page: WizzardPage) -> String {
         switch page {
         case .base:
-            return "Budget"
+            return String(localized: "Budget")
         case .income:
-            return "Earnings"
+            return String(localized: "Earnings")
         case .outcomeFixed:
-            return "Fixed Expenses"
+            return String(localized: "Fixed Expenses")
         case .outcomeFlexible:
-            return "Flexible Expenses"
+            return String(localized: "Flexible Expenses")
         }
     }
     
