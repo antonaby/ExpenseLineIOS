@@ -40,7 +40,15 @@ class DatabaseManager: ObservableObject {
             }
         }
         
+        initCloudKitSchema()
+    }
+    
+    private func initCloudKitSchema() {
         #if DEBUG
+        if !CommandLine.arguments.contains("-init-cloudkit-scheme") {
+            return
+        }
+        
         do {
             try container.initializeCloudKitSchema(options: [])
         } catch {
