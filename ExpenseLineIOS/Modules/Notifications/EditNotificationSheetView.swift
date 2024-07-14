@@ -53,6 +53,7 @@ struct EditNotificationSheetView: View {
                                     Image(systemName: "pencil")
                                         .frame(width: 30)
                                         .foregroundStyle(Color.appLink)
+                                        .accessibilityLabel("Reminder's name")
                                     TextField("Name", text: $vm.name)
                                 }
                             }
@@ -173,6 +174,8 @@ struct EditNotificationSheetView: View {
                             .foregroundStyle(Color.appLink)
                         Text("Reminder")
                     }
+                    .accessibilityLabel("Reminder's time")
+                    .accessibilityElement(children: .combine)
                 }
             }
         }
@@ -189,6 +192,8 @@ struct EditNotificationSheetView: View {
                             .foregroundStyle(Color.appLink)
                         Text("Reminder")
                     }
+                    .accessibilityLabel("Reminder's time")
+                    .accessibilityElement(children: .combine)
                 }
             }
         }
@@ -223,8 +228,10 @@ struct EditNotificationSheetView: View {
                         Image(systemName: "clock")
                             .frame(width: 30)
                             .foregroundStyle(Color.appLink)
-                        Text("Time")
+                        Text("Reminder")
                     }
+                    .accessibilityLabel("Reminder's time")
+                    .accessibilityElement(children: .combine)
                 }
             }
         }

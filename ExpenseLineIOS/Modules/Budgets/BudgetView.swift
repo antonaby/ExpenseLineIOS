@@ -46,7 +46,6 @@ struct BudgetView: View {
                         Image(systemName: "chevron.left")
                             .font(.title3)
                         Text("Budgets")
-                            .font(.caption)
                     }
                     .foregroundStyle(Color.appLink)
                     .padding(5)
@@ -74,22 +73,22 @@ struct BudgetView: View {
                             notificationService: notificationService,
                             analyticsService: analyticsService
                         ))
-                        .tabItem { Image(systemName: "house") }
+                    .tabItem { Image(systemName: "house").accessibilityLabel("Main Page") }
                         .tag(BudgetViewPage.overview)
                     CategoryListView(vm: CategoryListViewModel(parent: vm, 
                                                                budgetService: budgetService,
                                                                analyticsService: analyticsService))
-                        .tabItem { Image(systemName: "dollarsign.arrow.circlepath") }
+                        .tabItem { Image(systemName: "dollarsign.arrow.circlepath").accessibilityLabel("Categories") }
                         .tag(BudgetViewPage.categories)
                     TransactionListView(vm: TransactionListViewModel(parent: vm, 
                                                                      budgetService: budgetService,
                                                                      analyticsService: analyticsService))
-                        .tabItem { Image(systemName: "wallet.pass") }
+                        .tabItem { Image(systemName: "wallet.pass").accessibilityLabel("Expenses") }
                         .tag(BudgetViewPage.transactions)
                     BudgetStatsView(vm: BudgetStatsViewModel(parent: vm, 
                                                              budgetService: budgetService,
                                                              analyticsService: analyticsService))
-                        .tabItem { Image(systemName: "chart.pie") }
+                        .tabItem { Image(systemName: "chart.pie").accessibilityLabel("Statistics") }
                         .tag(BudgetViewPage.stats)
                 }
                 .accentColor(Color.appLink)
@@ -150,7 +149,7 @@ struct BudgetView: View {
                 analyticsService: analyticsService)
             )
             .environmentObject(vm.formatters)
-            .navigationTitle("Transaction")
+            .navigationTitle("Expense Record")
             .preferredColorScheme(appState.colorScheme)
         }
         .navigationDestination(for: CategoryNotificationsRef.self) { ref in

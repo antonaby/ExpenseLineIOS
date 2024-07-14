@@ -22,7 +22,7 @@ struct BudgetStatsView: View {
             VStack {
                 FlexibleCardView {
                     VStack {
-                        Text("Spending by day")
+                        Text("Expenses by Day")
                             .bold()
                         Chart(vm.daySpendings) { spendings in
                             LineMark(
@@ -44,7 +44,7 @@ struct BudgetStatsView: View {
                 }
                 FlexibleCardView {
                     VStack {
-                        Text("Spendings by month")
+                        Text("Expenses by Month")
                             .bold()
                         Chart {
                             ForEach(vm.monthSpendings) { spendings in

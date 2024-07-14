@@ -2,13 +2,34 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%lf%% Spent" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lf%% Потрачено"
+          }
+        }
+      }
     },
     "A comprehensive budget includes overall, fixed, and flexible expenses, providing a clear financial roadmap. Fixed expenses, like rent and subscriptions, are predictable, while flexible expenses, such as shopping and dining out, vary and are typically allocated as a percentage of your budget. Balancing these elements helps ensure financial stability and effective resource management." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всеобъемлющий бюджет включает в себя общие, фиксированные и гибкие затраты, предоставляя четкий финансовый план. Предсказуемые фиксированные расходы, такие как аренда и подписки, более стабильны, в то время как гибкие расходы, такие как покупки и походы в рестораны, варьируются и обычно распределяются как процент от вашего бюджета. Балансировка этих элементов помогает обеспечить финансовую стабильность и эффективное управление ресурсами."
+          }
+        }
+      }
     },
-    "A personal budget is an empowering step towards financial stability and achieving your dreams. It helps you manage income and expenses, prioritize spending, and save for future goals, all while reducing financial stress." : {
-
+    "A personal budget is an empowering step towards financial stability and achieving your dreams. It helps you manage earnings and expenses, prioritize spending, and save for future goals, all while reducing financial stress." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Личный бюджет – это важный шаг к финансовой стабильности и достижению ваших мечтаний. Он помогает вам управлять доходами и расходами, расставлять приоритеты в тратах и копить на будущие цели, при этом снижая финансовый стресс."
+          }
+        }
+      }
     },
     "Add" : {
       "localizations" : {
@@ -21,10 +42,24 @@
       }
     },
     "Add Expenses" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить расходы"
+          }
+        }
+      }
     },
     "All Reminders" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все Нопоминания"
+          }
+        }
+      }
     },
     "Amount" : {
       "localizations" : {
@@ -37,7 +72,14 @@
       }
     },
     "An expenses list details all your spending, helping you track money flow and spot patterns. It aids in making informed financial decisions." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Список расходов детализирует все ваши траты, помогая отслеживать движение денег и выявлять закономерности. Он способствует принятию обоснованных финансовых решений."
+          }
+        }
+      }
     },
     "Back" : {
       "localizations" : {
@@ -76,6 +118,16 @@
         }
       }
     },
+    "Categories" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Категории"
+          }
+        }
+      }
+    },
     "Category" : {
       "localizations" : {
         "ru" : {
@@ -96,19 +148,15 @@
         }
       }
     },
-    "Choose category" : {
-      "extractionState" : "stale",
+    "Choose Category" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выберете категорию"
+            "value" : "Выберете Категорию"
           }
         }
       }
-    },
-    "Choose Category" : {
-
     },
     "Clear" : {
       "localizations" : {
@@ -121,21 +169,24 @@
       }
     },
     "Close" : {
-
-    },
-    "Color" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цвет"
+            "value" : "Закрыть"
           }
         }
       }
     },
     "Color Scheme" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цветовая Схема"
+          }
+        }
+      }
     },
     "Create" : {
       "localizations" : {
@@ -148,7 +199,14 @@
       }
     },
     "Create a reminder" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать Напоминание"
+          }
+        }
+      }
     },
     "Currency" : {
       "localizations" : {
@@ -181,15 +239,11 @@
       }
     },
     "Dark" : {
-
-    },
-    "Dark Mode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Темный режим"
+            "value" : "Темная"
           }
         }
       }
@@ -234,6 +288,16 @@
         }
       }
     },
+    "Earnings" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расходы"
+          }
+        }
+      }
+    },
     "Edit" : {
       "localizations" : {
         "ru" : {
@@ -254,12 +318,42 @@
         }
       }
     },
+    "Expense Record" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расходы"
+          }
+        }
+      }
+    },
     "Expenses" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Расходы"
+          }
+        }
+      }
+    },
+    "Expenses by Day" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расходы по Дням"
+          }
+        }
+      }
+    },
+    "Expenses by Month" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расходы по Месяцам"
           }
         }
       }
@@ -275,7 +369,14 @@
       }
     },
     "Fixed expenses, such as rent, utilities, and subscriptions, are consistent costs you can anticipate each month. Properly accounting for these necessary outflows ensures you maintain financial stability and can plan effectively for savings and discretionary spending." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фиксированные расходы, такие как аренда, коммунальные услуги и подписки, являются постоянными затратами, которые вы можете предсказать каждый месяц. Правильный учет этих необходимых расходов обеспечивает поддержание финансовой стабильности и позволяет эффективно планировать накопления и дискреционные траты."
+          }
+        }
+      }
     },
     "Flexible Expenses" : {
       "localizations" : {
@@ -288,7 +389,14 @@
       }
     },
     "Flexible expenses, such as shopping, coffee, and food delivery, can vary greatly from month to month and are often allocated as a percentage of your budget. By keeping these variable costs in check, you can better manage your overall finances and allocate more funds towards savings and essential expenses." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Гибкие расходы, такие как покупки, кофе и доставка еды, могут значительно варьироваться от месяца к месяцу и часто распределяются как процент от вашего бюджета. Контролируя эти переменные затраты, вы можете лучше управлять своими общими финансами и выделять больше средств на накопления и необходимые расходы."
+          }
+        }
+      }
     },
     "From" : {
       "localizations" : {
@@ -296,16 +404,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "От"
-          }
-        }
-      }
-    },
-    "Full Access" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Полный доступ"
           }
         }
       }
@@ -320,20 +418,6 @@
         }
       }
     },
-    "Help button" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка помощи"
-          }
-        }
-      }
-    },
-    "Help Button" : {
-
-    },
     "Income" : {
       "localizations" : {
         "ru" : {
@@ -345,10 +429,34 @@
       }
     },
     "Income %@" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доходы %@"
+          }
+        }
+      }
     },
     "Light" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Светлая"
+          }
+        }
+      }
+    },
+    "Main Page" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главная страница"
+          }
+        }
+      }
     },
     "Month" : {
       "localizations" : {
@@ -400,6 +508,16 @@
         }
       }
     },
+    "No Expenses" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет записей о расходах"
+          }
+        }
+      }
+    },
     "no results" : {
       "localizations" : {
         "ru" : {
@@ -420,16 +538,6 @@
         }
       }
     },
-    "No transactions" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Нет расходов"
-          }
-        }
-      }
-    },
     "One Time" : {
       "localizations" : {
         "ru" : {
@@ -440,30 +548,65 @@
         }
       }
     },
-    "Outcome" : {
+    "Open Full Access" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Расходы"
+            "value" : "Открыть полный доступ"
           }
         }
       }
     },
     "Outcome %@" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расходы %@"
+          }
+        }
+      }
     },
     "Percent" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Процент"
+          }
+        }
+      }
     },
-    "Please add at least one income source." : {
-
+    "Please add at least one income source like salary." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста добавьте хотяб один источник доходов"
+          }
+        }
+      }
     },
     "Premium" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Премиум"
+          }
+        }
+      }
     },
     "Preview" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предпоказ"
+          }
+        }
+      }
     },
     "Remind me at" : {
       "localizations" : {
@@ -485,6 +628,26 @@
         }
       }
     },
+    "Reminder's name" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя Напоминания"
+          }
+        }
+      }
+    },
+    "Reminder's time" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время сигнала"
+          }
+        }
+      }
+    },
     "Reminders" : {
       "localizations" : {
         "ru" : {
@@ -496,7 +659,14 @@
       }
     },
     "Reminders help you stay organized and ensure important tasks and deadlines are not overlooked. They enable you to manage your schedule more effectively and achieve your goals efficiently." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминания помогают вам оставаться организованными и не упускать важные задачи и сроки. Они позволяют более эффективно управлять своим расписанием и достигать своих целей."
+          }
+        }
+      }
     },
     "remove" : {
       "localizations" : {
@@ -504,17 +674,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "удалить"
-          }
-        }
-      }
-    },
-    "Restore" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Восстановить"
           }
         }
       }
@@ -561,24 +720,11 @@
       }
     },
     "Show Help Button" : {
-
-    },
-    "Spending by day" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Расходы по дням"
-          }
-        }
-      }
-    },
-    "Spendings by month" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Расходы по месяцам"
+            "value" : "Показать Кнопку Помощи"
           }
         }
       }
@@ -593,30 +739,72 @@
         }
       }
     },
-    "Subscription" : {
-
-    },
-    "Swipe left to delete a category." : {
-
-    },
-    "Swipe left to edit or delete a notification." : {
-
-    },
-    "Swipe left to edit or delete an entry." : {
-
-    },
-    "Swipe right to turn a notification on or off." : {
-
-    },
-    "System" : {
-
-    },
-    "Time" : {
+    "Statistics" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Время"
+            "value" : "Статистика"
+          }
+        }
+      }
+    },
+    "Subscription" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписка"
+          }
+        }
+      }
+    },
+    "Swipe left to delete a category." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахните влево чтобы удалить запись."
+          }
+        }
+      }
+    },
+    "Swipe left to edit or delete a notification." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахните влево чтобы редактировать или удалить запись."
+          }
+        }
+      }
+    },
+    "Swipe left to edit or delete an entry." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахните влево чтобы редактировать или удалить запись."
+          }
+        }
+      }
+    },
+    "Swipe right to turn a notification on or off." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смахните вправо чтобы включить или выключить напоминание"
+          }
+        }
+      }
+    },
+    "System" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Системная"
           }
         }
       }
@@ -642,14 +830,11 @@
       }
     },
     "Today's Reminders" : {
-
-    },
-    "Transaction" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Расходы"
+            "value" : "Напоминания на Сегодня"
           }
         }
       }
@@ -685,7 +870,14 @@
       }
     },
     "Upgrade to Premium" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro Подписка"
+          }
+        }
+      }
     },
     "Weekly" : {
       "localizations" : {
@@ -697,8 +889,25 @@
         }
       }
     },
-    "Your income is the foundation of your financial life, providing the means to cover essential expenses and save for future goals. Managing and maximizing your income wisely can lead to increased financial stability and a higher quality of life." : {
-
+    "Welcome to your primary financial overview! Our budget mobile app’s main screen is designed to give you a clear and concise summary of your spending with a focus on fixed and flexible expenses." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать в ваш основной финансовый обзор! Главный экран нашего бюджетного мобильного приложения разработан, чтобы предоставить вам четкое и лаконичное резюме ваших расходов с акцентом на фиксированные и гибкие затраты."
+          }
+        }
+      }
+    },
+    "Your earnings are the foundation of your financial life, providing the means to cover essential expenses and save for future goals." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваши доходы являются основой вашей финансовой жизни, предоставляя средства для покрытия необходимых расходов и накоплений на будущие цели."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

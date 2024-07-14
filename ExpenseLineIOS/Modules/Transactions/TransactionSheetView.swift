@@ -25,7 +25,7 @@ struct TransactionSheetView: View {
                 .accessibilityLabel("Close")
                 .accessibilityElement(children: .combine)
                 Spacer()
-                Text("Transaction")
+                Text("Expense Record")
                     .font(.headline)
                 Spacer()
                 ToolButton(color: Color.appLink) {

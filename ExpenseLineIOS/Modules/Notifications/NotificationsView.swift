@@ -199,8 +199,7 @@ struct NotificationsView: View {
                         vm.todayNotifications = true
                     } label: {
                         HStack {
-                            Image(systemName: "calendar")
-                            Text("Today")
+                            Label("Today", systemImage: "calendar")
                                 .lineLimit(1)
                         }
                         .frame(width: 100)
@@ -215,8 +214,7 @@ struct NotificationsView: View {
                         vm.todayNotifications = false
                     } label: {
                         HStack {
-                            Image(systemName: "bell")
-                            Text("Reminders")
+                            Label("Reminders", systemImage: "bell")
                                 .lineLimit(1)
                         }
                         .frame(width: 100)

@@ -68,7 +68,10 @@ struct HelpView: View {
             Text("Budget")
                 .font(.title2)
                 .bold()
-            Text("A personal budget is an empowering step towards financial stability and achieving your dreams. It helps you manage income and expenses, prioritize spending, and save for future goals, all while reducing financial stress.")
+            Text("A personal budget is an empowering step towards financial stability and achieving your dreams. It helps you manage earnings and expenses, prioritize spending, and save for future goals, all while reducing financial stress.")
+                .multilineTextAlignment(.center)
+                .padding(.top, 5)
+            Text("A comprehensive budget includes overall, fixed, and flexible expenses, providing a clear financial roadmap. Fixed expenses, like rent and subscriptions, are predictable, while flexible expenses, such as shopping and dining out, vary and are typically allocated as a percentage of your budget. Balancing these elements helps ensure financial stability and effective resource management.")
                 .multilineTextAlignment(.center)
                 .padding(.top, 5)
         }
@@ -83,14 +86,14 @@ struct HelpView: View {
             Text("Income")
                 .font(.title2)
                 .bold()
-            Text("Your income is the foundation of your financial life, providing the means to cover essential expenses and save for future goals. Managing and maximizing your income wisely can lead to increased financial stability and a higher quality of life.")
+            Text("Your earnings are the foundation of your financial life, providing the means to cover essential expenses and save for future goals.")
                 .multilineTextAlignment(.center)
                 .padding(.top, 5)
             HStack {
                 Image(systemName: "exclamationmark.square")
                     .foregroundStyle(Color.appLink)
                     .font(.largeTitle)
-                Text("Please add at least one income source.")
+                Text("Please add at least one income source like salary.")
             }
             .padding([.top], 5)
             .font(.title3)
@@ -153,7 +156,7 @@ struct HelpView: View {
             Text("Budget")
                 .font(.title2)
                 .bold()
-            Text("A comprehensive budget includes overall, fixed, and flexible expenses, providing a clear financial roadmap. Fixed expenses, like rent and subscriptions, are predictable, while flexible expenses, such as shopping and dining out, vary and are typically allocated as a percentage of your budget. Balancing these elements helps ensure financial stability and effective resource management.")
+            Text("Welcome to your primary financial overview! Our budget mobile app’s main screen is designed to give you a clear and concise summary of your spending with a focus on fixed and flexible expenses.")
                 .multilineTextAlignment(.center)
                 .padding(.top, 5)
         }

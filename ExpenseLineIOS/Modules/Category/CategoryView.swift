@@ -101,7 +101,7 @@ struct CategoryView: View {
                 }
             } else {
                 FlexibleCardView {
-                    Text("No transactions")
+                    Text("No Expenses")
                         .bold()
                         .frame(maxWidth: .infinity)
                 }

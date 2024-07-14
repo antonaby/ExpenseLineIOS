@@ -15,7 +15,7 @@ struct BudgetShortSummaryView: View {
         ContentSizeCardView {
             HStack {
                 VStack {
-                    Text("Income")
+                    Text("Earnings")
                         .font(.caption)
                         .bold()
                     Text(vm.getTotalIncome())
@@ -27,7 +27,7 @@ struct BudgetShortSummaryView: View {
                 Divider()
                     .frame(maxHeight: 30)
                 VStack {
-                    Text("Outcome")
+                    Text("Expenses")
                         .font(.caption)
                         .bold()
                     Text(vm.getTotalOutcome())

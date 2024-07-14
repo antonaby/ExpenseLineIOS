@@ -89,7 +89,7 @@ struct BudgetOverviewView: View {
                         .padding(.leading, 15)
                         TabView(selection: $spendings) {
                             SpendingsView(
-                                title: "Spendings",
+                                title: "Expenses",
                                 firstColor: Color.appExpensesAll,
                                 secondColor: Color.appExpensesAll.opacity(0.3),
                                 left: { AmountView(vm.totalOutcome) {

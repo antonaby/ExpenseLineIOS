@@ -36,12 +36,12 @@ struct PaywallView: View {
                 .accessibilityElement(children: .combine)
             }
             ScrollView {
-                Text("Full Access")
+                Text("Open Full Access")
                     .font(.title)
-                PremiumAdvantagesRow(icon: "piggy-bank", text: "Unlimited budgets")
-                PremiumAdvantagesRow(icon: "fl-shopping-cart", text: "Unlimited categories")
-                PremiumAdvantagesRow(icon: "fl-other", text: "Unlimited transactions")
-                PremiumAdvantagesRow(icon: "bell", text: "Unlimited reminders")
+                PremiumAdvantagesRow(icon: "piggy-bank", text: "Unlimited Budgets")
+                PremiumAdvantagesRow(icon: "fl-shopping-cart", text: "Unlimited Categories")
+                PremiumAdvantagesRow(icon: "fl-other", text: "Unlimited Expense Records")
+                PremiumAdvantagesRow(icon: "bell", text: "Unlimited Reminders")
                 Color.clear.frame(height: 35)
                 VStack {
                     ForEach(subscrioptionManager.products) { product in

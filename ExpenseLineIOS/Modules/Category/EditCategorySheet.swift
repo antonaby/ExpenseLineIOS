@@ -384,9 +384,9 @@ struct EditCategorySheet: View {
         case .income:
             CategoryLebelView("Income", lebel: "case")
         case .outcomeFixed:
-            CategoryLebelView("Mountly", lebel: "house")
+            CategoryLebelView("Fixed", lebel: "house")
         case .outcomePercent:
-            CategoryLebelView("Flexible %", lebel: "takeoutbag.and.cup.and.straw")
+            CategoryLebelView("Flexible", lebel: "takeoutbag.and.cup.and.straw")
         }
     }
     

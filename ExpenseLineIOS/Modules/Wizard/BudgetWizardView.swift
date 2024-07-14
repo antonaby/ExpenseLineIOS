@@ -261,11 +261,11 @@ struct BudgetWizardView: View {
         case .base:
             return "Budget"
         case .income:
-            return "Wages & Income"
+            return "Earnings"
         case .outcomeFixed:
-            return "Monthly Spendings"
+            return "Fixed Expenses"
         case .outcomeFlexible:
-            return "Flexible Spendings"
+            return "Flexible Expenses"
         }
     }
     
