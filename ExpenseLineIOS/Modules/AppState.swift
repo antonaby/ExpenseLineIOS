@@ -90,7 +90,7 @@ class AppState: ObservableObject {
     func navigateNewBudgetWizzard() {
         let budget = bundle.budgetService.newBudgetEntity()
         budget.isNew = true
-        budget.name = "My Budget"
+        budget.name = String(localized: "My Budget")
         budget.currency = bundle.dataService.getCurrencySymbolOrDefault(Locale.current.identifier).id
         for category in bundle.dataService.getDefaultCategories(budget: budget) {
             budget.addToCategories(category)

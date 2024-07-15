@@ -89,7 +89,7 @@ struct BudgetOverviewView: View {
                         .padding(.leading, 15)
                         TabView(selection: $spendings) {
                             SpendingsView(
-                                title: "Expenses",
+                                title: String(localized: "Expenses"),
                                 firstColor: Color.appExpensesAll,
                                 secondColor: Color.appExpensesAll.opacity(0.3),
                                 left: { AmountView(vm.totalOutcome) {
@@ -101,7 +101,7 @@ struct BudgetOverviewView: View {
                                 })
                             .tag(SpengingsType.overall)
                             SpendingsView(
-                                title: "Fixed",
+                                title: String(localized: "Fixed"),
                                 firstColor: Color.appExpensesFixed,
                                 secondColor: Color.appExpensesFixed.opacity(0.3),
                                 left: { AmountView(vm.totalFixedOutcome) {
@@ -113,7 +113,7 @@ struct BudgetOverviewView: View {
                                 })
                             .tag(SpengingsType.fixed)
                             SpendingsView(
-                                title: "Flexible",
+                                title: String(localized: "Flexible"),
                                 firstColor: Color.appExpensesFlexible,
                                 secondColor: Color.appExpensesFlexible.opacity(0.3),
                                 left: { AmountView(vm.totalPercentOutcome) {

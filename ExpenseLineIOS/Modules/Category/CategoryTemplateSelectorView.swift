@@ -37,7 +37,7 @@ struct CategoryTemplateSelectorView: View {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
                         TemplatesSectionsView(mainTemplates)
-                        TemplateSection(name: "Other", templates: otherTemplates)
+                        TemplateSection(name: String(localized: "Other"), templates: otherTemplates)
                     }
                 }
             }
@@ -54,7 +54,7 @@ struct CategoryTemplateSelectorView: View {
     @ViewBuilder
     func TemplatesSectionsView(_ templates: [CategoryTemplateType]) -> some View {
         ForEach(templates) { template in
-            TemplateSection(name: "Categories", templates: template.templates)
+            TemplateSection(name: String(localized: "Categories"), templates: template.templates)
         }
     }
     

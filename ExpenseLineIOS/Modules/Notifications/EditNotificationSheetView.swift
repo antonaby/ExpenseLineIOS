@@ -154,6 +154,7 @@ struct EditNotificationSheetView: View {
                                 .font(.title3)
                             Text(getTypeName(type))
                                 .font(.caption)
+                                .lineLimit(1)
                         }
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(vm.type == type ? Color.appLink : Color.appCardTextColor)
@@ -258,13 +259,13 @@ struct EditNotificationSheetView: View {
     private func getTypeName(_ type: NotificationType) -> String {
         switch type {
         case .nonotification:
-            "No signal"
+            String(localized: "No Signal")
         case .exact:
-            "One Time"
+            String(localized: "One Time")
         case .daily:
-            "Daily"
+            String(localized: "Daily")
         case .weekly:
-            "Weekly"
+            String(localized: "Weekly")
         }
     }
     

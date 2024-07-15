@@ -91,7 +91,7 @@ struct TransactionSheetView: View {
                             }
                         }
                         FlexibleCardView {
-                            CustomNumericField(text: vm.amount, placeholder: "Amount") {
+                            CustomNumericField(text: vm.amount, placeholder: String(localized: "Amount")) {
                                 CustomNumericKeybord(
                                     text: $vm.amount,
                                     showKeyboard: $showKeyboard,

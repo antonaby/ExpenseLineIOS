@@ -243,7 +243,6 @@ struct EditCategorySheet: View {
     
     @FocusState private var showKeyboard: Bool
     
-    @State var placeholder: String = "Amount"
     @State var showCategrotyTemplateSheet: Bool = false
     
     var body: some View {
@@ -318,7 +317,7 @@ struct EditCategorySheet: View {
                     .frame(minHeight: 50)
                     FlexibleCardView {
                         if vm.type == .outcomePercent {
-                            CustomNumericField(text: vm.percent, placeholder: "Percent") {
+                            CustomNumericField(text: vm.percent, placeholder: String(localized: "Percent")) {
                                 CustomNumericKeybord(
                                     text: $vm.percent,
                                     showKeyboard: $showKeyboard,
@@ -331,7 +330,7 @@ struct EditCategorySheet: View {
                             .accessibilityLabel("Percent")
                             .accessibilityElement(children: .combine)
                         } else {
-                            CustomNumericField(text: vm.amount, placeholder: "Amount") {
+                            CustomNumericField(text: vm.amount, placeholder: String(localized: "Amount")) {
                                 CustomNumericKeybord(
                                     text: $vm.amount,
                                     showKeyboard: $showKeyboard,
@@ -382,11 +381,11 @@ struct EditCategorySheet: View {
     func CategoryLabel(_ type: CategoryType) -> some View {
         switch type {
         case .income:
-            CategoryLebelView("Income", lebel: "case")
+            CategoryLebelView(String(localized: "Earnings"), lebel: "case")
         case .outcomeFixed:
-            CategoryLebelView("Fixed", lebel: "house")
+            CategoryLebelView(String(localized: "Fixed"), lebel: "house")
         case .outcomePercent:
-            CategoryLebelView("Flexible", lebel: "takeoutbag.and.cup.and.straw")
+            CategoryLebelView(String(localized: "Flexible"), lebel: "takeoutbag.and.cup.and.straw")
         }
     }
     
