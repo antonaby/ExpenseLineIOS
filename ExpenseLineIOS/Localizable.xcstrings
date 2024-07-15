@@ -91,6 +91,28 @@
         }
       }
     },
+    "Big Buyings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Большие покупки"
+          }
+        }
+      }
+    },
+    "Books" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Книги"
+          }
+        }
+      }
+    },
     "Budget" : {
       "localizations" : {
         "ru" : {
@@ -114,6 +136,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Бюджеты"
+          }
+        }
+      }
+    },
+    "Bussiness" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бизнес"
           }
         }
       }
@@ -174,6 +207,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Закрыть"
+          }
+        }
+      }
+    },
+    "Clothes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Одежда"
+          }
+        }
+      }
+    },
+    "Coffee" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кофе"
           }
         }
       }
@@ -288,6 +343,28 @@
         }
       }
     },
+    "Delivery & Take Away" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доставка и Еда на вынос"
+          }
+        }
+      }
+    },
+    "Drink" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напитки"
+          }
+        }
+      }
+    },
     "Earnings" : {
       "localizations" : {
         "ru" : {
@@ -314,6 +391,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Включено"
+          }
+        }
+      }
+    },
+    "Entertainment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Развлечения"
           }
         }
       }
@@ -354,6 +442,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Расходы по Месяцам"
+          }
+        }
+      }
+    },
+    "Fast Food" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фаст Фуд"
           }
         }
       }
@@ -430,12 +529,67 @@
         }
       }
     },
+    "Gift" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подарки"
+          }
+        }
+      }
+    },
+    "Groceries" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продукты"
+          }
+        }
+      }
+    },
+    "Gym" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спортзал"
+          }
+        }
+      }
+    },
+    "Healthy Food" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здоровая еда"
+          }
+        }
+      }
+    },
     "Help" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Помощь"
+          }
+        }
+      }
+    },
+    "House" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дом"
           }
         }
       }
@@ -460,12 +614,78 @@
         }
       }
     },
+    "Insurance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Страховка"
+          }
+        }
+      }
+    },
+    "Internet" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Интернет"
+          }
+        }
+      }
+    },
+    "Investments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инвестиции"
+          }
+        }
+      }
+    },
+    "Laundry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стирка"
+          }
+        }
+      }
+    },
     "Light" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Светлая"
+          }
+        }
+      }
+    },
+    "Loans" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кредиты"
+          }
+        }
+      }
+    },
+    "Magazine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Журналы"
           }
         }
       }
@@ -480,12 +700,45 @@
         }
       }
     },
+    "Medical" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Медицина"
+          }
+        }
+      }
+    },
+    "Mobile Phone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мобильный телефон"
+          }
+        }
+      }
+    },
     "Month" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Месяц"
+          }
+        }
+      }
+    },
+    "Music" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Музыка"
           }
         }
       }
@@ -602,6 +855,28 @@
         }
       }
     },
+    "Other Expenses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другие Расходы"
+          }
+        }
+      }
+    },
+    "Other Income" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другие Доходы"
+          }
+        }
+      }
+    },
     "Outcome %@" : {
       "localizations" : {
         "ru" : {
@@ -612,12 +887,56 @@
         }
       }
     },
+    "Parking" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Паркинг"
+          }
+        }
+      }
+    },
+    "Passive Income" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пассивный доход"
+          }
+        }
+      }
+    },
+    "Payments" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платежи"
+          }
+        }
+      }
+    },
     "Percent" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Процент"
+          }
+        }
+      }
+    },
+    "Pets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Домашние животные"
           }
         }
       }
@@ -648,6 +967,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Предпоказ"
+          }
+        }
+      }
+    },
+    "Public Transport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Транспорт"
           }
         }
       }
@@ -722,6 +1052,28 @@
         }
       }
     },
+    "Rent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аренда"
+          }
+        }
+      }
+    },
+    "Restaurant" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ресторан"
+          }
+        }
+      }
+    },
     "Salary" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -729,6 +1081,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зарплата"
+          }
+        }
+      }
+    },
+    "Salon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Парикмахерская"
           }
         }
       }
@@ -763,12 +1126,45 @@
         }
       }
     },
+    "Shopping" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Шопинг"
+          }
+        }
+      }
+    },
     "Show Help Button" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать Кнопку Помощи"
+          }
+        }
+      }
+    },
+    "Snacks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перекус"
+          }
+        }
+      }
+    },
+    "Spa" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спа"
           }
         }
       }
@@ -799,6 +1195,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подписка"
+          }
+        }
+      }
+    },
+    "Subscriptions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписки"
           }
         }
       }
@@ -879,6 +1286,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Напоминания на Сегодня"
+          }
+        }
+      }
+    },
+    "Toys" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игрушки"
+          }
+        }
+      }
+    },
+    "Travel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Путешествия"
           }
         }
       }

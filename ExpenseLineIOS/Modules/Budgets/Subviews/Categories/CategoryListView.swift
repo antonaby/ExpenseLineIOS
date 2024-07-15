@@ -27,6 +27,7 @@ struct CategoryCard: View {
                             .accessibilityLabel(category.entity.nameValue)
                             Text(category.entity.nameValue)
                                 .foregroundStyle(Color.appCardTextColor)
+                                .lineLimit(1)
                                 .bold()
                         }
                         Text(formatters.formatAmount(category.spendings.totalAmount))

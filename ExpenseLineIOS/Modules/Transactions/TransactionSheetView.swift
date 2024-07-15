@@ -60,12 +60,14 @@ struct TransactionSheetView: View {
                                         )
                                         .accessibilityLabel(category.nameValue)
                                         Text(category.nameValue)
+                                            .lineLimit(1)
                                         Spacer()
                                     }
                                 } else {
                                     HStack {
                                         Text("Choose Category")
                                             .frame(height: 45)
+                                            .lineLimit(1)
                                     }
                                 }
                             }

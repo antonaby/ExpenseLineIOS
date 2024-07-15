@@ -32,14 +32,6 @@ struct CategoryView: View {
                         .accessibilityLabel(vm.category.nameValue)
                         Text(vm.category.nameValue)
                             .font(.title2)
-                        Spacer()
-                        Image(systemName: "pencil")
-                            .foregroundColor(Color.appLink)
-                            .frame(width: 50, height: 50, alignment: .topTrailing)
-                            .padding([.top, .trailing], 10)
-                            .onTapGesture {
-                                selectedCategory = vm.category
-                            }
                     }
                     HStack {
                         Text(formatters.formatAmount(vm.totalAmount))
@@ -57,6 +49,16 @@ struct CategoryView: View {
                 }
             }
             .defaultListCard()
+            .overlay(alignment: .topTrailing) {
+                Image(systemName: "pencil")
+                    .foregroundColor(Color.appLink)
+                    .frame(width: 50, height: 50, alignment: .topTrailing)
+                    .padding([.top, .trailing], 15)
+                    .accessibilityLabel("Edit")
+                    .onTapGesture {
+                        selectedCategory = vm.category
+                    }
+            }
             FlexibleCardView {
                 NavigationLink(value: CategoryNotificationsRef(category: vm.category)) {
                     if !vm.notifications.isEmpty {

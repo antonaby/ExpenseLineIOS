@@ -20,11 +20,13 @@ struct NotificationCard: View {
                     HStack(alignment: .firstTextBaseline) {
                         Text(notification.nameValue)
                             .bold()
+                            .lineLimit(1)
                         Spacer()
                         if let category = notification.category {
                             HStack {
                                 Text(category.nameValue)
                                     .font(.caption)
+                                    .lineLimit(1)
                                 IconView(name: category.iconNameValue, size: 25)
                                     .accessibilityLabel(category.nameValue)
                             }

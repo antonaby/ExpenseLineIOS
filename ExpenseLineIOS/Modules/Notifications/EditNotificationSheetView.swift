@@ -71,6 +71,7 @@ struct EditNotificationSheetView: View {
                                                 Text(category.nameValue)
                                                     .frame(height: 45)
                                                     .font(.title2)
+                                                    .lineLimit(1)
                                                 Spacer()
                                             }
                                             .frame(maxWidth: .infinity)

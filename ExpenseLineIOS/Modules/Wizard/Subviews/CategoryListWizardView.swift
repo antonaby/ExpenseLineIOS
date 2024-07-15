@@ -31,6 +31,7 @@ struct CategoryListWizardView: View {
                             )
                             .accessibilityLabel(category.nameValue)
                             Text(category.nameValue)
+                                .lineLimit(1)
                             Spacer()
                             if category.typeValue == .outcomePercent {
                                 HStack {

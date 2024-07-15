@@ -125,8 +125,8 @@ struct NotificationView: View {
 }
 
 #Preview("No") {
-    var bundle = ServiceBundle.preview
-    var budget = bundle.budgetService.newBudgetEntity()
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
     
     var category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview category"

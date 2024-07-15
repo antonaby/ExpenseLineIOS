@@ -25,6 +25,7 @@ struct CategorySelectorView: View {
                             .accessibilityLabel(ctg.nameValue)
                         Text(ctg.nameValue)
                             .foregroundStyle(Color.appCardTextColor)
+                            .lineLimit(1)
                     }
                 }
                 .listRowSeparator(.hidden)

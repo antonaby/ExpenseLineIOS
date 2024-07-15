@@ -29,6 +29,7 @@ struct TransactionCard: View {
                                 .foregroundStyle(Color.appLinkInactive)
                             Text(transaction.name ?? "?")
                                 .bold()
+                                .lineLimit(1)
                             Text(formatters.formatAmount(transaction.amountDecimal))
                                 .font(.title3)
                                 .frame(maxWidth: .infinity, alignment: .leading)
