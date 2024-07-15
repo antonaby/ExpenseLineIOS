@@ -82,11 +82,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-init-cloudkit-scheme"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-com.apple.CoreData.CloudKitDebug 0"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-FIRDebugEnabled"
