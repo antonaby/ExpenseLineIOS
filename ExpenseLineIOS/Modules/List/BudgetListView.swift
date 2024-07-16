@@ -56,6 +56,7 @@ struct BudgetListView: View {
                                         }
                                         Button(role: .destructive) {
                                             vm.deleteBudget(budget)
+                                            vm.loadBudgets()
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
