@@ -66,7 +66,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Количество"
+            "value" : "Сумма"
           }
         }
       }
@@ -946,7 +946,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Пожалуйста добавьте хотяб один источник доходов"
+            "value" : "Пожалуйста добавьте как минимум один источник доходов"
           }
         }
       }
@@ -1338,6 +1338,50 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Понятно"
+          }
+        }
+      }
+    },
+    "Unlimited Budgets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неограниченное количество бюджетов"
+          }
+        }
+      }
+    },
+    "Unlimited Categories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неограниченное количество категорий"
+          }
+        }
+      }
+    },
+    "Unlimited Expense Records" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неограниченное количество записей о расходах"
+          }
+        }
+      }
+    },
+    "Unlimited Reminders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неограниченные напоминания"
           }
         }
       }

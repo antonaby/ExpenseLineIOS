@@ -10,7 +10,7 @@
     "_applicationInternalID" : "6514299632",
     "_developerTeamID" : "N27LL4XQG6",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 742478713.48044395,
+    "_lastSynchronizedDate" : 742803888.95162201,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -75,7 +75,7 @@
         {
           "adHocOffers" : [
             {
-              "internalID" : "F5E2370D",
+              "internalID" : "333313C9",
               "numberOfPeriods" : 1,
               "offerID" : "3_day_trial",
               "paymentMode" : "free",
@@ -96,6 +96,11 @@
               "description" : "Monthly, Cancel Any Time",
               "displayName" : "Monthly Subscription",
               "locale" : "en_US"
+            },
+            {
+              "description" : "Каждый месяц, Отмена в любое время",
+              "displayName" : "Месячная Подписка",
+              "locale" : "ru"
             }
           ],
           "productID" : "default_monthly_subscription",
