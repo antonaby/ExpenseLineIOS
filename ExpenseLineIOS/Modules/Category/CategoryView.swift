@@ -62,7 +62,11 @@ struct CategoryView: View {
             FlexibleCardView {
                 NavigationLink(value: CategoryNotificationsRef(category: vm.category)) {
                     if !vm.notifications.isEmpty {
-                        ShortNotificationsListView(notifications: $vm.notifications, showCategory: false)
+                        ShortNotificationsListView(
+                            notifications: $vm.notifications,
+                            showCategory: false,
+                            useNavigation: false
+                        )
                     } else {
                         Text("Reminders")
                     }

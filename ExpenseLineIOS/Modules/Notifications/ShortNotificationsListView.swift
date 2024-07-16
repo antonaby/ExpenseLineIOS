@@ -13,6 +13,7 @@ struct ShortNotificationsListView: View {
     
     @Binding var notifications: [NotificationEntity]
     var showCategory: Bool = true
+    var useNavigation: Bool = true
     
     private let currentTime: DateComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
     
@@ -20,20 +21,29 @@ struct ShortNotificationsListView: View {
         VStack(spacing: 10) {
             if !notifications.isEmpty {
                 ForEach($notifications) { $notification in
-                    NavigationLink(value: notification) {
-                        switch notification.typeValue {
-                        case .nonotification:
-                            NoNotificationShortView(notification)
-                        case .daily:
-                            DailyNotificationShortView(notification)
-                        case .exact:
-                            ExactNotificationShortView(notification)
-                        case .weekly:
-                            WeeklyNotificationShortView(notification)
+                    if useNavigation {
+                        NavigationLink(value: notification) {
+                           NotificationShortView(notification)
                         }
+                    } else {
+                        NotificationShortView(notification)
                     }
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    func NotificationShortView(_ notification: NotificationEntity) -> some View {
+        switch notification.typeValue {
+        case .nonotification:
+            NoNotificationShortView(notification)
+        case .daily:
+            DailyNotificationShortView(notification)
+        case .exact:
+            ExactNotificationShortView(notification)
+        case .weekly:
+            WeeklyNotificationShortView(notification)
         }
     }
     

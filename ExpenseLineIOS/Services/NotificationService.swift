@@ -172,8 +172,8 @@ class NotificationService: ObservableObject {
     
     func scheduleDailyReminder(date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "ExpenseLine"
-        content.body = "Have you added your spendings today?"
+        content.title = String(localized: "% Budget")
+        content.body = String(localized: "Have you added your expenses today?")
         content.sound = .default
         
         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
@@ -250,7 +250,7 @@ class NotificationService: ObservableObject {
     
     private func prepareContent(_ notification: NotificationEntity) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
-        content.title = "ExpenseLine"
+        content.title = String(localized: "% Budget")
         content.body = notification.nameValue
         content.sound = .default
         content.interruptionLevel = .active

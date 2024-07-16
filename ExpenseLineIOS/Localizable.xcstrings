@@ -1,6 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "% Budget" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "% Budget"
+          }
+        }
+      }
+    },
     "%lf%% Spent" : {
       "localizations" : {
         "ru" : {
@@ -558,6 +569,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Спортзал"
+          }
+        }
+      }
+    },
+    "Have you added your expenses today?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не забудьте добавить расходы за сегодня."
           }
         }
       }
