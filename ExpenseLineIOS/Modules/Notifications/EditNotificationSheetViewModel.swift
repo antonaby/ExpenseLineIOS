@@ -119,7 +119,7 @@ class EditNotificationSheetViewModel: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "edit_notification", "msg": "\(error)"])
+        analyticsService.logError(place: "edit_notification", error: error)
     }
     
 }

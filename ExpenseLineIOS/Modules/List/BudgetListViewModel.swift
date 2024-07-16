@@ -42,7 +42,7 @@ class BudgetListViewModel: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "budget_list", "msg": "\(error)"])
+        analyticsService.logError(place: "budget_list", error: error)
     }
     
 }

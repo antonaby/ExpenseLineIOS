@@ -105,7 +105,7 @@ class NotificationsViewModel: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "notifications", "msg": "\(error)"])
+        analyticsService.logError(place: "notifications", error: error)
     }
     
 }

@@ -103,11 +103,12 @@ import StoreKit
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "sunscription_manager", "msg": "\(error)"])
+        analyticsService.logError(place: "sunscription_manager", error: error)
     }
     
     private func logSubscriptionErrorEvent(_ reason: String) {
-        analyticsService.logEvent(name: AnalyticsService.SUBSCRIPTION_ERROR, params: ["place": "sunscription_manager", "msg": reason])
+        let msg = reason[...reason.index(reason.startIndex, offsetBy: 10)]
+        analyticsService.logEvent(name: AnalyticsService.SUBSCRIPTION_ERROR, params: ["place": "sunscription_manager", "msg": msg])
     }
     
 }

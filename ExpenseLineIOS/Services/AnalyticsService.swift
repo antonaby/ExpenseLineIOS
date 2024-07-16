@@ -47,6 +47,12 @@ class AnalyticsService: ObservableObject {
         Analytics.logEvent(name, parameters: params)
     }
     
+    func logError(place: String, error: Error, eventName: String = AnalyticsService.DATA_ERROR) {
+        let errorMsg = "\(error)"
+        let msg = errorMsg[...errorMsg.index(errorMsg.startIndex, offsetBy: 10)]
+        logEvent(name: eventName, params: ["place": place, "msg": msg])
+    }
+    
     func updateUserId() {
         Analytics.setUserID(settingService.getUserId())
         logEvent(name: AnalyticsService.APP_OPEN)

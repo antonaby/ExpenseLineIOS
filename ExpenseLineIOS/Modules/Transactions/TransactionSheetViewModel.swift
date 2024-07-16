@@ -83,13 +83,15 @@ class TransactionSheetViewModel: ObservableObject {
     func save() {
         transaction.name = name
         transaction.amountDecimal = convertToDecimalNumber(amount, symbol: currencySymbol)
-        transaction.category = category
-        transaction.budget = budget
         transaction.createdAt = date
         transaction.day = Calendar.current.startOfDay(for: date)
         transaction.isNew = false
         
         do {
+            if let ctg = category {
+                transaction.category = budgetService.refreshCategory(ctg)
+            }
+            transaction.budget = budgetService.refreshBudget(budget)
             transaction.period = try budgetService.getPeriodByDate(for: date, budget: budget)
             try budgetService.save()
         } catch {
@@ -127,7 +129,7 @@ class TransactionSheetViewModel: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "edit_transaction", "msg": "\(error)"])
+        analyticsService.logError(place: "edit_transaction", error: error)
     }
     
 }

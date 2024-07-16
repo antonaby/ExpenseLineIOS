@@ -31,10 +31,7 @@ class PeriodListViewModel: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(
-            name: AnalyticsService.DATA_ERROR,
-            params: ["place": "budget_period", "msg": "\(error)"]
-        )
+        analyticsService.logError(place: "budget_period", error: error)
     }
     
 }

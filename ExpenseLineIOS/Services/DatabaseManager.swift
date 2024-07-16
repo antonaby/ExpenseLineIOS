@@ -41,6 +41,7 @@ class DatabaseManager: ObservableObject {
         }
         
         initCloudKitSchema()
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
     private func initCloudKitSchema() {

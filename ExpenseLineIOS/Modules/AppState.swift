@@ -135,7 +135,7 @@ class AppState: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        bundle.analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "app_sate", "msg": "\(error)"])
+        bundle.analyticsService.logError(place: "app_sate", error: error)
     }
     
 }

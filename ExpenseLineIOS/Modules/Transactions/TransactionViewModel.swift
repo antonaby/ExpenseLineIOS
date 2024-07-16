@@ -42,7 +42,7 @@ class TransactionViewModel: ObservableObject {
     }
     
     private func logErrorEvent(_ error: Error) {
-        analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "transaction", "msg": "\(error)"])
+        analyticsService.logError(place: "transaction", error: error)
     }
     
 }

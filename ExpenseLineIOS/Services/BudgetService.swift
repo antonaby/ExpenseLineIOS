@@ -98,6 +98,16 @@ class BudgetService: ObservableObject {
         dm.rollback()
     }
     
+    func refreshBudget(_ budget: BudgetEntity) -> BudgetEntity {
+        dm.viewContext.refresh(budget, mergeChanges: true)
+        return budget
+    }
+    
+    func refreshCategory(_ category: PlanCategoryEntity) -> PlanCategoryEntity {
+        dm.viewContext.refresh(category, mergeChanges: true)
+        return category
+    }
+ 
     func getBudgetById(_ budgetId: UUID) throws -> BudgetEntity? {
         let request = BudgetEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", budgetId as CVarArg)

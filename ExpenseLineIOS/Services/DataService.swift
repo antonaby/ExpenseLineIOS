@@ -26,7 +26,7 @@ class DataService: ObservableObject {
                     loadedCategories = try decoder.decode([CategoryTemplateType].self, from: data)
                 }
             } catch {
-                analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "data_service", "msg": "\(error)"])
+                analyticsService.logError(place: "data_service_categories", error: error)
                 print("Something went wrong \(error)")
             }
         }
@@ -55,7 +55,7 @@ class DataService: ObservableObject {
                     loadedCountryCurrencies = try decoder.decode([CountryCurrency].self, from: data)
                 }
             } catch {
-                analyticsService.logEvent(name: AnalyticsService.DATA_ERROR, params: ["place": "data_service", "msg": "\(error)"])
+                analyticsService.logError(place: "data_service_countries", error: error)
                 print("Something went wrong \(error)")
             }
         }
