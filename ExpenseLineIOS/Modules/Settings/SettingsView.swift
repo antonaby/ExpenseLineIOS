@@ -199,11 +199,11 @@ struct SettingsView: View {
         if let scheme = colorScheme {
             switch scheme {
             case .light:
-                return "Light"
+                return String(localized: "Light")
             case .dark:
-                return "Dark"
+                return String(localized: "Dark")
             default:
-                return "System"
+                return String(localized: "System")
             }
         }
         
