@@ -81,7 +81,7 @@ class NotificationsViewModel: ObservableObject {
     
     func deleteNotification(_ notification: NotificationEntity) {
         do {
-            try notificationService.deleteNotification(notification)
+            notificationService.deleteNotification(notification)
             try notificationService.save()
         } catch {
             logErrorEvent(error)
@@ -91,7 +91,8 @@ class NotificationsViewModel: ObservableObject {
     
     func resheduleNotification(_ notification: NotificationEntity) {
         do {
-            try notificationService.sheduleNotification(notification)
+            notificationService.sheduleNotification(notification)
+            try notificationService.save()
         } catch {
             logErrorEvent(error)
             print("Something went wrong \(error)")

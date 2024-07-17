@@ -128,11 +128,11 @@ struct NotificationView: View {
     let bundle = ServiceBundle.preview
     let budget = bundle.budgetService.newBudgetEntity()
     
-    var category = bundle.budgetService.newCategoryEntity(budget)
+    let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview category"
     category.iconName = "fl-cloth"
     
-    var notification = bundle.notificationService.newNotificationEntity(budget)
+    let notification = bundle.notificationService.newNotificationEntity(budget)
     notification.name = "Preview"
     notification.category = category
     notification.typeValue = .nonotification
@@ -149,14 +149,14 @@ struct NotificationView: View {
 }
 
 #Preview("Exact") {
-    var bundle = ServiceBundle.preview
-    var budget = bundle.budgetService.newBudgetEntity()
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
     
-    var category = bundle.budgetService.newCategoryEntity(budget)
+    let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview category"
     category.iconName = "fl-cloth"
     
-    var notification = bundle.notificationService.newNotificationEntity(budget)
+    let notification = bundle.notificationService.newNotificationEntity(budget)
     notification.name = "Preview"
     notification.category = category
     notification.typeValue = .exact
@@ -174,14 +174,14 @@ struct NotificationView: View {
 
 
 #Preview("Daily") {
-    var bundle = ServiceBundle.preview
-    var budget = bundle.budgetService.newBudgetEntity()
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
     
-    var category = bundle.budgetService.newCategoryEntity(budget)
+    let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview category"
     category.iconName = "fl-cloth"
     
-    var notification = bundle.notificationService.newNotificationEntity(budget)
+    let notification = bundle.notificationService.newNotificationEntity(budget)
     notification.name = "Preview"
     notification.category = category
     notification.typeValue = .daily
@@ -198,14 +198,14 @@ struct NotificationView: View {
 }
 
 #Preview("Weekly") {
-    var bundle = ServiceBundle.preview
-    var budget = bundle.budgetService.newBudgetEntity()
+    let bundle = ServiceBundle.preview
+    let budget = bundle.budgetService.newBudgetEntity()
     
-    var category = bundle.budgetService.newCategoryEntity(budget)
+    let category = bundle.budgetService.newCategoryEntity(budget)
     category.name = "Preview category"
     category.iconName = "fl-cloth"
     
-    var notification = bundle.notificationService.newNotificationEntity(budget)
+    let notification = bundle.notificationService.newNotificationEntity(budget)
     notification.name = "Preview"
     notification.category = category
     notification.typeValue = .weekly

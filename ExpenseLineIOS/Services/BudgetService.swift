@@ -59,17 +59,10 @@ class BudgetService: ObservableObject {
         return entity
     }
     
-    func deleteCategory(_ category: PlanCategoryEntity, budget: BudgetEntity) {
+    func deleteCategoryWithNotifications(_ category: PlanCategoryEntity, budget: BudgetEntity) {
         budget.removeFromCategories(category)
-        dm.viewContext.delete(category)
-    }
-    
-    func deleteCategoryWithNotifications(_ category: PlanCategoryEntity, budget: BudgetEntity) throws {
-        budget.removeFromCategories(category)
-        if let notifications = category.notifications?.allObjects as? [NotificationEntity] {
-            for notification in notifications {
-                try notificationService.deleteNotification(notification)
-            }
+        for notification in category.allNotifications {
+            notificationService.deleteNotification(notification)
         }
         
         dm.viewContext.delete(category)
@@ -80,10 +73,10 @@ class BudgetService: ObservableObject {
         dm.viewContext.delete(transaction)
     }
     
-    func deleteBudget(_ budget: BudgetEntity) throws {
+    func deleteBudget(_ budget: BudgetEntity) {
         if let notifications = budget.notifications?.allObjects as? [NotificationEntity] {
             for notification in notifications {
-                try notificationService.deleteNotification(notification)
+                notificationService.deleteNotification(notification)
             }
         }
         

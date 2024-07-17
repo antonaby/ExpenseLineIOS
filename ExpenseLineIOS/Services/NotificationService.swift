@@ -188,33 +188,26 @@ class NotificationService: ObservableObject {
             .removePendingNotificationRequests(withIdentifiers: [NotificationService.DAILY_REMINDER_ID])
     }
     
-    func sheduleNotification(_ notification: NotificationEntity) throws {
+    func sheduleNotification(_ notification: NotificationEntity) {
         if !notification.enabled {
-            try cancelNotification(notification)
+            cancelNotification(notification)
             return
         }
         
         var requests: [UNNotificationRequest] = []
+        cancelNotification(notification)
         
-        do {
-            try cancelNotification(notification)
-            
-            switch notification.typeValue {
-            case .nonotification:
-                try cancelNotification(notification)
-            case .exact:
-                requests = sheduleExactNotification(notification)
-            case .daily:
-                requests = sheduleDailyNotification(notification)
-            case .weekly:
-                requests = sheduleWeeklyNotification(notification)
-            }
-            
-            try dm.sync()
-        } catch {
-            throw NotificationServiceError.SaveError(msg: "Failed to save notifications", reason: error)
+        switch notification.typeValue {
+        case .nonotification:
+            break
+        case .exact:
+            requests = sheduleExactNotification(notification)
+        case .daily:
+            requests = sheduleDailyNotification(notification)
+        case .weekly:
+            requests = sheduleWeeklyNotification(notification)
         }
-        
+            
         if !requests.isEmpty {
             for request in requests {
                 UNUserNotificationCenter.current().add(request)
@@ -222,7 +215,12 @@ class NotificationService: ObservableObject {
         }
     }
     
-    func cancelNotification(_ notification: NotificationEntity) throws {
+    func deleteNotification(_ notification: NotificationEntity) {
+        cancelNotification(notification)
+        dm.viewContext.delete(notification)
+    }
+    
+    private func cancelNotification(_ notification: NotificationEntity) {
         let entires = notification.entries?.allObjects as? [NotificationEntryEntity] ?? []
         if entires.isEmpty {
             return
@@ -235,17 +233,7 @@ class NotificationService: ObservableObject {
                 .removePendingNotificationRequests(withIdentifiers: [entryId.uuidString])
         }
         
-        do {
-            removeOldEntries(notification)
-            try dm.sync()
-        } catch {
-            throw NotificationServiceError.SaveError(msg: "Failed to delete notifications", reason: error)
-        }
-    }
-    
-    func deleteNotification(_ notification: NotificationEntity) throws {
-        try cancelNotification(notification)
-        dm.viewContext.delete(notification)
+        removeOldEntries(notification)
     }
     
     private func prepareContent(_ notification: NotificationEntity) -> UNMutableNotificationContent {

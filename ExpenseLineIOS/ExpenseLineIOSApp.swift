@@ -32,7 +32,7 @@ struct ExpenseLineIOSApp: App {
     @StateObject private var subscriptionManager: SubscriptionManager
     
     init() {
-        var bundle = ServiceBundle()
+        let bundle = ServiceBundle()
         self.serviceBundle = bundle
         self._subscriptionManager = StateObject(wrappedValue: SubscriptionManager(analyticsService: bundle.analyticsService))
     }

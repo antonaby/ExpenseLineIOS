@@ -32,7 +32,7 @@ class BudgetWizardViewModel: ObservableObject {
     private let analyticsService: AnalyticsService
     private let notificationService: NotificationService
     private var cancellables = Set<AnyCancellable>()
-    private var notificationsToDelete: [NotificationEntity] = []
+    private var categoriesToDelete: [PlanCategoryEntity] = []
     
     var formatters: FormattersHolder
     
@@ -63,7 +63,9 @@ class BudgetWizardViewModel: ObservableObject {
     }
     
     func categoriesForType(_ types: [CategoryType]) -> [PlanCategoryEntity] {
-        budget.categoriesForType(types, skipUnnamed: true)
+        let categories = budget.categoriesForType(types, skipUnnamed: true)
+        let deletedCategoryIds = categoriesToDelete.map { $0.id }
+        return categories.filter { !deletedCategoryIds.contains($0.id) }
     }
     
     func selectCategory(_ category: PlanCategoryEntity) {
@@ -86,8 +88,7 @@ class BudgetWizardViewModel: ObservableObject {
     
     func deleteCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
-        notificationsToDelete.append(contentsOf: category.allNotifications)
-        budgetService.deleteCategory(category, budget: budget)
+        categoriesToDelete.append(category)
         
         op = .none
     }
@@ -95,8 +96,7 @@ class BudgetWizardViewModel: ObservableObject {
     func dismissCategory(_ category: PlanCategoryEntity) {
         selectedCategory = nil
         if op == .create {
-            notificationsToDelete.append(contentsOf: category.allNotifications)
-            budgetService.deleteCategory(category, budget: budget)
+            budgetService.deleteCategoryWithNotifications(category, budget: budget)
         }
         
         op = .none
@@ -144,9 +144,9 @@ class BudgetWizardViewModel: ObservableObject {
         budget.currency = currency.id
         
         do {
-            if !notificationsToDelete.isEmpty {
-                for notifications in notificationsToDelete {
-                    try notificationService.cancelNotification(notifications)
+            if !categoriesToDelete.isEmpty {
+                for category in categoriesToDelete {
+                    budgetService.deleteCategoryWithNotifications(category, budget: budget)
                 }
             }
             

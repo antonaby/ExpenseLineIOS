@@ -80,7 +80,8 @@ class EditNotificationSheetViewModel: ObservableObject {
         notification.isNew = false
         
         do {
-            try notificationService.sheduleNotification(notification)
+            notificationService.sheduleNotification(notification)
+            try notificationService.save()
         } catch {
             logErrorEvent(error)
             print("Something went wrong \(error)")
@@ -89,7 +90,7 @@ class EditNotificationSheetViewModel: ObservableObject {
     
     func deleteNotification() {
         do {
-            try notificationService.deleteNotification(notification)
+            notificationService.deleteNotification(notification)
             try notificationService.save()
         } catch {
             logErrorEvent(error)

@@ -92,7 +92,7 @@ class CategoryViewModel: ObservableObject {
     
     func deleteCategory(_ category: PlanCategoryEntity) {
         do {
-            try budgetService.deleteCategoryWithNotifications(category, budget: budget)
+            budgetService.deleteCategoryWithNotifications(category, budget: budget)
             try budgetService.save()
         } catch {
             logErrorEvent(error)
