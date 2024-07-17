@@ -57,7 +57,25 @@ class BudgetViewModel: ObservableObject {
         self.currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
         self.totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
         self.formatters = FormattersHolder(locale: currency.locale)
-        
+    }
+    
+    func reloadBudget() {
+        do {
+            if let budgetId = budget.id, let loadedBudget = try budgetService.getBudgetById(budgetId) {
+                budget = loadedBudget
+                period = try budgetService.getOrCreateLastPeriod(loadedBudget)
+                currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
+                totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
+                formatters = FormattersHolder(locale: currency.locale)
+                subscribe()
+            }
+        } catch {
+            logErrorEvent(error)
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    private func subscribe() {
         $budget.sink { [weak self] budget in
             self?.dataUpdateSubject.send(.budget)
         }
@@ -66,20 +84,6 @@ class BudgetViewModel: ObservableObject {
             self?.dataUpdateSubject.send(.period)
         }
         .store(in: &cancellables)
-    }
-    
-    func reloadBudget() {
-        do {
-            if let budgetId = budget.id, let loadedBudget = try budgetService.getBudgetById(budgetId) {
-                budget = loadedBudget
-                currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
-                totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
-                formatters = FormattersHolder(locale: currency.locale)
-            }
-        } catch {
-            logErrorEvent(error)
-            print("Something went wrong \(error)")
-        }
     }
     
     func sendTransactionUpdated() {
