@@ -63,7 +63,6 @@ class BudgetViewModel: ObservableObject {
         do {
             if let budgetId = budget.id, let loadedBudget = try budgetService.getBudgetById(budgetId) {
                 budget = loadedBudget
-                period = try budgetService.getOrCreateLastPeriod(loadedBudget)
                 currency = dataService.getCurrencySymbolOrDefault(budget.currencyValue)
                 totalPlannedIncomeCalculated = budget.totalAmountForCategoryType(.income)
                 formatters = FormattersHolder(locale: currency.locale)

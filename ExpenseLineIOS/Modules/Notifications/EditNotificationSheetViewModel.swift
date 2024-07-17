@@ -88,16 +88,6 @@ class EditNotificationSheetViewModel: ObservableObject {
         }
     }
     
-    func deleteNotification() {
-        do {
-            notificationService.deleteNotification(notification)
-            try notificationService.save()
-        } catch {
-            logErrorEvent(error)
-            print("Something went wrong \(error)")
-        }
-    }
-    
     func rollback() {
         notificationService.rollback()
     }

@@ -36,14 +36,6 @@ struct TransactionView: View {
                                 .bold()
                         }
                         Spacer()
-                        Button {
-                            editSheetOpen.toggle()
-                        } label: {
-                            Image(systemName: "pencil")
-                                .foregroundColor(Color.appLink)
-                                .frame(width: 50, height: 50, alignment: .topTrailing)
-                                .padding([.top, .trailing], 10)
-                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     Text(formatters.formatAmount(vm.transaction.amountDecimal))
@@ -53,7 +45,26 @@ struct TransactionView: View {
                         .foregroundStyle(Color.appLinkInactive)
                 }
             }
-            Spacer()
+            FlexibleCardView {
+                HStack {
+                    Button {
+                        editSheetOpen.toggle()
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .tint(Color.appLink)
+                    Divider()
+                    Button {
+                        vm.deleteTransaction()
+                        dismiss()
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .tint(Color.appDestructiveLink)
+                }
+            }
         }
         .padding(.horizontal, 20)
         .background(Color.appBackground)

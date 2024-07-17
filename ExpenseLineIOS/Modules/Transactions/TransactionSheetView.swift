@@ -106,13 +106,6 @@ struct TransactionSheetView: View {
                             .accessibilityLabel("Amount")
                             .accessibilityElement(children: .combine)
                         }
-                        Button {
-                            vm.deleteTransaction()
-                            dismiss()
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                                .tint(Color.appDestructiveLink)
-                        }
                     }
                     .padding(.top, 10)
                     .padding(.horizontal, 15)

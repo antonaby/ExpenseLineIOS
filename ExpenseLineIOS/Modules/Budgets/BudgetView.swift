@@ -167,7 +167,8 @@ struct BudgetView: View {
         .navigationDestination(for: NotificationEntity.self) { notification in
             NotificationView(vm: NotificationViewModel(
                 notification: notification,
-                notificationService: notificationService)
+                notificationService: notificationService,
+                analyticsService: analyticsService)
             )
                 .environmentObject(vm.formatters)
                 .navigationTitle("Reminder")

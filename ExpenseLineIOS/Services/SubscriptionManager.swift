@@ -79,7 +79,7 @@ import StoreKit
             }
         } catch {
             logErrorEvent(error)
-            print("Failed to purchase the product!")
+            print("Failed to purchase the product! \(error)")
         }
     }
     
@@ -107,8 +107,12 @@ import StoreKit
     }
     
     private func logSubscriptionErrorEvent(_ reason: String) {
-        let msg = reason[...reason.index(reason.startIndex, offsetBy: 10)]
-        analyticsService.logEvent(name: AnalyticsService.SUBSCRIPTION_ERROR, params: ["place": "sunscription_manager", "msg": msg])
+        if reason.count > 20 {
+            let msg = reason[...reason.index(reason.startIndex, offsetBy: 10)]
+            analyticsService.logEvent(name: AnalyticsService.SUBSCRIPTION_ERROR, params: ["place": "sunscription_manager", "msg": msg])
+        } else {
+            analyticsService.logEvent(name: AnalyticsService.SUBSCRIPTION_ERROR, params: ["place": "sunscription_manager", "msg": reason])
+        }
     }
     
 }

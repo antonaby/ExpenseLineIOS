@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NotificationView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject var analyticsService: AnalyticsService
     @EnvironmentObject var formatters: FormattersHolder
     @EnvironmentObject var appState: AppState
@@ -42,15 +44,6 @@ struct NotificationView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .overlay(alignment: .topTrailing) {
-                    Button {
-                        showEditSheet.toggle()
-                    } label: {
-                        Image(systemName: "pencil")
-                            .padding([.top, .trailing], 5)
-                    }
-                    .tint(Color.appLink)
-                }
             }
             if let category = vm.notification.category {
                 FlexibleCardView {
@@ -60,6 +53,26 @@ struct NotificationView: View {
                         Text(category.nameValue)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            FlexibleCardView {
+                HStack {
+                    Button {
+                        showEditSheet.toggle()
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .tint(Color.appLink)
+                    Divider()
+                    Button {
+                        vm.deleteNotification()
+                        dismiss()
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .tint(Color.appDestructiveLink)
                 }
             }
         }
@@ -141,7 +154,8 @@ struct NotificationView: View {
     
     return NotificationView(vm: NotificationViewModel(
         notification: notification,
-        notificationService: bundle.notificationService)
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService)
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
@@ -165,7 +179,8 @@ struct NotificationView: View {
     
     return NotificationView(vm: NotificationViewModel(
         notification: notification,
-        notificationService: bundle.notificationService)
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService)
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
@@ -190,7 +205,8 @@ struct NotificationView: View {
     
     return NotificationView(vm: NotificationViewModel(
         notification: notification,
-        notificationService: bundle.notificationService)
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService)
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))
@@ -215,7 +231,8 @@ struct NotificationView: View {
     
     return NotificationView(vm: NotificationViewModel(
         notification: notification,
-        notificationService: bundle.notificationService)
+        notificationService: bundle.notificationService,
+        analyticsService: bundle.analyticsService)
     )
     .serviceBundle(bundle)
     .environmentObject(AppState(bundle: bundle))

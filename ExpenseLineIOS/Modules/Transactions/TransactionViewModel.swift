@@ -41,6 +41,16 @@ class TransactionViewModel: ObservableObject {
         }
     }
     
+    func deleteTransaction() {
+        do {
+            budgetService.deleteTransaction(transaction, budget: budget)
+            try budgetService.save()
+        } catch {
+            logErrorEvent(error)
+            print("Something went wrong \(error)")
+        }
+    }
+    
     private func logErrorEvent(_ error: Error) {
         analyticsService.logError(place: "transaction", error: error)
     }

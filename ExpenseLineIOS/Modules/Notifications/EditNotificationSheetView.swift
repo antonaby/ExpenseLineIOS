@@ -118,14 +118,6 @@ struct EditNotificationSheetView: View {
                     }
                     .padding(.top, 10)
                     .padding(.horizontal, 15)
-                    Button {
-                        vm.deleteNotification()
-                        dismiss()
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                            .tint(Color.appDestructiveLink)
-                    }
-                    
                 }
                 .background(Color.appBackground)
             }

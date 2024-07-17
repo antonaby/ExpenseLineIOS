@@ -49,8 +49,12 @@ class AnalyticsService: ObservableObject {
     
     func logError(place: String, error: Error, eventName: String = AnalyticsService.DATA_ERROR) {
         let errorMsg = "\(error)"
-        let msg = errorMsg[...errorMsg.index(errorMsg.startIndex, offsetBy: 10)]
-        logEvent(name: eventName, params: ["place": place, "msg": msg])
+        if errorMsg.count > 20 {
+            let msg = errorMsg[...errorMsg.index(errorMsg.startIndex, offsetBy: 10)]
+            logEvent(name: eventName, params: ["place": place, "msg": msg])
+        } else {
+            logEvent(name: eventName, params: ["place": place, "msg": errorMsg])
+        }
     }
     
     func updateUserId() {

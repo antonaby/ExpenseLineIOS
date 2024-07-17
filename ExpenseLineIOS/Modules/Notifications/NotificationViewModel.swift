@@ -13,10 +13,12 @@ class NotificationViewModel: ObservableObject {
     @Published var notification: NotificationEntity
     
     private let notificationService: NotificationService
+    private let analyticsService: AnalyticsService
     
-    init(notification: NotificationEntity, notificationService: NotificationService) {
+    init(notification: NotificationEntity, notificationService: NotificationService, analyticsService: AnalyticsService) {
         self.notification = notification
         self.notificationService = notificationService
+        self.analyticsService = analyticsService
     }
     
     func reloadNotification() {
@@ -26,6 +28,20 @@ class NotificationViewModel: ObservableObject {
     
     func isActive() -> Bool {
         notification.typeValue != .nonotification && notification.enabled
+    }
+    
+    func deleteNotification() {
+        do {
+            notificationService.deleteNotification(notification)
+            try notificationService.save()
+        } catch {
+            logErrorEvent(error)
+            print("Something went wrong \(error)")
+        }
+    }
+    
+    private func logErrorEvent(_ error: Error) {
+        analyticsService.logError(place: "notification", error: error)
     }
     
 }
