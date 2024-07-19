@@ -156,7 +156,7 @@ struct HelpView: View {
             Text("Budget")
                 .font(.title2)
                 .bold()
-            Text("Welcome to your primary financial overview! Our budget mobile app’s main screen is designed to give you a clear and concise summary of your spending with a focus on fixed and flexible expenses.")
+            Text("Welcome to your primary financial overview! Our budgeting mobile app’s main screen is designed to give you a clear and concise summary of your spending with a focus on fixed and flexible expenses.")
                 .multilineTextAlignment(.center)
                 .padding(.top, 5)
         }

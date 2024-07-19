@@ -1428,12 +1428,12 @@
         }
       }
     },
-    "Welcome to your primary financial overview! Our budget mobile app’s main screen is designed to give you a clear and concise summary of your spending with a focus on fixed and flexible expenses." : {
+    "Welcome to your primary financial overview! Our budgeting mobile app’s main screen is designed to give you a clear and concise summary of your spending with a focus on fixed and flexible expenses." : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добро пожаловать в ваш основной финансовый обзор! Главный экран нашего бюджетного мобильного приложения разработан, чтобы предоставить вам четкое и лаконичное резюме ваших расходов с акцентом на постоянные и переменные расходы."
+            "value" : "Добро пожаловать в ваш основной финансовый обзор! Основной экран нашего мобильного приложения для составления бюджета разработан, чтобы предоставить вам четкое и краткое резюме ваших расходов с акцентом на фиксированные и гибкие расходы."
           }
         }
       }
