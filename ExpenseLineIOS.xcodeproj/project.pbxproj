@@ -73,6 +73,7 @@
 		D25ACF962BDD1AB800D61DEA /* CustomNumericField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */; };
 		D25AF79A2BF9D787009FEDD1 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */; };
 		D263EC6F2BB6E9A000BA4287 /* ServiceBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */; };
+		D266960A2C4BB37C005E6D54 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D26696092C4BB37C005E6D54 /* PrivacyInfo.xcprivacy */; };
 		D2673F2C2C1715E000C0613B /* EditNotificationSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2673F2B2C1715E000C0613B /* EditNotificationSheetView.swift */; };
 		D2673F2E2C17173F00C0613B /* EditNotificationSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2673F2D2C17173F00C0613B /* EditNotificationSheetViewModel.swift */; };
 		D26B0E522C3A5FEA0072C945 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26B0E512C3A5FEA0072C945 /* NotificationView.swift */; };
@@ -189,6 +190,7 @@
 		D25ACF952BDD1AB800D61DEA /* CustomNumericField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumericField.swift; sourceTree = "<group>"; };
 		D25AF7992BF9D787009FEDD1 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		D263EC6E2BB6E9A000BA4287 /* ServiceBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBundle.swift; sourceTree = "<group>"; };
+		D26696092C4BB37C005E6D54 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		D2673F2B2C1715E000C0613B /* EditNotificationSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationSheetView.swift; sourceTree = "<group>"; };
 		D2673F2D2C17173F00C0613B /* EditNotificationSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationSheetViewModel.swift; sourceTree = "<group>"; };
 		D26B0E512C3A5FEA0072C945 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		D20EF29E2BB18CFA006CF8CD = {
 			isa = PBXGroup;
 			children = (
+				D26696092C4BB37C005E6D54 /* PrivacyInfo.xcprivacy */,
 				D23109102C3938B000DE6372 /* Percent Budget.storekit */,
 				D20EF2A92BB18CFA006CF8CD /* ExpenseLineIOS */,
 				D20EF2BA2BB18CFB006CF8CD /* ExpenseLineIOSTests */,
@@ -676,6 +679,7 @@
 				D20EF2B22BB18CFB006CF8CD /* Preview Assets.xcassets in Resources */,
 				D22E47522C0B1DF9006C4C3B /* LaunchScreen.storyboard in Resources */,
 				D20EF2AF2BB18CFB006CF8CD /* Assets.xcassets in Resources */,
+				D266960A2C4BB37C005E6D54 /* PrivacyInfo.xcprivacy in Resources */,
 				D24F9E4A2C37DC21005260D8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -946,7 +950,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = ExpenseLineIOS/ExpenseLineIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"ExpenseLineIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = N27LL4XQG6;
 				ENABLE_PREVIEWS = YES;
@@ -980,7 +984,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = ExpenseLineIOS/ExpenseLineIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"ExpenseLineIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = N27LL4XQG6;
 				ENABLE_PREVIEWS = YES;
